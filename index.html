@@ -1147,6 +1147,8 @@
     const GOALS_KEY = 'rianne_goals_vacation_v1';
     const QUOTES_KEY = 'rianne_quotes_vacation_v1';
     const SYNC_QUEUE_KEY = 'rianne_sync_queue_v1';
+    const APP_SCHEMA_VERSION_KEY = 'rianne_schema_version_v1';
+    const CURRENT_SCHEMA_VERSION = 2; // Incremented safely on new features
 
     const SAMPLE_BOOKS = [
       {
@@ -1342,21 +1344,75 @@
     }
 
     function initData() {
-      books = safeJsonParse(localStorage.getItem(STORAGE_KEY), SAMPLE_BOOKS);
-      quotes = safeJsonParse(localStorage.getItem(QUOTES_KEY), SAMPLE_QUOTES);
-      goals = safeJsonParse(localStorage.getItem(GOALS_KEY), DEFAULT_GOALS);
+      // 1. Strict Check: If the user already has saved data in localStorage, NEVER load sample books over it!
+      const existingBooksRaw = localStorage.getItem(STORAGE_KEY);
+      const existingQuotesRaw = localStorage.getItem(QUOTES_KEY);
+      const existingGoalsRaw = localStorage.getItem(GOALS_KEY);
 
+      if (existingBooksRaw !== null) {
+        // User has existing data: parse and preserve it completely
+        books = safeJsonParse(existingBooksRaw, []);
+      } else {
+        // First-time user only: seed initial sample demo books
+        books = SAMPLE_BOOKS;
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(books));
+      }
+
+      if (existingQuotesRaw !== null) {
+        quotes = safeJsonParse(existingQuotesRaw, []);
+      } else {
+        quotes = SAMPLE_QUOTES;
+        localStorage.setItem(QUOTES_KEY, JSON.stringify(quotes));
+      }
+
+      if (existingGoalsRaw !== null) {
+        const savedGoals = safeJsonParse(existingGoalsRaw, DEFAULT_GOALS);
+        // Merge with defaults in case new goal options are introduced in future updates
+        goals = { ...DEFAULT_GOALS, ...savedGoals };
+      } else {
+        goals = { ...DEFAULT_GOALS };
+        localStorage.setItem(GOALS_KEY, JSON.stringify(goals));
+      }
+
+      // 2. Schema Auto-Migrator: Gracefully backfills any new properties into older books
+      migrateUserLibrarySchema();
+
+      // 3. Establish active book based on user's real library
       const sortedActive = getCurrentlyReadingSorted();
       if (sortedActive.length > 0) {
         activeBookId = sortedActive[0].id;
       } else if (books.length > 0) {
         activeBookId = books[0].id;
+      } else {
+        activeBookId = null;
       }
 
       setupOfflineWatcher();
       setupSyncQueueEngine();
       saveData();
       updateSyncBadge();
+    }
+
+    // Automatically adds missing keys from future app upgrades without touching existing values
+    function migrateUserLibrarySchema() {
+      if (!Array.isArray(books)) {
+        books = [];
+        return;
+      }
+
+      books.forEach(b => {
+        if (!b.sessions) b.sessions = [];
+        if (!b.reReads) b.reReads = [];
+        if (!b.formats || b.formats.length === 0) b.formats = ['Paperback'];
+        if (typeof b.currentPage !== 'number') b.currentPage = 0;
+        if (typeof b.pageCount !== 'number') b.pageCount = 300;
+        if (!b.status) b.status = 'to-read';
+        if (!b.ownership) b.ownership = 'owned';
+        if (typeof b.totalSecondsRead !== 'number') b.totalSecondsRead = 0;
+        if (!b.categories) b.categories = ['Fiction'];
+      });
+
+      localStorage.setItem(APP_SCHEMA_VERSION_KEY, String(CURRENT_SCHEMA_VERSION));
     }
 
     function saveData() {
