@@ -685,7 +685,7 @@
           <label class="retro-btn py-2.5 px-2 rounded-xl bg-[#FFA6C5] text-[#062d5d] border-2 border-[#041c3b] flex flex-col items-center justify-center gap-0.5 cursor-pointer shadow-[2px_2px_0px_#041c3b]">
             <span class="text-xs">Bookshelf</span>
             <span class="text-[9px] opacity-80">JSON / CSV</span>
-            <input type="file" id="bookshelfBackupInput" accept=".json,.csv" onchange="importBookshelfFile(event)" class="hidden">
+            <input type="file" id="bookshelfBackupInput" accept=".json,.csv,text/csv,application/json" onchange="importBookshelfFile(event)" class="hidden">
           </label>
         </div>
 
@@ -3226,70 +3226,12 @@
       reader.onload = function(e) {
         try {
           const text = e.target.result;
-          const rows = parseCSVText(text);
-          if (rows.length < 2) throw new Error('Empty CSV');
-
-          const headers = rows[0].map(h => h.trim().toLowerCase());
-          const titleIdx = headers.indexOf('title');
-          const authorIdx = headers.indexOf('author');
-          const isbnIdx = headers.indexOf('isbn13') !== -1 ? headers.indexOf('isbn13') : headers.indexOf('isbn');
-          const pagesIdx = headers.indexOf('number of pages');
-          const shelfIdx = headers.indexOf('exclusive shelf');
-          const dateReadIdx = headers.indexOf('date read');
-
-          let importedCount = 0;
-          for (let i = 1; i < rows.length; i++) {
-            const row = rows[i];
-            if (!row || row.length < 2) continue;
-
-            const title = row[titleIdx] ? row[titleIdx].replace(/^"|"$/g, '').trim() : '';
-            if (!title) continue;
-
-            const author = row[authorIdx] ? row[authorIdx].replace(/^"|"$/g, '').trim() : 'Unknown';
-            const pageCount = parseInt(row[pagesIdx]) || 300;
-            const shelfRaw = row[shelfIdx] ? row[shelfIdx].toLowerCase().trim() : 'to-read';
-            const isbn = row[isbnIdx] ? row[isbnIdx].replace(/[^0-9X]/gi, '') : '';
-            const dateRead = row[dateReadIdx] ? row[dateReadIdx].trim() : '';
-
-            let status = 'to-read';
-            if (shelfRaw === 'read') status = 'finished';
-            else if (shelfRaw === 'currently-reading') status = 'reading';
-            else if (shelfRaw === 'did-not-finish' || shelfRaw === 'abandoned') status = 'abandoned';
-
-            const bookId = 'gr_' + Date.now() + '_' + i;
-            const newBook = {
-              id: bookId,
-              title,
-              authors: [author],
-              pageCount,
-              currentPage: status === 'finished' ? pageCount : (status === 'reading' ? Math.round(pageCount * 0.3) : 0),
-              status,
-              ownership: 'owned',
-              formats: ['Paperback'],
-              categories: ['Goodreads Import'],
-              thumbnail: '',
-              description: '',
-              totalSecondsRead: status === 'finished' ? Math.round(pageCount * 110) : 0,
-              sessions: [],
-              reReads: [],
-              rating: 5,
-              lastReadDate: dateRead ? dateRead.replace(/\//g, '-') : new Date().toISOString().split('T')[0]
-            };
-
-            books.push(newBook);
-            queueOfflineBookForSync(bookId, title, author, isbn);
-            importedCount++;
-          }
-
-          saveData();
-          renderActiveBooksCarousel();
-          renderHeroCard();
-          renderLibrary();
-          showToast(`Imported ${importedCount} books from Goodreads! 📚`);
-          processSyncQueue();
-
+          parseAndImportCSV(text, 'Goodreads');
         } catch (err) {
+          console.error('Goodreads import error:', err);
           showToast('Failed to parse Goodreads CSV', '⚠️');
+        } finally {
+          event.target.value = '';
         }
       };
       reader.readAsText(file);
@@ -3332,6 +3274,156 @@
       return lines;
     }
 
+    function normalizeImportedBook(rawBook, index) {
+      const title = (rawBook.title || rawBook.bookTitle || rawBook.name || 'Untitled').trim();
+      let authors = rawBook.authors || rawBook.author || ['Unknown Author'];
+      if (typeof authors === 'string') {
+        authors = authors.split(/,|&|;/).map(a => a.trim()).filter(Boolean);
+      }
+      if (!Array.isArray(authors) || authors.length === 0) {
+        authors = ['Unknown Author'];
+      }
+
+      const pageCount = parseInt(rawBook.pageCount || rawBook.pages || rawBook.numberOfPages || rawBook.totalPages) || 300;
+      let currentPage = parseInt(rawBook.currentPage || rawBook.progress || rawBook.pagesRead) || 0;
+
+      let status = (rawBook.status || rawBook.shelf || rawBook.readingStatus || 'to-read').toLowerCase().trim();
+      if (status === 'read' || status === 'completed' || status === 'done') status = 'finished';
+      else if (status === 'currently-reading' || status === 'in-progress' || status === 'reading') status = 'reading';
+      else if (status === 'want-to-read' || status === 'to-read' || status === 'tbr') status = 'to-read';
+      else if (status === 'did-not-finish' || status === 'abandoned' || status === 'dnf') status = 'abandoned';
+      else if (status === 'wishlist' || status === 'wish-list') status = 'wishlist';
+      else status = 'to-read';
+
+      if (status === 'finished' && currentPage === 0) {
+        currentPage = pageCount;
+      }
+
+      let ownership = (rawBook.ownership || 'owned').toLowerCase().trim();
+      if (!['owned', 'borrowed', 'not-owned'].includes(ownership)) ownership = 'owned';
+
+      let formats = rawBook.formats || rawBook.format || ['Paperback'];
+      if (typeof formats === 'string') formats = [formats];
+      if (!Array.isArray(formats) || formats.length === 0) formats = ['Paperback'];
+
+      let categories = rawBook.categories || rawBook.genres || rawBook.genre || ['General'];
+      if (typeof categories === 'string') categories = categories.split(/,|;/).map(c => c.trim()).filter(Boolean);
+      if (!Array.isArray(categories) || categories.length === 0) categories = ['General'];
+
+      const id = rawBook.id || ('imp_' + Date.now() + '_' + (index || 0));
+      const thumbnail = rawBook.thumbnail || rawBook.cover || rawBook.coverUrl || rawBook.imageUrl || '';
+      const description = rawBook.description || rawBook.synopsis || rawBook.summary || '';
+      const totalSecondsRead = parseInt(rawBook.totalSecondsRead) || (status === 'finished' ? pageCount * 100 : 0);
+      const sessions = Array.isArray(rawBook.sessions) ? rawBook.sessions : [];
+      const reReads = Array.isArray(rawBook.reReads) ? rawBook.reReads : [];
+      const rating = parseInt(rawBook.rating) || 5;
+      const lastReadDate = rawBook.lastReadDate || rawBook.dateRead || rawBook.dateFinished || (status === 'finished' ? new Date().toISOString().split('T')[0] : null);
+
+      return {
+        id,
+        title,
+        authors,
+        pageCount,
+        currentPage,
+        status,
+        ownership,
+        formats,
+        categories,
+        thumbnail,
+        description,
+        totalSecondsRead,
+        sessions,
+        reReads,
+        rating,
+        lastReadDate
+      };
+    }
+
+    function parseAndImportCSV(text, sourceName) {
+      const rows = parseCSVText(text);
+      if (!rows || rows.length < 2) {
+        throw new Error('CSV is empty or missing headers');
+      }
+
+      const headers = rows[0].map(h => (h || '').trim().toLowerCase().replace(/^["']|["']$/g, ''));
+      
+      const findCol = (...aliases) => {
+        for (const alias of aliases) {
+          const idx = headers.findIndex(h => h === alias || h.includes(alias));
+          if (idx !== -1) return idx;
+        }
+        return -1;
+      };
+
+      const titleIdx = findCol('title', 'book title', 'name');
+      const authorIdx = findCol('author', 'authors', 'creator');
+      const pagesIdx = findCol('number of pages', 'pages', 'page count', 'total pages', 'length');
+      const curPageIdx = findCol('current page', 'progress', 'pages read');
+      const shelfIdx = findCol('exclusive shelf', 'shelf', 'status', 'reading status', 'state');
+      const isbnIdx = findCol('isbn13', 'isbn', 'isbn-13');
+      const formatIdx = findCol('format', 'binding', 'book format');
+      const dateReadIdx = findCol('date read', 'date finished', 'finished', 'completed date', 'read date');
+      const genresIdx = findCol('genres', 'genre', 'categories', 'tags');
+      const coverIdx = findCol('cover', 'cover url', 'image', 'thumbnail');
+      const descIdx = findCol('description', 'synopsis', 'summary', 'notes');
+
+      if (titleIdx === -1) {
+        throw new Error('Could not identify title column in CSV');
+      }
+
+      let importedCount = 0;
+      for (let i = 1; i < rows.length; i++) {
+        const row = rows[i];
+        if (!row || row.length <= titleIdx) continue;
+
+        const title = (row[titleIdx] || '').replace(/^["']|["']$/g, '').trim();
+        if (!title) continue;
+
+        const author = authorIdx !== -1 && row[authorIdx] ? row[authorIdx].replace(/^["']|["']$/g, '').trim() : 'Unknown Author';
+        const pageCount = pagesIdx !== -1 ? (parseInt(row[pagesIdx]) || 300) : 300;
+        const curPage = curPageIdx !== -1 ? (parseInt(row[curPageIdx]) || 0) : 0;
+        const rawShelf = shelfIdx !== -1 && row[shelfIdx] ? row[shelfIdx].trim() : 'to-read';
+        const isbn = isbnIdx !== -1 && row[isbnIdx] ? row[isbnIdx].replace(/[^0-9X]/gi, '') : '';
+        const format = formatIdx !== -1 && row[formatIdx] ? row[formatIdx].trim() : 'Paperback';
+        const dateRead = dateReadIdx !== -1 && row[dateReadIdx] ? row[dateReadIdx].trim().replace(/\//g, '-') : '';
+        const genres = genresIdx !== -1 && row[genresIdx] ? row[genresIdx].split(/[,;]/).map(g => g.trim()) : [sourceName || 'Import'];
+        const cover = coverIdx !== -1 && row[coverIdx] ? row[coverIdx].trim() : '';
+        const desc = descIdx !== -1 && row[descIdx] ? row[descIdx].trim() : '';
+
+        const normalized = normalizeImportedBook({
+          title,
+          author,
+          pageCount,
+          currentPage: curPage,
+          status: rawShelf,
+          format,
+          categories: genres,
+          thumbnail: cover,
+          description: desc,
+          lastReadDate: dateRead
+        }, i);
+
+        books.push(normalized);
+        if (!normalized.thumbnail) {
+          queueOfflineBookForSync(normalized.id, normalized.title, normalized.authors[0], isbn);
+        }
+        importedCount++;
+      }
+
+      if (importedCount === 0) {
+        throw new Error('No valid book records found in CSV');
+      }
+
+      saveData();
+      renderActiveBooksCarousel();
+      renderHeroCard();
+      renderLibrary();
+      renderCalendar();
+      updateStatsView();
+      showToast(`Imported ${importedCount} books from ${sourceName || 'CSV'}! 📚`);
+      processSyncQueue();
+    }
+
     function importBookshelfFile(event) {
       const file = event.target.files[0];
       if (!file) return;
@@ -3339,20 +3431,71 @@
       const reader = new FileReader();
       reader.onload = function(e) {
         try {
-          const parsed = JSON.parse(e.target.result);
-          if (parsed.books && Array.isArray(parsed.books)) {
-            books = parsed.books;
-            if (parsed.quotes) quotes = parsed.quotes;
-            if (parsed.goals) goals = parsed.goals;
-            saveData();
-            renderActiveBooksCarousel();
-            renderHeroCard();
-            renderLibrary();
-            renderCalendar();
-            showToast('Bookshelf backup restored!');
+          const rawText = (e.target.result || '').trim();
+
+          // 1. Check if the file is JSON
+          if (rawText.startsWith('{') || rawText.startsWith('[')) {
+            let parsed;
+            try {
+              parsed = JSON.parse(rawText);
+            } catch (jsonErr) {
+              // In case it has JSON-like characters but is actually CSV
+              parseAndImportCSV(rawText, 'Bookshelf');
+              return;
+            }
+
+            let candidateBooks = [];
+
+            if (Array.isArray(parsed)) {
+              candidateBooks = parsed;
+            } else if (parsed && typeof parsed === 'object') {
+              if (Array.isArray(parsed.books)) {
+                candidateBooks = parsed.books;
+              } else if (Array.isArray(parsed.library)) {
+                candidateBooks = parsed.library;
+              } else if (Array.isArray(parsed.data)) {
+                candidateBooks = parsed.data;
+              } else if (Array.isArray(parsed.items)) {
+                candidateBooks = parsed.items;
+              }
+
+              if (Array.isArray(parsed.quotes) && parsed.quotes.length > 0) {
+                quotes = parsed.quotes;
+              }
+              if (parsed.goals && typeof parsed.goals === 'object') {
+                goals = { ...DEFAULT_GOALS, ...parsed.goals };
+              }
+            }
+
+            if (candidateBooks.length > 0) {
+              const normalized = candidateBooks.map((b, idx) => normalizeImportedBook(b, idx));
+              books = normalized;
+              
+              if (books.length > 0) {
+                const readingList = getCurrentlyReadingSorted();
+                activeBookId = readingList.length > 0 ? readingList[0].id : books[0].id;
+              }
+
+              saveData();
+              renderActiveBooksCarousel();
+              renderHeroCard();
+              renderLibrary();
+              renderCalendar();
+              updateStatsView();
+              showToast(`Restored ${books.length} books from backup! ✨`);
+              processSyncQueue();
+              return;
+            }
           }
+
+          // 2. Fallback: Parse as CSV
+          parseAndImportCSV(rawText, 'Bookshelf');
+
         } catch (err) {
-          showToast('Invalid backup file', '⚠️');
+          console.error('File import failed:', err);
+          showToast('Could not read backup file format', '⚠️');
+        } finally {
+          event.target.value = '';
         }
       };
       reader.readAsText(file);
