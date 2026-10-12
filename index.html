@@ -72,6 +72,16 @@
       box-shadow: 1px 1px 0px var(--retro-navy) !important;
     }
 
+    /* Prevent native number spinners from covering the % symbol */
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    input[type=number] {
+      -moz-appearance: textfield;
+    }
+
     /* Hide scrollbars for slick mobile viewing */
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
@@ -79,15 +89,22 @@
 </head>
 <body class="text-slate-800 antialiased selection:bg-[#FFA4C4] selection:text-[#05244C]">
 
-  <!-- STICKY RETRO TOP HEADER -->
+  <!-- STICKY RETRO TOP HEADER WITH TROPICAL PALM ISLAND EMBLEM -->
   <header class="sticky top-0 z-40 bg-[#446BA2]/95 backdrop-blur-md border-b-2 border-[#FFA4C4] px-4 pt-3.5 pb-3 transition-all shadow-md">
     <div class="max-w-md mx-auto flex items-center justify-between">
       <div class="flex items-center gap-2.5">
+        <!-- Cute Tropical Palm Island Icon -->
         <div class="w-10 h-10 rounded-2xl bg-[#FFF9EE] border-2 border-[#FFA4C4] shadow-retro-navy flex items-center justify-center overflow-hidden">
-          <svg class="w-6 h-6 text-[#05244C]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/>
-            <path d="M6 6h10"/>
-            <path d="M6 10h10"/>
+          <svg class="w-6 h-6" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="23" cy="9" r="4.5" fill="#FFD034" stroke="#05244C" stroke-width="1.5"/>
+            <path d="M4 27C9 24.5 23 24.5 28 27" stroke="#05244C" stroke-width="2" stroke-linecap="round"/>
+            <path d="M15 25.5C14.5 20 16 15.5 19 12" stroke="#05244C" stroke-width="2.2" stroke-linecap="round"/>
+            <circle cx="17.2" cy="13.2" r="1.3" fill="#FF5B22"/>
+            <circle cx="19.4" cy="13.8" r="1.3" fill="#FF5B22"/>
+            <path d="M19 12C16 9 9 10 7 13C10 13 15 12 19 12Z" fill="#1DBBB4" stroke="#05244C" stroke-width="1.5" stroke-linejoin="round"/>
+            <path d="M19 12C19 7 15 4 12 5C13 8 16 10 19 12Z" fill="#1DBBB4" stroke="#05244C" stroke-width="1.5" stroke-linejoin="round"/>
+            <path d="M19 12C22 8 26 6 28 8C27 10 23 11 19 12Z" fill="#1DBBB4" stroke="#05244C" stroke-width="1.5" stroke-linejoin="round"/>
+            <path d="M19 12C23 12 28 14 29 17C26 16 22 15 19 12Z" fill="#1DBBB4" stroke="#05244C" stroke-width="1.5" stroke-linejoin="round"/>
           </svg>
         </div>
         <div>
@@ -191,7 +208,7 @@
         </div>
       </div>
 
-      <!-- 3. LIVE TIMER DRAWER WITH PROCEDURAL AUDIO -->
+      <!-- 3. LIVE TIMER DRAWER WITH FOCUS ATMOSPHERE -->
       <div id="liveTimerBox" class="hidden bg-[#05244C] border-3 border-[#FFD034] rounded-3xl p-5 shadow-retro-orange text-[#FFF9EE]">
         <div class="flex items-center justify-between mb-3">
           <div class="flex items-center gap-2">
@@ -222,7 +239,7 @@
 
     </section>
 
-    <!-- TAB 2: LIBRARY (WITH VIEW SWITCHERS, FORMAT FILTERS, GENRE SORT & BATCH EDIT) -->
+    <!-- TAB 2: LIBRARY -->
     <section id="tab-library" class="tab-content hidden space-y-4">
       
       <!-- Search, Views, and Batch Toggle Bar -->
@@ -247,14 +264,21 @@
           <button onclick="toggleBatchSelectMode()" id="batchSelectModeBtn" class="h-9 px-3 bg-amber-100 hover:bg-amber-200 border-2 border-[#05244C] rounded-xl text-[11px] font-black text-[#05244C] shadow-retro-navy flex items-center justify-center flex-shrink-0 whitespace-nowrap retro-btn">Select</button>
         </div>
 
-        <!-- Shelf Pills: All, Reading, TBR, Finished, DNF, Wishlist (Wishlist permanent pink) -->
-        <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-2 px-1">
-          <button onclick="setShelfFilter('all')" class="shelf-pill px-2.5 py-1 rounded-full text-[11px] font-black border-2 border-[#05244C] bg-[#05244C] text-[#FFF9EE] shadow-retro-navy whitespace-nowrap flex-shrink-0" data-shelf="all">All</button>
-          <button onclick="setShelfFilter('reading')" class="shelf-pill px-2.5 py-1 rounded-full text-[11px] font-bold border border-[#FF5B22] bg-[#FF5B22]/15 text-[#FF5B22] whitespace-nowrap flex-shrink-0" data-shelf="reading">Reading</button>
-          <button onclick="setShelfFilter('to-read')" class="shelf-pill px-2.5 py-1 rounded-full text-[11px] font-bold border border-[#D97706] bg-[#FFD034]/25 text-[#B45309] whitespace-nowrap flex-shrink-0" data-shelf="to-read">TBR</button>
-          <button onclick="setShelfFilter('finished')" class="shelf-pill px-2.5 py-1 rounded-full text-[11px] font-bold border border-[#10B981] bg-[#10B981]/15 text-[#047857] whitespace-nowrap flex-shrink-0" data-shelf="finished">Finished</button>
-          <button onclick="setShelfFilter('dnf')" class="shelf-pill px-2.5 py-1 rounded-full text-[11px] font-bold border border-[#A855F7] bg-[#A855F7]/15 text-[#7E22CE] whitespace-nowrap flex-shrink-0" data-shelf="dnf">DNF</button>
-          <button onclick="setShelfFilter('wishlist')" class="shelf-pill px-2.5 py-1 rounded-full text-[11px] font-bold border border-[#FFA4C4] bg-[#FFA4C4]/35 text-[#BE185D] whitespace-nowrap flex-shrink-0" data-shelf="wishlist">Wishlist</button>
+        <!-- 2 CLEAN AESTHETIC ROWS FOR CATEGORIES (NO SCROLLING OR CLIPPING) -->
+        <div class="space-y-1.5 pt-1">
+          <!-- Row 1: All, Reading, TBR, Finished -->
+          <div class="grid grid-cols-4 gap-1.5">
+            <button onclick="setShelfFilter('all')" class="shelf-pill py-1.5 rounded-xl text-[11px] font-black border-2 border-[#05244C] bg-[#05244C] text-[#FFF9EE] shadow-retro-navy text-center transition-all" data-shelf="all">All</button>
+            <button onclick="setShelfFilter('reading')" class="shelf-pill py-1.5 rounded-xl text-[11px] font-bold border border-[#FF5B22] bg-[#FF5B22]/15 text-[#FF5B22] text-center transition-all" data-shelf="reading">Reading</button>
+            <button onclick="setShelfFilter('to-read')" class="shelf-pill py-1.5 rounded-xl text-[11px] font-bold border border-[#D97706] bg-[#FFD034]/25 text-[#B45309] text-center transition-all" data-shelf="to-read">TBR</button>
+            <button onclick="setShelfFilter('finished')" class="shelf-pill py-1.5 rounded-xl text-[11px] font-bold border border-[#10B981] bg-[#10B981]/15 text-[#047857] text-center transition-all" data-shelf="finished">Finished</button>
+          </div>
+          <!-- Row 2: Faves, DNF, Wishlist -->
+          <div class="grid grid-cols-3 gap-1.5">
+            <button onclick="setShelfFilter('faves')" class="shelf-pill py-1.5 rounded-xl text-[11px] font-bold border border-rose-400 bg-rose-100 text-rose-700 text-center transition-all" data-shelf="faves">Faves</button>
+            <button onclick="setShelfFilter('dnf')" class="shelf-pill py-1.5 rounded-xl text-[11px] font-bold border border-[#A855F7] bg-[#A855F7]/15 text-[#7E22CE] text-center transition-all" data-shelf="dnf">DNF</button>
+            <button onclick="setShelfFilter('wishlist')" class="shelf-pill py-1.5 rounded-xl text-[11px] font-bold border border-[#FFA4C4] bg-[#FFA4C4]/35 text-[#BE185D] text-center transition-all" data-shelf="wishlist">Wishlist</button>
+          </div>
         </div>
 
         <!-- Format Filter Pills -->
@@ -279,6 +303,8 @@
             <label class="block text-slate-500 font-bold mb-0.5">Sort By</label>
             <select id="librarySortSelect" onchange="renderLibrary()" class="w-full bg-white border border-[#05244C] rounded-lg p-1.5 font-bold text-[#05244C]">
               <option value="recent" selected>Recently Read</option>
+              <option value="rating_high">Highest Rating (★)</option>
+              <option value="rating_low">Lowest Rating (★)</option>
               <option value="title">Title (A ➔ Z)</option>
               <option value="author">Author (A ➔ Z)</option>
               <option value="progress">Highest Progress %</option>
@@ -287,7 +313,7 @@
         </div>
       </div>
 
-      <!-- Bulk Actions Bar (Visible during batch selection) -->
+      <!-- Bulk Actions Bar -->
       <div id="batchActionBar" class="hidden bg-[#FFEDC9] border-2 border-[#05244C] rounded-2xl p-3 flex items-center justify-between shadow-retro-navy">
         <span id="batchCountLabel" class="text-xs font-black text-[#05244C]">0 books selected</span>
         <div class="flex gap-2">
@@ -296,7 +322,7 @@
         </div>
       </div>
 
-      <!-- Add Book Action Bar: Online Search & Custom -->
+      <!-- Add Book Action Bar -->
       <div class="flex gap-2">
         <button onclick="openOnlineSearchModal()" class="flex-1 retro-btn bg-[#FFD034] text-[#05244C] py-2.5 rounded-2xl text-xs font-black border-2 border-[#05244C] shadow-retro-navy flex items-center justify-center gap-1.5">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
@@ -351,10 +377,7 @@
         <div class="flex items-center justify-between">
           <h3 class="text-base font-retro-title text-[#05244C]">Reading Statistics</h3>
           <select id="statsYearSelect" onchange="renderStatsDashboard()" class="bg-white border-2 border-[#05244C] rounded-xl px-2.5 py-1 text-xs font-bold text-[#05244C]">
-            <option value="2026" selected>2026</option>
-            <option value="2025">2025</option>
-            <option value="2027">2027</option>
-            <option value="all">All-Time</option>
+            <!-- Generated dynamically based on years -->
           </select>
         </div>
 
@@ -375,10 +398,13 @@
           </div>
         </div>
 
-        <!-- KPI Grid -->
+        <!-- KPI Grid (Books Finished is clickable to view finished books) -->
         <div class="grid grid-cols-2 gap-2.5">
-          <div class="bg-white border-2 border-[#05244C] p-3 rounded-2xl shadow-sm">
-            <p class="text-[10px] uppercase font-bold text-slate-500">Books Finished</p>
+          <div onclick="openFinishedBooksModal()" class="bg-white border-2 border-[#05244C] p-3 rounded-2xl shadow-sm cursor-pointer hover:bg-orange-50 transition-colors group">
+            <div class="flex items-center justify-between">
+              <p class="text-[10px] uppercase font-bold text-slate-500">Books Finished</p>
+              <span class="text-[10px] text-[#FF5B22] font-black group-hover:translate-x-0.5 transition-transform">View ›</span>
+            </div>
             <p id="statBooksFinished" class="text-xl font-retro-title text-[#FF5B22]">0</p>
           </div>
           <div class="bg-white border-2 border-[#05244C] p-3 rounded-2xl shadow-sm">
@@ -417,7 +443,7 @@
 
   </main>
 
-  <!-- BOTTOM DOCKED NAVIGATION BAR (SVG Line Icons) -->
+  <!-- BOTTOM DOCKED NAVIGATION BAR -->
   <nav class="fixed bottom-0 left-0 right-0 z-50 bg-[#446BA2]/95 backdrop-blur-lg border-t-2 border-[#FFA4C4] px-6 py-2 shadow-lg">
     <div class="max-w-md mx-auto flex items-center justify-between">
       <button onclick="switchTab('reading')" class="nav-tab flex flex-col items-center gap-1 text-[#FFD034]" data-tab="reading">
@@ -442,7 +468,7 @@
     </div>
   </nav>
 
-  <!-- MODAL: MANUAL PAST SESSION (With Pages OR Percentage Mode) -->
+  <!-- MODAL: MANUAL PAST SESSION -->
   <div id="modalPastSession" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4">
     <div class="bg-[#FFF9EE] border-3 border-[#05244C] rounded-3xl p-6 w-full max-w-sm shadow-retro-orange space-y-3.5">
       <div class="flex justify-between items-center pb-2 border-b-2 border-orange-200">
@@ -508,11 +534,15 @@
     </div>
   </div>
 
-  <!-- MODAL: BOOK DETAIL & EDIT (With % sync and reviews & reaction scales) -->
+  <!-- MODAL: BOOK DETAIL & EDIT (CLEAN STARS, NO INSTRUCTION TEXT, NO MICRO BUTTONS, STARS FOR VIBES) -->
   <div id="modalBookDetail" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4">
     <div class="bg-[#FFF9EE] border-3 border-[#05244C] rounded-3xl p-6 w-full max-w-sm shadow-retro-orange space-y-3.5 max-h-[90vh] overflow-y-auto">
       <div class="flex justify-between items-center pb-2 border-b-2 border-orange-200">
-        <h3 class="text-base font-retro-title text-[#05244C]">Edit Book</h3>
+        <div class="flex items-center gap-2">
+          <h3 class="text-base font-retro-title text-[#05244C]">Edit Book</h3>
+          <!-- Minimalist Heart Toggle -->
+          <button type="button" onclick="toggleBookFavorite()" id="btnFavoriteToggle" class="w-8 h-8 rounded-full border-2 border-[#05244C] bg-white text-base flex items-center justify-center retro-btn shadow-sm" title="Toggle Favorite">♡</button>
+        </div>
         <button onclick="closeModal('modalBookDetail')" class="text-slate-500 font-bold text-lg">✕</button>
       </div>
       <input type="hidden" id="editBookId">
@@ -526,7 +556,7 @@
           <input type="text" id="editBookAuthor" class="w-full bg-white border-2 border-[#05244C] rounded-xl p-2 font-semibold">
         </div>
 
-        <!-- Synced Page / Integer Percent / Total -->
+        <!-- Synced Page / Integer Percent / Total (Uncovered %) -->
         <div class="grid grid-cols-3 gap-2">
           <div>
             <label class="block mb-1">Current Pg</label>
@@ -535,8 +565,8 @@
           <div>
             <label class="block mb-1">Percent (%)</label>
             <div class="relative">
-              <input type="number" step="1" id="editBookPercent" oninput="syncEditInputs('percent')" min="0" max="100" class="w-full bg-white border-2 border-[#05244C] rounded-xl p-2 font-semibold text-[#FF5B22]" placeholder="0">
-              <span class="absolute right-2 top-2 text-xs font-bold text-slate-400 pointer-events-none">%</span>
+              <input type="number" step="1" id="editBookPercent" oninput="syncEditInputs('percent')" min="0" max="100" class="w-full bg-white border-2 border-[#05244C] rounded-xl p-2 pr-7 font-semibold text-[#FF5B22]" placeholder="0">
+              <span class="absolute right-2.5 top-2.5 text-xs font-black text-slate-400 pointer-events-none">%</span>
             </div>
           </div>
           <div>
@@ -581,8 +611,8 @@
           <input type="url" id="editBookCover" class="w-full bg-white border-2 border-[#05244C] rounded-xl p-2 font-semibold">
         </div>
 
-        <!-- FINISHED REVIEWS, STAR RATING & CUSTOM VIBE/REACTION SCALES -->
-        <div id="finishedReviewSection" class="pt-3 border-t-2 border-orange-200/80 space-y-2.5">
+        <!-- FINISHED REVIEWS SECTION -->
+        <div id="finishedReviewSection" class="pt-3 border-t-2 border-orange-200/80 space-y-3">
           <div class="flex items-center justify-between">
             <label class="text-[11px] font-black uppercase text-[#FF5B22]">Finished Review & Vibes</label>
             <span class="text-[10px] text-slate-500 font-editorial">Your rating & feelings</span>
@@ -594,43 +624,83 @@
             <input type="date" id="editBookFinishedDate" class="w-full bg-white border-2 border-[#05244C] rounded-xl p-2 font-bold text-xs">
           </div>
 
-          <!-- Overall Star Rating (1 to 5) -->
-          <div>
-            <label class="block text-[10px] uppercase text-slate-500 mb-1">Overall Rating</label>
-            <div id="starRatingSelector" class="flex gap-1.5 text-2xl cursor-pointer">
-              <span onclick="setEditBookStarRating(1)" class="star-item text-slate-300">★</span>
-              <span onclick="setEditBookStarRating(2)" class="star-item text-slate-300">★</span>
-              <span onclick="setEditBookStarRating(3)" class="star-item text-slate-300">★</span>
-              <span onclick="setEditBookStarRating(4)" class="star-item text-slate-300">★</span>
-              <span onclick="setEditBookStarRating(5)" class="star-item text-slate-300">★</span>
+          <!-- CLEAN TAP-TO-CYCLE STAR RATING: NO INSTRUCTIONS, NO MICRO-BUTTONS -->
+          <div class="bg-white border-2 border-[#05244C] p-3 rounded-2xl shadow-sm space-y-1.5">
+            <div class="flex items-center justify-between">
+              <span class="text-[10px] uppercase font-bold text-slate-500">Overall Rating</span>
+              <span id="starRatingTextVal" class="text-sm font-black text-[#FF5B22] font-mono bg-amber-50 px-2.5 py-0.5 rounded-lg border border-orange-200">0.0 ★</span>
+            </div>
+
+            <!-- 5 Big Centered Cycling Stars -->
+            <div class="pt-1 flex justify-center">
+              <div id="starRatingSelector" class="flex gap-2.5 text-3xl cursor-pointer select-none">
+                <span onclick="cycleStarRating(1)" class="star-item text-slate-300 hover:scale-110 active:scale-95 transition-transform">★</span>
+                <span onclick="cycleStarRating(2)" class="star-item text-slate-300 hover:scale-110 active:scale-95 transition-transform">★</span>
+                <span onclick="cycleStarRating(3)" class="star-item text-slate-300 hover:scale-110 active:scale-95 transition-transform">★</span>
+                <span onclick="cycleStarRating(4)" class="star-item text-slate-300 hover:scale-110 active:scale-95 transition-transform">★</span>
+                <span onclick="cycleStarRating(5)" class="star-item text-slate-300 hover:scale-110 active:scale-95 transition-transform">★</span>
+              </div>
             </div>
             <input type="hidden" id="editBookStarRating" value="0">
           </div>
 
-          <!-- Custom Mood/Reaction Meters: Tears, Scariness, Spice, Heartbreak -->
-          <div class="bg-amber-100/60 p-3 rounded-2xl border border-[#05244C] space-y-2">
-            <p class="text-[10px] uppercase font-black text-[#05244C] mb-1">Vibe & Emotional Scales (0 - 5)</p>
+          <!-- VIBE & EMOTIONAL IMPACT: 5 STARS FOR EVERY EMOTION -->
+          <div class="bg-white/95 border-2 border-[#05244C] p-3 rounded-2xl shadow-sm space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-[10px] font-black uppercase text-[#05244C] tracking-wider">Vibe & Emotional Impact</span>
+            </div>
             
-            <div class="grid grid-cols-2 gap-2 text-[10px]">
-              <div>
-                <label class="block font-bold">😭 Tears / Sadness</label>
-                <input type="range" id="vibeTears" min="0" max="5" step="1" value="0" oninput="updateVibeLabel('vibeTears','lblTears')" class="w-full accent-[#FF5B22]">
-                <div class="flex justify-between text-[9px] text-slate-500 font-mono"><span>0</span><span id="lblTears">0</span><span>5</span></div>
+            <div class="space-y-2 text-[11px] font-bold text-[#05244C]">
+              <!-- 1. Tears -->
+              <div class="bg-[#FFF9EE] border border-orange-200 rounded-xl p-2.5 flex items-center justify-between">
+                <span class="flex items-center gap-1.5 font-bold"><span>😭</span> Tears</span>
+                <div class="flex gap-1 text-lg select-none cursor-pointer" id="stars_vibeTears">
+                  <span onclick="setVibeStars('vibeTears', 1)" class="vibe-star text-slate-300 hover:scale-110 transition-transform">★</span>
+                  <span onclick="setVibeStars('vibeTears', 2)" class="vibe-star text-slate-300 hover:scale-110 transition-transform">★</span>
+                  <span onclick="setVibeStars('vibeTears', 3)" class="vibe-star text-slate-300 hover:scale-110 transition-transform">★</span>
+                  <span onclick="setVibeStars('vibeTears', 4)" class="vibe-star text-slate-300 hover:scale-110 transition-transform">★</span>
+                  <span onclick="setVibeStars('vibeTears', 5)" class="vibe-star text-slate-300 hover:scale-110 transition-transform">★</span>
+                </div>
+                <input type="hidden" id="vibeTears" value="0">
               </div>
-              <div>
-                <label class="block font-bold">👻 Spook / Scare</label>
-                <input type="range" id="vibeScary" min="0" max="5" step="1" value="0" oninput="updateVibeLabel('vibeScary','lblScary')" class="w-full accent-[#FF5B22]">
-                <div class="flex justify-between text-[9px] text-slate-500 font-mono"><span>0</span><span id="lblScary">0</span><span>5</span></div>
+
+              <!-- 2. Spook -->
+              <div class="bg-[#FFF9EE] border border-orange-200 rounded-xl p-2.5 flex items-center justify-between">
+                <span class="flex items-center gap-1.5 font-bold"><span>👻</span> Spook</span>
+                <div class="flex gap-1 text-lg select-none cursor-pointer" id="stars_vibeScary">
+                  <span onclick="setVibeStars('vibeScary', 1)" class="vibe-star text-slate-300 hover:scale-110 transition-transform">★</span>
+                  <span onclick="setVibeStars('vibeScary', 2)" class="vibe-star text-slate-300 hover:scale-110 transition-transform">★</span>
+                  <span onclick="setVibeStars('vibeScary', 3)" class="vibe-star text-slate-300 hover:scale-110 transition-transform">★</span>
+                  <span onclick="setVibeStars('vibeScary', 4)" class="vibe-star text-slate-300 hover:scale-110 transition-transform">★</span>
+                  <span onclick="setVibeStars('vibeScary', 5)" class="vibe-star text-slate-300 hover:scale-110 transition-transform">★</span>
+                </div>
+                <input type="hidden" id="vibeScary" value="0">
               </div>
-              <div>
-                <label class="block font-bold">🌶️ Spice / Romance</label>
-                <input type="range" id="vibeSpice" min="0" max="5" step="1" value="0" oninput="updateVibeLabel('vibeSpice','lblSpice')" class="w-full accent-[#FF5B22]">
-                <div class="flex justify-between text-[9px] text-slate-500 font-mono"><span>0</span><span id="lblSpice">0</span><span>5</span></div>
+
+              <!-- 3. Romance & Spice -->
+              <div class="bg-[#FFF9EE] border border-orange-200 rounded-xl p-2.5 flex items-center justify-between">
+                <span class="flex items-center gap-1.5 font-bold"><span>🌶️</span> Romance & Spice</span>
+                <div class="flex gap-1 text-lg select-none cursor-pointer" id="stars_vibeSpice">
+                  <span onclick="setVibeStars('vibeSpice', 1)" class="vibe-star text-slate-300 hover:scale-110 transition-transform">★</span>
+                  <span onclick="setVibeStars('vibeSpice', 2)" class="vibe-star text-slate-300 hover:scale-110 transition-transform">★</span>
+                  <span onclick="setVibeStars('vibeSpice', 3)" class="vibe-star text-slate-300 hover:scale-110 transition-transform">★</span>
+                  <span onclick="setVibeStars('vibeSpice', 4)" class="vibe-star text-slate-300 hover:scale-110 transition-transform">★</span>
+                  <span onclick="setVibeStars('vibeSpice', 5)" class="vibe-star text-slate-300 hover:scale-110 transition-transform">★</span>
+                </div>
+                <input type="hidden" id="vibeSpice" value="0">
               </div>
-              <div>
-                <label class="block font-bold">💔 Heartbreak</label>
-                <input type="range" id="vibeHeartbreak" min="0" max="5" step="1" value="0" oninput="updateVibeLabel('vibeHeartbreak','lblHeartbreak')" class="w-full accent-[#FF5B22]">
-                <div class="flex justify-between text-[9px] text-slate-500 font-mono"><span>0</span><span id="lblHeartbreak">0</span><span>5</span></div>
+
+              <!-- 4. Angst -->
+              <div class="bg-[#FFF9EE] border border-orange-200 rounded-xl p-2.5 flex items-center justify-between">
+                <span class="flex items-center gap-1.5 font-bold"><span>💔</span> Angst</span>
+                <div class="flex gap-1 text-lg select-none cursor-pointer" id="stars_vibeHeartbreak">
+                  <span onclick="setVibeStars('vibeHeartbreak', 1)" class="vibe-star text-slate-300 hover:scale-110 transition-transform">★</span>
+                  <span onclick="setVibeStars('vibeHeartbreak', 2)" class="vibe-star text-slate-300 hover:scale-110 transition-transform">★</span>
+                  <span onclick="setVibeStars('vibeHeartbreak', 3)" class="vibe-star text-slate-300 hover:scale-110 transition-transform">★</span>
+                  <span onclick="setVibeStars('vibeHeartbreak', 4)" class="vibe-star text-slate-300 hover:scale-110 transition-transform">★</span>
+                  <span onclick="setVibeStars('vibeHeartbreak', 5)" class="vibe-star text-slate-300 hover:scale-110 transition-transform">★</span>
+                </div>
+                <input type="hidden" id="vibeHeartbreak" value="0">
               </div>
             </div>
           </div>
@@ -673,7 +743,24 @@
     </div>
   </div>
 
-  <!-- MODAL: BATCH / BULK EDIT MULTIPLE BOOKS -->
+  <!-- MODAL: FINISHED BOOKS LIST -->
+  <div id="modalFinishedBooks" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4">
+    <div class="bg-[#FFF9EE] border-3 border-[#05244C] rounded-3xl p-5 w-full max-w-sm shadow-retro-orange space-y-3 max-h-[85vh] flex flex-col">
+      <div class="flex justify-between items-center pb-2 border-b-2 border-orange-200">
+        <div>
+          <h3 class="text-base font-retro-title text-[#05244C]">Finished Books</h3>
+          <p id="finishedModalYearSub" class="text-[11px] font-editorial text-slate-500 italic">Completed in 2026</p>
+        </div>
+        <button onclick="closeModal('modalFinishedBooks')" class="text-slate-500 font-bold text-lg">✕</button>
+      </div>
+      <div id="finishedBooksModalList" class="flex-1 overflow-y-auto space-y-2 pr-1 no-scrollbar">
+        <!-- Populated dynamically -->
+      </div>
+      <button onclick="closeModal('modalFinishedBooks'); switchTab('library'); setShelfFilter('finished');" class="w-full py-2 bg-[#FFD034] text-[#05244C] rounded-xl text-xs font-black border-2 border-[#05244C] shadow-retro-navy">View All Finished in Library ➔</button>
+    </div>
+  </div>
+
+  <!-- MODAL: BATCH EDIT -->
   <div id="modalBulkEdit" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4">
     <div class="bg-[#FFF9EE] border-3 border-[#05244C] rounded-3xl p-6 w-full max-w-sm shadow-retro-orange space-y-4">
       <div class="flex justify-between items-center pb-2 border-b-2 border-orange-200">
@@ -875,7 +962,7 @@
           <button onclick="closeMenuDrawer()" class="text-xl font-bold text-slate-500">✕</button>
         </div>
 
-        <!-- ☁️ REAL-TIME CLOUD SYNC SECTION (Option #2) -->
+        <!-- ☁️ REAL-TIME CLOUD SYNC SECTION -->
         <div class="bg-gradient-to-br from-[#446BA2] to-[#2B4B79] text-[#FFF9EE] p-4 rounded-2xl border-2 border-[#FFD034] shadow-md">
           <div class="flex items-center justify-between mb-2">
             <span class="text-xs font-black uppercase tracking-wider text-[#FFD034] flex items-center gap-1.5">
@@ -906,7 +993,7 @@
           </div>
         </div>
 
-        <!-- Data Import/Export Tools (Multi-CSV & Goodreads Export Enabled) -->
+        <!-- Data Import/Export Tools -->
         <div class="space-y-2 pt-1">
           <p class="text-xs font-bold text-slate-500 uppercase tracking-wider">File Backup & Import</p>
           <button onclick="exportJsonBackup()" class="w-full py-2.5 bg-white border-2 border-[#05244C] rounded-xl text-xs font-black text-[#05244C] shadow-retro-navy text-left px-3">
@@ -935,9 +1022,8 @@
     Notice
   </div>
 
-  <!-- JAVASCRIPT APPLICATION CORE -->
   <script>
-    const APP_VERSION = "2.8";
+    const APP_VERSION = "3.0";
     let books = [];
     let readingSessions = [];
     let quotes = [];
@@ -945,18 +1031,32 @@
     let activeBookId = null;
 
     // View & Filter States
-    let currentLibraryView = 'covers'; // 'covers', 'cards', 'list'
-    let currentGridCols = 4; // Default permanently to 4 columns
+    let currentLibraryView = 'covers';
+    let currentGridCols = 4;
     let currentShelfFilter = 'all';
     let currentFormatFilter = 'all';
     let isBatchMode = false;
     let selectedBookIds = new Set();
-    let currentLogMode = 'pages'; // 'pages' or 'percent'
+    let currentLogMode = 'pages';
 
     // Calendar & Stats State
     let calendarYear = new Date().getFullYear();
     let calendarMonth = new Date().getMonth();
     let quoteViewMode = 'timeline';
+    let isEditingFavorite = false;
+
+    // Helper: Star glyph formatter for full, quarter, half, and three-quarter stars
+    function getStarDisplayHtml(rating) {
+      if (!rating || rating <= 0) return '';
+      const full = Math.floor(rating);
+      const rem = Math.round((rating - full) * 100) / 100;
+      let s = '★'.repeat(full);
+      if (rem >= 0.75) s += '¾';
+      else if (rem >= 0.5) s += '½';
+      else if (rem >= 0.25) s += '¼';
+      return s;
+    }
+    window.renderStarGlyphs = getStarDisplayHtml;
 
     // Reading Timer State
     let timerInterval = null;
@@ -985,7 +1085,6 @@
       if (storedBooks && Array.isArray(storedBooks)) {
         books = storedBooks;
       } else {
-        // Starter books
         books = [
           {
             id: 'b_1',
@@ -1036,6 +1135,7 @@
 
       determineActiveHeroBook();
       populateGenreDropdown();
+      populateYearDropdown();
       renderAllViews();
       initCloudSync();
     }
@@ -1062,24 +1162,19 @@
     }
 
     function calculateSmartReadingPace(book) {
-      if (!readingSessions || readingSessions.length === 0) return 40; // Default baseline
-
-      // Check sessions for this specific book first
+      if (!readingSessions || readingSessions.length === 0) return 40;
       const thisBookSessions = readingSessions.filter(s => s.bookId === (book ? book.id : null) && s.durationMinutes > 0 && s.pagesRead > 0);
       if (thisBookSessions.length >= 2) {
         const totalMins = thisBookSessions.reduce((acc, s) => acc + s.durationMinutes, 0);
         const totalPgs = thisBookSessions.reduce((acc, s) => acc + s.pagesRead, 0);
         return Math.max(15, Math.min(120, Math.round((totalPgs / totalMins) * 60)));
       }
-
-      // Fallback to recent 30-day global reading pattern
       const validSessions = readingSessions.filter(s => s.durationMinutes > 0 && s.pagesRead > 0);
       if (validSessions.length > 0) {
         const totalMins = validSessions.reduce((acc, s) => acc + s.durationMinutes, 0);
         const totalPgs = validSessions.reduce((acc, s) => acc + s.pagesRead, 0);
         return Math.max(15, Math.min(120, Math.round((totalPgs / totalMins) * 60)));
       }
-
       return 40;
     }
 
@@ -1112,7 +1207,6 @@
       const formatEl = document.getElementById('heroFormatBadge');
       if (formatEl) formatEl.innerText = `${book.format || 'Paperback'} • ${book.ownership || 'Owned'}`;
 
-      // Integer % (no decimals)
       const pct = book.pageCount > 0 ? Math.min(100, Math.round((book.currentPage / book.pageCount) * 100)) : 0;
       
       const barEl = document.getElementById('heroProgressBar');
@@ -1124,7 +1218,6 @@
       const pctBadge = document.getElementById('heroPercentBadge');
       if (pctBadge) pctBadge.innerText = `${pct}%`;
 
-      // Smart pattern-based pace
       const pace = calculateSmartReadingPace(book);
       const paceEl = document.getElementById('heroPaceMetric');
       if (paceEl) paceEl.innerText = `~ ${pace} pgs/hr`;
@@ -1184,7 +1277,6 @@
       showToast('Switched active book');
     }
 
-    // Helper: Category colors and labels
     function getShelfInfo(shelf) {
       switch(shelf) {
         case 'reading':
@@ -1193,6 +1285,8 @@
           return { label: 'TBR', bg: 'bg-[#FFD034]', text: 'text-[#05244C]', border: 'border-[#05244C]', pillBg: 'bg-[#FFD034]/25', pillText: 'text-[#B45309]', pillBorder: 'border-[#D97706]' };
         case 'finished':
           return { label: 'Finished', bg: 'bg-[#10B981]', text: 'text-white', border: 'border-[#05244C]', pillBg: 'bg-[#10B981]/15', pillText: 'text-[#047857]', pillBorder: 'border-[#10B981]' };
+        case 'faves':
+          return { label: 'Faves', bg: 'bg-[#FF2E7E]', text: 'text-white', border: 'border-[#05244C]', pillBg: 'bg-rose-100', pillText: 'text-rose-700', pillBorder: 'border-rose-400' };
         case 'dnf':
           return { label: 'DNF', bg: 'bg-[#A855F7]', text: 'text-white', border: 'border-[#05244C]', pillBg: 'bg-[#A855F7]/15', pillText: 'text-[#7E22CE]', pillBorder: 'border-[#A855F7]' };
         case 'wishlist':
@@ -1214,7 +1308,6 @@
       if (view === 'covers' && document.getElementById('viewBtnCovers')) document.getElementById('viewBtnCovers').classList.add('bg-[#FF5B22]', 'text-white');
       if (view === 'cards' && document.getElementById('viewBtnCards')) document.getElementById('viewBtnCards').classList.add('bg-[#FF5B22]', 'text-white');
       if (view === 'list' && document.getElementById('viewBtnList')) document.getElementById('viewBtnList').classList.add('bg-[#FF5B22]', 'text-white');
-
       renderLibrary();
     }
 
@@ -1224,9 +1317,9 @@
         const btnShelf = btn.getAttribute('data-shelf');
         const info = getShelfInfo(btnShelf);
         if (btnShelf === shelf) {
-          btn.className = `shelf-pill px-2.5 py-1 rounded-full text-[11px] font-black border-2 border-[#05244C] ${info.bg} ${info.text} shadow-retro-navy whitespace-nowrap flex-shrink-0`;
+          btn.className = `shelf-pill py-1.5 rounded-xl text-[11px] font-black border-2 border-[#05244C] ${info.bg} ${info.text} shadow-retro-navy text-center transition-all`;
         } else {
-          btn.className = `shelf-pill px-2.5 py-1 rounded-full text-[11px] font-bold border ${info.pillBorder} ${info.pillBg} ${info.pillText} whitespace-nowrap flex-shrink-0`;
+          btn.className = `shelf-pill py-1.5 rounded-xl text-[11px] font-bold border ${info.pillBorder} ${info.pillBg} ${info.pillText} text-center transition-all`;
         }
       });
       renderLibrary();
@@ -1288,6 +1381,7 @@
       const genre = document.getElementById('libraryGenreSelect')?.value || 'all';
 
       let filtered = books.filter(b => {
+        if (currentShelfFilter === 'faves') return !!b.isFavorite;
         if (currentShelfFilter === 'all') return b.shelf !== 'wishlist';
         return b.shelf === currentShelfFilter;
       });
@@ -1363,6 +1457,7 @@
       const sort = document.getElementById('librarySortSelect')?.value || 'recent';
 
       let filtered = books.filter(b => {
+        if (currentShelfFilter === 'faves') return !!b.isFavorite;
         if (currentShelfFilter === 'all') return b.shelf !== 'wishlist';
         return b.shelf === currentShelfFilter;
       });
@@ -1384,7 +1479,11 @@
       }
 
       // Sorting
-      if (sort === 'title') {
+      if (sort === 'rating_high') {
+        filtered.sort((a, b) => (b.rating || 0) - (a.rating || 0));
+      } else if (sort === 'rating_low') {
+        filtered.sort((a, b) => (a.rating || 0) - (b.rating || 0));
+      } else if (sort === 'title') {
         filtered.sort((a, b) => a.title.localeCompare(b.title));
       } else if (sort === 'author') {
         filtered.sort((a, b) => a.author.localeCompare(b.author));
@@ -1395,7 +1494,6 @@
           return pctB - pctA;
         });
       } else {
-        // 'recent'
         filtered.sort((a, b) => (b.lastSessionDate || '').localeCompare(a.lastSessionDate || ''));
       }
 
@@ -1404,13 +1502,15 @@
         return;
       }
 
-      // VIEW 1: COVERS GRID (DEFAULT TO 4-COL)
+      // VIEW 1: COVERS GRID
       if (currentLibraryView === 'covers') {
         container.innerHTML = `
           <div class="grid grid-cols-4 gap-2">
             ${filtered.map(b => {
               const isSelected = selectedBookIds.has(b.id);
               const info = getShelfInfo(b.shelf);
+              const starStr = getStarDisplayHtml(b.rating);
+              const starDisplayNum = b.rating ? (b.rating % 1 === 0 ? b.rating : b.rating.toFixed(2).replace(/\.?0+$/, '')) : '';
               return `
                 <div onclick="${isBatchMode ? `toggleSelectBook('${b.id}', event)` : `openBookDetailModal('${b.id}')`}" class="relative group cursor-pointer">
                   <div class="relative rounded-xl overflow-hidden border-2 border-[#05244C] shadow-retro-navy ${isSelected ? 'ring-4 ring-[#FF5B22]' : ''}">
@@ -1420,12 +1520,15 @@
                         ${isSelected ? '<span class="text-[#FF5B22] font-black text-xs">✓</span>' : ''}
                       </div>
                     ` : ''}
-                    <!-- Distinct Category Corner Badge -->
+                    ${b.isFavorite ? `
+                      <span class="absolute top-1 left-1 bg-white/95 rounded-full p-0.5 px-1 text-[11px] border border-[#05244C] shadow-sm leading-none text-rose-600 font-bold">♥️</span>
+                    ` : ''}
                     <span class="absolute top-1 right-1 ${info.bg} ${info.text} text-[8px] font-black px-1.5 py-0.5 rounded-md border border-[#05244C] shadow-sm leading-none">
                       ${b.shelf === 'finished' ? '✓' : info.label}
                     </span>
                   </div>
                   <p class="text-[10px] font-bold text-[#FFF9EE] truncate mt-1">${b.title}</p>
+                  ${starStr ? `<div class="text-[10px] text-[#FFD034] font-bold leading-none drop-shadow-sm truncate">${starStr} <span class="text-[8px] text-white/90 font-mono">(${starDisplayNum}★)</span></div>` : ''}
                 </div>
               `;
             }).join('')}
@@ -1441,7 +1544,8 @@
               const pct = b.pageCount > 0 ? Math.round((b.currentPage / b.pageCount) * 100) : 0;
               const isSelected = selectedBookIds.has(b.id);
               const info = getShelfInfo(b.shelf);
-              const stars = b.rating ? '★'.repeat(b.rating) + '☆'.repeat(5 - b.rating) : '';
+              const starStr = getStarDisplayHtml(b.rating);
+              const starDisplayNum = b.rating ? (b.rating % 1 === 0 ? b.rating : b.rating.toFixed(2).replace(/\.?0+$/, '')) : '';
               return `
                 <div class="bg-[#FFF9EE] border-2 border-[#05244C] rounded-2xl p-3.5 shadow-retro-orange flex gap-3 items-center ${isSelected ? 'ring-4 ring-[#FF5B22]' : ''}">
                   ${isBatchMode ? `
@@ -1454,10 +1558,11 @@
                     <div class="flex items-center gap-1.5">
                       <span class="text-[9px] uppercase font-black px-2 py-0.5 rounded-full ${info.bg} ${info.text} border border-[#05244C] shadow-sm">${info.label}</span>
                       <span class="text-[9px] font-bold text-slate-500">${b.format || 'Paperback'}</span>
+                      ${b.isFavorite ? `<span class="text-xs text-rose-600 font-bold">♥️</span>` : ''}
                     </div>
                     <h4 class="text-xs font-retro-title text-[#05244C] truncate mt-1">${b.title}</h4>
                     <p class="text-[10px] font-editorial text-slate-600 truncate italic">${b.author}</p>
-                    ${stars ? `<div class="text-[#FF5B22] text-xs font-bold leading-none mt-0.5">${stars}</div>` : ''}
+                    ${starStr ? `<div class="text-[#FF5B22] text-xs font-bold leading-none mt-0.5">${starStr} <span class="text-[9px] text-slate-500 font-normal">(${starDisplayNum}★)</span></div>` : ''}
                     <div class="mt-1 flex justify-between items-center text-[10px] font-bold">
                       <span>${b.currentPage} / ${b.pageCount} pgs</span>
                       <span class="text-[#FF5B22] font-black">${pct}%</span>
@@ -1479,6 +1584,7 @@
               const isSelected = selectedBookIds.has(b.id);
               const info = getShelfInfo(b.shelf);
               const pct = b.pageCount > 0 ? Math.round((b.currentPage / b.pageCount) * 100) : 0;
+              const starStr = getStarDisplayHtml(b.rating);
               return `
                 <div onclick="${isBatchMode ? `toggleSelectBook('${b.id}', event)` : `openBookDetailModal('${b.id}')`}" class="p-3 flex items-center justify-between cursor-pointer hover:bg-amber-50 ${isSelected ? 'bg-orange-100/60' : ''}">
                   ${isBatchMode ? `
@@ -1490,8 +1596,9 @@
                     <div class="flex items-center gap-1.5">
                       <span class="text-[8px] font-black uppercase px-1.5 py-0.5 rounded border border-[#05244C] ${info.bg} ${info.text}">${info.label}</span>
                       <h4 class="text-xs font-bold text-[#05244C] truncate">${b.title}</h4>
+                      ${b.isFavorite ? `<span class="text-xs text-rose-600 font-bold">♥️</span>` : ''}
                     </div>
-                    <p class="text-[10px] text-slate-500 truncate mt-0.5">${b.author} • <span class="text-slate-400">${b.format || 'Paperback'}</span></p>
+                    <p class="text-[10px] text-slate-500 truncate mt-0.5">${b.author} ${starStr ? `• <span class="text-[#FF5B22] font-bold">${starStr}</span>` : ''}</p>
                   </div>
                   <div class="text-right flex-shrink-0">
                     <span class="text-xs font-mono font-black text-[#05244C]">${pct}%</span>
@@ -1525,7 +1632,6 @@
       for (let day = 1; day <= daysInMonth; day++) {
         const dateStr = `${calendarYear}-${String(calendarMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
         const daySessions = readingSessions.filter(s => s.date === dateStr);
-        // Also look up any book that was finished on this exact date
         const dayFinishedBooks = books.filter(b => b.finishedDate === dateStr || (Array.isArray(b.finishedDates) && b.finishedDates.includes(dateStr)));
 
         if (daySessions.length > 0 || dayFinishedBooks.length > 0) {
@@ -1579,6 +1685,39 @@
       renderCalendar();
     }
 
+    function populateYearDropdown() {
+      const select = document.getElementById('statsYearSelect');
+      if (!select) return;
+
+      const currentRealYear = new Date().getFullYear();
+      const yearsSet = new Set([currentRealYear, currentRealYear - 1, currentRealYear + 1]);
+
+      readingSessions.forEach(s => {
+        if (s.date) {
+          const yr = parseInt(s.date.slice(0, 4), 10);
+          if (!isNaN(yr)) yearsSet.add(yr);
+        }
+      });
+      books.forEach(b => {
+        if (b.finishedDate) {
+          const yr = parseInt(b.finishedDate.slice(0, 4), 10);
+          if (!isNaN(yr)) yearsSet.add(yr);
+        }
+        if (Array.isArray(b.finishedDates)) {
+          b.finishedDates.forEach(d => {
+            const yr = parseInt(d.slice(0, 4), 10);
+            if (!isNaN(yr)) yearsSet.add(yr);
+          });
+        }
+      });
+
+      const sortedYears = Array.from(yearsSet).sort((a, b) => b - a);
+      const prevVal = select.value || String(currentRealYear);
+
+      select.innerHTML = sortedYears.map(y => `<option value="${y}">${y}</option>`).join('') + `<option value="all">All-Time</option>`;
+      select.value = sortedYears.map(String).includes(prevVal) ? prevVal : String(currentRealYear);
+    }
+
     function renderStatsDashboard() {
       const yearSelect = document.getElementById('statsYearSelect');
       const year = yearSelect ? yearSelect.value : String(calendarYear);
@@ -1589,13 +1728,20 @@
 
       const totalPages = filteredSessions.reduce((acc, s) => acc + (s.pagesRead || 0), 0);
       const totalMinutes = filteredSessions.reduce((acc, s) => acc + (s.durationMinutes || 0), 0);
-      const finishedCount = books.filter(b => b.shelf === 'finished').length;
+
+      const finishedInYear = books.filter(b => {
+        if (b.shelf !== 'finished') return false;
+        if (year === 'all') return true;
+        if (b.finishedDate && b.finishedDate.startsWith(year)) return true;
+        if (Array.isArray(b.finishedDates) && b.finishedDates.some(d => d.startsWith(year))) return true;
+        return false;
+      }).length;
 
       const pgsEl = document.getElementById('statPagesRead');
       if (pgsEl) pgsEl.innerText = totalPages.toLocaleString();
 
       const finEl = document.getElementById('statBooksFinished');
-      if (finEl) finEl.innerText = finishedCount;
+      if (finEl) finEl.innerText = finishedInYear;
 
       const hrs = Math.floor(totalMinutes / 60);
       const mins = totalMinutes % 60;
@@ -1618,6 +1764,48 @@
           dailyGoalEl.innerText = `${todayPages} / ${userGoals.dailyTarget} pages`;
         }
       }
+    }
+
+    function openFinishedBooksModal() {
+      const year = document.getElementById('statsYearSelect')?.value || String(calendarYear);
+      const listEl = document.getElementById('finishedBooksModalList');
+      const subEl = document.getElementById('finishedModalYearSub');
+      if (!listEl) return;
+
+      if (subEl) subEl.innerText = year === 'all' ? 'All-Time Completed Books' : `Completed in ${year}`;
+
+      const finishedBooks = books.filter(b => {
+        if (b.shelf !== 'finished') return false;
+        if (year === 'all') return true;
+        if (b.finishedDate && b.finishedDate.startsWith(year)) return true;
+        if (Array.isArray(b.finishedDates) && b.finishedDates.some(d => d.startsWith(year))) return true;
+        return false;
+      });
+
+      if (finishedBooks.length === 0) {
+        listEl.innerHTML = `<div class="p-6 text-center text-xs font-bold text-slate-500 italic">No books marked as finished in ${year} yet.</div>`;
+      } else {
+        listEl.innerHTML = finishedBooks.map(b => {
+          const starStr = getStarDisplayHtml(b.rating);
+          const fDate = b.finishedDate || (Array.isArray(b.finishedDates) && b.finishedDates[0]) || 'Finished';
+          return `
+            <div onclick="closeModal('modalFinishedBooks'); openBookDetailModal('${b.id}')" class="bg-white border-2 border-[#05244C] rounded-2xl p-2.5 flex gap-3 items-center cursor-pointer hover:bg-orange-50 transition-colors shadow-sm">
+              <img src="${b.cover || 'https://placehold.co/80x120/446BA2/FFF9EE?text=Cover'}" class="w-12 h-16 object-cover rounded-lg border border-[#05244C] flex-shrink-0 bg-slate-200">
+              <div class="flex-1 min-w-0">
+                <h4 class="text-xs font-bold text-[#05244C] truncate">${b.title}</h4>
+                <p class="text-[10px] text-slate-500 truncate font-editorial italic">${b.author}</p>
+                <div class="flex items-center gap-2 mt-1">
+                  ${starStr ? `<span class="text-[#FF5B22] text-xs font-bold">${starStr}</span>` : '<span class="text-[9px] text-slate-400">Unrated</span>'}
+                  <span class="text-[9px] font-bold text-emerald-700 bg-emerald-100 px-1.5 py-0.5 rounded-full">✓ ${fDate}</span>
+                </div>
+              </div>
+              <span class="text-xs text-slate-400 font-bold pr-1">›</span>
+            </div>
+          `;
+        }).join('');
+      }
+
+      openModal('modalFinishedBooks');
     }
 
     function setLogSessionMode(mode) {
@@ -1703,7 +1891,6 @@
       bk.currentPage = Math.max(bk.currentPage, endP);
       bk.lastSessionDate = dateStr;
 
-      // Automatically move to finished when reaching 100% or total pages
       if (bk.pageCount > 0 && bk.currentPage >= bk.pageCount) {
         bk.currentPage = bk.pageCount;
         bk.shelf = 'finished';
@@ -1739,28 +1926,36 @@
       document.getElementById('editBookOwnership').value = bk.ownership || 'Owned';
       document.getElementById('editBookCover').value = bk.cover || '';
 
-      // Re-read badge
+      isEditingFavorite = !!bk.isFavorite;
+      updateFavoriteButtonDisplay();
+
       const count = bk.readCount || (bk.shelf === 'finished' ? 1 : 0);
       const reBadge = document.getElementById('reReadCountBadge');
       if (reBadge) reBadge.innerText = count > 1 ? `Re-read ${count} times` : (count === 1 ? `Finished 1 time` : `In progress`);
 
-      // Set finished date input
       const finishDateInput = document.getElementById('editBookFinishedDate');
       if (finishDateInput) {
         finishDateInput.value = bk.finishedDate || new Date().toISOString().split('T')[0];
       }
 
-      // Set review rating & vibe meters
       setEditBookStarRating(bk.rating || 0);
-      setVibeMeter('vibeTears', 'lblTears', bk.vibeTears || 0);
-      setVibeMeter('vibeScary', 'lblScary', bk.vibeScary || 0);
-      setVibeMeter('vibeSpice', 'lblSpice', bk.vibeSpice || 0);
-      setVibeMeter('vibeHeartbreak', 'lblHeartbreak', bk.vibeHeartbreak || 0);
+
+      // Initialize all 4 Vibe Stars
+      document.getElementById('vibeTears').value = bk.vibeTears || 0;
+      renderVibeStars('vibeTears', bk.vibeTears || 0);
+
+      document.getElementById('vibeScary').value = bk.vibeScary || 0;
+      renderVibeStars('vibeScary', bk.vibeScary || 0);
+
+      document.getElementById('vibeSpice').value = bk.vibeSpice || 0;
+      renderVibeStars('vibeSpice', bk.vibeSpice || 0);
+
+      document.getElementById('vibeHeartbreak').value = bk.vibeHeartbreak || 0;
+      renderVibeStars('vibeHeartbreak', bk.vibeHeartbreak || 0);
+
       document.getElementById('editBookReviewText').value = bk.review || '';
 
-      // Render past sessions for this book
       renderBookSessionsList(bk.id);
-
       toggleReviewSectionDisplay();
       openModal('modalBookDetail');
     }
@@ -1800,35 +1995,103 @@
       }
     }
 
+    function toggleBookFavorite() {
+      isEditingFavorite = !isEditingFavorite;
+      updateFavoriteButtonDisplay();
+    }
+
+    function updateFavoriteButtonDisplay() {
+      const btn = document.getElementById('btnFavoriteToggle');
+      if (!btn) return;
+      if (isEditingFavorite) {
+        btn.innerHTML = '♥️';
+        btn.classList.add('bg-rose-100', 'border-rose-400', 'text-rose-600');
+        btn.classList.remove('bg-white', 'border-[#05244C]', 'text-slate-400');
+      } else {
+        btn.innerHTML = '♡';
+        btn.classList.remove('bg-rose-100', 'border-rose-400', 'text-rose-600');
+        btn.classList.add('bg-white', 'border-[#05244C]', 'text-slate-400');
+      }
+    }
+
     function toggleReviewSectionDisplay() {
       const shelf = document.getElementById('editBookShelf').value;
       const revSec = document.getElementById('finishedReviewSection');
       if (revSec) revSec.style.display = shelf === 'finished' ? 'block' : 'none';
     }
 
+    // Interactive Tap-to-Cycle Star Rating Logic (Full -> 3/4 -> 1/2 -> 1/4)
+    function cycleStarRating(starIdx) {
+      const curRating = Number(document.getElementById('editBookStarRating').value) || 0;
+      let newRating = starIdx;
+      
+      if (Math.abs(curRating - starIdx) < 0.05) {
+        newRating = starIdx - 0.25;
+      } else if (Math.abs(curRating - (starIdx - 0.25)) < 0.05) {
+        newRating = starIdx - 0.5;
+      } else if (Math.abs(curRating - (starIdx - 0.5)) < 0.05) {
+        newRating = starIdx - 0.75;
+      } else if (Math.abs(curRating - (starIdx - 0.75)) < 0.05) {
+        newRating = starIdx;
+      } else {
+        newRating = starIdx;
+      }
+      setEditBookStarRating(newRating);
+    }
+
     function setEditBookStarRating(rating) {
-      document.getElementById('editBookStarRating').value = rating;
+      const r = Math.max(0, Math.min(5, Number(rating) || 0));
+      document.getElementById('editBookStarRating').value = r;
+
+      const textVal = document.getElementById('starRatingTextVal');
+      if (textVal) {
+        const formatted = r % 1 === 0 ? r.toFixed(1) : r.toFixed(2).replace(/0+$/, '');
+        textVal.innerText = `${formatted} ★`;
+      }
+
       const stars = document.querySelectorAll('#starRatingSelector .star-item');
       stars.forEach((s, idx) => {
-        if (idx < rating) {
-          s.className = "star-item text-[#FF5B22]";
+        const starIdx = idx + 1;
+        if (r >= starIdx) {
+          s.className = "star-item text-[#FF5B22] hover:scale-110 active:scale-95 transition-transform";
+          s.innerText = '★';
+        } else if (r >= starIdx - 0.25) {
+          s.className = "star-item text-[#FF5B22] hover:scale-110 active:scale-95 transition-transform";
+          s.innerText = '¾';
+        } else if (r >= starIdx - 0.5) {
+          s.className = "star-item text-[#FF5B22] hover:scale-110 active:scale-95 transition-transform";
+          s.innerText = '½';
+        } else if (r >= starIdx - 0.75) {
+          s.className = "star-item text-[#FF5B22] hover:scale-110 active:scale-95 transition-transform";
+          s.innerText = '¼';
         } else {
-          s.className = "star-item text-slate-300";
+          s.className = "star-item text-slate-300 hover:scale-110 active:scale-95 transition-transform";
+          s.innerText = '★';
         }
       });
     }
 
-    function setVibeMeter(sliderId, labelId, val) {
-      const slider = document.getElementById(sliderId);
-      const label = document.getElementById(labelId);
-      if (slider) slider.value = val;
-      if (label) label.innerText = val;
+    // Set & Render Stars for Emotion Vibes
+    function setVibeStars(vibeKey, starCount) {
+      const input = document.getElementById(vibeKey);
+      const current = input ? Number(input.value) || 0 : 0;
+      const newVal = (current === starCount) ? 0 : starCount;
+      if (input) input.value = newVal;
+      renderVibeStars(vibeKey, newVal);
     }
 
-    function updateVibeLabel(sliderId, labelId) {
-      const slider = document.getElementById(sliderId);
-      const label = document.getElementById(labelId);
-      if (slider && label) label.innerText = slider.value;
+    function renderVibeStars(vibeKey, activeVal) {
+      const container = document.getElementById('stars_' + vibeKey);
+      if (!container) return;
+      const count = Number(activeVal) || 0;
+      const stars = container.querySelectorAll('.vibe-star');
+      stars.forEach((s, idx) => {
+        if (idx < count) {
+          s.className = "vibe-star text-[#FF5B22] hover:scale-110 transition-transform cursor-pointer";
+        } else {
+          s.className = "vibe-star text-slate-300 hover:scale-110 transition-transform cursor-pointer";
+        }
+      });
     }
 
     function saveBookDetail() {
@@ -1843,11 +2106,11 @@
       bk.format = document.getElementById('editBookFormat').value;
       bk.ownership = document.getElementById('editBookOwnership').value;
       bk.cover = document.getElementById('editBookCover').value.trim();
+      bk.isFavorite = isEditingFavorite;
 
       const pct = bk.pageCount > 0 ? Math.round((bk.currentPage / bk.pageCount) * 100) : 0;
       const chosenShelf = document.getElementById('editBookShelf').value;
 
-      // Automatically set to finished if 100% or current pages equals/exceeds total pages
       if (pct >= 100 || (bk.pageCount > 0 && bk.currentPage >= bk.pageCount) || chosenShelf === 'finished') {
         const todayStr = new Date().toISOString().split('T')[0];
         const enteredDate = document.getElementById('editBookFinishedDate')?.value || todayStr;
@@ -1862,7 +2125,6 @@
         }
         bk.lastSessionDate = enteredDate;
 
-        // Ensure a session exists on the finish date so it registers with total pages & calendar stats
         const hasSessionOnFinish = readingSessions.some(s => s.bookId === bk.id && s.date === enteredDate);
         if (!hasSessionOnFinish) {
           readingSessions.push({
@@ -1889,9 +2151,12 @@
         bk.vibeSpice = Number(document.getElementById('vibeSpice').value) || 0;
         bk.vibeHeartbreak = Number(document.getElementById('vibeHeartbreak').value) || 0;
         bk.review = document.getElementById('editBookReviewText').value.trim();
+      } else {
+        bk.rating = Number(document.getElementById('editBookStarRating').value) || bk.rating || 0;
       }
 
       saveBooks();
+      populateYearDropdown();
       closeModal('modalBookDetail');
       determineActiveHeroBook();
       renderAllViews();
@@ -1907,7 +2172,6 @@
       bk.currentPage = 0;
       bk.shelf = 'reading';
       bk.lastSessionDate = new Date().toISOString().split('T')[0];
-      // Keep previous finished dates in bk.finishedDates, clear active finishedDate
       bk.finishedDate = null;
 
       saveBooks();
@@ -1929,7 +2193,6 @@
       const mins = totalMinutes % 60;
       if (timeEl) timeEl.innerText = `${hrs > 0 ? hrs + 'h ' : ''}${mins}m total`;
 
-      // 1. Finished Milestones Banner
       let milestonesHtml = '';
       if (bk && (bk.finishedDate || (Array.isArray(bk.finishedDates) && bk.finishedDates.length > 0))) {
         const dates = bk.finishedDates && bk.finishedDates.length > 0 ? bk.finishedDates : [bk.finishedDate];
@@ -1952,7 +2215,6 @@
         return;
       }
 
-      // Sort newest session first
       sessions.sort((a, b) => (b.date || '').localeCompare(a.date || ''));
 
       const sessionCardsHtml = sessions.map(s => `
@@ -1970,40 +2232,6 @@
       `).join('');
 
       listEl.innerHTML = milestonesHtml + sessionCardsHtml;
-    }
-
-    function renderBookSessionsList(bookId) {
-      const listEl = document.getElementById('bookSessionsList');
-      const timeEl = document.getElementById('bookTotalSessionTime');
-      if (!listEl) return;
-
-      const sessions = readingSessions.filter(s => s.bookId === bookId);
-      const totalMinutes = sessions.reduce((acc, s) => acc + (s.durationMinutes || 0), 0);
-      const hrs = Math.floor(totalMinutes / 60);
-      const mins = totalMinutes % 60;
-      if (timeEl) timeEl.innerText = `${hrs > 0 ? hrs + 'h ' : ''}${mins}m total`;
-
-      if (sessions.length === 0) {
-        listEl.innerHTML = `<p class="text-[11px] text-slate-400 italic text-center py-2">No logged sessions recorded for this book yet.</p>`;
-        return;
-      }
-
-      // Sort newest session first
-      sessions.sort((a, b) => (b.date || '').localeCompare(a.date || ''));
-
-      listEl.innerHTML = sessions.map(s => `
-        <div class="bg-amber-50/70 border border-orange-200/80 rounded-xl p-2 flex items-center justify-between text-[11px]">
-          <div>
-            <div class="flex items-center gap-2">
-              <span class="font-bold text-[#05244C]">${s.date}</span>
-              <span class="bg-[#FF5B22] text-white px-1.5 py-0.2 rounded text-[9px] font-black">+${s.pagesRead || (s.endPage - s.startPage)} pgs</span>
-              <span class="text-slate-500 font-bold">${s.durationMinutes}m</span>
-            </div>
-            <p class="text-[10px] text-slate-500">Pgs ${s.startPage || 0} ➔ ${s.endPage || 0}${s.notes ? ` • “${s.notes}”` : ''}</p>
-          </div>
-          <button type="button" onclick="deleteSessionFromBook('${s.id}', '${bookId}')" class="text-slate-400 hover:text-red-500 font-bold px-1.5 py-0.5 rounded text-xs" title="Delete Session">✕</button>
-        </div>
-      `).join('');
     }
 
     function deleteSessionFromBook(sessionId, bookId) {
@@ -2409,7 +2637,6 @@
       showToast('Copied quote card!');
     }
 
-    // --- BULLETPROOF MULTI-PROVIDER CLOUD SYNC ENGINE ---
     let activeSyncKey = localStorage.getItem('rianne_cloud_sync_key') || '';
     let autoSyncTimer = null;
 
@@ -2426,7 +2653,6 @@
       const payload = { books, sessions: readingSessions, quotes, goals: userGoals, updatedAt: Date.now() };
       let newKey = null;
 
-      // Primary Vault Provider (superjsonblob with CORS response body)
       try {
         const res = await fetch("https://superjsonblob.com/api/jsonBlob", {
           method: 'POST',
@@ -2446,7 +2672,6 @@
         console.warn("Primary vault failed, trying fallback...", e);
       }
 
-      // Secondary Fallback Provider (jsonblob)
       if (!newKey) {
         try {
           const res = await fetch("https://jsonblob.com/api/jsonBlob", {
@@ -2503,7 +2728,6 @@
       const payload = { books, sessions: readingSessions, quotes, goals: userGoals, updatedAt: Date.now() };
       let success = false;
 
-      // 1. Try superjsonblob endpoint
       try {
         const res = await fetch(`https://superjsonblob.com/api/jsonBlob/${activeSyncKey}`, {
           method: 'PUT',
@@ -2513,7 +2737,6 @@
         if (res.ok) success = true;
       } catch(e) {}
 
-      // 2. Try jsonblob endpoint
       if (!success) {
         try {
           const res = await fetch(`https://jsonblob.com/api/jsonBlob/${activeSyncKey}`, {
@@ -2534,13 +2757,11 @@
       if (!activeSyncKey) return false;
       let cloudData = null;
 
-      // 1. Try superjsonblob
       try {
         const res = await fetch(`https://superjsonblob.com/api/jsonBlob/${activeSyncKey}`);
         if (res.ok) cloudData = await res.json();
       } catch(e) {}
 
-      // 2. Try jsonblob
       if (!cloudData) {
         try {
           const res = await fetch(`https://jsonblob.com/api/jsonBlob/${activeSyncKey}`);
@@ -2548,7 +2769,6 @@
         } catch(e) {}
       }
 
-      // 3. Try via CORS proxy fallback
       if (!cloudData) {
         const proxies = [
           `https://api.allorigins.win/raw?url=${encodeURIComponent(`https://superjsonblob.com/api/jsonBlob/${activeSyncKey}`)}`,
@@ -2590,12 +2810,10 @@
       autoSyncTimer = setTimeout(() => { pushToCloudSync(); }, 2500);
     }
 
-    // --- INSTANT DEVICE-TO-DEVICE QUICK TRANSFER CODE ---
     function copyQuickTransferCode() {
       try {
         const packageData = { b: books, s: readingSessions, q: quotes, g: userGoals, t: Date.now() };
         const jsonStr = JSON.stringify(packageData);
-        // Base64 encode using UTF-8 safe method
         const code = btoa(encodeURIComponent(jsonStr));
         const t = document.createElement("textarea");
         t.value = code;
@@ -2670,7 +2888,6 @@
       showToast('Cleared starter demo books!');
     }
 
-    // --- ROBUST QUOTE-AWARE CSV ENGINE FOR ALL BOOKSHELF & GOODREADS FILES ---
     function parseCsvRows(text) {
       const rows = [];
       let currentRow = [];
@@ -2720,9 +2937,7 @@
       let booksAdded = 0;
       let sessionsAdded = 0;
       let quotesAdded = 0;
-      let collectionsAdded = 0;
 
-      // Sort files so Books are parsed before Reading History, Cards, and Collections
       const fileList = Array.from(files).sort((a, b) => {
         const aIsBooks = a.name.toLowerCase().includes('books') ? -1 : 1;
         const bIsBooks = b.name.toLowerCase().includes('books') ? -1 : 1;
@@ -2752,9 +2967,8 @@
           } else if (lower.includes('cards') || lower.includes('card')) {
             quotesAdded += parseBookshelfCardsCsv(content);
           } else if (lower.includes('collection')) {
-            collectionsAdded += parseBookshelfCollectionsCsv(content);
+            parseBookshelfCollectionsCsv(content);
           } else {
-            // Bookshelf-Books or Goodreads CSV
             booksAdded += parseBooksCsv(content);
           }
         }
@@ -2806,9 +3020,7 @@
         else if (rawShelf.includes('dnf') || rawShelf.includes('dropped')) shelf = 'dnf';
         else if (rawShelf.includes('wish')) shelf = 'wishlist';
 
-        // Check if book is already present (by title or Bookshelf Book ID)
         let existing = books.find(b => (b.externalId && b.externalId === rawId) || b.title.toLowerCase() === title.toLowerCase());
-        
         const genres = row[genreIdx] ? row[genreIdx].split(/[,;/]/).map(g => g.trim()).filter(Boolean) : ['General'];
         const finDate = row[finDateIdx] ? row[finDateIdx].slice(0, 10) : (shelf === 'finished' ? new Date().toISOString().split('T')[0] : null);
 
@@ -2868,7 +3080,6 @@
         const rawBookId = row[idIdx];
         const title = row[titleIdx];
 
-        // Link session to matching imported book
         let matchedBook = books.find(b => (rawBookId && b.externalId === rawBookId) || (title && b.title.toLowerCase() === title.toLowerCase()));
 
         readingSessions.push({
@@ -3021,7 +3232,44 @@
       renderQuotes();
     }
 
-    window.addEventListener('DOMContentLoaded', initializeUserData);
+    // Click outside backdrop to close modals & drawer
+    function setupBackdropDismiss() {
+      const modals = [
+        'modalPastSession',
+        'modalBookDetail',
+        'modalFinishedBooks',
+        'modalBulkEdit',
+        'modalOnlineSearch',
+        'modalManualBook',
+        'modalAddQuote',
+        'modalGoalEditor'
+      ];
+
+      modals.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.addEventListener('click', function(e) {
+            if (e.target === this) {
+              closeModal(id);
+            }
+          });
+        }
+      });
+
+      const drawer = document.getElementById('drawerMenu');
+      if (drawer) {
+        drawer.addEventListener('click', function(e) {
+          if (e.target === this) {
+            closeMenuDrawer();
+          }
+        });
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      initializeUserData();
+      setupBackdropDismiss();
+    });
   </script>
 </body>
 </html>
