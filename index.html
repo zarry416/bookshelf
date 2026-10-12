@@ -995,9 +995,15 @@
 
         <!-- Data Import/Export Tools -->
         <div class="space-y-2 pt-1">
-          <p class="text-xs font-bold text-slate-500 uppercase tracking-wider">File Backup & Import</p>
-          <button onclick="exportJsonBackup()" class="w-full py-2.5 bg-white border-2 border-[#05244C] rounded-xl text-xs font-black text-[#05244C] shadow-retro-navy text-left px-3">
-            📥 Download JSON Backup
+          <div class="flex items-center justify-between">
+            <p class="text-xs font-bold text-slate-500 uppercase tracking-wider">File Backup & Safety</p>
+            <span class="text-[10px] font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-full">Auto-Saved</span>
+          </div>
+          <p class="text-[11px] text-slate-500 leading-tight">Your library is saved in your browser's persistent storage and will remain intact across code updates.</p>
+
+          <button onclick="exportJsonBackup()" class="w-full py-2.5 bg-white border-2 border-[#05244C] rounded-xl text-xs font-black text-[#05244C] shadow-retro-navy text-left px-3 flex items-center justify-between">
+            <span>📥 Download JSON Backup</span>
+            <span class="text-[10px] text-slate-400 font-mono" id="drawerBackupCount">0 books</span>
           </button>
           
           <label class="w-full py-2.5 bg-white border-2 border-[#05244C] rounded-xl text-xs font-black text-[#05244C] shadow-retro-navy text-left px-3 block cursor-pointer">
@@ -1081,7 +1087,18 @@
     }
 
     function initializeUserData() {
-      const storedBooks = safeJsonParse('rianne_books_v1', null);
+      // 1. Primary storage check
+      let storedBooks = safeJsonParse('rianne_books_v1', null);
+      
+      // 2. Fail-safe backup vault check
+      if (!storedBooks || !Array.isArray(storedBooks)) {
+        const vault = safeJsonParse('rianne_backup_vault', null);
+        if (vault && Array.isArray(vault.books) && vault.books.length > 0) {
+          storedBooks = vault.books;
+          localStorage.setItem('rianne_books_v1', JSON.stringify(storedBooks));
+        }
+      }
+
       if (storedBooks && Array.isArray(storedBooks)) {
         books = storedBooks;
       } else {
@@ -1130,9 +1147,15 @@
       }
 
       readingSessions = safeJsonParse('rianne_sessions_v1', []);
+      if (readingSessions.length === 0) {
+        const vault = safeJsonParse('rianne_backup_vault', null);
+        if (vault && Array.isArray(vault.sessions)) readingSessions = vault.sessions;
+      }
+
       quotes = safeJsonParse('rianne_quotes_v1', []);
       userGoals = safeJsonParse('rianne_goals_v1', userGoals);
 
+      updateBackupCountBadge();
       determineActiveHeroBook();
       populateGenreDropdown();
       populateYearDropdown();
@@ -1140,24 +1163,47 @@
       initCloudSync();
     }
 
+    function createVaultSnapshot() {
+      try {
+        const snapshot = {
+          savedAt: Date.now(),
+          books,
+          sessions: readingSessions,
+          quotes,
+          goals: userGoals
+        };
+        localStorage.setItem('rianne_backup_vault', JSON.stringify(snapshot));
+      } catch(e) {}
+      updateBackupCountBadge();
+    }
+
+    function updateBackupCountBadge() {
+      const badge = document.getElementById('drawerBackupCount');
+      if (badge) badge.innerText = `${books.length} book${books.length === 1 ? '' : 's'}`;
+    }
+
     function saveBooks() {
       localStorage.setItem('rianne_books_v1', JSON.stringify(books));
+      createVaultSnapshot();
       populateGenreDropdown();
       triggerCloudAutoSync();
     }
 
     function saveSessions() {
       localStorage.setItem('rianne_sessions_v1', JSON.stringify(readingSessions));
+      createVaultSnapshot();
       triggerCloudAutoSync();
     }
 
     function saveQuotes() {
       localStorage.setItem('rianne_quotes_v1', JSON.stringify(quotes));
+      createVaultSnapshot();
       triggerCloudAutoSync();
     }
 
     function saveGoals() {
       localStorage.setItem('rianne_goals_v1', JSON.stringify(userGoals));
+      createVaultSnapshot();
       triggerCloudAutoSync();
     }
 
