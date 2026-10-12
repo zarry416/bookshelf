@@ -1408,72 +1408,105 @@
     }
 
     // Smart-Match closest preset genres using Google Books + Open Library
-    async function autoMatchBookGenresOnline() {
-      const title = document.getElementById('editBookTitle')?.value.trim();
-      const author = document.getElementById('editBookAuthor')?.value.trim();
-      if (!title) {
-        showToast('Please enter a title first');
-        return;
-      }
+  // Upgraded Smart-Match: Google Books + Open Library + Wikipedia with fuzzy fallback
+async function autoMatchBookGenresOnline() {
+  const title = document.getElementById('editBookTitle')?.value.trim();
+  const author = document.getElementById('editBookAuthor')?.value.trim();
+  if (!title) {
+    showToast('Please enter a title first');
+    return;
+  }
 
-      showToast(`Analyzing metadata for "${title}"...`);
-      const gatheredTags = [];
+  showToast(`Matching genres for "${title}"...`);
+  const gatheredText = [title];
 
-      try {
-        const gq = `intitle:${encodeURIComponent(title)}${author ? `+inauthor:${encodeURIComponent(author)}` : ''}`;
-        const gres = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${gq}&maxResults=3`);
-        if (gres.ok) {
-          const gdata = await gres.json();
-          if (Array.isArray(gdata.items)) {
-            gdata.items.forEach(it => {
-              if (Array.isArray(it.volumeInfo?.categories)) {
-                gatheredTags.push(...it.volumeInfo.categories);
-              }
-              if (it.volumeInfo?.description) {
-                gatheredTags.push(it.volumeInfo.description.slice(0, 300));
-              }
-            });
+  // 1. Google Books (Exact & General Title Fallback)
+  try {
+    const cleanTitle = title.replace(/[^\w\s]/gi, ' ').trim();
+    const gq = `intitle:${encodeURIComponent(cleanTitle)}${author ? `+inauthor:${encodeURIComponent(author)}` : ''}`;
+    const gres = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${gq}&maxResults=3`);
+    if (gres.ok) {
+      const gdata = await gres.json();
+      if (Array.isArray(gdata.items)) {
+        gdata.items.forEach(it => {
+          if (Array.isArray(it.volumeInfo?.categories)) {
+            gatheredText.push(...it.volumeInfo.categories);
           }
-        }
-      } catch (e) {}
-
-      try {
-        const olRes = await fetch(`https://openlibrary.org/search.json?title=${encodeURIComponent(title)}${author ? `&author=${encodeURIComponent(author)}` : ''}&limit=3`);
-        if (olRes.ok) {
-          const odata = await olRes.json();
-          if (Array.isArray(odata.docs)) {
-            odata.docs.forEach(d => {
-              if (Array.isArray(d.subject)) gatheredTags.push(...d.subject.slice(0, 15));
-            });
+          if (it.volumeInfo?.description) {
+            gatheredText.push(it.volumeInfo.description);
           }
-        }
-      } catch (e) {}
-
-      if (gatheredTags.length === 0) {
-        showToast('No online info found to classify.');
-        return;
+        });
       }
-
-      const textCorpus = gatheredTags.join(' ').toLowerCase();
-      let matchedCount = 0;
-
-      Object.entries(GENRE_KEYWORDS_MAP).forEach(([preset, keywords]) => {
-        const hits = keywords.some(k => textCorpus.includes(k));
-        if (hits && !editingBookGenres.includes(preset)) {
-          editingBookGenres.push(preset);
-          matchedCount++;
-        }
-      });
-
-      // Default to Fiction if nothing specific triggered and it's not marked non-fiction
-      if (editingBookGenres.length === 0 && !textCorpus.includes('non-fiction') && !textCorpus.includes('biography')) {
-        editingBookGenres.push('Fiction');
-        matchedCount++;
-      }
-
-      renderGenrePills();
-      showToast(matchedCount > 0 ? `Matched ${matchedCount} genre(s)!` : 'No new genre matches found.');
     }
+  } catch (e) {}
+
+  // 2. Open Library Search (title + author general query)
+  try {
+    const olQuery = `${title} ${author || ''}`.trim();
+    const olRes = await fetch(`https://openlibrary.org/search.json?q=${encodeURIComponent(olQuery)}&limit=3`);
+    if (olRes.ok) {
+      const odata = await olRes.json();
+      if (Array.isArray(odata.docs)) {
+        odata.docs.forEach(d => {
+          if (Array.isArray(d.subject)) gatheredText.push(...d.subject);
+          if (Array.isArray(d.subject_facet)) gatheredText.push(...d.subject_facet);
+          if (Array.isArray(d.first_sentence)) gatheredText.push(...d.first_sentence);
+        });
+      }
+    }
+  } catch (e) {}
+
+  // 3. Wikipedia API fallback (extremely reliable for book plots/genres, no rate limits)
+  if (gatheredText.length <= 1) {
+    try {
+      const wikiQuery = `${title} novel`;
+      const wRes = await fetch(`https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(wikiQuery)}&format=json&origin=*`);
+      if (wRes.ok) {
+        const wData = await wRes.json();
+        if (wData.query?.search?.length > 0) {
+          wData.query.search.slice(0, 2).forEach(s => {
+            gatheredText.push(s.snippet.replace(/<[^>]+>/g, ' '));
+          });
+        }
+      }
+    } catch (e) {}
+  }
+
+  const textCorpus = gatheredText.join(' ').toLowerCase();
+
+  // If literally nothing came back online, scan the title itself
+  let matchedCount = 0;
+
+  Object.entries(GENRE_KEYWORDS_MAP).forEach(([preset, keywords]) => {
+    const hits = keywords.some(k => textCorpus.includes(k));
+    if (hits && !editingBookGenres.includes(preset)) {
+      editingBookGenres.push(preset);
+      matchedCount++;
+    }
+  });
+
+  // Common title/subtext deductions
+  if (textCorpus.includes('manga') || textCorpus.includes('vol.') || textCorpus.includes('vol ')) {
+    if (!editingBookGenres.includes('Manga')) { editingBookGenres.push('Manga'); matchedCount++; }
+  }
+  if (textCorpus.includes('comic') || textCorpus.includes('graphic novel')) {
+    if (!editingBookGenres.includes('Graphic Novel / Comic')) { editingBookGenres.push('Graphic Novel / Comic'); matchedCount++; }
+  }
+
+  // Fallback to Fiction if nothing specific triggered and it's clearly fiction
+  if (editingBookGenres.length === 0) {
+    if (textCorpus.includes('biography') || textCorpus.includes('memoir') || textCorpus.includes('nonfiction')) {
+      editingBookGenres.push('Non-Fiction / Memoir');
+      matchedCount++;
+    } else {
+      editingBookGenres.push('Fiction');
+      matchedCount++;
+    }
+  }
+
+  renderGenrePills();
+  showToast(matchedCount > 0 ? `Matched ${matchedCount} genre(s)!` : 'No new genre matches found.');
+}
 
     function extractValidYear(dateStr) {
       if (!dateStr) return null;
