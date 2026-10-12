@@ -105,7 +105,7 @@
   <header id="appHeader" class="relative z-40 bg-[#446BA2] border-b-2 border-[#FFA4C4] px-4 pb-3 shadow-md">
     <div class="max-w-md mx-auto flex items-center justify-between">
       <div class="flex items-center gap-3">
-        <!-- CELESTIAL SUN & MOON (SOURCE VECTOR) -->
+        <!-- CELESTIAL SUN & MOON VECTOR -->
         <svg class="w-11 h-11 flex-shrink-0 drop-shadow-[0_2px_4px_rgba(5,36,76,0.35)]" viewBox="0 0 200 200" fill="none" stroke="#FFF9EE" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <g id="sharp-ray">
@@ -146,7 +146,7 @@
           <path d="M93 121 C 95 122, 95 125, 92 126" stroke-width="1.2"/>
         </svg>
 
-        <!-- VACATION RETRO TITLE WITH LAYERED DROP SHADOW -->
+        <!-- VACATION RETRO TITLE -->
         <h1 class="text-2xl font-retro-title italic text-[#FFF9EE] tracking-tight leading-none drop-shadow-[2px_3px_0px_#05244C]">
           Rianne's Bookshelf
         </h1>
@@ -270,7 +270,7 @@
           
           <div class="flex bg-amber-200/70 p-1 rounded-xl border border-[#05244C] flex-shrink-0">
             <button onclick="setLibraryView('covers')" id="viewBtnCovers" class="px-2 py-1 rounded-lg text-xs font-bold bg-[#FF5B22] text-white" title="Covers Grid">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2z"/></svg>
             </button>
             <button onclick="setLibraryView('cards')" id="viewBtnCards" class="px-2 py-1 rounded-lg text-xs font-bold text-slate-700" title="Detailed Cards">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h14a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6z"/></svg>
@@ -642,7 +642,7 @@
           <div class="grid grid-cols-2 gap-1.5" id="editBookFormatButtonsContainer"></div>
         </div>
 
-        <!-- Cover Image with Individual Auto-Find & Upload -->
+        <!-- Cover Image with Auto-Find & Upload -->
         <div>
           <div class="flex items-center justify-between mb-1">
             <label class="block">Cover Image</label>
@@ -685,10 +685,11 @@
             <input type="date" id="editBookFinishedDate" class="w-full bg-white border-2 border-[#05244C] rounded-xl p-2 font-bold text-xs">
           </div>
 
+          <!-- Overall Rating -->
           <div class="bg-white border-2 border-[#05244C] p-3 rounded-2xl shadow-sm space-y-1.5">
             <div class="flex items-center">
-  <span class="text-[10px] uppercase font-bold text-slate-500">Overall Rating</span>
-</div>
+              <span class="text-[10px] uppercase font-bold text-slate-500">Overall Rating</span>
+            </div>
             <div class="pt-1 flex justify-center">
               <div id="starRatingSelector" class="flex gap-2.5 text-3xl cursor-pointer select-none">
                 <span onclick="cycleStarRating(1)" class="star-item text-slate-300 transition-transform">★</span>
@@ -701,7 +702,7 @@
             <input type="hidden" id="editBookStarRating" value="0">
           </div>
 
-          <!-- Dynamic Vibes Container -->
+          <!-- 7 Dynamic Vibes Container -->
           <div class="bg-white/95 border-2 border-[#05244C] p-3 rounded-2xl shadow-sm space-y-2">
             <span class="text-[10px] font-black uppercase text-[#05244C] tracking-wider block">Vibe & Impact</span>
             <div id="vibesContainer" class="space-y-2 text-[11px] font-bold text-[#05244C]"></div>
@@ -769,13 +770,13 @@
           </div>
         </div>
 
-        <!-- Book Quotes Inside Edit Modal -->
+        <!-- Book Quotes Inside Edit Modal (Tag-Free, Normal Font) -->
         <div class="pt-3 border-t-2 border-orange-200/80 space-y-3">
           <div class="flex items-center justify-between">
             <span class="text-[10px] uppercase font-black text-[#05244C] tracking-wide">Passages & Reactions</span>
             <div class="flex gap-1.5">
               <button type="button" onclick="openInlineQuoteLogger('quote')" class="px-2 py-0.5 bg-[#1DBBB4] text-white rounded-lg text-[10px] font-black border border-[#05244C] shadow-sm retro-btn">+ Quote</button>
-              <button type="button" onclick="openInlineQuoteLogger('thought')" class="px-2 py-0.5 bg-[#FFF9EE] text-[#05244C] rounded-lg text-[10px] font-black border border-[#05244C] shadow-retro-navy retro-btn">💭 + Thought</button>
+              <button type="button" onclick="openInlineQuoteLogger('thought')" class="px-2 py-0.5 bg-[#FFF9EE] text-[#05244C] rounded-lg text-[10px] font-black border border-[#05244C] shadow-sm retro-btn">💭 + Thought</button>
             </div>
           </div>
 
@@ -787,7 +788,7 @@
             
             <input type="hidden" id="editModalEntryType" value="quote">
             <input type="hidden" id="editModalEditingQuoteId" value="">
-            <textarea id="editModalQuoteText" rows="2.5" placeholder="Type passage..." class="w-full bg-white border border-[#05244C] rounded-lg p-2 font-editorial italic text-xs"></textarea>
+            <textarea id="editModalQuoteText" rows="3" placeholder="Type passage..." class="w-full bg-white border border-[#05244C] rounded-lg p-2 font-sans text-xs text-slate-800 leading-relaxed focus:outline-none"></textarea>
             
             <div class="grid grid-cols-2 gap-2 text-[10px]">
               <div>
@@ -798,11 +799,6 @@
                 <label class="block font-bold mb-0.5">Page #</label>
                 <input type="text" id="editModalQuotePage" placeholder="p. 142" class="w-full bg-white border border-[#05244C] rounded-lg p-1.5 font-bold text-[10px]">
               </div>
-            </div>
-
-            <div>
-              <label class="block font-bold text-[10px] mb-1">Tag</label>
-              <input type="text" id="editModalQuoteTag" placeholder="sad, favorite..." class="w-full bg-white border border-[#05244C] rounded-lg p-1.5 font-bold text-[10px]">
             </div>
 
             <div class="flex gap-1.5 pt-1">
@@ -823,7 +819,7 @@
     </div>
   </div>
 
-  <!-- MODAL: ADD / EDIT QUOTE OR THOUGHT -->
+  <!-- MODAL: ADD / EDIT QUOTE OR THOUGHT (STANDALONE, TAG-FREE) -->
   <div id="modalAddQuote" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4">
     <div class="bg-[#FFF9EE] border-3 border-[#05244C] rounded-3xl p-6 w-full max-w-sm shadow-retro-orange space-y-3.5">
       <div class="flex justify-between items-center pb-2 border-b-2 border-orange-200">
@@ -846,7 +842,7 @@
         </div>
         <div>
           <label id="standaloneContentLabel" class="block mb-1">Quote Passage</label>
-          <textarea id="quoteTextInput" rows="3" placeholder="Type passage..." class="w-full bg-white border-2 border-[#05244C] rounded-xl p-3 font-editorial text-sm italic"></textarea>
+          <textarea id="quoteTextInput" rows="3.5" placeholder="Type passage..." class="w-full bg-white border-2 border-[#05244C] rounded-xl p-3 font-sans text-xs text-slate-800 leading-relaxed focus:outline-none"></textarea>
         </div>
 
         <div class="grid grid-cols-2 gap-2">
@@ -859,14 +855,9 @@
             <input type="text" id="quotePageInput" placeholder="142" class="w-full bg-white border-2 border-[#05244C] rounded-xl p-2">
           </div>
         </div>
-
-        <div>
-          <label class="block mb-1">Tag</label>
-          <input type="text" id="quoteTagInput" placeholder="sad, deep..." class="w-full bg-white border-2 border-[#05244C] rounded-xl p-2">
-        </div>
       </div>
 
-      <button onclick="saveQuote()" class="w-full py-3 bg-[#FFD034] text-[#05244C] rounded-2xl font-black border-2 border-[#05244C] shadow-retro-navy">Save to Collection</button>
+      <button onclick="saveQuote()" id="standaloneQuoteSaveBtn" class="w-full py-3 bg-[#FFD034] text-[#05244C] rounded-2xl font-black border-2 border-[#05244C] shadow-retro-navy">Save to Collection</button>
     </div>
   </div>
 
@@ -1155,11 +1146,15 @@
       'Adventure': ['adventure', 'survival', 'expedition', 'quest']
     };
 
+    // 7 CUSTOM VIBE & IMPACT METRICS
     const VIBE_DEFINITIONS = [
-      { key: 'vibeTears', label: '😭 Tears' },
-      { key: 'vibeScary', label: '👻 Spook' },
-      { key: 'vibeSpice', label: '🌶️ Romance & Spice' },
-      { key: 'vibeHeartbreak', label: '💔 Angst' }
+      { key: 'vibeHeartfelt', label: '🤍 Heartfelt' },
+      { key: 'vibeSuspense', label: '⚡ Suspense' },
+      { key: 'vibeMystery', label: '🔍 Mystery' },
+      { key: 'vibeHorror', label: '👻 Horror' },
+      { key: 'vibeRomance', label: '💖 Romance' },
+      { key: 'vibeSpice', label: '🌶️ Spice' },
+      { key: 'vibeTears', label: '😭 Tears' }
     ];
 
     let calendarYear = new Date().getFullYear();
@@ -1545,18 +1540,56 @@
       }).join('');
     }
 
+    // 7 VIBES WITH HALF-STAR CYCLING (★ -> ½ -> 0)
     function renderVibeInputs() {
       const container = document.getElementById('vibesContainer');
       if (!container) return;
       container.innerHTML = VIBE_DEFINITIONS.map(vibe => `
         <div class="bg-[#FFF9EE] border border-orange-200 rounded-xl p-2.5 flex items-center justify-between">
           <span class="font-bold">${vibe.label}</span>
-          <div class="flex gap-1 text-lg select-none cursor-pointer" id="stars_${vibe.key}">
-            ${[1, 2, 3, 4, 5].map(i => `<span onclick="setVibeStars('${vibe.key}', ${i})" class="vibe-star text-slate-300 hover:scale-110 transition-transform">★</span>`).join('')}
+          <div class="flex gap-1.5 text-lg select-none cursor-pointer" id="stars_${vibe.key}">
+            ${[1, 2, 3, 4, 5].map(i => `<span onclick="cycleVibeStar('${vibe.key}', ${i})" class="vibe-star text-slate-300 hover:scale-110 transition-transform">★</span>`).join('')}
           </div>
           <input type="hidden" id="${vibe.key}" value="0">
         </div>
       `).join('');
+    }
+
+    function setVibeStars(vibeKey, rating) {
+      const hiddenInput = document.getElementById(vibeKey);
+      if (hiddenInput) hiddenInput.value = rating;
+
+      const container = document.getElementById('stars_' + vibeKey);
+      if (!container) return;
+      const starElements = container.querySelectorAll('.vibe-star');
+      const fullStars = Math.floor(rating);
+      const hasHalf = (rating % 1 !== 0);
+
+      starElements.forEach((el, idx) => {
+        if (idx < fullStars) {
+          el.className = "vibe-star text-[#FF5B22] font-bold";
+          el.innerText = '★';
+        } else if (idx === fullStars && hasHalf) {
+          el.className = "vibe-star text-[#FF5B22] font-bold";
+          el.innerText = '½';
+        } else {
+          el.className = "vibe-star text-slate-300";
+          el.innerText = '★';
+        }
+      });
+    }
+
+    function cycleVibeStar(vibeKey, starNum) {
+      const current = Number(document.getElementById(vibeKey)?.value) || 0;
+      let newRating = starNum;
+
+      if (current === starNum) {
+        newRating = starNum - 0.5;
+      } else if (current === starNum - 0.5) {
+        newRating = 0;
+      }
+
+      setVibeStars(vibeKey, newRating);
     }
 
     function safeJsonParse(key, fallback) {
@@ -2099,14 +2132,11 @@
         cover: '',
         rating: 0,
         review: '',
-        vibeTears: 0,
-        vibeScary: 0,
-        vibeSpice: 0,
-        vibeHeartbreak: 0,
         isFavorite: false,
         finishedDate: null,
         lastSessionDate: null
       };
+      VIBE_DEFINITIONS.forEach(v => { tempBook[v.key] = 0; });
       books.unshift(tempBook);
       saveBooks();
       renderAllViews();
@@ -2211,56 +2241,45 @@
         : "w-8 h-8 rounded-full border-2 border-[#05244C] bg-white text-base flex items-center justify-center retro-btn shadow-sm";
     }
 
-   function setEditBookStarRating(rating) {
-  const hiddenInput = document.getElementById('editBookStarRating');
-  if (hiddenInput) hiddenInput.value = rating;
+    // CLEAN OVERALL RATING: No number on top right
+    function setEditBookStarRating(rating) {
+      const hiddenInput = document.getElementById('editBookStarRating');
+      if (hiddenInput) hiddenInput.value = rating;
 
-  const starElements = document.querySelectorAll('#starRatingSelector .star-item');
-  const fullStars = Math.floor(rating);
-  const remainder = Math.round((rating - fullStars) * 100) / 100;
+      const starElements = document.querySelectorAll('#starRatingSelector .star-item');
+      const fullStars = Math.floor(rating);
+      const remainder = Math.round((rating - fullStars) * 100) / 100;
 
-  starElements.forEach((el, idx) => {
-    if (idx < fullStars) {
-      el.className = "star-item text-[#FF5B22] transition-transform";
-      el.innerText = '★';
-    } else if (idx === fullStars && remainder > 0) {
-      el.className = "star-item text-[#FF5B22] transition-transform";
-      el.innerText = remainder >= 0.75 ? '¾' : remainder >= 0.5 ? '½' : '¼';
-    } else {
-      el.className = "star-item text-slate-300 transition-transform";
-      el.innerText = '★';
-    }
-  });
-}
-
-    function cycleStarRating(starNum) {
-  const curRating = Number(document.getElementById('editBookStarRating')?.value) || 0;
-  let newRating = starNum;
-
-  if (curRating === starNum) {
-    newRating = starNum - 0.25;      // 4.00 -> 3.75 (¾)
-  } else if (curRating === starNum - 0.25) {
-    newRating = starNum - 0.5;       // 3.75 -> 3.50 (½)
-  } else if (curRating === starNum - 0.5) {
-    newRating = starNum - 0.75;      // 3.50 -> 3.25 (¼)
-  } else if (curRating === starNum - 0.75) {
-    newRating = 0;                   // 3.25 -> 0 (Clear)
-  }
-
-  setEditBookStarRating(newRating);
-}
-
-    function setVibeStars(vibeKey, val) {
-      const hiddenInput = document.getElementById(vibeKey);
-      if (hiddenInput) hiddenInput.value = val;
-      const container = document.getElementById('stars_' + vibeKey);
-      if (!container) return;
-      const stars = container.querySelectorAll('.vibe-star');
-      stars.forEach((star, idx) => {
-        star.className = idx < val 
-          ? "vibe-star text-[#FF5B22] font-bold" 
-          : "vibe-star text-slate-300";
+      starElements.forEach((el, idx) => {
+        if (idx < fullStars) {
+          el.className = "star-item text-[#FF5B22] transition-transform";
+          el.innerText = '★';
+        } else if (idx === fullStars && remainder > 0) {
+          el.className = "star-item text-[#FF5B22] transition-transform";
+          el.innerText = remainder >= 0.75 ? '¾' : remainder >= 0.5 ? '½' : '¼';
+        } else {
+          el.className = "star-item text-slate-300 transition-transform";
+          el.innerText = '★';
+        }
       });
+    }
+
+    // QUARTER-STAR STEPPING: 4 -> 3.75 (¾) -> 3.5 (½) -> 3.25 (¼) -> 0
+    function cycleStarRating(starNum) {
+      const curRating = Number(document.getElementById('editBookStarRating')?.value) || 0;
+      let newRating = starNum;
+
+      if (curRating === starNum) {
+        newRating = starNum - 0.25;
+      } else if (curRating === starNum - 0.25) {
+        newRating = starNum - 0.5;
+      } else if (curRating === starNum - 0.5) {
+        newRating = starNum - 0.75;
+      } else if (curRating === starNum - 0.75) {
+        newRating = 0;
+      }
+
+      setEditBookStarRating(newRating);
     }
 
     function renderBookSessionsList(bookId) {
@@ -2359,7 +2378,7 @@
     function deleteBookDetail() {
       const id = document.getElementById('editBookId').value;
       if (!id) return;
-      books = books.filter(b => !selectedBookIds.has(b.id));
+      books = books.filter(b => b.id !== id);
       readingSessions = readingSessions.filter(s => s.bookId !== id);
       quotes = quotes.filter(q => q.bookId !== id);
 
@@ -2528,14 +2547,11 @@
         cover: item.cover,
         rating: 0,
         review: '',
-        vibeTears: 0,
-        vibeScary: 0,
-        vibeSpice: 0,
-        vibeHeartbreak: 0,
         isFavorite: false,
         finishedDate: null,
         lastSessionDate: null
       };
+      VIBE_DEFINITIONS.forEach(v => { newBk[v.key] = 0; });
 
       books.push(newBk);
       saveBooks();
@@ -3097,6 +3113,7 @@
       showToast('Unmarked as finished.');
     }
 
+    // INLINE QUOTE LOGGER (TAG-FREE, NORMAL FONT)
     function openInlineQuoteLogger(type = 'quote') {
       const form = document.getElementById('editBookQuoteForm');
       if (!form) return;
@@ -3105,10 +3122,33 @@
       document.getElementById('editModalEntryType').value = type;
       document.getElementById('editModalEditingQuoteId').value = '';
       document.getElementById('editQuoteFormHeader').innerText = type === 'thought' ? '💭 New Thought' : '“ New Quote';
-      document.getElementById('editModalQuoteText').placeholder = type === 'thought' ? 'Your thought or reaction...' : '“Type passage...”';
+      document.getElementById('editModalQuoteSubmitBtn').innerText = 'Save Entry';
+      
+      const textEl = document.getElementById('editModalQuoteText');
+      textEl.value = '';
+      textEl.placeholder = type === 'thought' ? 'Your reaction or thought...' : 'Type passage...';
+
       document.getElementById('editModalQuoteDate').value = new Date().toISOString().split('T')[0];
       document.getElementById('editModalQuotePage').value = '';
-      document.getElementById('editModalQuoteTag').value = '';
+    }
+
+    function editBookEntryInModal(quoteId, bookId) {
+      const q = quotes.find(item => item.id === quoteId);
+      if (!q) return;
+
+      const form = document.getElementById('editBookQuoteForm');
+      if (!form) return;
+      form.classList.remove('hidden');
+
+      const type = q.type || 'quote';
+      document.getElementById('editModalEntryType').value = type;
+      document.getElementById('editModalEditingQuoteId').value = q.id;
+      document.getElementById('editQuoteFormHeader').innerText = type === 'thought' ? '💭 Edit Thought' : '“ Edit Quote';
+      document.getElementById('editModalQuoteSubmitBtn').innerText = 'Update Entry';
+
+      document.getElementById('editModalQuoteText').value = q.text || '';
+      document.getElementById('editModalQuoteDate').value = q.date || new Date().toISOString().split('T')[0];
+      document.getElementById('editModalQuotePage').value = q.page || '';
     }
 
     function toggleEditQuoteForm(forceState) {
@@ -3124,31 +3164,40 @@
       const text = document.getElementById('editModalQuoteText')?.value.trim();
       const date = document.getElementById('editModalQuoteDate')?.value || new Date().toISOString().split('T')[0];
       const page = document.getElementById('editModalQuotePage')?.value.trim();
-      const tag = document.getElementById('editModalQuoteTag')?.value.trim();
       const type = document.getElementById('editModalEntryType')?.value || 'quote';
+      const editingId = document.getElementById('editModalEditingQuoteId')?.value;
 
       if (!text) {
         showToast('Please type text');
         return;
       }
 
-      quotes.unshift({
-        id: 'q_' + Date.now(),
-        type: type,
-        bookId: bk?.id || bookId,
-        bookTitle: bk?.title || 'Untitled',
-        bookCover: bk?.cover || '',
-        text: text,
-        page: page,
-        tag: tag || (type === 'thought' ? 'Thought' : 'Favorite'),
-        date: date
-      });
+      if (editingId) {
+        const q = quotes.find(item => item.id === editingId);
+        if (q) {
+          q.text = text;
+          q.date = date;
+          q.page = page;
+          q.type = type;
+        }
+      } else {
+        quotes.unshift({
+          id: 'q_' + Date.now(),
+          type: type,
+          bookId: bk?.id || bookId,
+          bookTitle: bk?.title || 'Untitled',
+          bookCover: bk?.cover || '',
+          text: text,
+          page: page,
+          date: date
+        });
+      }
 
       saveQuotes();
       toggleEditQuoteForm(false);
       renderEditBookQuotesList(bookId);
       renderQuotes();
-      showToast('Saved!');
+      showToast(editingId ? 'Entry updated!' : (type === 'thought' ? 'Thought saved!' : 'Quote saved!'));
     }
 
     function renderEditBookQuotesList(bookId) {
@@ -3157,23 +3206,24 @@
       const bQuotes = quotes.filter(q => q.bookId === bookId);
 
       if (bQuotes.length === 0) {
-        listEl.innerHTML = `<p class="text-[11px] text-slate-400 italic text-center py-2">No passages logged for this book yet.</p>`;
+        listEl.innerHTML = `<p class="text-[11px] text-slate-400 italic text-center py-2">No passages or thoughts logged for this book yet.</p>`;
         return;
       }
 
       listEl.innerHTML = bQuotes.map(q => {
         const isThought = (q.type === 'thought');
         return `
-          <div class="${isThought ? 'bg-[#FFEDC9]/80 border-amber-300' : 'bg-amber-50/70 border-orange-200/80'} border rounded-xl p-2.5 space-y-1 relative group">
+          <div class="${isThought ? 'bg-[#FFEDC9]/80 border-amber-300' : 'bg-amber-50/70 border-orange-200/80'} border rounded-xl p-2.5 space-y-1.5 shadow-sm">
             <div class="flex items-center justify-between pb-0.5">
               <span class="text-[9px] font-black uppercase ${isThought ? 'text-amber-800' : 'text-[#FF5B22]'}">${isThought ? '💭 Reader Thought' : '“ Quote'}</span>
-              <button type="button" onclick="deleteQuote('${q.id}', '${bookId}')" class="text-slate-400 hover:text-red-500 font-bold text-xs">✕</button>
+              <div class="flex items-center gap-2">
+                <button type="button" onclick="editBookEntryInModal('${q.id}', '${bookId}')" class="text-slate-500 hover:text-[#05244C] font-black text-[10px] retro-btn">✏️ Edit</button>
+                <button type="button" onclick="deleteQuote('${q.id}', '${bookId}')" class="text-slate-400 hover:text-red-500 font-bold text-xs">✕</button>
+              </div>
             </div>
-            <p class="${isThought ? 'font-sans text-xs text-slate-800' : 'font-editorial text-xs italic text-[#05244C]'} leading-snug">${isThought ? q.text : `“${q.text}”`}</p>
-            <div class="flex items-center gap-2 text-[10px] text-slate-500 pt-0.5">
-              ${q.page ? `<span>Page ${q.page}</span>` : ''}
-              <span>• ${q.date || ''}</span>
-              <span class="bg-[#FFA4C4] text-[#05244C] px-1.5 py-0.2 rounded-full font-bold border border-[#05244C]/30">${q.tag}</span>
+            <p class="font-sans text-xs text-[#05244C] leading-snug">${isThought ? q.text : `“${q.text}”`}</p>
+            <div class="pt-0.5 text-[10px] text-slate-500 font-bold">
+              ${q.page ? 'Page ' + q.page : ''} ${q.date ? '• ' + q.date : ''}
             </div>
           </div>
         `;
@@ -3188,6 +3238,7 @@
       showToast('Entry deleted');
     }
 
+    // STANDALONE ADD & EDIT MODAL (TAG-FREE)
     function setStandaloneEntryType(type) {
       document.getElementById('standaloneEntryTypeVal').value = type;
       const btnQ = document.getElementById('btnEntryTypeQuote');
@@ -3214,40 +3265,68 @@
         select.innerHTML = books.map(b => `<option value="${b.id}" ${(bookId || activeBookId) === b.id ? 'selected' : ''}>${b.title} (${b.author})</option>`).join('');
       }
       document.getElementById('standaloneQuoteEditId').value = '';
+      document.getElementById('standaloneModalTitle').innerText = (type === 'thought') ? 'Save Reader Thought' : 'Save Quote';
+      document.getElementById('standaloneQuoteSaveBtn').innerText = 'Save Entry';
       document.getElementById('quoteTextInput').value = '';
       document.getElementById('quoteDateInput').value = new Date().toISOString().split('T')[0];
       document.getElementById('quotePageInput').value = '';
-      document.getElementById('quoteTagInput').value = '';
       setStandaloneEntryType(type);
       openModal('modalAddQuote');
     }
 
+    function editStandaloneQuote(id) {
+      const q = quotes.find(item => item.id === id);
+      if (!q) return;
+
+      const type = q.type || 'quote';
+      openAddQuoteModal(q.bookId, type);
+
+      document.getElementById('standaloneQuoteEditId').value = q.id;
+      document.getElementById('standaloneModalTitle').innerText = (type === 'thought') ? 'Edit Reader Thought' : 'Edit Quote';
+      document.getElementById('standaloneQuoteSaveBtn').innerText = 'Update Entry';
+      document.getElementById('quoteTextInput').value = q.text || '';
+      document.getElementById('quoteDateInput').value = q.date || new Date().toISOString().split('T')[0];
+      document.getElementById('quotePageInput').value = q.page || '';
+    }
+
     function saveQuote() {
+      const editingId = document.getElementById('standaloneQuoteEditId')?.value;
       const bookId = document.getElementById('quoteBookSelect').value;
       const text = document.getElementById('quoteTextInput').value.trim();
       const date = document.getElementById('quoteDateInput').value || new Date().toISOString().split('T')[0];
       const page = document.getElementById('quotePageInput').value;
-      const tag = document.getElementById('quoteTagInput').value.trim();
       const type = document.getElementById('standaloneEntryTypeVal').value || 'quote';
       const bk = books.find(b => b.id === bookId);
       if (!text) return;
 
-      quotes.unshift({
-        id: 'q_' + Date.now(),
-        type: type,
-        bookId: bk?.id || 'unknown',
-        bookTitle: bk?.title || 'Untitled',
-        bookCover: bk?.cover || '',
-        text: text,
-        page: page,
-        tag: tag || (type === 'thought' ? 'Thought' : 'Favorite'),
-        date: date
-      });
+      if (editingId) {
+        const q = quotes.find(item => item.id === editingId);
+        if (q) {
+          q.bookId = bk?.id || bookId;
+          q.bookTitle = bk?.title || 'Untitled';
+          q.bookCover = bk?.cover || '';
+          q.text = text;
+          q.date = date;
+          q.page = page;
+          q.type = type;
+        }
+      } else {
+        quotes.unshift({
+          id: 'q_' + Date.now(),
+          type: type,
+          bookId: bk?.id || 'unknown',
+          bookTitle: bk?.title || 'Untitled',
+          bookCover: bk?.cover || '',
+          text: text,
+          page: page,
+          date: date
+        });
+      }
 
       saveQuotes();
       closeModal('modalAddQuote');
       renderQuotes();
-      showToast('Saved to collection!');
+      showToast(editingId ? 'Entry updated!' : (type === 'thought' ? 'Thought saved!' : 'Quote saved!'));
     }
 
     function setQuoteTypeFilter(filterType) {
@@ -3262,6 +3341,7 @@
       renderQuotes();
     }
 
+    // MAIN TAB QUOTES: Big Quotation Mark & No Tags
     function renderQuotes() {
       const container = document.getElementById('quotesContainer');
       if (!container) return;
@@ -3277,21 +3357,51 @@
 
       container.innerHTML = filteredQuotes.map(q => {
         const isThought = (q.type === 'thought');
-        return `
-          <div class="relative bg-[#FFF9EE] border-3 border-[#05244C] rounded-3xl p-5 shadow-retro-orange space-y-2.5">
-            <div class="flex items-center justify-between pb-1 border-b border-orange-200/70">
-              <span class="text-[9px] font-black uppercase ${isThought ? 'text-amber-800' : 'text-[#1DBBB4]'}">${isThought ? '💭 Thought' : '“ Quote'}</span>
-              <button onclick="deleteQuote('${q.id}')" class="text-slate-400 hover:text-red-500 font-bold text-sm">✕</button>
-            </div>
-            <p class="${isThought ? 'font-sans text-xs text-[#05244C] font-semibold bg-amber-100/60 p-3 rounded-xl' : 'font-quote-display text-base text-[#05244C] font-semibold italic'} leading-relaxed">
-              ${isThought ? q.text : `“${q.text}”`}
-            </p>
-            <div class="pt-2 border-t border-orange-200 flex justify-between items-center text-[10px] text-slate-500">
-              <span>${q.bookTitle} ${q.page ? '• p. ' + q.page : ''}</span>
-              <div class="flex items-center gap-1.5">
-                <span class="bg-[#FFA4C4] text-[#05244C] px-2 py-0.5 rounded-full font-bold border border-[#05244C]">${q.tag || 'Favorite'}</span>
-                <button onclick="copyQuoteText('${q.id}')" class="text-xs font-bold text-[#446BA2] underline ml-1">Copy</button>
+        if (isThought) {
+          return `
+            <div class="relative bg-[#FFF9EE] border-3 border-[#05244C] rounded-3xl p-5 shadow-retro-orange space-y-2.5">
+              <div class="flex items-center justify-between pb-1 border-b border-orange-200/70">
+                <span class="bg-[#FFEDC9] text-amber-900 border border-[#05244C] text-[9px] font-black uppercase px-2 py-0.5 rounded-full flex items-center gap-1">
+                  <span>💭</span> Reader Thought
+                </span>
+                <div class="flex items-center gap-2">
+                  <button onclick="editStandaloneQuote('${q.id}')" class="text-slate-500 hover:text-[#05244C] font-black text-xs">✏️ Edit</button>
+                  <button onclick="deleteQuote('${q.id}')" class="text-slate-400 hover:text-red-500 font-bold text-sm">✕</button>
+                </div>
               </div>
+              <div class="bg-amber-100/60 border-2 border-dashed border-[#05244C]/25 rounded-2xl p-3.5">
+                <p class="font-sans text-xs text-[#05244C] font-semibold leading-relaxed">${q.text}</p>
+              </div>
+              <div class="pt-1 flex items-center justify-between text-xs">
+                <div class="min-w-0 pr-2">
+                  <span class="font-black text-[#FF5B22] uppercase tracking-wider block truncate">${q.bookTitle}</span>
+                  <span class="text-[10px] text-slate-500 font-bold">${q.page ? 'Page ' + q.page : ''} ${q.date ? '• ' + q.date : ''}</span>
+                </div>
+                <button onclick="copyQuoteText('${q.id}')" class="text-xs font-bold text-[#446BA2] underline">Copy</button>
+              </div>
+            </div>
+          `;
+        }
+
+        return `
+          <div class="relative bg-[#FFF9EE] border-3 border-[#05244C] rounded-3xl p-6 shadow-retro-orange space-y-2">
+            <div class="flex items-center justify-end pb-0.5">
+              <div class="flex items-center gap-2">
+                <button onclick="editStandaloneQuote('${q.id}')" class="text-slate-500 hover:text-[#05244C] font-black text-xs">✏️ Edit</button>
+                <button onclick="deleteQuote('${q.id}')" class="text-slate-400 hover:text-red-500 font-bold text-sm">✕</button>
+              </div>
+            </div>
+
+            <!-- Big decorative quotation mark -->
+            <div class="font-quote-display text-6xl text-[#1DBBB4] font-black leading-none select-none -mt-4 -mb-3">“</div>
+            <p class="font-quote-display text-base text-[#05244C] font-semibold italic leading-relaxed pt-0.5">${q.text}</p>
+            
+            <div class="pt-2 border-t-2 border-orange-200/80 flex items-center justify-between text-xs">
+              <div class="min-w-0 pr-2">
+                <span class="font-black text-[#FF5B22] uppercase tracking-wider block truncate">${q.bookTitle}</span>
+                <span class="text-[10px] text-slate-500 font-bold">${q.page ? 'Page ' + q.page : ''} ${q.date ? '• ' + q.date : ''}</span>
+              </div>
+              <button onclick="copyQuoteText('${q.id}')" class="text-xs font-bold text-[#446BA2] underline">Copy</button>
             </div>
           </div>
         `;
