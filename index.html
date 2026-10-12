@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <!-- Ensure external book cover images from Google Books & Open Library load without 403 referrer blocks -->
+  <meta name="referrer" content="no-referrer">
   <title>Rianne's Bookshelf</title>
 
   <!-- PWA & Mobile Web App Meta -->
@@ -89,11 +91,10 @@
 </head>
 <body class="text-slate-800 antialiased selection:bg-[#FFA4C4] selection:text-[#05244C]">
 
-  <!-- STICKY RETRO TOP HEADER WITH CUTE TROPICAL PALM ISLAND EMBLEM -->
   <header class="sticky top-0 z-40 bg-[#446BA2]/95 backdrop-blur-md border-b-2 border-[#FFA4C4] px-4 pt-3.5 pb-3 transition-all shadow-md">
     <div class="max-w-md mx-auto flex items-center justify-between">
       <div class="flex items-center gap-2.5">
-        <!-- Cute Tropical Palm Island Icon -->
+        <!-- Cute Retro Tropical Palm Island Emblem -->
         <div class="w-10 h-10 rounded-2xl bg-[#FFF9EE] border-2 border-[#FFA4C4] shadow-retro-navy flex items-center justify-center overflow-hidden flex-shrink-0">
           <svg class="w-6 h-6" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
             <circle cx="23" cy="9" r="4.5" fill="#FFD034" stroke="#05244C" stroke-width="1.5"/>
@@ -119,7 +120,6 @@
     </div>
   </header>
 
-  <!-- MAIN TAB CONTENT CONTAINER -->
   <main class="max-w-md mx-auto px-4 pt-4 pb-28">
 
     <!-- TAB 1: READING HERO & ACTIVE PROGRESS -->
@@ -138,7 +138,7 @@
 
         <!-- Book Cover & Info Row -->
         <div class="flex gap-3.5 items-start">
-          <img id="heroCover" src="https://images.unsplash.com/photo-1544947950-fa07a98d237f?auto=format&fit=crop&w=400&q=80" alt="Book Cover" class="w-24 h-36 object-cover rounded-xl border-2 border-[#05244C] shadow-md flex-shrink-0 bg-slate-200">
+          <img id="heroCover" src="https://images.unsplash.com/photo-1544947950-fa07a98d237f?auto=format&fit=crop&w=400&q=80" alt="Book Cover" class="w-24 aspect-[2/3] object-cover rounded-xl border-2 border-[#05244C] shadow-md flex-shrink-0 bg-slate-200" onerror="this.src='https://placehold.co/200x300/446BA2/FFF9EE?text=Cover'">
           
           <div class="flex-1 min-w-0">
             <h2 id="heroTitle" class="text-lg font-retro-title text-[#05244C] leading-snug line-clamp-2">The Butterfly Garden</h2>
@@ -540,7 +540,7 @@
       <div class="flex justify-between items-center pb-2 border-b-2 border-orange-200">
         <div class="flex items-center gap-2">
           <h3 class="text-base font-retro-title text-[#05244C]">Edit Book</h3>
-          <!-- Minimalist Heart Toggle -->
+          <!-- Minimalist Heart Suit Toggle -->
           <button type="button" onclick="toggleBookFavorite()" id="btnFavoriteToggle" class="w-8 h-8 rounded-full border-2 border-[#05244C] bg-white text-base flex items-center justify-center retro-btn shadow-sm" title="Toggle Favorite">♡</button>
         </div>
         <button onclick="closeModal('modalBookDetail')" class="text-slate-500 font-bold text-lg">✕</button>
@@ -1034,7 +1034,7 @@
   </div>
 
   <script>
-    const APP_VERSION = "3.2";
+    const APP_VERSION = "3.3";
     let books = [];
     let readingSessions = [];
     let quotes = [];
@@ -1124,7 +1124,7 @@
       let storedBooks = safeJsonParse('rianne_books_v1', null);
       
       // 2. Fail-safe backup vault check
-      if (!storedBooks || !Array.isArray(storedBooks)) {
+      if (!storedBooks || !Array.isArray(storedBooks) || storedBooks.length === 0) {
         const vault = safeJsonParse('rianne_backup_vault', null);
         if (vault && Array.isArray(vault.books) && vault.books.length > 0) {
           storedBooks = vault.books;
@@ -1270,6 +1270,7 @@
           coverUrl = `https://covers.openlibrary.org/b/isbn/${cleanIsbn}-L.jpg`;
           b.cover = coverUrl;
           foundCount++;
+          saveBooks(); // Incremental save immediately preserves recovered covers
           continue;
         }
 
@@ -1283,6 +1284,7 @@
               coverUrl = `https://covers.openlibrary.org/b/id/${data.docs[0].cover_i}-L.jpg`;
               b.cover = coverUrl;
               foundCount++;
+              saveBooks();
               continue;
             }
           }
@@ -1299,6 +1301,7 @@
               coverUrl = (links.thumbnail || links.smallThumbnail).replace(/^http:\/\//i, 'https://').replace('&edge=curl', '');
               b.cover = coverUrl;
               foundCount++;
+              saveBooks();
             }
           }
         } catch(e) {}
@@ -1454,7 +1457,7 @@
         return `
           <div onclick="selectHeroBook('${b.id}')" class="flex-shrink-0 w-44 bg-[#FFF9EE] border-2 border-[#05244C] rounded-2xl p-3 shadow-retro-navy cursor-pointer transition-transform hover:-translate-y-1">
             <div class="flex gap-2.5 items-center">
-              <img src="${b.cover || 'https://placehold.co/100x150/446BA2/FFF9EE?text=Cover'}" class="w-11 h-16 object-cover rounded-lg border border-[#05244C]">
+              <img src="${b.cover || 'https://placehold.co/100x150/446BA2/FFF9EE?text=Cover'}" class="w-11 aspect-[2/3] object-cover rounded-lg border border-[#05244C]" onerror="this.src='https://placehold.co/100x150/446BA2/FFF9EE?text=Cover'">
               <div class="flex-1 min-w-0">
                 <h4 class="text-xs font-bold text-[#05244C] truncate">${b.title}</h4>
                 <p class="text-[10px] text-slate-500 truncate font-editorial italic">${b.author}</p>
@@ -1473,7 +1476,6 @@
       showToast('Switched active book');
     }
 
-    // Helper: Category colors and labels
     function getShelfInfo(shelf) {
       switch(shelf) {
         case 'reading':
@@ -1699,7 +1701,7 @@
         return;
       }
 
-      // VIEW 1: COVERS GRID
+      // VIEW 1: COVERS GRID (STANDARD 2:3 BOOK RATIO)
       if (currentLibraryView === 'covers') {
         container.innerHTML = `
           <div class="grid grid-cols-4 gap-2">
@@ -1711,7 +1713,7 @@
               return `
                 <div onclick="${isBatchMode ? `toggleSelectBook('${b.id}', event)` : `openBookDetailModal('${b.id}')`}" class="relative group cursor-pointer">
                   <div class="relative rounded-xl overflow-hidden border-2 border-[#05244C] shadow-retro-navy aspect-[2/3] bg-slate-200 ${isSelected ? 'ring-4 ring-[#FF5B22]' : ''}">
-                    <img src="${b.cover || 'https://placehold.co/200x300/446BA2/FFF9EE?text=' + encodeURIComponent(b.title.slice(0, 15))}" class="w-full h-full object-cover">
+                    <img src="${b.cover || 'https://placehold.co/200x300/446BA2/FFF9EE?text=' + encodeURIComponent(b.title.slice(0, 15))}" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/200x300/446BA2/FFF9EE?text=' + encodeURIComponent('${b.title.slice(0, 15)}')">
                     ${isBatchMode ? `
                       <div class="absolute top-1.5 left-1.5 w-5 h-5 rounded-md bg-white border border-[#05244C] flex items-center justify-center">
                         ${isSelected ? '<span class="text-[#FF5B22] font-black text-xs">✓</span>' : ''}
@@ -1750,7 +1752,7 @@
                       ${isSelected ? '<span class="text-[#FF5B22] font-black text-xs">✓</span>' : ''}
                     </div>
                   ` : ''}
-                  <img src="${b.cover || 'https://placehold.co/100x150/446BA2/FFF9EE?text=' + encodeURIComponent(b.title.slice(0, 10))}" class="w-14 aspect-[2/3] object-cover rounded-xl border border-[#05244C] flex-shrink-0">
+                  <img src="${b.cover || 'https://placehold.co/100x150/446BA2/FFF9EE?text=' + encodeURIComponent(b.title.slice(0, 10))}" class="w-14 aspect-[2/3] object-cover rounded-xl border border-[#05244C] flex-shrink-0 bg-slate-200" onerror="this.src='https://placehold.co/100x150/446BA2/FFF9EE?text=' + encodeURIComponent('${b.title.slice(0, 10)}')">
                   <div class="flex-1 min-w-0">
                     <div class="flex items-center gap-1.5">
                       <span class="text-[9px] uppercase font-black px-2 py-0.5 rounded-full ${info.bg} ${info.text} border border-[#05244C] shadow-sm">${info.label}</span>
@@ -1993,7 +1995,7 @@
           const fDate = b.finishedDate || (Array.isArray(b.finishedDates) && b.finishedDates[0]) || 'Finished';
           return `
             <div onclick="closeModal('modalFinishedBooks'); openBookDetailModal('${b.id}')" class="bg-white border-2 border-[#05244C] rounded-2xl p-2.5 flex gap-3 items-center cursor-pointer hover:bg-orange-50 transition-colors shadow-sm">
-              <img src="${b.cover || 'https://placehold.co/80x120/446BA2/FFF9EE?text=' + encodeURIComponent(b.title.slice(0, 10))}" class="w-12 h-16 object-cover rounded-lg border border-[#05244C] flex-shrink-0 bg-slate-200">
+              <img src="${b.cover || 'https://placehold.co/80x120/446BA2/FFF9EE?text=' + encodeURIComponent(b.title.slice(0, 10))}" class="w-12 aspect-[2/3] object-cover rounded-lg border border-[#05244C] flex-shrink-0 bg-slate-200" onerror="this.src='https://placehold.co/80x120/446BA2/FFF9EE?text=' + encodeURIComponent('${b.title.slice(0, 10)}')">
               <div class="flex-1 min-w-0">
                 <h4 class="text-xs font-bold text-[#05244C] truncate">${b.title}</h4>
                 <p class="text-[10px] text-slate-500 truncate font-editorial italic">${b.author}</p>
@@ -2273,7 +2275,6 @@
       });
     }
 
-    // Set & Render Stars for Emotion Vibes
     function setVibeStars(vibeKey, starCount) {
       const input = document.getElementById(vibeKey);
       const current = input ? Number(input.value) || 0 : 0;
@@ -2571,7 +2572,7 @@
       window._tempSearchResults = results;
       list.innerHTML = results.map((r, idx) => `
         <div class="bg-white border-2 border-[#05244C] rounded-2xl p-3 flex gap-3 items-center">
-          <img src="${r.cover || 'https://placehold.co/80x120/446BA2/FFF9EE?text=' + encodeURIComponent(r.title.slice(0, 10))}" class="w-12 h-18 object-cover rounded-lg border border-[#05244C]">
+          <img src="${r.cover || 'https://placehold.co/80x120/446BA2/FFF9EE?text=' + encodeURIComponent(r.title.slice(0, 10))}" class="w-12 aspect-[2/3] object-cover rounded-lg border border-[#05244C]" onerror="this.src='https://placehold.co/80x120/446BA2/FFF9EE?text=' + encodeURIComponent('${r.title.slice(0, 10)}')">
           <div class="flex-1 min-w-0">
             <h4 class="text-xs font-bold text-[#05244C] truncate">${r.title}</h4>
             <p class="text-[10px] text-slate-500 truncate font-editorial italic">${r.author}</p>
@@ -2846,7 +2847,7 @@
       if (activeSyncKey) {
         const input = document.getElementById('syncKeyInput');
         if (input) input.value = activeSyncKey;
-        pullFromCloudSync(false);
+        // Do NOT pull automatically on startup so existing local library covers are never overwritten
       }
     }
 
