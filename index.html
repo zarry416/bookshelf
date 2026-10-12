@@ -262,7 +262,7 @@
       </div>
     </section>
 
-    <!-- TAB 2: LIBRARY (WITH SHELF COUNT PILLS) -->
+    <!-- TAB 2: LIBRARY -->
     <section id="tab-library" class="tab-content hidden space-y-4">
       <div class="bg-[#FFF9EE] border-3 border-[#05244C] rounded-2xl p-3 shadow-retro-orange space-y-2.5">
         <div class="flex items-center gap-2">
@@ -270,7 +270,7 @@
           
           <div class="flex bg-amber-200/70 p-1 rounded-xl border border-[#05244C] flex-shrink-0">
             <button onclick="setLibraryView('covers')" id="viewBtnCovers" class="px-2 py-1 rounded-lg text-xs font-bold bg-[#FF5B22] text-white" title="Covers Grid">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2z"/></svg>
             </button>
             <button onclick="setLibraryView('cards')" id="viewBtnCards" class="px-2 py-1 rounded-lg text-xs font-bold text-slate-700" title="Detailed Cards">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h14a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6z"/></svg>
@@ -283,7 +283,7 @@
           <button onclick="toggleBatchSelectMode()" id="batchSelectModeBtn" class="h-9 px-3 bg-amber-100 hover:bg-amber-200 border-2 border-[#05244C] rounded-xl text-[11px] font-black text-[#05244C] shadow-retro-navy flex items-center justify-center flex-shrink-0 whitespace-nowrap retro-btn">Select</button>
         </div>
 
-        <!-- Shelf Pills with Integrated Mini Count Badges -->
+        <!-- Shelf Pills with Integrated Live Count Badges -->
         <div class="space-y-1.5 pt-1">
           <div class="grid grid-cols-4 gap-1.5">
             <button onclick="setShelfFilter('all')" class="shelf-pill py-1.5 px-1 rounded-xl text-[11px] font-black border-2 border-[#05244C] bg-[#05244C] text-[#FFF9EE] shadow-retro-navy flex items-center justify-center gap-1 transition-all" data-shelf="all">
@@ -370,7 +370,7 @@
       <div id="libraryContainer" class="pt-1"></div>
     </section>
 
-    <!-- TAB 3: CALENDAR & STATS -->
+    <!-- TAB 3: CALENDAR & STATS (WITH VIBE DNA ANALYTICS) -->
     <section id="tab-calendar" class="tab-content hidden space-y-5">
       <div class="bg-[#FFF9EE] border-3 border-[#05244C] rounded-3xl p-5 shadow-retro-orange">
         <div class="flex items-center justify-between mb-4">
@@ -446,6 +446,15 @@
             <p class="text-[10px] uppercase font-bold text-slate-500">Average Speed</p>
             <p id="statAvgSpeed" class="text-xl font-retro-title text-[#05244C]">-- pgs/hr</p>
           </div>
+        </div>
+
+        <!-- VIBE DNA OVERVIEW (8 METRICS) -->
+        <div class="bg-white border-2 border-[#05244C] p-3.5 rounded-2xl shadow-sm space-y-2.5">
+          <div class="flex items-center justify-between">
+            <span class="text-[10px] font-black uppercase text-[#05244C] tracking-wider">Reading Vibe DNA</span>
+            <span id="vibeDnaCount" class="text-[9px] font-bold text-slate-400">0 books analyzed</span>
+          </div>
+          <div id="vibeDnaGrid" class="grid grid-cols-2 gap-2 text-[10px]"></div>
         </div>
       </div>
     </section>
@@ -724,7 +733,7 @@
             <input type="hidden" id="editBookStarRating" value="0">
           </div>
 
-          <!-- 7 Custom Vibe Shapes Grid Container -->
+          <!-- 8 Custom Vibe Shapes Grid Container -->
           <div class="bg-white/95 border-2 border-[#05244C] p-3 rounded-2xl shadow-sm space-y-2">
             <span class="text-[10px] font-black uppercase text-[#05244C] tracking-wider block">Vibe & Impact</span>
             <div id="vibesContainer" class="space-y-2 text-[11px] font-bold text-[#05244C]"></div>
@@ -975,7 +984,7 @@
     </div>
   </div>
 
-  <!-- MODAL: ANNUAL READING WRAP -->
+  <!-- MODAL: ANNUAL READING WRAP (WITH VIBE BREAKDOWN) -->
   <div id="modalInfographic" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden items-center justify-center p-4">
     <div class="bg-[#FFF9EE] border-3 border-[#05244C] rounded-3xl p-5 w-full max-w-md shadow-retro-orange space-y-4 max-h-[92vh] overflow-y-auto no-scrollbar">
       <div class="flex justify-between items-center pb-2 border-b-2 border-orange-200">
@@ -1021,6 +1030,12 @@
             <p class="text-[9px] font-black uppercase text-[#FFA4C4] tracking-wider mb-1">Avg Star Rating</p>
             <p id="infoAvgRating" class="text-xl font-retro-title text-white">0.0 ★</p>
             <p id="infoReadingPace" class="text-[10px] text-slate-300 mt-1">~ 0 pgs/hr</p>
+          </div>
+
+          <!-- Top Reading Vibes Highlight in Infographic -->
+          <div class="bg-white/10 rounded-2xl p-3 border border-white/20 col-span-2">
+            <p class="text-[9px] font-black uppercase text-[#FFD034] tracking-wider mb-1.5">Top Reading Vibes</p>
+            <div id="infoTopVibesBar" class="flex flex-wrap gap-1.5"></div>
           </div>
         </div>
       </div>
@@ -1117,7 +1132,7 @@
     Notice
   </div>
   <script>
-    const APP_VERSION = "5.7";
+    const APP_VERSION = "5.8";
     let books = [];
     let readingSessions = [];
     let quotes = [];
@@ -1170,7 +1185,7 @@
       'Self-Help / Personal Growth': ['self-help', 'self help', 'personal development', 'personal growth', 'productivity', 'habits', 'mindfulness', 'motivation', 'mindset', 'wellness', 'self-improvement', 'leadership', 'success']
     };
 
-    // 7 CUSTOM VIBE & IMPACT METRICS WITH CLEAN SVG SILHOUETTES
+    // EXACT 8 CUSTOM VIBE & IMPACT METRICS (FEATURING KILIG SPARKLE ✨)
     const VIBE_DEFINITIONS = [
       {
         key: 'vibeHeartfelt',
@@ -1213,6 +1228,13 @@
         label: 'Tear',
         color: '#0284C7',
         svgPath: 'M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z'
+      },
+      {
+        key: 'vibeKilig',
+        label: 'Kilig',
+        color: '#F59E0B',
+        // 4-Pointed Sparkle Star Silhouette (✨)
+        svgPath: 'M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5Z'
       }
     ];
 
@@ -1599,7 +1621,7 @@
       }).join('');
     }
 
-    // 7 VIBES WITH SVG SHAPES & HALF-FILL CYCLING (1 -> 0.5 -> 0)
+    // 8 VIBES WITH SVG SHAPES & HALF-FILL CYCLING (1 -> 0.5 -> 0)
     function renderVibeInputs() {
       const container = document.getElementById('vibesContainer');
       if (!container) return;
@@ -1666,6 +1688,33 @@
       }
 
       setVibeShapes(vibeKey, next);
+    }
+
+    // VIBE AVERAGES & DNA ANALYTICS
+    function calculateVibeAverages(bookList) {
+      const ratedBooks = bookList.filter(b => b.shelf === 'finished');
+      const totals = {};
+      const counts = {};
+
+      VIBE_DEFINITIONS.forEach(v => {
+        totals[v.key] = 0;
+        counts[v.key] = 0;
+      });
+
+      ratedBooks.forEach(b => {
+        VIBE_DEFINITIONS.forEach(v => {
+          const val = Number(b[v.key]) || 0;
+          if (val > 0) {
+            totals[v.key] += val;
+            counts[v.key]++;
+          }
+        });
+      });
+
+      return VIBE_DEFINITIONS.map(v => {
+        const avg = counts[v.key] > 0 ? (totals[v.key] / counts[v.key]).toFixed(1) : 0;
+        return { ...v, average: Number(avg), count: counts[v.key] };
+      }).sort((a, b) => b.average - a.average);
     }
 
     // SHELF COUNT BADGES UPDATE
@@ -2341,7 +2390,6 @@
         : "w-8 h-8 rounded-full border-2 border-[#05244C] bg-white text-base flex items-center justify-center retro-btn shadow-sm";
     }
 
-    // CLEAN OVERALL RATING: No number on top right
     function setEditBookStarRating(rating) {
       const hiddenInput = document.getElementById('editBookStarRating');
       if (hiddenInput) hiddenInput.value = rating;
@@ -2364,7 +2412,6 @@
       });
     }
 
-    // QUARTER-STAR STEPPING: 4 -> 3.75 (¾) -> 3.5 (½) -> 3.25 (¼) -> 0
     function cycleStarRating(starNum) {
       const curRating = Number(document.getElementById('editBookStarRating')?.value) || 0;
       let newRating = starNum;
@@ -2780,15 +2827,12 @@
       const totalPages = filteredSessions.reduce((acc, s) => acc + (s.pagesRead || 0), 0);
       const totalMinutes = filteredSessions.reduce((acc, s) => acc + (s.durationMinutes || 0), 0);
 
-      const finishedInYear = books.filter(b => {
-        if (b.shelf !== 'finished') return false;
-        if (year === 'all') return true;
-        const bYr = extractValidYear(b.finishedDate);
-        return bYr && String(bYr) === year;
-      }).length;
+      const finishedBooks = (year === 'all')
+        ? books.filter(b => b.shelf === 'finished')
+        : books.filter(b => b.shelf === 'finished' && String(extractValidYear(b.finishedDate)) === year);
 
       document.getElementById('statPagesRead').innerText = totalPages.toLocaleString();
-      document.getElementById('statBooksFinished').innerText = finishedInYear;
+      document.getElementById('statBooksFinished').innerText = finishedBooks.length;
 
       const hrs = Math.floor(totalMinutes / 60);
       const mins = totalMinutes % 60;
@@ -2807,6 +2851,25 @@
         } else {
           const todayPages = todaySessions.reduce((acc, s) => acc + (s.pagesRead || 0), 0);
           dailyGoalEl.innerText = `${todayPages} / ${userGoals.dailyTarget} pages`;
+        }
+      }
+
+      // Render Vibe DNA (Averages across all 8 vibes)
+      const vibeAvgs = calculateVibeAverages(finishedBooks);
+      const dnaGrid = document.getElementById('vibeDnaGrid');
+      const dnaCount = document.getElementById('vibeDnaCount');
+
+      if (dnaCount) dnaCount.innerText = `${finishedBooks.length} book${finishedBooks.length === 1 ? '' : 's'} analyzed`;
+      if (dnaGrid) {
+        if (finishedBooks.length === 0) {
+          dnaGrid.innerHTML = `<span class="text-slate-400 italic col-span-2 text-center py-2">Complete books and log vibes to view DNA.</span>`;
+        } else {
+          dnaGrid.innerHTML = vibeAvgs.map(v => `
+            <div class="bg-amber-50/70 border border-orange-200/80 rounded-xl p-2 flex items-center justify-between">
+              <span class="font-bold text-[#05244C] truncate pr-1">${v.label}</span>
+              <span class="font-black font-mono text-xs" style="color: ${v.color}">${v.average > 0 ? v.average + ' / 5' : '—'}</span>
+            </div>
+          `).join('');
         }
       }
     }
@@ -2951,6 +3014,19 @@
 
       const avgSpeed = totalMinutes > 0 ? Math.round((totalPages / totalMinutes) * 60) : 40;
       document.getElementById('infoReadingPace').innerText = `~ ${avgSpeed} pgs/hr pace`;
+
+      // Top Vibes in Infographic
+      const infoVibes = calculateVibeAverages(finishedBooks).filter(v => v.average > 0).slice(0, 4);
+      const vibesBarEl = document.getElementById('infoTopVibesBar');
+      if (vibesBarEl) {
+        vibesBarEl.innerHTML = infoVibes.length === 0
+          ? `<span class="text-xs text-slate-300 italic">No vibe scores logged.</span>`
+          : infoVibes.map(v => `
+              <span class="px-2 py-0.5 rounded-full text-[10px] font-black border border-white/30 text-white" style="background-color: ${v.color}99">
+                ${v.label} ${v.average}★
+              </span>
+            `).join('');
+      }
 
       openModal('modalInfographic');
     }
