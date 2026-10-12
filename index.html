@@ -2233,19 +2233,37 @@
         : "w-8 h-8 rounded-full border-2 border-[#05244C] bg-white text-base flex items-center justify-center retro-btn shadow-sm";
     }
 
-    function setEditBookStarRating(rating) {
-      const hiddenInput = document.getElementById('editBookStarRating');
-      const textVal = document.getElementById('starRatingTextVal');
-      if (hiddenInput) hiddenInput.value = rating;
-      if (textVal) textVal.innerText = `${rating.toFixed(rating % 1 === 0 ? 1 : 2)} ★`;
+   function setEditBookStarRating(rating) {
+  const hiddenInput = document.getElementById('editBookStarRating');
+  const textVal = document.getElementById('starRatingTextVal');
+  if (hiddenInput) hiddenInput.value = rating;
 
-      const starElements = document.querySelectorAll('#starRatingSelector .star-item');
-      starElements.forEach((el, idx) => {
-        el.className = (idx < Math.floor(rating)) 
-          ? "star-item text-[#FF5B22] transition-transform" 
-          : "star-item text-slate-300 transition-transform";
-      });
+  // Render fractional glyph string (e.g., "★★★★½")
+  const starGlyphs = getStarDisplayHtml(rating);
+  const formattedNum = rating ? (rating % 1 === 0 ? rating.toFixed(1) : rating.toFixed(2)) : '0.0';
+
+  if (textVal) {
+    textVal.innerText = starGlyphs ? `${formattedNum} ★ (${starGlyphs})` : `${formattedNum} ★`;
+  }
+
+  // Update the interactive 5-star row with fractional indicator
+  const starElements = document.querySelectorAll('#starRatingSelector .star-item');
+  const fullStars = Math.floor(rating);
+  const remainder = Math.round((rating - fullStars) * 100) / 100;
+
+  starElements.forEach((el, idx) => {
+    if (idx < fullStars) {
+      el.className = "star-item text-[#FF5B22] transition-transform";
+      el.innerText = '★';
+    } else if (idx === fullStars && remainder > 0) {
+      el.className = "star-item text-[#FF5B22] transition-transform";
+      el.innerText = remainder >= 0.75 ? '¾' : remainder >= 0.5 ? '½' : '¼';
+    } else {
+      el.className = "star-item text-slate-300 transition-transform";
+      el.innerText = '★';
     }
+  });
+}
 
     function cycleStarRating(starNum) {
       const curRating = Number(document.getElementById('editBookStarRating')?.value) || 0;
