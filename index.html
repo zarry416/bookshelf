@@ -686,10 +686,9 @@
           </div>
 
           <div class="bg-white border-2 border-[#05244C] p-3 rounded-2xl shadow-sm space-y-1.5">
-            <div class="flex items-center justify-between">
-              <span class="text-[10px] uppercase font-bold text-slate-500">Overall Rating</span>
-              <span id="starRatingTextVal" class="text-sm font-black text-[#FF5B22] font-mono bg-amber-50 px-2.5 py-0.5 rounded-lg border border-orange-200">0.0 ★</span>
-            </div>
+            <div class="flex items-center">
+  <span class="text-[10px] uppercase font-bold text-slate-500">Overall Rating</span>
+</div>
             <div class="pt-1 flex justify-center">
               <div id="starRatingSelector" class="flex gap-2.5 text-3xl cursor-pointer select-none">
                 <span onclick="cycleStarRating(1)" class="star-item text-slate-300 transition-transform">★</span>
@@ -2212,33 +2211,27 @@
         : "w-8 h-8 rounded-full border-2 border-[#05244C] bg-white text-base flex items-center justify-center retro-btn shadow-sm";
     }
 
-    function setEditBookStarRating(rating) {
-      const hiddenInput = document.getElementById('editBookStarRating');
-      const textVal = document.getElementById('starRatingTextVal');
-      if (hiddenInput) hiddenInput.value = rating;
+   function setEditBookStarRating(rating) {
+  const hiddenInput = document.getElementById('editBookStarRating');
+  if (hiddenInput) hiddenInput.value = rating;
 
-      const formattedNum = rating ? (rating % 1 === 0 ? rating.toFixed(1) : rating.toFixed(2)) : '0.0';
-      if (textVal) {
-        textVal.innerText = `${formattedNum} ★`;
-      }
+  const starElements = document.querySelectorAll('#starRatingSelector .star-item');
+  const fullStars = Math.floor(rating);
+  const remainder = Math.round((rating - fullStars) * 100) / 100;
 
-      const starElements = document.querySelectorAll('#starRatingSelector .star-item');
-      const fullStars = Math.floor(rating);
-      const remainder = Math.round((rating - fullStars) * 100) / 100;
-
-      starElements.forEach((el, idx) => {
-        if (idx < fullStars) {
-          el.className = "star-item text-[#FF5B22] transition-transform";
-          el.innerText = '★';
-        } else if (idx === fullStars && remainder > 0) {
-          el.className = "star-item text-[#FF5B22] transition-transform";
-          el.innerText = remainder >= 0.75 ? '¾' : remainder >= 0.5 ? '½' : '¼';
-        } else {
-          el.className = "star-item text-slate-300 transition-transform";
-          el.innerText = '★';
-        }
-      });
+  starElements.forEach((el, idx) => {
+    if (idx < fullStars) {
+      el.className = "star-item text-[#FF5B22] transition-transform";
+      el.innerText = '★';
+    } else if (idx === fullStars && remainder > 0) {
+      el.className = "star-item text-[#FF5B22] transition-transform";
+      el.innerText = remainder >= 0.75 ? '¾' : remainder >= 0.5 ? '½' : '¼';
+    } else {
+      el.className = "star-item text-slate-300 transition-transform";
+      el.innerText = '★';
     }
+  });
+}
 
     function cycleStarRating(starNum) {
       const curRating = Number(document.getElementById('editBookStarRating')?.value) || 0;
