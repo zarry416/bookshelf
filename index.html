@@ -262,7 +262,7 @@
       </div>
     </section>
 
-    <!-- TAB 2: LIBRARY (WITH TASTEFUL COUNT BUBBLES) -->
+    <!-- TAB 2: LIBRARY (WITH SHELF COUNT PILLS) -->
     <section id="tab-library" class="tab-content hidden space-y-4">
       <div class="bg-[#FFF9EE] border-3 border-[#05244C] rounded-2xl p-3 shadow-retro-orange space-y-2.5">
         <div class="flex items-center gap-2">
@@ -1117,7 +1117,7 @@
     Notice
   </div>
   <script>
-    const APP_VERSION = "5.6";
+    const APP_VERSION = "5.7";
     let books = [];
     let readingSessions = [];
     let quotes = [];
@@ -1136,6 +1136,7 @@
     let editingBookGenres = [];
     let showUnselectedCatalog = false;
 
+    // PRESET GENRES (INCLUDING SELF-HELP / PERSONAL GROWTH)
     const PRESET_GENRES = [
       'Fiction', 'Classics', 'Manga', 'Graphic Novel / Comic',
       'Coming of Age / YA', 'Romance', 'Horror', 'Thriller',
@@ -1165,11 +1166,11 @@
       'Non-Fiction / Memoir': ['biography', 'memoir', 'autobiography', 'non-fiction', 'nonfiction', 'essay'],
       'True Crime': ['true crime', 'serial killer', 'criminology'],
       'Paranormal / Supernatural': ['paranormal', 'supernatural', 'vampire', 'werewolf', 'witch', 'occult'],
-      'Adventure': ['adventure', 'survival', 'expedition', 'quest']
-      'Self-Help / Personal Growth': ['self-help', 'self help', 'personal development', 'personal growth', 'productivity', 'habits', 'mindfulness', 'motivation', 'mindset', 'wellness', 'self-improvement', 'leadership', 'success', 'psychology of'],
+      'Adventure': ['adventure', 'survival', 'expedition', 'quest'],
+      'Self-Help / Personal Growth': ['self-help', 'self help', 'personal development', 'personal growth', 'productivity', 'habits', 'mindfulness', 'motivation', 'mindset', 'wellness', 'self-improvement', 'leadership', 'success']
     };
 
-    // 7 CUSTOM VIBE & IMPACT METRICS (NO EXTERNAL TAGS, CLEAN PATHS)
+    // 7 CUSTOM VIBE & IMPACT METRICS WITH CLEAN SVG SILHOUETTES
     const VIBE_DEFINITIONS = [
       {
         key: 'vibeHeartfelt',
@@ -3385,7 +3386,7 @@
       document.getElementById('standaloneQuoteSaveBtn').innerText = 'Update Entry';
       document.getElementById('quoteTextInput').value = q.text || '';
       document.getElementById('quoteDateInput').value = q.date || new Date().toISOString().split('T')[0];
-      document.getElementById('quotePageInput').value = q.page || '';
+      document.getElementById('quotePageInput').value = '';
     }
 
     function saveQuote() {
