@@ -307,9 +307,9 @@
         <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1.5 px-0.5 border-t border-orange-200/60">
           <span class="text-[10px] font-bold text-slate-500 uppercase tracking-wider pl-0.5">Format:</span>
           <button onclick="setFormatFilter('all')" id="formatFilter-all" class="px-2 py-0.5 rounded-lg text-[10px] font-bold border border-[#05244C] bg-[#FFD034] text-[#05244C] whitespace-nowrap">All</button>
+          <button onclick="setFormatFilter('eBook')" id="formatFilter-eBook" class="px-2 py-0.5 rounded-lg text-[10px] font-bold border border-[#05244C]/40 bg-white/60 text-[#05244C] whitespace-nowrap">eBook</button>
           <button onclick="setFormatFilter('Paperback')" id="formatFilter-Paperback" class="px-2 py-0.5 rounded-lg text-[10px] font-bold border border-[#05244C]/40 bg-white/60 text-[#05244C] whitespace-nowrap">Paperback</button>
           <button onclick="setFormatFilter('Hardcover')" id="formatFilter-Hardcover" class="px-2 py-0.5 rounded-lg text-[10px] font-bold border border-[#05244C]/40 bg-white/60 text-[#05244C] whitespace-nowrap">Hardcover</button>
-          <button onclick="setFormatFilter('eBook')" id="formatFilter-eBook" class="px-2 py-0.5 rounded-lg text-[10px] font-bold border border-[#05244C]/40 bg-white/60 text-[#05244C] whitespace-nowrap">eBook</button>
           <button onclick="setFormatFilter('Audiobook')" id="formatFilter-Audiobook" class="px-2 py-0.5 rounded-lg text-[10px] font-bold border border-[#05244C]/40 bg-white/60 text-[#05244C] whitespace-nowrap">Audiobook</button>
         </div>
 
@@ -617,23 +617,22 @@
           </div>
         </div>
 
+        <!-- MULTI-SELECT PRESET GENRE PILLS -->
         <div>
           <div class="flex items-center justify-between mb-1">
-            <label class="block">Genres & Categories</label>
-            <button type="button" onclick="autoFetchGenresForCurrentBook()" class="text-[10px] font-black text-[#1DBBB4] hover:underline flex items-center gap-0.5">
-              <span>🔍 Auto-Fetch Genres</span>
-            </button>
+            <label class="block text-slate-700 font-bold">Genres</label>
+            <span id="selectedGenreCount" class="text-[9px] font-black text-[#FF5B22]">0 selected</span>
           </div>
-          <input type="text" id="editBookGenres" placeholder="Thriller, Mystery, Contemporary" class="w-full bg-white border-2 border-[#05244C] rounded-xl p-2 font-semibold text-xs">
-          <p class="text-[9px] text-slate-400 mt-0.5">Separate with commas (e.g. Fantasy, Romance)</p>
+          <div id="genrePillsSelector" class="flex flex-wrap gap-1.5 p-2 bg-white border-2 border-[#05244C] rounded-2xl max-h-36 overflow-y-auto no-scrollbar shadow-inner"></div>
+          <input type="hidden" id="editBookGenres">
         </div>
 
         <div>
           <label class="block mb-1">Formats</label>
           <div class="grid grid-cols-2 gap-1.5" id="editBookFormatButtonsContainer">
+            <button type="button" onclick="toggleEditBookFormat('eBook')" id="fmtBtn_edit_eBook" class="py-2 px-2 rounded-xl text-[11px] font-bold border-2 border-[#05244C] bg-white text-slate-700 text-center transition-all">📱 eBook</button>
             <button type="button" onclick="toggleEditBookFormat('Paperback')" id="fmtBtn_edit_Paperback" class="py-2 px-2 rounded-xl text-[11px] font-bold border-2 border-[#05244C] bg-white text-slate-700 text-center transition-all">📖 Paperback</button>
             <button type="button" onclick="toggleEditBookFormat('Hardcover')" id="fmtBtn_edit_Hardcover" class="py-2 px-2 rounded-xl text-[11px] font-bold border-2 border-[#05244C] bg-white text-slate-700 text-center transition-all">📚 Hardcover</button>
-            <button type="button" onclick="toggleEditBookFormat('eBook')" id="fmtBtn_edit_eBook" class="py-2 px-2 rounded-xl text-[11px] font-bold border-2 border-[#05244C] bg-white text-slate-700 text-center transition-all">📱 eBook</button>
             <button type="button" onclick="toggleEditBookFormat('Audiobook')" id="fmtBtn_edit_Audiobook" class="py-2 px-2 rounded-xl text-[11px] font-bold border-2 border-[#05244C] bg-white text-slate-700 text-center transition-all">🎧 Audiobook</button>
           </div>
         </div>
@@ -1005,9 +1004,9 @@
           <label class="block mb-1">Change Format</label>
           <select id="bulkFormatSelect" class="w-full bg-white border-2 border-[#05244C] rounded-xl p-2.5 font-semibold">
             <option value="no-change">Keep current</option>
+            <option value="eBook">eBook</option>
             <option value="Paperback">Paperback</option>
             <option value="Hardcover">Hardcover</option>
-            <option value="eBook">eBook</option>
             <option value="Audiobook">Audiobook</option>
           </select>
         </div>
@@ -1236,7 +1235,7 @@
   </div>
 
   <script>
-    const APP_VERSION = "4.7";
+    const APP_VERSION = "4.8";
     let books = [];
     let readingSessions = [];
     let quotes = [];
@@ -1251,7 +1250,35 @@
     let selectedBookIds = new Set();
     let currentLogMode = 'pages';
 
+    // Default format changed to eBook
     let editingBookFormats = ['eBook'];
+    let editingBookGenres = [];
+
+    // Expanded Curated Preset Genre Tags
+    const PRESET_GENRES = [
+      'Fiction',
+      'Classics',
+      'Manga',
+      'Graphic Novel / Comic',
+      'Coming of Age / YA',
+      'Romance',
+      'Horror',
+      'Thriller',
+      'Psychological',
+      'Mystery / Crime',
+      'Fantasy',
+      'Sci-Fi',
+      'Dystopian',
+      'Contemporary',
+      'Historical Fiction',
+      'Anthology',
+      'Short Stories',
+      'Non-Fiction / Memoir',
+      'True Crime',
+      'Paranormal / Supernatural',
+      'Adventure'
+    ];
+
     let calendarYear = new Date().getFullYear();
     let calendarMonth = new Date().getMonth();
     let quoteViewMode = 'timeline';
@@ -1262,6 +1289,46 @@
     let timerRunning = false;
     let timerSeconds = 0;
     let timerStartTimestamp = null;
+
+    function renderGenrePills() {
+      const container = document.getElementById('genrePillsSelector');
+      const countLabel = document.getElementById('selectedGenreCount');
+      if (!container) return;
+
+      if (countLabel) {
+        countLabel.innerText = `${editingBookGenres.length} selected`;
+      }
+
+      container.innerHTML = PRESET_GENRES.map(genre => {
+        const isSelected = editingBookGenres.includes(genre);
+        return `
+          <button 
+            type="button" 
+            onclick="toggleGenreSelection('${genre.replace(/'/g, "\\'")}')" 
+            class="px-2.5 py-1 rounded-xl text-[10px] font-black border-2 border-[#05244C] transition-all select-none ${
+              isSelected 
+                ? 'bg-[#FF5B22] text-white shadow-retro-navy scale-100' 
+                : 'bg-amber-50 text-[#05244C] opacity-75 hover:opacity-100 hover:bg-amber-100'
+            }">
+            ${genre} ${isSelected ? '✓' : '+'}
+          </button>
+        `;
+      }).join('');
+
+      const hiddenInput = document.getElementById('editBookGenres');
+      if (hiddenInput) {
+        hiddenInput.value = editingBookGenres.join(', ');
+      }
+    }
+
+    function toggleGenreSelection(genre) {
+      if (editingBookGenres.includes(genre)) {
+        editingBookGenres = editingBookGenres.filter(g => g !== genre);
+      } else {
+        editingBookGenres.push(genre);
+      }
+      renderGenrePills();
+    }
 
     function extractValidYear(dateStr) {
       if (!dateStr) return null;
@@ -1358,92 +1425,6 @@
       const q = encodeURIComponent(`${title} ${author} book cover`.trim() || 'book cover');
       window.open(`https://www.google.com/search?tbm=isch&q=${q}`, '_blank');
     }
-
-async function autoFetchGenresForCurrentBook() {
-  const title = document.getElementById('editBookTitle')?.value.trim();
-  const author = document.getElementById('editBookAuthor')?.value.trim();
-  if (!title) {
-    showToast('Please enter title first');
-    return;
-  }
-
-  showToast(`Looking up genres for "${title}"...`);
-  const foundGenres = new Set();
-
-  // Junk catalog terms to ignore
-  const ignoredPatterns = [
-    'general', 'fiction', 'non-fiction', 'nonfiction', 'accessible book', 
-    'protected daisy', 'in library', 'lending library', 'nyt:bestseller', 
-    'open library staff picks', 'reading level', 'large type', 'audiobook'
-  ];
-
-  function cleanAndAddTag(rawTag) {
-    if (!rawTag) return;
-    const clean = rawTag.replace(/[_\-\/]/g, ' ').trim();
-    const lower = clean.toLowerCase();
-    
-    // Skip if it contains junk terms or is too short/long
-    if (clean.length < 3 || clean.length > 30) return;
-    if (ignoredPatterns.some(p => lower === p || lower.startsWith(p + ' '))) return;
-
-    // Capitalize first letter of each word
-    const formatted = clean.split(' ')
-      .map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase())
-      .join(' ');
-
-    foundGenres.add(formatted);
-  }
-
-  // 1. Check Google Books categories
-  try {
-    const gq = `intitle:${encodeURIComponent(title)}${author ? `+inauthor:${encodeURIComponent(author)}` : ''}`;
-    const gres = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${gq}&maxResults=3`);
-    if (gres.ok) {
-      const gdata = await gres.json();
-      if (Array.isArray(gdata.items)) {
-        gdata.items.forEach(it => {
-          const cats = it.volumeInfo?.categories || [];
-          cats.forEach(c => {
-            // Split slash-delimited BISAC paths like "Fiction / Thrillers / Psychological"
-            c.split(/[\/,]/).forEach(sub => cleanAndAddTag(sub));
-          });
-        });
-      }
-    }
-  } catch(e) {}
-
-  // 2. Open Library Subject Fallback
-  if (foundGenres.size === 0) {
-    try {
-      const olUrl = `https://openlibrary.org/search.json?title=${encodeURIComponent(title)}${author ? `&author=${encodeURIComponent(author)}` : ''}&limit=3`;
-      const olRes = await fetch(olUrl);
-      if (olRes.ok) {
-        const olData = await olRes.json();
-        if (Array.isArray(olData.docs)) {
-          olData.docs.forEach(doc => {
-            if (Array.isArray(doc.subject)) {
-              doc.subject.slice(0, 10).forEach(s => cleanAndAddTag(s));
-            }
-          });
-        }
-      }
-    } catch(e) {}
-  }
-
-  if (foundGenres.size === 0) {
-    showToast('No distinct genres found online. You can type them manually.');
-    return;
-  }
-
-  const input = document.getElementById('editBookGenres');
-  const existing = input ? input.value.split(',').map(g => g.trim()).filter(Boolean) : [];
-  existing.forEach(g => foundGenres.add(g));
-
-  // Take top 4 most concise tags
-  const finalTags = Array.from(foundGenres).slice(0, 5);
-  if (input) input.value = finalTags.join(', ');
-  showToast(`Found: ${finalTags.join(', ')}`);
-}
 
     async function autoFindSingleCover() {
       const title = document.getElementById('editBookTitle')?.value.trim();
@@ -1575,13 +1556,13 @@ async function autoFetchGenresForCurrentBook() {
     window.renderStarGlyphs = getStarDisplayHtml;
 
     function getBookFormatsList(book) {
-      if (!book) return ['Paperback'];
+      if (!book) return ['eBook'];
       if (Array.isArray(book.formats) && book.formats.length > 0) return book.formats;
       if (book.format && typeof book.format === 'string') {
         const split = book.format.split(/[,•/]/).map(s => s.trim()).filter(Boolean);
         if (split.length > 0) return split;
       }
-      return ['Paperback'];
+      return ['eBook'];
     }
 
     function toggleEditBookFormat(fmtName) {
@@ -1599,8 +1580,8 @@ async function autoFetchGenresForCurrentBook() {
     }
 
     function renderEditBookFormatButtons() {
-      const allFormats = ['Paperback', 'Hardcover', 'eBook', 'Audiobook'];
-      const icons = { 'Paperback': '📖', 'Hardcover': '📚', 'eBook': '📱', 'Audiobook': '🎧' };
+      const allFormats = ['eBook', 'Paperback', 'Hardcover', 'Audiobook'];
+      const icons = { 'eBook': '📱', 'Paperback': '📖', 'Hardcover': '📚', 'Audiobook': '🎧' };
       allFormats.forEach(fmt => {
         const btn = document.getElementById(`fmtBtn_edit_${fmt}`);
         if (!btn) return;
@@ -1646,7 +1627,7 @@ async function autoFetchGenresForCurrentBook() {
 
       books.forEach(b => {
         if (b.cover) b.cover = cleanImageUrl(b.cover);
-        if (!b.formats) b.formats = b.format ? [b.format] : ['Paperback'];
+        if (!b.formats) b.formats = b.format ? [b.format] : ['eBook'];
       });
 
       updateBackupCountBadge();
@@ -1865,7 +1846,7 @@ async function autoFetchGenresForCurrentBook() {
 
     function setFormatFilter(format) {
       currentFormatFilter = format;
-      ['all', 'Paperback', 'Hardcover', 'eBook', 'Audiobook'].forEach(f => {
+      ['all', 'eBook', 'Paperback', 'Hardcover', 'Audiobook'].forEach(f => {
         const btn = document.getElementById(`formatFilter-${f}`);
         if (!btn) return;
         if (f === format) {
@@ -2184,7 +2165,11 @@ async function autoFetchGenresForCurrentBook() {
 
       document.getElementById('editBookShelf').value = bk.shelf || 'reading';
       document.getElementById('editBookOwnership').value = bk.ownership || 'Owned';
-      document.getElementById('editBookGenres').value = Array.isArray(bk.genres) ? bk.genres.join(', ') : (bk.genres || '');
+      
+      // Setup Genre Pills
+      editingBookGenres = Array.isArray(bk.genres) ? [...bk.genres] : (bk.genres ? bk.genres.split(',').map(g => g.trim()) : []);
+      renderGenrePills();
+
       document.getElementById('editBookCover').value = bk.cover || '';
       updateLiveCoverPreview(bk.cover || '');
 
@@ -2378,8 +2363,8 @@ async function autoFetchGenresForCurrentBook() {
       bk.formats = [...editingBookFormats];
       bk.isFavorite = isEditingFavorite;
 
-      const rawGenres = document.getElementById('editBookGenres').value;
-      bk.genres = rawGenres.split(',').map(g => g.trim()).filter(Boolean);
+      // Save Genres from Selected Array
+      bk.genres = [...editingBookGenres];
 
       const rawCover = document.getElementById('editBookCover').value;
       bk.cover = cleanImageUrl(rawCover);
@@ -2496,112 +2481,108 @@ async function autoFetchGenresForCurrentBook() {
 
     // --- ONLINE BOOK SEARCH ---
     async function executeOnlineBookSearch() {
-  const query = document.getElementById('onlineSearchQuery')?.value.trim();
-  const resultsContainer = document.getElementById('onlineSearchResultsList');
-  if (!query || !resultsContainer) return;
+      const query = document.getElementById('onlineSearchQuery')?.value.trim();
+      const resultsContainer = document.getElementById('onlineSearchResultsList');
+      if (!query || !resultsContainer) return;
 
-  resultsContainer.innerHTML = '<p class="text-center text-xs text-slate-400 py-6">Searching catalogs...</p>';
-  currentSearchResults = [];
+      resultsContainer.innerHTML = '<p class="text-center text-xs text-slate-400 py-6">Searching catalogs...</p>';
+      currentSearchResults = [];
 
-  let items = [];
+      let items = [];
 
-  // 1. Try Google Books
-  try {
-    const res = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(query)}&maxResults=10`);
-    if (res.ok) {
-      const data = await res.json();
-      if (Array.isArray(data.items) && data.items.length > 0) {
-        items = data.items.map(it => {
-          const info = it.volumeInfo || {};
-          const links = info.imageLinks || {};
-          return {
-            title: info.title || 'Untitled',
-            author: info.authors ? info.authors.join(', ') : 'Unknown Author',
-            pageCount: Number(info.pageCount) || 300,
-            genres: Array.isArray(info.categories) ? info.categories : ['General'],
-            cover: cleanImageUrl((links.thumbnail || links.smallThumbnail || '').replace(/^http:\/\//i, 'https://'))
-          };
-        });
-      }
-    }
-  } catch (err) {
-    console.warn("Google Books fetch failed, trying Open Library fallback...");
-  }
-
-  // 2. Fallback to Open Library if Google failed or found 0 books
-  if (items.length === 0) {
-    try {
-      const olRes = await fetch(`https://openlibrary.org/search.json?q=${encodeURIComponent(query)}&limit=10`);
-      if (olRes.ok) {
-        const olData = await olRes.json();
-        if (Array.isArray(olData.docs) && olData.docs.length > 0) {
-          items = olData.docs.map(doc => ({
-            title: doc.title || 'Untitled',
-            author: Array.isArray(doc.author_name) ? doc.author_name.join(', ') : 'Unknown Author',
-            pageCount: Number(doc.number_of_pages_median) || 300,
-            genres: Array.isArray(doc.subject) ? doc.subject.slice(0, 2) : ['General'],
-            cover: doc.cover_i ? `https://covers.openlibrary.org/b/id/${doc.cover_i}-L.jpg` : ''
-          }));
+      // 1. Try Google Books
+      try {
+        const res = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(query)}&maxResults=10`);
+        if (res.ok) {
+          const data = await res.json();
+          if (Array.isArray(data.items) && data.items.length > 0) {
+            items = data.items.map(it => {
+              const info = it.volumeInfo || {};
+              const links = info.imageLinks || {};
+              return {
+                title: info.title || 'Untitled',
+                author: info.authors ? info.authors.join(', ') : 'Unknown Author',
+                pageCount: Number(info.pageCount) || 300,
+                genres: Array.isArray(info.categories) ? info.categories : ['Fiction'],
+                cover: cleanImageUrl((links.thumbnail || links.smallThumbnail || '').replace(/^http:\/\//i, 'https://'))
+              };
+            });
+          }
         }
+      } catch (err) {}
+
+      // 2. Open Library Fallback
+      if (items.length === 0) {
+        try {
+          const olRes = await fetch(`https://openlibrary.org/search.json?q=${encodeURIComponent(query)}&limit=10`);
+          if (olRes.ok) {
+            const olData = await olRes.json();
+            if (Array.isArray(olData.docs) && olData.docs.length > 0) {
+              items = olData.docs.map(doc => ({
+                title: doc.title || 'Untitled',
+                author: Array.isArray(doc.author_name) ? doc.author_name.join(', ') : 'Unknown Author',
+                pageCount: Number(doc.number_of_pages_median) || 300,
+                genres: Array.isArray(doc.subject) ? doc.subject.slice(0, 2) : ['Fiction'],
+                cover: doc.cover_i ? `https://covers.openlibrary.org/b/id/${doc.cover_i}-L.jpg` : ''
+              }));
+            }
+          }
+        } catch (err) {}
       }
-    } catch (err) {
-      console.warn("Open Library fallback failed:", err);
+
+      if (items.length === 0) {
+        resultsContainer.innerHTML = '<p class="text-center text-xs text-slate-500 py-6">No books found. Try typing title or author only.</p>';
+        return;
+      }
+
+      currentSearchResults = items;
+
+      resultsContainer.innerHTML = items.map((book, index) => `
+        <div class="bg-white border-2 border-[#05244C] rounded-2xl p-2.5 flex items-center justify-between gap-2.5 shadow-sm">
+          <img src="${book.cover || 'https://placehold.co/80x120/446BA2/FFF9EE?text=Cover'}" class="w-10 aspect-[2/3] object-cover rounded-lg border border-[#05244C] flex-shrink-0 bg-slate-200" onerror="handleCoverError(this)">
+          <div class="flex-1 min-w-0">
+            <h4 class="text-xs font-bold text-[#05244C] truncate">${book.title}</h4>
+            <p class="text-[10px] text-slate-500 font-editorial italic truncate">${book.author}</p>
+            <span class="text-[9px] text-slate-400 block">${book.pageCount} pages</span>
+          </div>
+          <button onclick="addBookFromSearchIndex(${index})" class="px-3 py-1.5 bg-[#FF5B22] text-white rounded-xl text-xs font-bold border border-[#05244C] shadow-sm retro-btn">Add</button>
+        </div>
+      `).join('');
     }
-  }
 
-  if (items.length === 0) {
-    resultsContainer.innerHTML = '<p class="text-center text-xs text-slate-500 py-6">No books found. Try typing title or author only.</p>';
-    return;
-  }
+    function addBookFromSearchIndex(index) {
+      const item = currentSearchResults[index];
+      if (!item) return;
 
-  currentSearchResults = items;
+      const newBk = {
+        id: 'b_search_' + Date.now(),
+        title: item.title,
+        author: item.author,
+        pageCount: item.pageCount,
+        currentPage: 0,
+        shelf: 'to-read',
+        ownership: 'Owned',
+        formats: ['eBook'],
+        genres: item.genres,
+        cover: item.cover,
+        rating: 0,
+        review: '',
+        vibeTears: 0,
+        vibeScary: 0,
+        vibeSpice: 0,
+        vibeHeartbreak: 0,
+        isFavorite: false,
+        finishedDate: null,
+        lastSessionDate: null
+      };
 
-  resultsContainer.innerHTML = items.map((book, index) => `
-    <div class="bg-white border-2 border-[#05244C] rounded-2xl p-2.5 flex items-center justify-between gap-2.5 shadow-sm">
-      <img src="${book.cover || 'https://placehold.co/80x120/446BA2/FFF9EE?text=Cover'}" class="w-10 aspect-[2/3] object-cover rounded-lg border border-[#05244C] flex-shrink-0 bg-slate-200" onerror="handleCoverError(this)">
-      <div class="flex-1 min-w-0">
-        <h4 class="text-xs font-bold text-[#05244C] truncate">${book.title}</h4>
-        <p class="text-[10px] text-slate-500 font-editorial italic truncate">${book.author}</p>
-        <span class="text-[9px] text-slate-400 block">${book.pageCount} pages</span>
-      </div>
-      <button onclick="addBookFromSearchIndex(${index})" class="px-3 py-1.5 bg-[#FF5B22] text-white rounded-xl text-xs font-bold border border-[#05244C] shadow-sm retro-btn">Add</button>
-    </div>
-  `).join('');
-}
-
-function addBookFromSearchIndex(index) {
-  const item = currentSearchResults[index];
-  if (!item) return;
-
-  const newBk = {
-    id: 'b_search_' + Date.now(),
-    title: item.title,
-    author: item.author,
-    pageCount: item.pageCount,
-    currentPage: 0,
-    shelf: 'to-read',
-    ownership: 'Owned',
-    formats: ['eBook'],
-    genres: item.genres,
-    cover: item.cover,
-    rating: 0,
-    review: '',
-    vibeTears: 0,
-    vibeScary: 0,
-    vibeSpice: 0,
-    vibeHeartbreak: 0,
-    isFavorite: false,
-    finishedDate: null,
-    lastSessionDate: null
-  };
-
-  books.push(newBk);
-  saveBooks();
-  closeModal('modalOnlineSearch');
-  determineActiveHeroBook();
-  renderAllViews();
-  showToast(`Added "${newBk.title}" to TBR!`);
-}
+      books.push(newBk);
+      saveBooks();
+      closeModal('modalOnlineSearch');
+      determineActiveHeroBook();
+      renderAllViews();
+      showToast(`Added "${newBk.title}" to TBR!`);
+    }
 
     // --- CALENDAR & STATS FUNCTIONS ---
     function renderCalendar() {
