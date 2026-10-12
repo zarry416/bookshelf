@@ -46,7 +46,7 @@
   <!-- Google Fonts: Vacation & Retro Typography -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Fraunces:ital,opsz,wght@0,9..144,400..900;1,9..144,400..900&family=Playfair+Display:ital,wght@0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Fraunces:ital,opsz,wght@0,9..144,400..900;1,9..144,400..900&family=Playfair+Display:ital,wght@0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <style>
     :root {
@@ -86,10 +86,6 @@
 
     .font-quote-display {
       font-family: 'Playfair Display', 'Bodoni Moda', Georgia, serif;
-    }
-
-    .font-handwriting {
-      font-family: 'Caveat', cursive;
     }
 
     .shadow-retro-orange {
@@ -135,7 +131,7 @@
 </head>
 <body class="text-slate-800 antialiased selection:bg-[#FFA4C4] selection:text-[#05244C]">
 
-  <!-- TOP HEADER -->
+  <!-- HEADER -->
   <header class="sticky top-0 z-40 bg-[#446BA2]/95 backdrop-blur-md border-b-2 border-[#FFA4C4] px-4 pb-3 transition-all shadow-md">
     <div class="max-w-md mx-auto flex items-center justify-between">
       <div class="flex items-center gap-2.5">
@@ -169,7 +165,6 @@
     <!-- TAB 1: READING HERO & ACTIVE PROGRESS -->
     <section id="tab-reading" class="tab-content space-y-6">
 
-      <!-- 1. LAST SESSION TOP HERO CARD -->
       <div id="heroReadingCard" class="bg-[#FFF9EE] border-3 border-[#05244C] rounded-3xl p-5 pt-4 pb-5 shadow-retro-orange relative transition-all">
         <div class="flex items-center justify-between mb-3.5 pb-2 border-b-2 border-orange-200/70">
           <div class="flex items-center gap-2">
@@ -208,7 +203,6 @@
           <span id="heroPaceMetric" class="text-[10px] font-bold text-[#05244C] bg-white/80 px-2 py-1 rounded-lg border border-orange-200">~ 40 pgs/hr</span>
         </div>
 
-        <!-- Five Action Buttons (Log, Timer, Quote, Thought, DNF) -->
         <div class="grid grid-cols-5 gap-1.5 mt-3.5 pt-1">
           <button onclick="openPastSessionModal()" class="retro-btn bg-[#FF5B22] text-white py-2 px-1 rounded-xl text-xs font-black border-2 border-[#05244C] shadow-retro-navy text-center flex flex-col items-center justify-center gap-1">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
@@ -237,7 +231,6 @@
         </div>
       </div>
 
-      <!-- 2. ALSO IN PROGRESS SHELF -->
       <div>
         <div class="flex items-center justify-between mb-2.5 px-1">
           <h3 class="text-xs font-extrabold text-[#FFF9EE] uppercase tracking-wider flex items-center gap-2">
@@ -250,7 +243,6 @@
         <div id="inProgressCarousel" class="flex gap-3 overflow-x-auto no-scrollbar pb-2 pt-1"></div>
       </div>
 
-      <!-- 3. LIVE TIMER DRAWER -->
       <div id="liveTimerBox" class="hidden bg-[#05244C] border-3 border-[#FFD034] rounded-3xl p-5 shadow-retro-orange text-[#FFF9EE]">
         <div class="flex items-center justify-between mb-3">
           <div class="flex items-center gap-2">
@@ -433,7 +425,6 @@
             <p class="text-[10px] uppercase font-bold text-slate-500">Total Pages</p>
             <p id="statPagesRead" class="text-xl font-retro-title text-[#05244C]">0</p>
           </div>
-          <!-- Clickable Hours Read: Opens per-book reading time breakdown -->
           <div onclick="openBookHoursModal()" class="bg-white border-2 border-[#05244C] p-3 rounded-2xl shadow-sm cursor-pointer hover:bg-teal-50 transition-colors group">
             <div class="flex items-center justify-between">
               <p class="text-[10px] uppercase font-bold text-slate-500">Hours Read</p>
@@ -449,7 +440,7 @@
       </div>
     </section>
 
-    <!-- TAB 4: QUOTES & THOUGHTS WITH TYPE TOGGLE (ALL, QUOTES, THOUGHTS) -->
+    <!-- TAB 4: QUOTES & THOUGHTS -->
     <section id="tab-quotes" class="tab-content hidden space-y-4">
       <div class="bg-[#FFF9EE] border-3 border-[#05244C] rounded-3xl p-4 shadow-retro-orange space-y-3">
         <div class="flex items-center justify-between">
@@ -463,7 +454,6 @@
           </div>
         </div>
 
-        <!-- Filter Pill Bar: All, Quotes, Thoughts -->
         <div class="flex items-center justify-between pt-1 border-t border-orange-200/60">
           <div class="flex bg-amber-100 p-0.5 rounded-xl border border-[#05244C]">
             <button onclick="setQuoteTypeFilter('all')" id="qTypeFilter_all" class="px-2.5 py-1 rounded-lg text-xs font-black bg-[#FF5B22] text-white">All</button>
@@ -483,7 +473,7 @@
 
   </main>
 
-  <!-- BOTTOM DOCKED NAVIGATION BAR -->
+  <!-- BOTTOM NAVIGATION -->
   <nav class="fixed bottom-0 left-0 right-0 z-50 bg-[#446BA2]/95 backdrop-blur-lg border-t-2 border-[#FFA4C4] px-6 py-2 shadow-lg">
     <div class="max-w-md mx-auto flex items-center justify-between">
       <button onclick="switchTab('reading')" class="nav-tab flex flex-col items-center gap-1 text-[#FFD034]" data-tab="reading">
@@ -631,7 +621,6 @@
           </div>
         </div>
 
-        <!-- Genres & Categories Input Field with Auto-Fetch -->
         <div>
           <div class="flex items-center justify-between mb-1">
             <label class="block">Genres & Categories</label>
@@ -777,7 +766,7 @@
           </div>
         </div>
 
-        <!-- RE-READ & SESSIONS HISTORY SECTION WITH DUAL PAGE / PERCENT SYNC -->
+        <!-- RE-READ & SESSIONS HISTORY SECTION -->
         <div class="pt-3 border-t-2 border-orange-200/80 space-y-3">
           <div class="flex items-center justify-between">
             <div>
@@ -797,7 +786,7 @@
               <button type="button" onclick="openNewInlineSessionForm()" class="px-2 py-0.5 bg-[#FF5B22] text-white rounded-lg text-[10px] font-black border border-[#05244C] shadow-sm retro-btn">+ Log Session</button>
             </div>
 
-            <!-- Inline Quick Session Logger Form (Supports Live % and Page Synced Entry) -->
+            <!-- Inline Quick Session Logger Form (Supports Dual Page and % Entry) -->
             <div id="inlineSessionForm" class="hidden bg-[#FFF9EE] border-2 border-[#05244C] rounded-xl p-2.5 space-y-2 shadow-sm">
               <div class="flex items-center justify-between pb-1 border-b border-orange-200">
                 <span id="inlineSessFormTitle" class="text-[10px] font-black uppercase text-[#FF5B22]">Quick Log Session</span>
@@ -860,7 +849,7 @@
           </div>
         </div>
 
-        <!-- BOOK QUOTES & PASSAGES DIRECTLY INSIDE EDIT MODAL -->
+        <!-- BOOK QUOTES & THOUGHTS SECTION -->
         <div class="pt-3 border-t-2 border-orange-200/80 space-y-3">
           <div class="flex items-center justify-between">
             <span class="text-[10px] uppercase font-black text-[#05244C] tracking-wide">Book Quotes & Thoughts</span>
@@ -870,7 +859,6 @@
             </div>
           </div>
 
-          <!-- Inline Quote/Thought Form -->
           <div id="editBookQuoteForm" class="hidden bg-[#FFF9EE] border-2 border-[#05244C] rounded-xl p-2.5 space-y-2 shadow-sm">
             <div class="flex justify-between items-center pb-1 border-b border-orange-200">
               <span id="editQuoteFormHeader" class="text-[10px] font-black uppercase text-[#1DBBB4]">New Passage</span>
@@ -893,12 +881,10 @@
               </div>
             </div>
 
-            <!-- Mood & Theme Tag Field with Preselected Clickable Tag Pills -->
             <div>
               <label class="block font-bold text-slate-600 text-[10px] mb-1">Tag / Mood</label>
               <input type="text" id="editModalQuoteTag" placeholder="sad, thoughtful, crazy..." class="w-full bg-white border border-[#05244C] rounded-lg p-1.5 font-bold text-[10px] mb-1.5">
               
-              <!-- Quick Select Tag Pills -->
               <div class="flex flex-wrap gap-1">
                 <button type="button" onclick="applyPresetTag('editModalQuoteTag', 'sad')" class="px-2 py-0.5 rounded-full text-[9px] font-bold border border-[#05244C] bg-rose-100 text-rose-800 hover:bg-rose-200">😢 sad</button>
                 <button type="button" onclick="applyPresetTag('editModalQuoteTag', 'thoughtful')" class="px-2 py-0.5 rounded-full text-[9px] font-bold border border-[#05244C] bg-blue-100 text-blue-800 hover:bg-blue-200">🤔 thoughtful</button>
@@ -926,9 +912,178 @@
     </div>
   </div>
 
-  <!-- MODAL: ADD / EDIT QUOTE OR THOUGHT (STANDALONE) -->
+  <!-- MODAL: MULTI-COVER PICKER -->
+  <div id="modalCoverPicker" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4">
+    <div class="bg-[#FFF9EE] border-3 border-[#05244C] rounded-3xl p-5 w-full max-w-sm shadow-retro-orange space-y-3 max-h-[85vh] flex flex-col">
+      <div class="flex justify-between items-center pb-2 border-b-2 border-orange-200">
+        <div>
+          <h3 class="text-base font-retro-title text-[#05244C]">Select Book Cover</h3>
+          <p id="coverPickerSub" class="text-[11px] font-editorial text-slate-500 italic">Found multiple covers</p>
+        </div>
+        <button onclick="closeModal('modalCoverPicker')" class="text-slate-500 font-bold text-lg">✕</button>
+      </div>
+      <div id="coverPickerGrid" class="flex-1 overflow-y-auto grid grid-cols-2 gap-3 pr-1 no-scrollbar pt-1"></div>
+      <p class="text-[10px] text-center text-slate-400 italic">Tap any cover to apply it to your book.</p>
+    </div>
+  </div>
+
+  <!-- MODAL: FINISHED BOOKS LIST -->
+  <div id="modalFinishedBooks" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4">
+    <div class="bg-[#FFF9EE] border-3 border-[#05244C] rounded-3xl p-5 w-full max-w-sm shadow-retro-orange space-y-3 max-h-[85vh] flex flex-col">
+      <div class="flex justify-between items-center pb-2 border-b-2 border-orange-200">
+        <div>
+          <h3 class="text-base font-retro-title text-[#05244C]">Finished Books</h3>
+          <p id="finishedModalYearSub" class="text-[11px] font-editorial text-slate-500 italic">Completed in 2026</p>
+        </div>
+        <button onclick="closeModal('modalFinishedBooks')" class="text-slate-500 font-bold text-lg">✕</button>
+      </div>
+      <div id="finishedBooksModalList" class="flex-1 overflow-y-auto space-y-2 pr-1 no-scrollbar"></div>
+      <button onclick="closeModal('modalFinishedBooks'); switchTab('library'); setShelfFilter('finished');" class="w-full py-2 bg-[#FFD034] text-[#05244C] rounded-xl text-xs font-black border-2 border-[#05244C] shadow-retro-navy">View All Finished in Library ➔</button>
+    </div>
+  </div>
+
+  <!-- MODAL: BATCH EDIT -->
+  <div id="modalBulkEdit" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4">
+    <div class="bg-[#FFF9EE] border-3 border-[#05244C] rounded-3xl p-6 w-full max-w-sm shadow-retro-orange space-y-4">
+      <div class="flex justify-between items-center pb-2 border-b-2 border-orange-200">
+        <h3 class="text-base font-retro-title text-[#05244C]">Batch Edit Books</h3>
+        <button onclick="closeModal('modalBulkEdit')" class="text-slate-500 font-bold text-lg">✕</button>
+      </div>
+
+      <p id="bulkEditSubtext" class="text-xs font-editorial italic text-slate-600">Editing 0 selected books</p>
+
+      <div class="space-y-3 text-xs font-bold text-[#05244C]">
+        <div>
+          <label class="block mb-1">Move All To Shelf</label>
+          <select id="bulkShelfSelect" class="w-full bg-white border-2 border-[#05244C] rounded-xl p-2.5">
+            <option value="no-change">— Keep existing shelf —</option>
+            <option value="reading">Reading</option>
+            <option value="to-read">To Read (TBR)</option>
+            <option value="finished">Finished</option>
+            <option value="dnf">DNF</option>
+            <option value="wishlist">Wishlist</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block mb-1">Change All Format</label>
+          <select id="bulkFormatSelect" class="w-full bg-white border-2 border-[#05244C] rounded-xl p-2.5">
+            <option value="no-change">— Keep existing format —</option>
+            <option value="Paperback">Paperback</option>
+            <option value="Hardcover">Hardcover</option>
+            <option value="eBook">eBook</option>
+            <option value="Audiobook">Audiobook</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block mb-1">Ownership</label>
+          <select id="bulkOwnershipSelect" class="w-full bg-white border-2 border-[#05244C] rounded-xl p-2.5">
+            <option value="no-change">— Keep existing ownership —</option>
+            <option value="Owned">Owned</option>
+            <option value="Borrowed">Borrowed</option>
+            <option value="Not Owned">Not Owned</option>
+          </select>
+        </div>
+
+        <div class="pt-2 border-t border-orange-200">
+          <button onclick="batchDeleteSelectedBooks()" class="w-full py-2 bg-red-100 hover:bg-red-200 text-red-700 rounded-xl font-bold border border-red-300 text-xs text-center">
+            🗑️ Delete All Selected Books
+          </button>
+        </div>
+      </div>
+
+      <button onclick="applyBatchEdit()" class="w-full py-3 bg-[#FF5B22] text-white rounded-2xl font-black border-2 border-[#05244C] shadow-retro-navy">Apply to Selected Books</button>
+    </div>
+  </div>
+
+  <!-- MODAL: ONLINE BOOK SEARCH & IMPORT -->
+  <div id="modalOnlineSearch" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4">
+    <div class="bg-[#FFF9EE] border-3 border-[#05244C] rounded-3xl p-5 w-full max-w-sm shadow-retro-orange max-h-[85vh] flex flex-col">
+      <div class="flex justify-between items-center pb-2 border-b-2 border-orange-200">
+        <h3 class="text-base font-retro-title text-[#05244C]">Add New Book</h3>
+        <button onclick="closeModal('modalOnlineSearch')" class="text-slate-500 font-bold text-lg">✕</button>
+      </div>
+
+      <div class="my-3 flex gap-2">
+        <input type="text" id="onlineSearchQuery" placeholder="Search title, author, or ISBN..." class="flex-1 bg-white border-2 border-[#05244C] rounded-xl px-3 py-2 text-xs font-semibold focus:outline-none">
+        <button onclick="performOnlineSearch()" class="px-3 bg-[#FF5B22] text-white rounded-xl font-bold border-2 border-[#05244C] text-xs">Search</button>
+      </div>
+
+      <div id="searchResultsList" class="flex-1 overflow-y-auto space-y-2 pr-1 no-scrollbar">
+        <p class="text-xs text-center text-slate-500 py-6 italic">Enter title, author, or ISBN above to find books.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: ADD MANUAL CUSTOM BOOK -->
+  <div id="modalManualBook" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4">
+    <div class="bg-[#FFF9EE] border-3 border-[#05244C] rounded-3xl p-6 w-full max-w-sm shadow-retro-orange space-y-3 max-h-[90vh] overflow-y-auto">
+      <div class="flex justify-between items-center pb-2 border-b-2 border-orange-200">
+        <h3 class="text-base font-retro-title text-[#05244C]">Add Custom Book</h3>
+        <button onclick="closeModal('modalManualBook')" class="text-slate-500 font-bold text-lg">✕</button>
+      </div>
+      <div class="space-y-2 text-xs font-bold text-[#05244C]">
+        <div>
+          <label class="block mb-1">Title *</label>
+          <input type="text" id="manualBookTitle" placeholder="e.g. The Great Gatsby" class="w-full bg-white border-2 border-[#05244C] rounded-xl p-2 font-semibold">
+        </div>
+        <div>
+          <label class="block mb-1">Author *</label>
+          <input type="text" id="manualBookAuthor" placeholder="e.g. F. Scott Fitzgerald" class="w-full bg-white border-2 border-[#05244C] rounded-xl p-2 font-semibold">
+        </div>
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="block mb-1">Total Pages</label>
+            <input type="number" id="manualBookPages" placeholder="300" class="w-full bg-white border-2 border-[#05244C] rounded-xl p-2 font-semibold">
+          </div>
+          <div>
+            <label class="block mb-1">Initial Shelf</label>
+            <select id="manualBookShelf" class="w-full bg-white border-2 border-[#05244C] rounded-xl p-2 font-semibold">
+              <option value="to-read" selected>To Read (TBR)</option>
+              <option value="reading">Reading</option>
+              <option value="finished">Finished</option>
+              <option value="dnf">DNF</option>
+              <option value="wishlist">Wishlist</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="block mb-1">Ownership</label>
+          <select id="manualBookOwnership" class="w-full bg-white border-2 border-[#05244C] rounded-xl p-2 font-semibold">
+            <option value="Owned">Owned</option>
+            <option value="Borrowed">Borrowed</option>
+            <option value="Not Owned">Not Owned</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block mb-1">Formats</label>
+          <div class="grid grid-cols-2 gap-1.5" id="manualBookFormatButtonsContainer">
+            <button type="button" onclick="toggleManualBookFormat('Paperback')" id="fmtBtn_manual_Paperback" class="py-2 px-2 rounded-xl text-[11px] font-bold border-2 border-[#05244C] bg-white text-slate-700 text-center transition-all">📖 Paperback</button>
+            <button type="button" onclick="toggleManualBookFormat('Hardcover')" id="fmtBtn_manual_Hardcover" class="py-2 px-2 rounded-xl text-[11px] font-bold border-2 border-[#05244C] bg-white text-slate-700 text-center transition-all">📚 Hardcover</button>
+            <button type="button" onclick="toggleManualBookFormat('eBook')" id="fmtBtn_manual_eBook" class="py-2 px-2 rounded-xl text-[11px] font-bold border-2 border-[#05244C] bg-white text-slate-700 text-center transition-all">📱 eBook</button>
+            <button type="button" onclick="toggleManualBookFormat('Audiobook')" id="fmtBtn_manual_Audiobook" class="py-2 px-2 rounded-xl text-[11px] font-bold border-2 border-[#05244C] bg-white text-slate-700 text-center transition-all">🎧 Audiobook</button>
+          </div>
+        </div>
+
+        <div>
+          <label class="block mb-1">Cover Image URL (optional)</label>
+          <input type="url" id="manualBookCover" placeholder="https://..." class="w-full bg-white border-2 border-[#05244C] rounded-xl p-2 font-semibold">
+        </div>
+        <div>
+          <label class="block mb-1">Genres / Categories (comma separated)</label>
+          <input type="text" id="manualBookGenres" placeholder="Classics, Fiction" class="w-full bg-white border-2 border-[#05244C] rounded-xl p-2 font-semibold">
+        </div>
+      </div>
+      <button onclick="submitManualBook()" class="w-full py-3 bg-[#FF5B22] text-white rounded-2xl font-black border-2 border-[#05244C] shadow-retro-navy">Save Book to Shelf</button>
+    </div>
+  </div>
+
+  <!-- MODAL: ADD QUOTE (STANDALONE) -->
   <div id="modalAddQuote" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4">
-    <div class="bg-[#FFF9EE] border-3 border-[#05244C] rounded-3xl p-6 w-full max-w-sm shadow-retro-orange space-y-3.5">
+    <div class="bg-[#FFF9EE] border-3 border-[#05244C] rounded-3xl p-6 w-full max-w-sm shadow-retro-orange space-y-4">
       <div class="flex justify-between items-center pb-2 border-b-2 border-orange-200">
         <h3 id="standaloneModalTitle" class="text-base font-retro-title text-[#05244C]">Save Passage</h3>
         <button onclick="closeModal('modalAddQuote')" class="text-slate-500 font-bold text-lg">✕</button>
@@ -936,7 +1091,6 @@
 
       <input type="hidden" id="standaloneQuoteEditId" value="">
 
-      <!-- Entry Type Toggle: Quote vs Reader Thought -->
       <div class="flex bg-amber-100 p-1 rounded-xl border border-[#05244C]">
         <button type="button" onclick="setStandaloneEntryType('quote')" id="btnEntryTypeQuote" class="flex-1 py-1 rounded-lg text-xs font-black bg-[#FF5B22] text-white">“ Book Quote</button>
         <button type="button" onclick="setStandaloneEntryType('thought')" id="btnEntryTypeThought" class="flex-1 py-1 rounded-lg text-xs font-black text-slate-700">💭 Reader Thought</button>
@@ -964,7 +1118,6 @@
           </div>
         </div>
 
-        <!-- Tag / Mood with Preselected Pills -->
         <div>
           <label class="block mb-1">Tag / Mood</label>
           <input type="text" id="quoteTagInput" placeholder="sad, thoughtful, crazy..." class="w-full bg-white border-2 border-[#05244C] rounded-xl p-2 mb-1.5">
@@ -1005,9 +1158,7 @@
         <button onclick="closeModal('modalInfographic')" class="text-slate-500 font-bold text-lg">✕</button>
       </div>
 
-      <!-- Infographic Share Card Poster -->
       <div id="infographicPoster" class="bg-gradient-to-br from-[#446BA2] via-[#2D548C] to-[#05244C] text-[#FFF9EE] rounded-3xl p-6 border-3 border-[#FFD034] shadow-retro-navy space-y-5 relative overflow-hidden">
-        <!-- Floating Palm / Sun Accents -->
         <div class="flex justify-between items-center border-b border-white/20 pb-3">
           <div>
             <span class="text-[10px] font-extrabold uppercase tracking-widest text-[#FFD034]">Year in Books</span>
@@ -1017,7 +1168,6 @@
           <span class="text-3xl">🌴</span>
         </div>
 
-        <!-- Big Metrics Row -->
         <div class="grid grid-cols-3 gap-2 text-center">
           <div class="bg-white/10 rounded-2xl p-2.5 border border-white/20 backdrop-blur-sm">
             <span class="text-[9px] uppercase font-bold text-slate-300">Books</span>
@@ -1033,7 +1183,6 @@
           </div>
         </div>
 
-        <!-- Completed Books Showcase Carousel / Mini Grid -->
         <div class="space-y-1.5">
           <div class="flex justify-between items-center text-[10px] font-bold text-slate-300">
             <span>Completed Titles</span>
@@ -1042,7 +1191,6 @@
           <div id="infoCoversRow" class="flex gap-2 overflow-x-auto no-scrollbar py-1"></div>
         </div>
 
-        <!-- Top Genre & Vibe Highlights -->
         <div class="grid grid-cols-2 gap-2 text-xs">
           <div class="bg-white/10 rounded-2xl p-3 border border-white/20">
             <p class="text-[9px] font-black uppercase text-[#FFD034] tracking-wider mb-1">Top Genres</p>
@@ -1167,2753 +1315,7 @@
   </div>
 
   <script>
-    const APP_VERSION = "4.6";
-    let books = [];
-    let readingSessions = [];
-    let quotes = [];
-    let userGoals = { dailyTarget: 30, dailyTargetType: 'pages', yearlyTarget: 25 };
-    let activeBookId = null;
-
-    let currentLibraryView = 'covers';
-    let currentGridCols = 4;
-    let currentShelfFilter = 'all';
-    let currentFormatFilter = 'all';
-    let currentQuoteTypeFilter = 'all'; // 'all', 'quote', 'thought'
-    let isBatchMode = false;
-    let selectedBookIds = new Set();
-    let currentLogMode = 'pages';
-
-    let editingBookFormats = ['Paperback'];
-    let manualBookFormats = ['Paperback'];
-
-    let calendarYear = new Date().getFullYear();
-    let calendarMonth = new Date().getMonth();
-    let quoteViewMode = 'timeline';
-    let isEditingFavorite = false;
-
-    let timerInterval = null;
-    let timerRunning = false;
-    let timerSeconds = 0;
-    let timerStartTimestamp = null;
-    let timerStartPage = 0;
-
-    let audioCtx = null;
-    let currentSoundType = null;
-    let activeSoundNodes = [];
-
-    function extractValidYear(dateStr) {
-      if (!dateStr) return null;
-      const match = String(dateStr).match(/\b(19\d\d|20\d\d)\b/);
-      return match ? parseInt(match[1], 10) : null;
-    }
-
-    function testImageUrl(url) {
-      return new Promise((resolve) => {
-        if (!url) return resolve(false);
-        const img = new Image();
-        img.referrerPolicy = 'no-referrer';
-        const timer = setTimeout(() => {
-          img.onload = null;
-          img.onerror = null;
-          resolve(false);
-        }, 3500);
-
-        img.onload = function() {
-          clearTimeout(timer);
-          if (img.naturalWidth > 15 && img.naturalHeight > 15) {
-            resolve(true);
-          } else {
-            resolve(false);
-          }
-        };
-        img.onerror = function() {
-          clearTimeout(timer);
-          resolve(false);
-        };
-        img.src = url;
-      });
-    }
-
-    function cleanImageUrl(rawUrl) {
-      if (!rawUrl) return '';
-      let url = String(rawUrl).trim().replace(/^["']|["']$/g, '');
-      if (!url) return '';
-
-      if (url.includes('google.com/imgres') || url.includes('google.com/url')) {
-        try {
-          const parsed = new URL(url);
-          const imgParam = parsed.searchParams.get('imgurl') || parsed.searchParams.get('url');
-          if (imgParam) {
-            url = decodeURIComponent(imgParam);
-          }
-        } catch (e) {}
-      }
-
-      if (url.startsWith('http://')) {
-        url = url.replace('http://', 'https://');
-      }
-
-      return url;
-    }
-
-    function handleCoverError(imgElement) {
-      if (!imgElement) return;
-      imgElement.onerror = null;
-      imgElement.src = 'https://placehold.co/200x300/446BA2/FFF9EE?text=Cover';
-    }
-
-    function handleCoverImageUpload(e) {
-      const file = e.target.files?.[0];
-      if (!file) return;
-
-      const reader = new FileReader();
-      reader.onload = function(event) {
-        const img = new Image();
-        img.onload = function() {
-          const canvas = document.createElement('canvas');
-          let width = img.width;
-          let height = img.height;
-          const maxDim = 720;
-          if (width > height && width > maxDim) {
-            height = Math.round((height * maxDim) / width);
-            width = maxDim;
-          } else if (height > maxDim) {
-            width = Math.round((width * maxDim) / height);
-            height = maxDim;
-          }
-          canvas.width = width;
-          canvas.height = height;
-          const ctx = canvas.getContext('2d');
-          ctx.drawImage(img, 0, 0, width, height);
-          const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.82);
-
-          const coverInput = document.getElementById('editBookCover');
-          if (coverInput) coverInput.value = compressedDataUrl;
-          updateLiveCoverPreview(compressedDataUrl);
-          showToast('Image attached!');
-        };
-        img.src = event.target.result;
-      };
-      reader.readAsDataURL(file);
-      e.target.value = '';
-    }
-
-    function openGoogleImagesSearch() {
-      const title = document.getElementById('editBookTitle')?.value.trim() || '';
-      const author = document.getElementById('editBookAuthor')?.value.trim() || '';
-      const q = encodeURIComponent(`${title} ${author} book cover`.trim() || 'book cover');
-      window.open(`https://www.google.com/search?tbm=isch&q=${q}`, '_blank');
-    }
-
-    // Auto-Fetch Genres specifically for current book in edit modal
-    async function autoFetchGenresForCurrentBook() {
-      const title = document.getElementById('editBookTitle')?.value.trim();
-      const author = document.getElementById('editBookAuthor')?.value.trim();
-      if (!title) {
-        showToast('Please enter title first');
-        return;
-      }
-
-      showToast(`Looking up genres for "${title}"...`);
-      const foundGenres = new Set();
-
-      try {
-        const gq = `intitle:${encodeURIComponent(title)}${author ? `+inauthor:${encodeURIComponent(author)}` : ''}`;
-        const gres = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${gq}&maxResults=3`);
-        if (gres.ok) {
-          const gdata = await gres.json();
-          if (Array.isArray(gdata.items)) {
-            gdata.items.forEach(it => {
-              if (Array.isArray(it.volumeInfo?.categories)) {
-                it.volumeInfo.categories.forEach(c => {
-                  c.split(/[\/,]/).forEach(sub => {
-                    const clean = sub.trim();
-                    if (clean && clean.toLowerCase() !== 'general') foundGenres.add(clean);
-                  });
-                });
-              }
-            });
-          }
-        }
-      } catch(e) {}
-
-      try {
-        const olRes = await fetch(`https://openlibrary.org/search.json?title=${encodeURIComponent(title)}${author ? `&author=${encodeURIComponent(author)}` : ''}&limit=3`);
-        if (olRes.ok) {
-          const olData = await olRes.json();
-          if (Array.isArray(olData.docs) && olData.docs[0]?.subject) {
-            olData.docs[0].subject.slice(0, 4).forEach(s => foundGenres.add(s.trim()));
-          }
-        }
-      } catch(e) {}
-
-      if (foundGenres.size === 0) {
-        showToast('No genres found online. You can type them manually.');
-        return;
-      }
-
-      const input = document.getElementById('editBookGenres');
-      const existing = input ? input.value.split(',').map(g => g.trim()).filter(Boolean) : [];
-      existing.forEach(g => foundGenres.add(g));
-
-      if (input) input.value = Array.from(foundGenres).join(', ');
-      showToast(`Updated genres: ${Array.from(foundGenres).slice(0, 3).join(', ')}`);
-    }
-
-    async function autoFindSingleCover() {
-      const title = document.getElementById('editBookTitle')?.value.trim();
-      const author = document.getElementById('editBookAuthor')?.value.trim();
-      const id = document.getElementById('editBookId')?.value;
-      const bk = books.find(b => b.id === id);
-
-      if (!title) {
-        showToast('Please enter a title first');
-        return;
-      }
-
-      showToast(`Searching Google Books & Open Library for "${title}"...`);
-      const candidates = [];
-
-      const rawIsbn = (bk?.isbn || bk?.isbn13 || '').replace(/[^0-9X]/gi, '');
-      if (rawIsbn && rawIsbn.length >= 10) {
-        const olIsbnUrl = `https://covers.openlibrary.org/b/isbn/${rawIsbn}-L.jpg`;
-        const isValidOl = await testImageUrl(olIsbnUrl);
-        if (isValidOl) {
-          candidates.push({ source: 'Open Library', url: olIsbnUrl, label: 'Open Library (ISBN)' });
-        }
-      }
-
-      try {
-        const q = `title=${encodeURIComponent(title)}${author ? `&author=${encodeURIComponent(author)}` : ''}`;
-        const res = await fetch(`https://openlibrary.org/search.json?${q}&limit=4`);
-        if (res.ok) {
-          const data = await res.json();
-          if (Array.isArray(data.docs)) {
-            for (const doc of data.docs) {
-              if (doc.cover_i) {
-                const olUrl = `https://covers.openlibrary.org/b/id/${doc.cover_i}-L.jpg`;
-                if (!candidates.some(c => c.url === olUrl)) {
-                  candidates.push({ source: 'Open Library', url: olUrl, label: doc.edition_count ? `${doc.edition_count} Editions` : 'Open Library' });
-                }
-              }
-            }
-          }
-        }
-      } catch(e) {}
-
-      try {
-        const gq = `intitle:${encodeURIComponent(title)}${author ? `+inauthor:${encodeURIComponent(author)}` : ''}`;
-        const gres = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${gq}&maxResults=4`);
-        if (gres.ok) {
-          const gdata = await gres.json();
-          if (Array.isArray(gdata.items)) {
-            for (const item of gdata.items) {
-              const links = item.volumeInfo?.imageLinks;
-              const gUrl = (links?.thumbnail || links?.smallThumbnail || '').replace(/^http:\/\//i, 'https://').replace('&edge=curl', '');
-              if (gUrl && !candidates.some(c => c.url === gUrl)) {
-                candidates.push({ source: 'Google Books', url: gUrl, label: item.volumeInfo?.publishedDate ? `Google (${item.volumeInfo.publishedDate.slice(0, 4)})` : 'Google Books' });
-              }
-            }
-          }
-        }
-      } catch(e) {}
-
-      if (candidates.length === 0) {
-        showToast('No covers found. Try "📷 Add Image" or "Google Images ↗"');
-        return;
-      }
-
-      if (candidates.length === 1) {
-        applyChosenCover(candidates[0].url);
-        showToast(`Applied cover from ${candidates[0].source}!`);
-        return;
-      }
-
-      openCoverPickerModal(candidates);
-    }
-
-    function openCoverPickerModal(candidates) {
-      const grid = document.getElementById('coverPickerGrid');
-      const sub = document.getElementById('coverPickerSub');
-      if (!grid) return;
-
-      if (sub) sub.innerText = `Found ${candidates.length} covers`;
-      grid.innerHTML = candidates.map(c => `
-        <div onclick="applyChosenCover('${c.url}')" class="bg-white border-2 border-[#05244C] rounded-2xl p-2 cursor-pointer hover:bg-orange-50 transition-all flex flex-col items-center gap-1.5 shadow-sm group">
-          <div class="w-full aspect-[2/3] rounded-xl overflow-hidden border border-[#05244C] bg-slate-200">
-            <img src="${c.url}" class="w-full h-full object-cover group-hover:scale-105 transition-transform" onerror="handleCoverError(this)">
-          </div>
-          <div class="w-full text-center">
-            <span class="text-[9px] font-black uppercase px-2 py-0.5 rounded-full ${c.source === 'Google Books' ? 'bg-blue-100 text-blue-800' : 'bg-emerald-100 text-emerald-800'} border border-[#05244C]/30">${c.source}</span>
-          </div>
-        </div>
-      `).join('');
-
-      openModal('modalCoverPicker');
-    }
-
-    function applyChosenCover(url) {
-      const coverInput = document.getElementById('editBookCover');
-      if (coverInput) coverInput.value = url;
-      updateLiveCoverPreview(url);
-      closeModal('modalCoverPicker');
-      showToast('Cover updated!');
-    }
-
-    function normalizeDateToYMD(val) {
-      if (!val) return null;
-      val = String(val).trim();
-      if (!val || val === 'null' || val === 'undefined') return null;
-
-      const ymd = val.match(/^(\d{4})[-/.](\d{1,2})[-/.](\d{1,2})/);
-      if (ymd) {
-        return `${ymd[1]}-${String(ymd[2]).padStart(2, '0')}-${String(ymd[3]).padStart(2, '0')}`;
-      }
-
-      const mdy = val.match(/^(\d{1,2})[-/.](\d{1,2})[-/.](\d{4})/);
-      if (mdy) {
-        return `${mdy[3]}-${String(mdy[1]).padStart(2, '0')}-${String(mdy[2]).padStart(2, '0')}`;
-      }
-
-      const parsed = Date.parse(val);
-      if (!isNaN(parsed)) {
-        const d = new Date(parsed);
-        return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
-      }
-
-      return null;
-    }
-
-    function getStarDisplayHtml(rating) {
-      if (!rating || rating <= 0) return '';
-      const full = Math.floor(rating);
-      const rem = Math.round((rating - full) * 100) / 100;
-      let s = '★'.repeat(full);
-      if (rem >= 0.75) s += '¾';
-      else if (rem >= 0.5) s += '½';
-      else if (rem >= 0.25) s += '¼';
-      return s;
-    }
-    window.renderStarGlyphs = getStarDisplayHtml;
-
-    function getBookFormatsList(book) {
-      if (!book) return ['Paperback'];
-      if (Array.isArray(book.formats) && book.formats.length > 0) {
-        return book.formats;
-      }
-      if (book.format && typeof book.format === 'string') {
-        const split = book.format.split(/[,•/]/).map(s => s.trim()).filter(Boolean);
-        if (split.length > 0) return split;
-      }
-      return ['Paperback'];
-    }
-
-    function toggleEditBookFormat(fmtName) {
-      if (editingBookFormats.includes(fmtName)) {
-        if (editingBookFormats.length > 1) {
-          editingBookFormats = editingBookFormats.filter(f => f !== fmtName);
-        } else {
-          showToast('Book must have at least 1 format');
-          return;
-        }
-      } else {
-        editingBookFormats.push(fmtName);
-      }
-      renderEditBookFormatButtons();
-    }
-
-    function renderEditBookFormatButtons() {
-      const allFormats = ['Paperback', 'Hardcover', 'eBook', 'Audiobook'];
-      const icons = { 'Paperback': '📖', 'Hardcover': '📚', 'eBook': '📱', 'Audiobook': '🎧' };
-      allFormats.forEach(fmt => {
-        const btn = document.getElementById(`fmtBtn_edit_${fmt}`);
-        if (!btn) return;
-        const isSelected = editingBookFormats.includes(fmt);
-        if (isSelected) {
-          btn.className = "py-2 px-2 rounded-xl text-[11px] font-black border-2 border-[#05244C] bg-[#FF5B22] text-white shadow-retro-navy text-center transition-all";
-          btn.innerHTML = `${icons[fmt]} ${fmt} ✓`;
-        } else {
-          btn.className = "py-2 px-2 rounded-xl text-[11px] font-bold border-2 border-[#05244C] bg-white text-slate-700 text-center transition-all opacity-80 hover:opacity-100";
-          btn.innerHTML = `${icons[fmt]} ${fmt}`;
-        }
-      });
-    }
-
-    function toggleManualBookFormat(fmtName) {
-      if (manualBookFormats.includes(fmtName)) {
-        if (manualBookFormats.length > 1) {
-          manualBookFormats = manualBookFormats.filter(f => f !== fmtName);
-        } else {
-          showToast('Book must have at least 1 format');
-          return;
-        }
-      } else {
-        manualBookFormats.push(fmtName);
-      }
-      renderManualBookFormatButtons();
-    }
-
-    function renderManualBookFormatButtons() {
-      const allFormats = ['Paperback', 'Hardcover', 'eBook', 'Audiobook'];
-      const icons = { 'Paperback': '📖', 'Hardcover': '📚', 'eBook': '📱', 'Audiobook': '🎧' };
-      allFormats.forEach(fmt => {
-        const btn = document.getElementById(`fmtBtn_manual_${fmt}`);
-        if (!btn) return;
-        const isSelected = manualBookFormats.includes(fmt);
-        if (isSelected) {
-          btn.className = "py-2 px-2 rounded-xl text-[11px] font-black border-2 border-[#05244C] bg-[#FF5B22] text-white shadow-retro-navy text-center transition-all";
-          btn.innerHTML = `${icons[fmt]} ${fmt} ✓`;
-        } else {
-          btn.className = "py-2 px-2 rounded-xl text-[11px] font-bold border-2 border-[#05244C] bg-white text-slate-700 text-center transition-all opacity-80 hover:opacity-100";
-          btn.innerHTML = `${icons[fmt]} ${fmt}`;
-        }
-      });
-    }
-
-    function safeJsonParse(key, fallback) {
-      try {
-        const val = localStorage.getItem(key);
-        return val ? JSON.parse(val) : fallback;
-      } catch (e) {
-        return fallback;
-      }
-    }
-
-    function initializeUserData() {
-      let storedBooks = safeJsonParse('rianne_books_v1', null);
-      
-      if (!storedBooks || !Array.isArray(storedBooks) || storedBooks.length === 0) {
-        const vault = safeJsonParse('rianne_backup_vault', null);
-        if (vault && Array.isArray(vault.books) && vault.books.length > 0) {
-          storedBooks = vault.books;
-          localStorage.setItem('rianne_books_v1', JSON.stringify(storedBooks));
-        }
-      }
-
-      if (storedBooks && Array.isArray(storedBooks)) {
-        books = storedBooks;
-      } else {
-        books = [
-          {
-            id: 'b_1',
-            title: 'The Butterfly Garden',
-            author: 'Dot Hutchison',
-            cover: 'https://images.unsplash.com/photo-1544947950-fa07a98d237f?auto=format&fit=crop&w=400&q=80',
-            pageCount: 288,
-            currentPage: 145,
-            shelf: 'reading',
-            formats: ['eBook', 'Paperback'],
-            ownership: 'Owned',
-            genres: ['Thriller', 'Mystery'],
-            lastSessionDate: '2026-10-09'
-          },
-          {
-            id: 'b_2',
-            title: 'Dune',
-            author: 'Frank Herbert',
-            cover: 'https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=400&q=80',
-            pageCount: 688,
-            currentPage: 210,
-            shelf: 'reading',
-            formats: ['Paperback'],
-            ownership: 'Owned',
-            genres: ['Sci-Fi', 'Classic'],
-            lastSessionDate: '2026-10-08'
-          },
-          {
-            id: 'b_3',
-            title: 'Tomorrow, and Tomorrow, and Tomorrow',
-            author: 'Gabrielle Zevin',
-            cover: 'https://images.unsplash.com/photo-1543002588-bfa74002ed7e?auto=format&fit=crop&w=400&q=80',
-            pageCount: 416,
-            currentPage: 0,
-            shelf: 'to-read',
-            formats: ['Hardcover', 'eBook'],
-            ownership: 'Owned',
-            genres: ['Fiction', 'Contemporary'],
-            lastSessionDate: null
-          }
-        ];
-        saveBooks();
-      }
-
-      readingSessions = safeJsonParse('rianne_sessions_v1', []);
-      if (readingSessions.length === 0) {
-        const vault = safeJsonParse('rianne_backup_vault', null);
-        if (vault && Array.isArray(vault.sessions)) readingSessions = vault.sessions;
-      }
-
-      quotes = safeJsonParse('rianne_quotes_v1', []);
-      userGoals = safeJsonParse('rianne_goals_v1', userGoals);
-
-      books.forEach(b => {
-        if (b.cover) b.cover = cleanImageUrl(b.cover);
-        if (!b.formats) {
-          b.formats = b.format ? [b.format] : ['Paperback'];
-        }
-      });
-
-      let dataChanged = false;
-      books.forEach(b => {
-        if (b.finishedDate) {
-          const norm = normalizeDateToYMD(b.finishedDate);
-          if (norm && norm !== b.finishedDate) { b.finishedDate = norm; dataChanged = true; }
-        }
-        if (b.lastSessionDate) {
-          const norm = normalizeDateToYMD(b.lastSessionDate);
-          if (norm && norm !== b.lastSessionDate) { b.lastSessionDate = norm; dataChanged = true; }
-        }
-        if (Array.isArray(b.finishedDates)) {
-          b.finishedDates = b.finishedDates.map(d => normalizeDateToYMD(d) || d);
-        }
-      });
-
-      readingSessions.forEach(s => {
-        if (s.date) {
-          const norm = normalizeDateToYMD(s.date);
-          if (norm && norm !== s.date) { s.date = norm; dataChanged = true; }
-        }
-      });
-
-      const currentMonthPrefix = `${calendarYear}-${String(calendarMonth + 1).padStart(2, '0')}`;
-      const hasSessionsInCurrentMonth = readingSessions.some(s => s.date && s.date.startsWith(currentMonthPrefix));
-      const hasFinishesInCurrentMonth = books.some(b => b.finishedDate && b.finishedDate.startsWith(currentMonthPrefix));
-
-      if (!hasSessionsInCurrentMonth && !hasFinishesInCurrentMonth) {
-        const allDates = [
-          ...readingSessions.map(s => s.date),
-          ...books.map(b => b.finishedDate)
-        ].filter(Boolean).sort().reverse();
-
-        if (allDates.length > 0) {
-          const latestYMD = normalizeDateToYMD(allDates[0]);
-          if (latestYMD) {
-            const yr = extractValidYear(latestYMD);
-            if (yr) {
-              const parts = latestYMD.split('-');
-              calendarYear = yr;
-              calendarMonth = parseInt(parts[1], 10) - 1;
-            }
-          }
-        }
-      }
-
-      if (dataChanged) {
-        saveBooks();
-        saveSessions();
-      }
-
-      updateBackupCountBadge();
-      determineActiveHeroBook();
-      populateGenreDropdown();
-      populateYearDropdown();
-      renderAllViews();
-      initCloudSync();
-
-      setTimeout(() => {
-        const missingCount = books.filter(b => !b.cover || b.cover.trim() === '').length;
-        if (missingCount > 0) fetchMissingCovers(false);
-      }, 1500);
-    }
-
-    function createVaultSnapshot() {
-      try {
-        const snapshot = {
-          savedAt: Date.now(),
-          books,
-          sessions: readingSessions,
-          quotes,
-          goals: userGoals
-        };
-        localStorage.setItem('rianne_backup_vault', JSON.stringify(snapshot));
-      } catch(e) {}
-      updateBackupCountBadge();
-    }
-
-    function updateBackupCountBadge() {
-      const badge = document.getElementById('drawerBackupCount');
-      if (badge) badge.innerText = `${books.length} book${books.length === 1 ? '' : 's'}`;
-    }
-
-    function saveBooks() {
-      localStorage.setItem('rianne_books_v1', JSON.stringify(books));
-      createVaultSnapshot();
-      populateGenreDropdown();
-      triggerCloudAutoSync();
-    }
-
-    function saveSessions() {
-      localStorage.setItem('rianne_sessions_v1', JSON.stringify(readingSessions));
-      createVaultSnapshot();
-      triggerCloudAutoSync();
-    }
-
-    function saveQuotes() {
-      localStorage.setItem('rianne_quotes_v1', JSON.stringify(quotes));
-      createVaultSnapshot();
-      triggerCloudAutoSync();
-    }
-
-    function saveGoals() {
-      localStorage.setItem('rianne_goals_v1', JSON.stringify(userGoals));
-      createVaultSnapshot();
-      triggerCloudAutoSync();
-    }
-
-    function calculateSmartReadingPace(book) {
-      if (!readingSessions || readingSessions.length === 0) return 40;
-      const thisBookSessions = readingSessions.filter(s => s.bookId === (book ? book.id : null) && s.durationMinutes > 0 && s.pagesRead > 0);
-      if (thisBookSessions.length >= 2) {
-        const totalMins = thisBookSessions.reduce((acc, s) => acc + s.durationMinutes, 0);
-        const totalPgs = thisBookSessions.reduce((acc, s) => acc + s.pagesRead, 0);
-        return Math.max(15, Math.min(120, Math.round((totalPgs / totalMins) * 60)));
-      }
-      const validSessions = readingSessions.filter(s => s.durationMinutes > 0 && s.pagesRead > 0);
-      if (validSessions.length > 0) {
-        const totalMins = validSessions.reduce((acc, s) => acc + s.durationMinutes, 0);
-        const totalPgs = validSessions.reduce((acc, s) => acc + s.pagesRead, 0);
-        return Math.max(15, Math.min(120, Math.round((totalPgs / totalMins) * 60)));
-      }
-      return 40;
-    }
-
-    function determineActiveHeroBook() {
-      const activeBooks = books.filter(b => b.shelf === 'reading');
-      if (activeBooks.length === 0) {
-        activeBookId = books[0] ? books[0].id : null;
-        return;
-      }
-      activeBooks.sort((a, b) => (b.lastSessionDate || '').localeCompare(a.lastSessionDate || ''));
-      activeBookId = activeBooks[0].id;
-    }
-
-    function renderHeroCard() {
-      const book = books.find(b => b.id === activeBookId);
-      if (!book) return;
-
-      const coverEl = document.getElementById('heroCover');
-      if (coverEl) coverEl.src = book.cover || 'https://placehold.co/200x300/446BA2/FFF9EE?text=Cover';
-      
-      const titleEl = document.getElementById('heroTitle');
-      if (titleEl) titleEl.innerText = book.title;
-
-      const authorEl = document.getElementById('heroAuthor');
-      if (authorEl) authorEl.innerText = book.author;
-
-      const lastDateEl = document.getElementById('heroLastDate');
-      if (lastDateEl) lastDateEl.innerText = book.lastSessionDate ? `Last read: ${book.lastSessionDate}` : 'No sessions yet';
-
-      const formatEl = document.getElementById('heroFormatBadge');
-      const fmts = getBookFormatsList(book);
-      if (formatEl) formatEl.innerText = `${fmts.join(' • ')} • ${book.ownership || 'Owned'}`;
-
-      const pct = book.pageCount > 0 ? Math.min(100, Math.round((book.currentPage / book.pageCount) * 100)) : 0;
-      
-      const barEl = document.getElementById('heroProgressBar');
-      if (barEl) barEl.style.width = `${pct}%`;
-
-      const txtEl = document.getElementById('heroProgressText');
-      if (txtEl) txtEl.innerText = `${book.currentPage} / ${book.pageCount} pages`;
-
-      const pctBadge = document.getElementById('heroPercentBadge');
-      if (pctBadge) pctBadge.innerText = `${pct}%`;
-
-      const pace = calculateSmartReadingPace(book);
-      const paceEl = document.getElementById('heroPaceMetric');
-      if (paceEl) paceEl.innerText = `~ ${pace} pgs/hr`;
-
-      const remainingPages = Math.max(0, book.pageCount - book.currentPage);
-      const estTimeEl = document.getElementById('heroEstTimeRemaining');
-      if (estTimeEl) {
-        if (remainingPages === 0) {
-          estTimeEl.innerText = 'Completed!';
-        } else {
-          const estMinutesLeft = Math.round((remainingPages / (pace / 60)));
-          const hrs = Math.floor(estMinutesLeft / 60);
-          const mins = estMinutesLeft % 60;
-          estTimeEl.innerText = `${hrs}h ${mins}m remaining`;
-        }
-      }
-    }
-
-    function renderCarousel() {
-      const container = document.getElementById('inProgressCarousel');
-      if (!container) return;
-
-      const readingBooks = books.filter(b => b.shelf === 'reading' && b.id !== activeBookId);
-      const countBadge = document.getElementById('activeCountBadge');
-      if (countBadge) countBadge.innerText = readingBooks.length;
-
-      if (readingBooks.length === 0) {
-        container.innerHTML = `
-          <div class="w-full bg-[#FFF9EE]/25 border-2 border-dashed border-[#FFF9EE]/50 rounded-2xl p-4 text-center text-xs font-bold text-[#FFF9EE]">
-            No other books in progress. <button onclick="openOnlineSearchModal()" class="underline font-black text-[#FFD034]">Add another</button>
-          </div>
-        `;
-        return;
-      }
-
-      container.innerHTML = readingBooks.map(b => {
-        const pct = b.pageCount > 0 ? Math.round((b.currentPage / b.pageCount) * 100) : 0;
-        return `
-          <div onclick="selectHeroBook('${b.id}')" class="flex-shrink-0 w-44 bg-[#FFF9EE] border-2 border-[#05244C] rounded-2xl p-3 shadow-retro-navy cursor-pointer transition-transform hover:-translate-y-1">
-            <div class="flex gap-2.5 items-center">
-              <img src="${b.cover || 'https://placehold.co/100x150/446BA2/FFF9EE?text=Cover'}" class="w-11 aspect-[2/3] object-cover rounded-lg border border-[#05244C]" onerror="handleCoverError(this)">
-              <div class="flex-1 min-w-0">
-                <h4 class="text-xs font-bold text-[#05244C] truncate">${b.title}</h4>
-                <p class="text-[10px] text-slate-500 truncate font-editorial italic">${b.author}</p>
-                <div class="mt-2 text-[10px] font-black text-[#FF5B22]">${pct}% (${b.currentPage}p)</div>
-              </div>
-            </div>
-          </div>
-        `;
-      }).join('');
-    }
-
-    function selectHeroBook(id) {
-      activeBookId = id;
-      renderHeroCard();
-      renderCarousel();
-      showToast('Switched active book');
-    }
-
-    function getShelfInfo(shelf) {
-      switch(shelf) {
-        case 'reading':
-          return { label: 'Reading', bg: 'bg-[#FF5B22]', text: 'text-white', border: 'border-[#05244C]', pillBg: 'bg-[#FF5B22]/15', pillText: 'text-[#FF5B22]', pillBorder: 'border-[#FF5B22]' };
-        case 'to-read':
-          return { label: 'TBR', bg: 'bg-[#FFD034]', text: 'text-[#05244C]', border: 'border-[#05244C]', pillBg: 'bg-[#FFD034]/25', pillText: 'text-[#B45309]', pillBorder: 'border-[#D97706]' };
-        case 'finished':
-          return { label: 'Finished', bg: 'bg-[#10B981]', text: 'text-white', border: 'border-[#05244C]', pillBg: 'bg-[#10B981]/15', pillText: 'text-[#047857]', pillBorder: 'border-[#10B981]' };
-        case 'faves':
-          return { label: 'Faves', bg: 'bg-[#FF2E7E]', text: 'text-white', border: 'border-[#05244C]', pillBg: 'bg-rose-100', pillText: 'text-rose-700', pillBorder: 'border-rose-400' };
-        case 'dnf':
-          return { label: 'DNF', bg: 'bg-[#A855F7]', text: 'text-white', border: 'border-[#05244C]', pillBg: 'bg-[#A855F7]/15', pillText: 'text-[#7E22CE]', pillBorder: 'border-[#A855F7]' };
-        case 'wishlist':
-          return { label: 'Wishlist', bg: 'bg-[#FFA4C4]', text: 'text-[#05244C]', border: 'border-[#05244C]', pillBg: 'bg-[#FFA4C4]/35', pillText: 'text-[#BE185D]', pillBorder: 'border-[#FFA4C4]' };
-        default:
-          return { label: 'All', bg: 'bg-[#05244C]', text: 'text-[#FFF9EE]', border: 'border-[#05244C]', pillBg: 'bg-white', pillText: 'text-[#05244C]', pillBorder: 'border-[#05244C]' };
-      }
-    }
-
-    function setLibraryView(view) {
-      currentLibraryView = view;
-      ['viewBtnCovers', 'viewBtnCards', 'viewBtnList'].forEach(id => {
-        const btn = document.getElementById(id);
-        if (btn) {
-          btn.classList.remove('bg-[#FF5B22]', 'text-white');
-          btn.classList.add('text-slate-700');
-        }
-      });
-      if (view === 'covers' && document.getElementById('viewBtnCovers')) document.getElementById('viewBtnCovers').classList.add('bg-[#FF5B22]', 'text-white');
-      if (view === 'cards' && document.getElementById('viewBtnCards')) document.getElementById('viewBtnCards').classList.add('bg-[#FF5B22]', 'text-white');
-      if (view === 'list' && document.getElementById('viewBtnList')) document.getElementById('viewBtnList').classList.add('bg-[#FF5B22]', 'text-white');
-      renderLibrary();
-    }
-
-    function setShelfFilter(shelf) {
-      currentShelfFilter = shelf;
-      document.querySelectorAll('.shelf-pill').forEach(btn => {
-        const btnShelf = btn.getAttribute('data-shelf');
-        const info = getShelfInfo(btnShelf);
-        if (btnShelf === shelf) {
-          btn.className = `shelf-pill py-1.5 rounded-xl text-[11px] font-black border-2 border-[#05244C] ${info.bg} ${info.text} shadow-retro-navy text-center transition-all`;
-        } else {
-          btn.className = `shelf-pill py-1.5 rounded-xl text-[11px] font-bold border ${info.pillBorder} ${info.pillBg} ${info.pillText} text-center transition-all`;
-        }
-      });
-      renderLibrary();
-    }
-
-    function setFormatFilter(format) {
-      currentFormatFilter = format;
-      ['all', 'Paperback', 'Hardcover', 'eBook', 'Audiobook'].forEach(f => {
-        const btn = document.getElementById(`formatFilter-${f}`);
-        if (!btn) return;
-        if (f === format) {
-          btn.className = "px-2 py-0.5 rounded-lg text-[10px] font-bold border border-[#05244C] bg-[#FFD034] text-[#05244C]";
-        } else {
-          btn.className = "px-2 py-0.5 rounded-lg text-[10px] font-bold border border-[#05244C]/40 bg-white/60 text-[#05244C]";
-        }
-      });
-      renderLibrary();
-    }
-
-    function populateGenreDropdown() {
-      const select = document.getElementById('libraryGenreSelect');
-      if (!select) return;
-      const currentVal = select.value;
-      const genreSet = new Set();
-      books.forEach(b => {
-        if (Array.isArray(b.genres)) {
-          b.genres.forEach(g => { if (g) genreSet.add(g.trim()); });
-        }
-      });
-      const sorted = Array.from(genreSet).sort();
-      select.innerHTML = '<option value="all">All Genres</option>' + sorted.map(g => `<option value="${g}">${g}</option>`).join('');
-      if (sorted.includes(currentVal)) select.value = currentVal;
-    }
-
-    function toggleBatchSelectMode() {
-      isBatchMode = !isBatchMode;
-      selectedBookIds.clear();
-      const btn = document.getElementById('batchSelectModeBtn');
-      const bar = document.getElementById('batchActionBar');
-      if (btn) btn.innerText = isBatchMode ? 'Done' : 'Select';
-      if (bar) bar.classList.toggle('hidden', !isBatchMode);
-      updateBatchCountDisplay();
-      renderLibrary();
-    }
-
-    function toggleSelectBook(id, e) {
-      if (e) e.stopPropagation();
-      if (selectedBookIds.has(id)) {
-        selectedBookIds.delete(id);
-      } else {
-        selectedBookIds.add(id);
-      }
-      updateBatchCountDisplay();
-      renderLibrary();
-    }
-
-    function selectAllVisibleBooks() {
-      const query = (document.getElementById('librarySearchInput')?.value || '').toLowerCase();
-      const genre = document.getElementById('libraryGenreSelect')?.value || 'all';
-
-      let filtered = books.filter(b => {
-        if (currentShelfFilter === 'faves') return !!b.isFavorite;
-        if (currentShelfFilter === 'all') return b.shelf !== 'wishlist';
-        return b.shelf === currentShelfFilter;
-      });
-
-      if (currentFormatFilter !== 'all') {
-        filtered = filtered.filter(b => getBookFormatsList(b).includes(currentFormatFilter));
-      }
-      if (genre !== 'all') {
-        filtered = filtered.filter(b => b.genres && b.genres.includes(genre));
-      }
-      if (query) {
-        filtered = filtered.filter(b => 
-          b.title.toLowerCase().includes(query) || 
-          b.author.toLowerCase().includes(query)
-        );
-      }
-
-      filtered.forEach(b => selectedBookIds.add(b.id));
-      updateBatchCountDisplay();
-      renderLibrary();
-    }
-
-    function updateBatchCountDisplay() {
-      const lbl = document.getElementById('batchCountLabel');
-      if (lbl) lbl.innerText = `${selectedBookIds.size} books selected`;
-    }
-
-    function openBatchEditModal() {
-      if (selectedBookIds.size === 0) {
-        showToast('Please select at least 1 book');
-        return;
-      }
-      document.getElementById('bulkEditSubtext').innerText = `Editing ${selectedBookIds.size} selected books`;
-      openModal('modalBulkEdit');
-    }
-
-    function applyBatchEdit() {
-      const shelf = document.getElementById('bulkShelfSelect').value;
-      const format = document.getElementById('bulkFormatSelect').value;
-      const ownership = document.getElementById('bulkOwnershipSelect').value;
-
-      selectedBookIds.forEach(id => {
-        const bk = books.find(b => b.id === id);
-        if (bk) {
-          if (shelf !== 'no-change') bk.shelf = shelf;
-          if (format !== 'no-change') {
-            bk.formats = [format];
-            bk.format = format;
-          }
-          if (ownership !== 'no-change') bk.ownership = ownership;
-        }
-      });
-
-      saveBooks();
-      closeModal('modalBulkEdit');
-      toggleBatchSelectMode();
-      determineActiveHeroBook();
-      renderAllViews();
-      showToast('Batch changes applied!');
-    }
-
-    function batchDeleteSelectedBooks() {
-      if (selectedBookIds.size === 0) return;
-      books = books.filter(b => !selectedBookIds.has(b.id));
-      saveBooks();
-      closeModal('modalBulkEdit');
-      toggleBatchSelectMode();
-      determineActiveHeroBook();
-      renderAllViews();
-      showToast('Books deleted');
-    }
-
-    function renderLibrary() {
-      const container = document.getElementById('libraryContainer');
-      if (!container) return;
-
-      const query = (document.getElementById('librarySearchInput')?.value || '').toLowerCase();
-      const genre = document.getElementById('libraryGenreSelect')?.value || 'all';
-      const sort = document.getElementById('librarySortSelect')?.value || 'recent';
-
-      let filtered = books.filter(b => {
-        if (currentShelfFilter === 'faves') return !!b.isFavorite;
-        if (currentShelfFilter === 'all') return b.shelf !== 'wishlist';
-        return b.shelf === currentShelfFilter;
-      });
-
-      if (currentFormatFilter !== 'all') {
-        filtered = filtered.filter(b => getBookFormatsList(b).includes(currentFormatFilter));
-      }
-
-      if (genre !== 'all') {
-        filtered = filtered.filter(b => b.genres && b.genres.includes(genre));
-      }
-
-      if (query) {
-        filtered = filtered.filter(b => 
-          b.title.toLowerCase().includes(query) || 
-          b.author.toLowerCase().includes(query) ||
-          (b.genres && b.genres.some(g => g.toLowerCase().includes(query)))
-        );
-      }
-
-      if (sort === 'rating_high') {
-        filtered.sort((a, b) => (b.rating || 0) - (a.rating || 0));
-      } else if (sort === 'rating_low') {
-        filtered.sort((a, b) => (a.rating || 0) - (b.rating || 0));
-      } else if (sort === 'title') {
-        filtered.sort((a, b) => a.title.localeCompare(b.title));
-      } else if (sort === 'author') {
-        filtered.sort((a, b) => a.author.localeCompare(b.author));
-      } else if (sort === 'progress') {
-        filtered.sort((a, b) => {
-          const pctA = a.pageCount > 0 ? (a.currentPage / a.pageCount) : 0;
-          const pctB = b.pageCount > 0 ? (b.currentPage / b.pageCount) : 0;
-          return pctB - pctA;
-        });
-      } else {
-        filtered.sort((a, b) => (b.lastSessionDate || '').localeCompare(a.lastSessionDate || ''));
-      }
-
-      if (filtered.length === 0) {
-        container.innerHTML = `<div class="bg-[#FFF9EE] rounded-2xl p-6 text-center border-2 border-[#05244C] text-xs font-bold text-slate-500">No books found on this shelf.</div>`;
-        return;
-      }
-
-      if (currentLibraryView === 'covers') {
-        container.innerHTML = `
-          <div class="grid grid-cols-4 gap-2">
-            ${filtered.map(b => {
-              const isSelected = selectedBookIds.has(b.id);
-              const info = getShelfInfo(b.shelf);
-              const starStr = getStarDisplayHtml(b.rating);
-              const starDisplayNum = b.rating ? (b.rating % 1 === 0 ? b.rating : b.rating.toFixed(2).replace(/\.?0+$/, '')) : '';
-              return `
-                <div onclick="${isBatchMode ? `toggleSelectBook('${b.id}', event)` : `openBookDetailModal('${b.id}')`}" class="relative group cursor-pointer">
-                  <div class="relative rounded-xl overflow-hidden border-2 border-[#05244C] shadow-retro-navy aspect-[2/3] bg-slate-200 ${isSelected ? 'ring-4 ring-[#FF5B22]' : ''}">
-                    <img src="${b.cover || 'https://placehold.co/200x300/446BA2/FFF9EE?text=Cover'}" class="w-full h-full object-cover" onerror="handleCoverError(this)">
-                    ${isBatchMode ? `
-                      <div class="absolute top-1.5 left-1.5 w-5 h-5 rounded-md bg-white border border-[#05244C] flex items-center justify-center">
-                        ${isSelected ? '<span class="text-[#FF5B22] font-black text-xs">✓</span>' : ''}
-                      </div>
-                    ` : ''}
-                    ${b.isFavorite ? `
-                      <span class="absolute top-1 left-1 bg-white/95 rounded-full p-0.5 px-1 text-[11px] border border-[#05244C] shadow-sm leading-none text-rose-600 font-bold">♥️</span>
-                    ` : ''}
-                    <span class="absolute top-1 right-1 ${info.bg} ${info.text} text-[8px] font-black px-1.5 py-0.5 rounded-md border border-[#05244C] shadow-sm leading-none">
-                      ${b.shelf === 'finished' ? '✓' : info.label}
-                    </span>
-                  </div>
-                  <p class="text-[10px] font-bold text-[#FFF9EE] truncate mt-1">${b.title}</p>
-                  ${starStr ? `<div class="text-[10px] text-[#FFD034] font-bold leading-none drop-shadow-sm truncate">${starStr} <span class="text-[8px] text-white/90 font-mono">(${starDisplayNum}★)</span></div>` : ''}
-                </div>
-              `;
-            }).join('')}
-          </div>
-        `;
-      } else if (currentLibraryView === 'cards') {
-        container.innerHTML = `
-          <div class="space-y-3">
-            ${filtered.map(b => {
-              const pct = b.pageCount > 0 ? Math.round((b.currentPage / b.pageCount) * 100) : 0;
-              const isSelected = selectedBookIds.has(b.id);
-              const info = getShelfInfo(b.shelf);
-              const starStr = getStarDisplayHtml(b.rating);
-              const starDisplayNum = b.rating ? (b.rating % 1 === 0 ? b.rating : b.rating.toFixed(2).replace(/\.?0+$/, '')) : '';
-              const fmts = getBookFormatsList(b);
-              return `
-                <div class="bg-[#FFF9EE] border-2 border-[#05244C] rounded-2xl p-3.5 shadow-retro-orange flex gap-3 items-center ${isSelected ? 'ring-4 ring-[#FF5B22]' : ''}">
-                  ${isBatchMode ? `
-                    <div onclick="toggleSelectBook('${b.id}', event)" class="w-5 h-5 rounded-md bg-white border border-[#05244C] flex items-center justify-center flex-shrink-0 cursor-pointer">
-                      ${isSelected ? '<span class="text-[#FF5B22] font-black text-xs">✓</span>' : ''}
-                    </div>
-                  ` : ''}
-                  <img src="${b.cover || 'https://placehold.co/100x150/446BA2/FFF9EE?text=Cover'}" class="w-14 aspect-[2/3] object-cover rounded-xl border border-[#05244C] flex-shrink-0 bg-slate-200" onerror="handleCoverError(this)">
-                  <div class="flex-1 min-w-0">
-                    <div class="flex items-center gap-1.5">
-                      <span class="text-[9px] uppercase font-black px-2 py-0.5 rounded-full ${info.bg} ${info.text} border border-[#05244C] shadow-sm">${info.label}</span>
-                      <span class="text-[9px] font-bold text-slate-500">${fmts.join(', ')}</span>
-                      ${b.isFavorite ? `<span class="text-xs text-rose-600 font-bold">♥️</span>` : ''}
-                    </div>
-                    <h4 class="text-xs font-retro-title text-[#05244C] truncate mt-1">${b.title}</h4>
-                    <p class="text-[10px] font-editorial text-slate-600 truncate italic">${b.author}</p>
-                    ${starStr ? `<div class="text-[#FF5B22] text-xs font-bold leading-none mt-0.5">${starStr} <span class="text-[9px] text-slate-500 font-normal">(${starDisplayNum}★)</span></div>` : ''}
-                    <div class="mt-1 flex justify-between items-center text-[10px] font-bold">
-                      <span>${b.currentPage} / ${b.pageCount} pgs</span>
-                      <span class="text-[#FF5B22] font-black">${pct}%</span>
-                    </div>
-                  </div>
-                  <button onclick="openBookDetailModal('${b.id}')" class="px-2.5 py-1.5 bg-white border border-[#05244C] rounded-xl text-xs font-bold text-[#05244C] flex-shrink-0">Edit</button>
-                </div>
-              `;
-            }).join('')}
-          </div>
-        `;
-      } else {
-        container.innerHTML = `
-          <div class="bg-[#FFF9EE] border-2 border-[#05244C] rounded-2xl divide-y-2 divide-orange-100 overflow-hidden shadow-retro-orange">
-            ${filtered.map(b => {
-              const isSelected = selectedBookIds.has(b.id);
-              const info = getShelfInfo(b.shelf);
-              const pct = b.pageCount > 0 ? Math.round((b.currentPage / b.pageCount) * 100) : 0;
-              const starStr = getStarDisplayHtml(b.rating);
-              const fmts = getBookFormatsList(b);
-              return `
-                <div onclick="${isBatchMode ? `toggleSelectBook('${b.id}', event)` : `openBookDetailModal('${b.id}')`}" class="p-3 flex items-center justify-between cursor-pointer hover:bg-amber-50 ${isSelected ? 'bg-orange-100/60' : ''}">
-                  ${isBatchMode ? `
-                    <div class="w-4 h-4 rounded-md bg-white border border-[#05244C] flex items-center justify-center mr-2.5 flex-shrink-0">
-                      ${isSelected ? '<span class="text-[#FF5B22] font-black text-[10px]">✓</span>' : ''}
-                    </div>
-                  ` : ''}
-                  <div class="min-w-0 flex-1 pr-2">
-                    <div class="flex items-center gap-1.5">
-                      <span class="text-[8px] font-black uppercase px-1.5 py-0.5 rounded border border-[#05244C] ${info.bg} ${info.text}">${info.label}</span>
-                      <h4 class="text-xs font-bold text-[#05244C] truncate">${b.title}</h4>
-                      ${b.isFavorite ? `<span class="text-xs text-rose-600 font-bold">♥️</span>` : ''}
-                    </div>
-                    <p class="text-[10px] text-slate-500 truncate mt-0.5">${b.author} • <span class="text-slate-400">${fmts.join(', ')}</span> ${starStr ? `• <span class="text-[#FF5B22] font-bold">${starStr}</span>` : ''}</p>
-                  </div>
-                  <div class="text-right flex-shrink-0">
-                    <span class="text-xs font-mono font-black text-[#05244C]">${pct}%</span>
-                    <span class="text-[9px] text-slate-400 block">${b.currentPage}p</span>
-                  </div>
-                </div>
-              `;
-            }).join('')}
-          </div>
-        `;
-      }
-    }
-
-    function renderCalendar() {
-      const monthTitleEl = document.getElementById('calendarMonthTitle');
-      if (!monthTitleEl) return;
-
-      const monthTitle = new Date(calendarYear, calendarMonth).toLocaleString('default', { month: 'long', year: 'numeric' });
-      monthTitleEl.innerText = monthTitle;
-
-      const firstDayIndex = new Date(calendarYear, calendarMonth, 1).getDay();
-      const daysInMonth = new Date(calendarYear, calendarMonth + 1, 0).getDate();
-      const grid = document.getElementById('calendarDaysGrid');
-      if (!grid) return;
-      grid.innerHTML = '';
-
-      for (let i = 0; i < firstDayIndex; i++) {
-        grid.innerHTML += `<div class="h-14 rounded-xl bg-amber-50/40 border border-transparent"></div>`;
-      }
-
-      for (let day = 1; day <= daysInMonth; day++) {
-        const dateStr = `${calendarYear}-${String(calendarMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-        const daySessions = readingSessions.filter(s => s.date === dateStr);
-        const dayFinishedBooks = books.filter(b => b.finishedDate === dateStr || (Array.isArray(b.finishedDates) && b.finishedDates.includes(dateStr)));
-
-        if (daySessions.length > 0 || dayFinishedBooks.length > 0) {
-          const isFinished = dayFinishedBooks.length > 0;
-          let cover = '';
-          let bookTitle = '';
-          if (isFinished) {
-            const bk = dayFinishedBooks[dayFinishedBooks.length - 1];
-            cover = bk?.cover;
-            bookTitle = bk?.title || '';
-          } else {
-            const lastSess = daySessions[daySessions.length - 1];
-            const bk = books.find(b => b.id === lastSess.bookId);
-            cover = bk?.cover;
-            bookTitle = bk?.title || '';
-          }
-          cover = cover || '';
-
-          grid.innerHTML += `
-            <div class="h-14 rounded-xl border-2 border-[#05244C] relative overflow-hidden shadow-sm bg-[#446BA2] bg-cover bg-center" style="${cover ? `background-image: url('${cover}')` : ''}">
-              <div class="absolute inset-0 bg-black/35 flex flex-col justify-between p-1">
-                <span class="text-[9px] font-black text-white drop-shadow">${day}</span>
-                ${!cover ? `<span class="text-[7px] text-white/90 font-bold truncate leading-tight">${bookTitle}</span>` : ''}
-              </div>
-              ${isFinished ? `<span class="absolute bottom-0.5 right-0.5 bg-emerald-500 text-white text-[8px] px-1 rounded-full font-black border border-white shadow">✓</span>` : ''}
-            </div>
-          `;
-        } else {
-          grid.innerHTML += `
-            <div class="h-14 rounded-xl border border-orange-200 bg-white flex flex-col items-center justify-between p-1">
-              <span class="text-[9px] font-bold text-slate-400 self-start">${day}</span>
-            </div>
-          `;
-        }
-      }
-
-      const completedBooksThisYear = books.filter(b => b.shelf === 'finished').length;
-      const currentMonthNum = new Date().getMonth() + 1;
-      const rate = (completedBooksThisYear / currentMonthNum).toFixed(1);
-      const proj = (rate * 12).toFixed(1);
-
-      const bannerText = document.getElementById('velocityBannerText');
-      if (bannerText) {
-        bannerText.innerText = `At your current rate of ${rate} books/month, you'll read ${proj} books this year!`;
-      }
-    }
-
-    function changeCalendarMonth(offset) {
-      calendarMonth += offset;
-      if (calendarMonth < 0) {
-        calendarMonth = 11;
-        calendarYear--;
-      } else if (calendarMonth > 11) {
-        calendarMonth = 0;
-        calendarYear++;
-      }
-      renderCalendar();
-    }
-
-    function populateYearDropdown() {
-      const select = document.getElementById('statsYearSelect');
-      if (!select) return;
-
-      const currentRealYear = new Date().getFullYear();
-      const yearsSet = new Set([currentRealYear]);
-
-      readingSessions.forEach(s => {
-        const yr = extractValidYear(s.date);
-        if (yr) yearsSet.add(yr);
-      });
-
-      books.forEach(b => {
-        const yr = extractValidYear(b.finishedDate);
-        if (yr) yearsSet.add(yr);
-
-        if (Array.isArray(b.finishedDates)) {
-          b.finishedDates.forEach(d => {
-            const fYr = extractValidYear(d);
-            if (fYr) yearsSet.add(fYr);
-          });
-        }
-      });
-
-      const sortedYears = Array.from(yearsSet).sort((a, b) => b - a);
-      const prevVal = select.value || String(currentRealYear);
-
-      select.innerHTML = sortedYears.map(y => `<option value="${y}">${y}</option>`).join('') + `<option value="all">All-Time</option>`;
-      select.value = sortedYears.map(String).includes(prevVal) ? prevVal : String(currentRealYear);
-    }
-
-    function renderStatsDashboard() {
-      const yearSelect = document.getElementById('statsYearSelect');
-      const year = yearSelect ? yearSelect.value : String(calendarYear);
-      let filteredSessions = readingSessions;
-      if (year !== 'all') {
-        filteredSessions = readingSessions.filter(s => {
-          const yr = extractValidYear(s.date);
-          return yr && String(yr) === year;
-        });
-      }
-
-      const totalPages = filteredSessions.reduce((acc, s) => acc + (s.pagesRead || 0), 0);
-      const totalMinutes = filteredSessions.reduce((acc, s) => acc + (s.durationMinutes || 0), 0);
-
-      const finishedInYear = books.filter(b => {
-        if (b.shelf !== 'finished') return false;
-        if (year === 'all') return true;
-        const bYr = extractValidYear(b.finishedDate);
-        if (bYr && String(bYr) === year) return true;
-        if (Array.isArray(b.finishedDates) && b.finishedDates.some(d => {
-          const dy = extractValidYear(d);
-          return dy && String(dy) === year;
-        })) return true;
-        return false;
-      }).length;
-
-      const pgsEl = document.getElementById('statPagesRead');
-      if (pgsEl) pgsEl.innerText = totalPages.toLocaleString();
-
-      const finEl = document.getElementById('statBooksFinished');
-      if (finEl) finEl.innerText = finishedInYear;
-
-      const hrs = Math.floor(totalMinutes / 60);
-      const mins = totalMinutes % 60;
-      const hrsEl = document.getElementById('statHoursRead');
-      if (hrsEl) hrsEl.innerText = `${hrs}h ${mins}m`;
-
-      const avgSpeed = totalMinutes > 0 ? Math.round((totalPages / totalMinutes) * 60) : '--';
-      const spdEl = document.getElementById('statAvgSpeed');
-      if (spdEl) spdEl.innerText = `${avgSpeed} pgs/hr`;
-
-      const todayStr = new Date().toISOString().split('T')[0];
-      const todaySessions = readingSessions.filter(s => s.date === todayStr);
-      const dailyGoalEl = document.getElementById('dailyGoalCount');
-      if (dailyGoalEl) {
-        if (userGoals.dailyTargetType === 'minutes') {
-          const todayMins = todaySessions.reduce((acc, s) => acc + (s.durationMinutes || 0), 0);
-          dailyGoalEl.innerText = `${todayMins} / ${userGoals.dailyTarget} mins`;
-        } else {
-          const todayPages = todaySessions.reduce((acc, s) => acc + (s.pagesRead || 0), 0);
-          dailyGoalEl.innerText = `${todayPages} / ${userGoals.dailyTarget} pages`;
-        }
-      }
-    }
-
-    // Modal: Hours spent on each book
-    function openBookHoursModal() {
-      const year = document.getElementById('statsYearSelect')?.value || String(calendarYear);
-      const listEl = document.getElementById('bookHoursList');
-      const subEl = document.getElementById('bookHoursSubtext');
-      if (!listEl) return;
-
-      if (subEl) subEl.innerText = year === 'all' ? 'All-time hours spent per book' : `Time spent in ${year}`;
-
-      let filteredSessions = readingSessions;
-      if (year !== 'all') {
-        filteredSessions = readingSessions.filter(s => {
-          const yr = extractValidYear(s.date);
-          return yr && String(yr) === year;
-        });
-      }
-
-      const bookTimes = {};
-      filteredSessions.forEach(s => {
-        if (!bookTimes[s.bookId]) bookTimes[s.bookId] = 0;
-        bookTimes[s.bookId] += (s.durationMinutes || 0);
-      });
-
-      const bookEntries = Object.keys(bookTimes).map(bId => {
-        const bk = books.find(b => b.id === bId) || { title: 'Unknown Title', author: 'Unknown', cover: '' };
-        return { book: bk, minutes: bookTimes[bId] };
-      }).sort((a, b) => b.minutes - a.minutes);
-
-      if (bookEntries.length === 0) {
-        listEl.innerHTML = `<p class="p-6 text-center text-xs font-bold text-slate-500 italic">No reading time recorded for this period.</p>`;
-      } else {
-        listEl.innerHTML = bookEntries.map(e => {
-          const hrs = Math.floor(e.minutes / 60);
-          const mins = e.minutes % 60;
-          return `
-            <div onclick="closeModal('modalBookHours'); openBookDetailModal('${e.book.id}')" class="bg-white border-2 border-[#05244C] rounded-2xl p-2.5 flex items-center justify-between cursor-pointer hover:bg-teal-50 transition-colors shadow-sm">
-              <div class="flex items-center gap-2.5 min-w-0 pr-2">
-                <img src="${e.book.cover || 'https://placehold.co/80x120/446BA2/FFF9EE?text=Cover'}" class="w-10 aspect-[2/3] object-cover rounded-lg border border-[#05244C] flex-shrink-0 bg-slate-200" onerror="handleCoverError(this)">
-                <div class="min-w-0">
-                  <h4 class="text-xs font-bold text-[#05244C] truncate">${e.book.title}</h4>
-                  <p class="text-[10px] text-slate-500 truncate font-editorial italic">${e.book.author}</p>
-                </div>
-              </div>
-              <div class="text-right flex-shrink-0">
-                <span class="text-xs font-black text-[#1DBBB4]">${hrs > 0 ? hrs + 'h ' : ''}${mins}m</span>
-                <span class="text-[9px] text-slate-400 block">${e.minutes} mins</span>
-              </div>
-            </div>
-          `;
-        }).join('');
-      }
-
-      openModal('modalBookHours');
-    }
-
-    // Modal: Annual Infographic / Reading Wrap
-    function openInfographicModal() {
-      const year = document.getElementById('statsYearSelect')?.value || String(calendarYear);
-      const isAll = (year === 'all');
-      const activeYear = isAll ? String(calendarYear) : year;
-
-      document.getElementById('infoYearTitle').innerText = isAll ? 'All-Time Reading Wrap' : `${activeYear} Reading Wrap`;
-
-      let filteredSessions = readingSessions;
-      if (!isAll) {
-        filteredSessions = readingSessions.filter(s => {
-          const yr = extractValidYear(s.date);
-          return yr && String(yr) === activeYear;
-        });
-      }
-
-      const totalPages = filteredSessions.reduce((acc, s) => acc + (s.pagesRead || 0), 0);
-      const totalMinutes = filteredSessions.reduce((acc, s) => acc + (s.durationMinutes || 0), 0);
-      const hrs = Math.round(totalMinutes / 60);
-
-      const finishedBooks = books.filter(b => {
-        if (b.shelf !== 'finished') return false;
-        if (isAll) return true;
-        const bYr = extractValidYear(b.finishedDate);
-        if (bYr && String(bYr) === activeYear) return true;
-        if (Array.isArray(b.finishedDates) && b.finishedDates.some(d => {
-          const dy = extractValidYear(d);
-          return dy && String(dy) === activeYear;
-        })) return true;
-        return false;
-      });
-
-      document.getElementById('infoTotalBooks').innerText = finishedBooks.length;
-      document.getElementById('infoTotalPages').innerText = totalPages.toLocaleString();
-      document.getElementById('infoTotalHours').innerText = `${hrs}h`;
-      document.getElementById('infoBooksFinishedSub').innerText = `${finishedBooks.length} book${finishedBooks.length === 1 ? '' : 's'}`;
-
-      const coversRow = document.getElementById('infoCoversRow');
-      if (finishedBooks.length === 0) {
-        coversRow.innerHTML = `<span class="text-xs text-slate-300 italic py-2">No completed books logged for this year.</span>`;
-      } else {
-        coversRow.innerHTML = finishedBooks.map(b => `
-          <img src="${b.cover || 'https://placehold.co/80x120/446BA2/FFF9EE?text=Cover'}" alt="${b.title}" class="w-14 aspect-[2/3] object-cover rounded-xl border border-white/40 shadow-sm flex-shrink-0" onerror="handleCoverError(this)">
-        `).join('');
-      }
-
-      // Top Genres Breakdown
-      const genreCounts = {};
-      finishedBooks.forEach(b => {
-        if (Array.isArray(b.genres)) {
-          b.genres.forEach(g => {
-            const clean = g.trim();
-            if (clean) genreCounts[clean] = (genreCounts[clean] || 0) + 1;
-          });
-        }
-      });
-
-      const topGenres = Object.entries(genreCounts).sort((a, b) => b[1] - a[1]).slice(0, 3);
-      const genresListEl = document.getElementById('infoTopGenresList');
-      if (topGenres.length === 0) {
-        genresListEl.innerHTML = `<span class="text-slate-300">Fiction</span>`;
-      } else {
-        genresListEl.innerHTML = topGenres.map(([g, cnt]) => `
-          <div class="flex justify-between items-center text-slate-200">
-            <span class="truncate pr-1">${g}</span>
-            <span class="text-[#FFD034] font-black">${cnt}</span>
-          </div>
-        `).join('');
-      }
-
-      // Average rating
-      const ratedBooks = finishedBooks.filter(b => b.rating > 0);
-      const avg = ratedBooks.length > 0 ? (ratedBooks.reduce((acc, b) => acc + b.rating, 0) / ratedBooks.length).toFixed(2) : '0.0';
-      document.getElementById('infoAvgRating').innerText = `${avg} ★`;
-
-      const avgSpeed = totalMinutes > 0 ? Math.round((totalPages / totalMinutes) * 60) : 40;
-      document.getElementById('infoReadingPace').innerText = `~ ${avgSpeed} pgs/hr pace`;
-
-      openModal('modalInfographic');
-    }
-
-    function shareInfographicText() {
-      const year = document.getElementById('statsYearSelect')?.value || String(calendarYear);
-      const bCount = document.getElementById('infoTotalBooks').innerText;
-      const pCount = document.getElementById('infoTotalPages').innerText;
-      const hCount = document.getElementById('infoTotalHours').innerText;
-      const rating = document.getElementById('infoAvgRating').innerText;
-
-      const summary = `📚 My ${year} Reading Wrap:\n• ${bCount} books completed\n• ${pCount} pages read\n• ${hCount} spent reading\n• ${rating} average star rating\n\nTracked with Rianne's Bookshelf! 🌴`;
-
-      const t = document.createElement("textarea");
-      t.value = summary;
-      document.body.appendChild(t);
-      t.select();
-      document.execCommand('copy');
-      document.body.removeChild(t);
-      showToast('Copied reading summary to clipboard!');
-    }
-
-    function openFinishedBooksModal() {
-      const year = document.getElementById('statsYearSelect')?.value || String(calendarYear);
-      const listEl = document.getElementById('finishedBooksModalList');
-      const subEl = document.getElementById('finishedModalYearSub');
-      if (!listEl) return;
-
-      if (subEl) subEl.innerText = year === 'all' ? 'All-Time Completed Books' : `Completed in ${year}`;
-
-      const finishedBooks = books.filter(b => {
-        if (b.shelf !== 'finished') return false;
-        if (year === 'all') return true;
-        const bYr = extractValidYear(b.finishedDate);
-        if (bYr && String(bYr) === year) return true;
-        if (Array.isArray(b.finishedDates) && b.finishedDates.some(d => {
-          const dy = extractValidYear(d);
-          return dy && String(dy) === year;
-        })) return true;
-        return false;
-      });
-
-      if (finishedBooks.length === 0) {
-        listEl.innerHTML = `<div class="p-6 text-center text-xs font-bold text-slate-500 italic">No books marked as finished in ${year} yet.</div>`;
-      } else {
-        listEl.innerHTML = finishedBooks.map(b => {
-          const starStr = getStarDisplayHtml(b.rating);
-          const fDate = b.finishedDate || (Array.isArray(b.finishedDates) && b.finishedDates[0]) || 'Finished';
-          return `
-            <div onclick="closeModal('modalFinishedBooks'); openBookDetailModal('${b.id}')" class="bg-white border-2 border-[#05244C] rounded-2xl p-2.5 flex gap-3 items-center cursor-pointer hover:bg-orange-50 transition-colors shadow-sm">
-              <img src="${b.cover || 'https://placehold.co/80x120/446BA2/FFF9EE?text=Cover'}" class="w-12 aspect-[2/3] object-cover rounded-lg border border-[#05244C] flex-shrink-0 bg-slate-200" onerror="handleCoverError(this)">
-              <div class="flex-1 min-w-0">
-                <h4 class="text-xs font-bold text-[#05244C] truncate">${b.title}</h4>
-                <p class="text-[10px] text-slate-500 truncate font-editorial italic">${b.author}</p>
-                <div class="flex items-center gap-2 mt-1">
-                  ${starStr ? `<span class="text-[#FF5B22] text-xs font-bold">${starStr}</span>` : '<span class="text-[9px] text-slate-400">Unrated</span>'}
-                  <span class="text-[9px] font-bold text-emerald-700 bg-emerald-100 px-1.5 py-0.5 rounded-full">✓ ${fDate}</span>
-                </div>
-              </div>
-              <span class="text-xs text-slate-400 font-bold pr-1">›</span>
-            </div>
-          `;
-        }).join('');
-      }
-
-      openModal('modalFinishedBooks');
-    }
-
-    function setLogSessionMode(mode) {
-      currentLogMode = mode;
-      const btnPages = document.getElementById('btnLogModePages');
-      const btnPercent = document.getElementById('btnLogModePercent');
-      const secPages = document.getElementById('logSectionPages');
-      const secPercent = document.getElementById('logSectionPercent');
-
-      if (mode === 'pages') {
-        btnPages.className = "flex-1 py-1 rounded-lg text-xs font-black bg-[#FF5B22] text-white";
-        btnPercent.className = "flex-1 py-1 rounded-lg text-xs font-black text-slate-700";
-        secPages.classList.remove('hidden');
-        secPercent.classList.add('hidden');
-      } else {
-        btnPages.className = "flex-1 py-1 rounded-lg text-xs font-black text-slate-700";
-        btnPercent.className = "flex-1 py-1 rounded-lg text-xs font-black bg-[#FF5B22] text-white";
-        secPages.classList.add('hidden');
-        secPercent.classList.remove('hidden');
-        secPercent.classList.add('grid');
-      }
-    }
-
-    function openPastSessionModal() {
-      const select = document.getElementById('pastSessionBookSelect');
-      select.innerHTML = books.map(b => `<option value="${b.id}" ${b.id === activeBookId ? 'selected' : ''}>${b.title}</option>`).join('');
-      document.getElementById('pastSessionDate').value = new Date().toISOString().split('T')[0];
-      syncPastSessionBookInfo();
-      openModal('modalPastSession');
-    }
-
-    function syncPastSessionBookInfo() {
-      const bookId = document.getElementById('pastSessionBookSelect').value;
-      const bk = books.find(b => b.id === bookId);
-      if (!bk) return;
-
-      document.getElementById('pastSessionStartPage').value = bk.currentPage;
-      document.getElementById('pastSessionEndPage').value = Math.min(bk.pageCount, bk.currentPage + 15);
-      document.getElementById('pastSessionMinutes').value = 30;
-
-      const startPct = bk.pageCount > 0 ? Math.round((bk.currentPage / bk.pageCount) * 100) : 0;
-      const endPct = Math.min(100, startPct + 10);
-      document.getElementById('pastSessionStartPercent').value = startPct;
-      document.getElementById('pastSessionEndPercent').value = endPct;
-      document.getElementById('pastSessionPercentMinutes').value = 30;
-    }
-
-    function submitPastSession() {
-      const bookId = document.getElementById('pastSessionBookSelect').value;
-      const dateStr = document.getElementById('pastSessionDate').value;
-      const notes = document.getElementById('pastSessionNotes').value.trim();
-      const bk = books.find(b => b.id === bookId);
-      if (!bk) return;
-
-      let startP = 0, endP = 0, minutes = 30;
-
-      if (currentLogMode === 'pages') {
-        startP = Number(document.getElementById('pastSessionStartPage').value) || 0;
-        endP = Number(document.getElementById('pastSessionEndPage').value) || startP;
-        minutes = Number(document.getElementById('pastSessionMinutes').value) || 1;
-      } else {
-        const startPct = Math.max(0, Math.min(100, Number(document.getElementById('pastSessionStartPercent').value) || 0));
-        const endPct = Math.max(0, Math.min(100, Number(document.getElementById('pastSessionEndPercent').value) || startPct));
-        minutes = Number(document.getElementById('pastSessionPercentMinutes').value) || 1;
-        startP = Math.round((startPct / 100) * bk.pageCount);
-        endP = Math.round((endPct / 100) * bk.pageCount);
-      }
-
-      const pagesRead = Math.max(0, endP - startP);
-      const session = {
-        id: 'sess_' + Date.now(),
-        bookId: bk.id,
-        date: dateStr,
-        timestamp: Date.now(),
-        durationMinutes: minutes,
-        startPage: startP,
-        endPage: endP,
-        pagesRead: pagesRead,
-        notes: notes
-      };
-
-      readingSessions.push(session);
-      bk.currentPage = Math.max(bk.currentPage, endP);
-      bk.lastSessionDate = dateStr;
-
-      if (bk.pageCount > 0 && bk.currentPage >= bk.pageCount) {
-        bk.currentPage = bk.pageCount;
-        bk.shelf = 'finished';
-        bk.finishedDate = dateStr;
-        if (!bk.finishedDates) bk.finishedDates = [];
-        if (!bk.finishedDates.includes(dateStr)) bk.finishedDates.push(dateStr);
-        showToast(`🎉 You finished ${bk.title}! Moved to Finished.`);
-      }
-
-      saveSessions();
-      saveBooks();
-      closeModal('modalPastSession');
-      determineActiveHeroBook();
-      renderAllViews();
-      showToast('Session logged to calendar!');
-    }
-
-    function updateLiveCoverPreview(url) {
-      const cleaned = cleanImageUrl(url);
-      const img = document.getElementById('editBookCoverPreviewImg');
-      const placeholder = document.getElementById('editBookCoverPreviewPlaceholder');
-      const statusLbl = document.getElementById('coverPreviewStatus');
-
-      if (!cleaned) {
-        if (img) {
-          img.onload = null;
-          img.onerror = null;
-          img.removeAttribute('src');
-          img.classList.add('hidden');
-        }
-        if (placeholder) placeholder.classList.remove('hidden');
-        if (statusLbl) {
-          statusLbl.innerText = 'No link entered';
-          statusLbl.className = 'text-[9px] font-bold text-slate-400';
-        }
-        return;
-      }
-
-      if (img) {
-        img.onload = window.handlePreviewImgLoaded;
-        img.onerror = window.handlePreviewImgError;
-        img.src = cleaned;
-        if (statusLbl) {
-          statusLbl.innerText = 'Checking link...';
-          statusLbl.className = 'text-[9px] font-bold text-amber-600';
-        }
-      }
-    }
-
-    function toggleInlineSessionForm(forceState) {
-      const form = document.getElementById('inlineSessionForm');
-      if (!form) return;
-      if (typeof forceState === 'boolean') {
-        form.classList.toggle('hidden', !forceState);
-      } else {
-        form.classList.toggle('hidden');
-      }
-    }
-
-    // Sync Page / Percent in Inline Session Form live
-    function syncInlineSessionInputs(origin) {
-      const bkId = document.getElementById('editBookId')?.value;
-      const bk = books.find(b => b.id === bkId);
-      const total = bk ? (bk.pageCount || 300) : 300;
-      if (total <= 0) return;
-
-      const startPageEl = document.getElementById('inlineSessStartPage');
-      const startPctEl = document.getElementById('inlineSessStartPercent');
-      const endPageEl = document.getElementById('inlineSessEndPage');
-      const endPctEl = document.getElementById('inlineSessEndPercent');
-
-      if (origin === 'startPage') {
-        const p = Number(startPageEl.value) || 0;
-        startPctEl.value = Math.min(100, Math.round((p / total) * 100));
-      } else if (origin === 'startPercent') {
-        const pct = Math.min(100, Math.max(0, Number(startPctEl.value) || 0));
-        startPageEl.value = Math.round((pct / 100) * total);
-      } else if (origin === 'endPage') {
-        const p = Number(endPageEl.value) || 0;
-        endPctEl.value = Math.min(100, Math.round((p / total) * 100));
-      } else if (origin === 'endPercent') {
-        const pct = Math.min(100, Math.max(0, Number(endPctEl.value) || 0));
-        endPageEl.value = Math.round((pct / 100) * total);
-      }
-    }
-
-    function openNewInlineSessionForm() {
-      const idInput = document.getElementById('inlineSessEditId');
-      if (idInput) idInput.value = '';
-
-      const titleEl = document.getElementById('inlineSessFormTitle');
-      if (titleEl) titleEl.innerText = 'Quick Log Session';
-
-      const btn = document.getElementById('inlineSessSubmitBtn');
-      if (btn) btn.innerText = 'Save Session';
-
-      const bk = books.find(b => b.id === document.getElementById('editBookId')?.value);
-      const cur = bk ? bk.currentPage : 0;
-      const tot = bk ? (bk.pageCount || 300) : 300;
-      const nextP = Math.min(tot, cur + 15);
-
-      document.getElementById('inlineSessDate').value = new Date().toISOString().split('T')[0];
-      document.getElementById('inlineSessMinutes').value = 30;
-      
-      document.getElementById('inlineSessStartPage').value = cur;
-      document.getElementById('inlineSessStartPercent').value = tot > 0 ? Math.round((cur / tot) * 100) : 0;
-
-      document.getElementById('inlineSessEndPage').value = nextP;
-      document.getElementById('inlineSessEndPercent').value = tot > 0 ? Math.round((nextP / tot) * 100) : 0;
-
-      document.getElementById('inlineSessNotes').value = '';
-
-      toggleInlineSessionForm(true);
-    }
-
-    function editSessionInBook(sessionId, bookId) {
-      const sess = readingSessions.find(s => s.id === sessionId);
-      if (!sess) return;
-      const bk = books.find(b => b.id === bookId);
-      const tot = bk ? (bk.pageCount || 300) : 300;
-
-      const idInput = document.getElementById('inlineSessEditId');
-      if (idInput) idInput.value = sess.id;
-
-      const titleEl = document.getElementById('inlineSessFormTitle');
-      if (titleEl) titleEl.innerText = 'Edit Session Entry';
-
-      const btn = document.getElementById('inlineSessSubmitBtn');
-      if (btn) btn.innerText = 'Update Entry';
-
-      document.getElementById('inlineSessDate').value = sess.date || new Date().toISOString().split('T')[0];
-      document.getElementById('inlineSessMinutes').value = sess.durationMinutes || 30;
-      
-      const sp = sess.startPage || 0;
-      const ep = sess.endPage || (sp + (sess.pagesRead || 0));
-
-      document.getElementById('inlineSessStartPage').value = sp;
-      document.getElementById('inlineSessStartPercent').value = tot > 0 ? Math.round((sp / tot) * 100) : 0;
-
-      document.getElementById('inlineSessEndPage').value = ep;
-      document.getElementById('inlineSessEndPercent').value = tot > 0 ? Math.round((ep / tot) * 100) : 0;
-
-      document.getElementById('inlineSessNotes').value = sess.notes || '';
-
-      toggleInlineSessionForm(true);
-      document.getElementById('inlineSessionForm')?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    }
-
-    function submitInlineSession() {
-      const bookId = document.getElementById('editBookId').value;
-      const bk = books.find(b => b.id === bookId);
-      if (!bk) return;
-
-      const editSessionId = document.getElementById('inlineSessEditId')?.value;
-      const dateStr = document.getElementById('inlineSessDate').value || new Date().toISOString().split('T')[0];
-      const minutes = Number(document.getElementById('inlineSessMinutes').value) || 20;
-      const startP = Number(document.getElementById('inlineSessStartPage').value) || 0;
-      const endP = Number(document.getElementById('inlineSessEndPage').value) || startP;
-      const notes = document.getElementById('inlineSessNotes').value.trim();
-      const pagesRead = Math.max(0, endP - startP);
-
-      if (editSessionId) {
-        const sess = readingSessions.find(s => s.id === editSessionId);
-        if (sess) {
-          sess.date = dateStr;
-          sess.durationMinutes = minutes;
-          sess.startPage = startP;
-          sess.endPage = endP;
-          sess.pagesRead = pagesRead;
-          sess.notes = notes;
-        }
-      } else {
-        const session = {
-          id: 'sess_' + Date.now(),
-          bookId: bk.id,
-          date: dateStr,
-          timestamp: Date.now(),
-          durationMinutes: minutes,
-          startPage: startP,
-          endPage: endP,
-          pagesRead: pagesRead,
-          notes: notes
-        };
-        readingSessions.push(session);
-      }
-
-      const bookSessions = readingSessions.filter(s => s.bookId === bk.id);
-      const maxPageReached = bookSessions.reduce((max, s) => Math.max(max, s.endPage || 0), 0);
-
-      bk.currentPage = Math.max(bk.currentPage, maxPageReached);
-      bk.lastSessionDate = dateStr;
-
-      document.getElementById('editBookCurrentPage').value = bk.currentPage;
-      const pct = bk.pageCount > 0 ? Math.min(100, Math.round((bk.currentPage / bk.pageCount) * 100)) : 0;
-      document.getElementById('editBookPercent').value = pct;
-
-      if (bk.pageCount > 0 && bk.currentPage >= bk.pageCount) {
-        bk.currentPage = bk.pageCount;
-        bk.shelf = 'finished';
-        bk.finishedDate = dateStr;
-        if (!bk.finishedDates) bk.finishedDates = [];
-        if (!bk.finishedDates.includes(dateStr)) bk.finishedDates.push(dateStr);
-        document.getElementById('editBookShelf').value = 'finished';
-        toggleReviewSectionDisplay();
-      }
-
-      saveSessions();
-      saveBooks();
-      renderBookSessionsList(bk.id);
-      toggleInlineSessionForm(false);
-      determineActiveHeroBook();
-      renderAllViews();
-      showToast(editSessionId ? 'Entry updated!' : 'Session logged!');
-    }
-
-    function unmarkBookFinished() {
-      const id = document.getElementById('editBookId').value;
-      const bk = books.find(b => b.id === id);
-      if (!bk) return;
-
-      bk.shelf = 'reading';
-      bk.finishedDate = null;
-      bk.finishedDates = [];
-      bk.rating = 0;
-      bk.vibeTears = 0;
-      bk.vibeScary = 0;
-      bk.vibeSpice = 0;
-      bk.vibeHeartbreak = 0;
-
-      readingSessions = readingSessions.filter(s => !(s.bookId === bk.id && (s.id.startsWith('sess_fin_') || s.notes === 'Finished reading!' || s.notes === 'Completed book!')));
-
-      document.getElementById('editBookShelf').value = 'reading';
-      document.getElementById('editBookFinishedDate').value = '';
-      setEditBookStarRating(0);
-      renderVibeStars('vibeTears', 0);
-      renderVibeStars('vibeScary', 0);
-      renderVibeStars('vibeSpice', 0);
-      renderVibeStars('vibeHeartbreak', 0);
-
-      saveBooks();
-      saveSessions();
-      toggleReviewSectionDisplay();
-      renderBookSessionsList(bk.id);
-      renderAllViews();
-      showToast(`Unmarked as finished. Moved back to Reading.`);
-    }
-
-    function removeFinishedMilestoneDate(targetDate, bookId) {
-      const bk = books.find(b => b.id === bookId);
-      if (!bk) return;
-
-      if (Array.isArray(bk.finishedDates)) {
-        bk.finishedDates = bk.finishedDates.filter(d => d !== targetDate);
-        if (bk.finishedDates.length > 0) {
-          bk.finishedDate = bk.finishedDates[bk.finishedDates.length - 1];
-        } else {
-          bk.finishedDate = null;
-          bk.shelf = 'reading';
-        }
-      } else if (bk.finishedDate === targetDate) {
-        bk.finishedDate = null;
-        bk.shelf = 'reading';
-      }
-
-      readingSessions = readingSessions.filter(s => !(s.bookId === bk.id && s.date === targetDate && (s.id.startsWith('sess_fin_') || s.notes === 'Finished reading!' || s.notes === 'Completed book!')));
-
-      saveBooks();
-      saveSessions();
-      renderBookSessionsList(bk.id);
-      toggleReviewSectionDisplay();
-      renderAllViews();
-      showToast('Finished milestone removed.');
-    }
-
-    // Helper to apply preset mood tag pills
-    function applyPresetTag(targetInputId, tag) {
-      const input = document.getElementById(targetInputId);
-      if (!input) return;
-      const current = input.value.split(',').map(t => t.trim()).filter(Boolean);
-      if (!current.includes(tag)) {
-        current.push(tag);
-        input.value = current.join(', ');
-      }
-    }
-
-    // Open Inline Quote Logger Inside Book Edit Modal
-    function openInlineQuoteLogger(type = 'quote') {
-      const form = document.getElementById('editBookQuoteForm');
-      if (!form) return;
-      form.classList.remove('hidden');
-
-      document.getElementById('editModalEntryType').value = type;
-      document.getElementById('editModalEditingQuoteId').value = '';
-      document.getElementById('editQuoteFormHeader').innerText = type === 'thought' ? '💭 New Reader Thought' : '“ New Book Quote';
-      document.getElementById('editModalQuoteText').placeholder = type === 'thought' ? 'Your reaction, theory, or quick thought...' : '“Type or paste passage...”';
-      document.getElementById('editModalQuoteDate').value = new Date().toISOString().split('T')[0];
-      document.getElementById('editModalQuotePage').value = '';
-      document.getElementById('editModalQuoteTag').value = '';
-    }
-
-    function toggleEditQuoteForm(forceState) {
-      const form = document.getElementById('editBookQuoteForm');
-      if (!form) return;
-      if (typeof forceState === 'boolean') {
-        form.classList.toggle('hidden', !forceState);
-      } else {
-        form.classList.toggle('hidden');
-      }
-    }
-
-    function editQuoteEntry(quoteId, bookId) {
-      const q = quotes.find(item => item.id === quoteId);
-      if (!q) return;
-
-      if (bookId) {
-        openInlineQuoteLogger(q.type || 'quote');
-        document.getElementById('editModalEditingQuoteId').value = q.id;
-        document.getElementById('editQuoteFormHeader').innerText = `Edit ${q.type === 'thought' ? 'Thought' : 'Quote'}`;
-        document.getElementById('editModalQuoteText').value = q.text || '';
-        document.getElementById('editModalQuoteDate').value = q.date || new Date().toISOString().split('T')[0];
-        document.getElementById('editModalQuotePage').value = q.page || '';
-        document.getElementById('editModalQuoteTag').value = q.tag || '';
-        document.getElementById('editBookQuoteForm')?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-      } else {
-        openAddQuoteModal(q.bookId, q.type || 'quote');
-        document.getElementById('standaloneQuoteEditId').value = q.id;
-        document.getElementById('standaloneModalTitle').innerText = `Edit ${q.type === 'thought' ? 'Thought' : 'Quote'}`;
-        document.getElementById('quoteTextInput').value = q.text || '';
-        document.getElementById('quoteDateInput').value = q.date || new Date().toISOString().split('T')[0];
-        document.getElementById('quotePageInput').value = q.page || '';
-        document.getElementById('quoteTagInput').value = q.tag || '';
-      }
-    }
-
-    function submitEditModalQuote() {
-      const bookId = document.getElementById('editBookId').value;
-      const bk = books.find(b => b.id === bookId);
-      const text = document.getElementById('editModalQuoteText')?.value.trim();
-      const date = document.getElementById('editModalQuoteDate')?.value || new Date().toISOString().split('T')[0];
-      const page = document.getElementById('editModalQuotePage')?.value.trim();
-      const tag = document.getElementById('editModalQuoteTag')?.value.trim();
-      const type = document.getElementById('editModalEntryType')?.value || 'quote';
-      const editingId = document.getElementById('editModalEditingQuoteId')?.value;
-
-      if (!text) {
-        showToast('Please type your passage or thought');
-        return;
-      }
-
-      if (editingId) {
-        const q = quotes.find(item => item.id === editingId);
-        if (q) {
-          q.text = text;
-          q.date = date;
-          q.page = page;
-          q.tag = tag || (type === 'thought' ? 'Thought' : 'Favorite');
-          q.type = type;
-        }
-      } else {
-        quotes.unshift({
-          id: 'q_' + Date.now(),
-          type: type, // 'quote' or 'thought'
-          bookId: bk?.id || bookId,
-          bookTitle: bk?.title || 'Unknown Title',
-          bookCover: bk?.cover || '',
-          text: text,
-          page: page,
-          tag: tag || (type === 'thought' ? 'Thought' : 'Favorite'),
-          date: date
-        });
-      }
-
-      saveQuotes();
-      toggleEditQuoteForm(false);
-      renderEditBookQuotesList(bookId);
-      renderQuotes();
-      showToast(editingId ? 'Entry updated!' : (type === 'thought' ? 'Thought saved!' : 'Quote saved!'));
-    }
-
-    function renderEditBookQuotesList(bookId) {
-      const listEl = document.getElementById('editBookQuotesList');
-      if (!listEl) return;
-      const bQuotes = quotes.filter(q => q.bookId === bookId);
-
-      if (bQuotes.length === 0) {
-        listEl.innerHTML = `<p class="text-[11px] text-slate-400 italic text-center py-2">No quotes or thoughts logged for this book yet.</p>`;
-        return;
-      }
-
-      listEl.innerHTML = bQuotes.map(q => {
-        const isThought = (q.type === 'thought');
-        return `
-          <div class="${isThought ? 'bg-[#FFEDC9]/80 border-amber-300' : 'bg-amber-50/70 border-orange-200/80'} border rounded-xl p-2.5 space-y-1 relative group">
-            <div class="flex items-center justify-between pb-0.5">
-              <span class="text-[9px] font-black uppercase ${isThought ? 'text-amber-800' : 'text-[#FF5B22]'}">${isThought ? '💭 Reader Thought' : '“ Quote'}</span>
-              <div class="flex items-center gap-1.5">
-                <button type="button" onclick="editQuoteEntry('${q.id}', '${bookId}')" class="text-slate-400 hover:text-slate-700 font-black text-[10px]">✏️ Edit</button>
-                <button type="button" onclick="deleteQuote('${q.id}', '${bookId}')" class="text-slate-400 hover:text-red-500 font-bold text-xs">✕</button>
-              </div>
-            </div>
-            <p class="${isThought ? 'font-sans text-xs text-slate-800' : 'font-editorial text-xs italic text-[#05244C]'} leading-snug pr-4">${isThought ? q.text : `“${q.text}”`}</p>
-            <div class="flex items-center gap-2 text-[10px] text-slate-500 pt-0.5">
-              ${q.page ? `<span>Page ${q.page}</span>` : ''}
-              <span>• ${q.date || ''}</span>
-              <span class="bg-[#FFA4C4] text-[#05244C] px-1.5 py-0.2 rounded-full font-bold border border-[#05244C]/30">${q.tag}</span>
-            </div>
-          </div>
-        `;
-      }).join('');
-    }
-
-    function deleteQuote(quoteId, bookId) {
-      quotes = quotes.filter(q => q.id !== quoteId);
-      saveQuotes();
-      renderQuotes();
-      if (bookId) renderEditBookQuotesList(bookId);
-      showToast('Entry deleted');
-    }
-
-    function setStandaloneEntryType(type) {
-      document.getElementById('standaloneEntryTypeVal').value = type;
-      const btnQ = document.getElementById('btnEntryTypeQuote');
-      const btnT = document.getElementById('btnEntryTypeThought');
-      const lbl = document.getElementById('standaloneContentLabel');
-      const txt = document.getElementById('quoteTextInput');
-
-      if (type === 'quote') {
-        btnQ.className = "flex-1 py-1 rounded-lg text-xs font-black bg-[#FF5B22] text-white";
-        btnT.className = "flex-1 py-1 rounded-lg text-xs font-black text-slate-700";
-        if (lbl) lbl.innerText = "Quote Passage";
-        if (txt) txt.placeholder = "Type or paste memorable passage...";
-      } else {
-        btnQ.className = "flex-1 py-1 rounded-lg text-xs font-black text-slate-700";
-        btnT.className = "flex-1 py-1 rounded-lg text-xs font-black bg-[#FF5B22] text-white";
-        if (lbl) lbl.innerText = "Reader Reaction or Thought";
-        if (txt) txt.placeholder = "What popped into your head while reading this?";
-      }
-    }
-
-    function openAddQuoteModal(bookId, type = 'quote') {
-      const select = document.getElementById('quoteBookSelect');
-      if (select) {
-        select.innerHTML = books.map(b => `<option value="${b.id}" ${(bookId || activeBookId) === b.id ? 'selected' : ''}>${b.title} (${b.author})</option>`).join('');
-      }
-
-      document.getElementById('standaloneQuoteEditId').value = '';
-      document.getElementById('standaloneModalTitle').innerText = type === 'thought' ? 'Save Reader Thought' : 'Save Quote';
-      document.getElementById('quoteTextInput').value = '';
-      document.getElementById('quoteDateInput').value = new Date().toISOString().split('T')[0];
-      document.getElementById('quotePageInput').value = '';
-      document.getElementById('quoteTagInput').value = '';
-      
-      setStandaloneEntryType(type);
-      openModal('modalAddQuote');
-    }
-
-    function saveQuote() {
-      const editingId = document.getElementById('standaloneQuoteEditId')?.value;
-      const bookId = document.getElementById('quoteBookSelect').value;
-      const text = document.getElementById('quoteTextInput').value.trim();
-      const date = document.getElementById('quoteDateInput').value || new Date().toISOString().split('T')[0];
-      const page = document.getElementById('quotePageInput').value;
-      const tag = document.getElementById('quoteTagInput').value.trim();
-      const type = document.getElementById('standaloneEntryTypeVal').value || 'quote';
-      const bk = books.find(b => b.id === bookId);
-      if (!text) return;
-
-      if (editingId) {
-        const q = quotes.find(item => item.id === editingId);
-        if (q) {
-          q.bookId = bk?.id || bookId;
-          q.bookTitle = bk?.title || 'Unknown Title';
-          q.bookCover = bk?.cover || '';
-          q.text = text;
-          q.date = date;
-          q.page = page;
-          q.tag = tag || (type === 'thought' ? 'Thought' : 'Favorite');
-          q.type = type;
-        }
-      } else {
-        quotes.unshift({
-          id: 'q_' + Date.now(),
-          type: type,
-          bookId: bk?.id || 'unknown',
-          bookTitle: bk?.title || 'Unknown Title',
-          bookCover: bk?.cover || '',
-          text: text,
-          page: page,
-          tag: tag || (type === 'thought' ? 'Thought' : 'Favorite'),
-          date: date
-        });
-      }
-
-      saveQuotes();
-      closeModal('modalAddQuote');
-      renderQuotes();
-      showToast(editingId ? 'Entry updated!' : (type === 'thought' ? 'Thought saved!' : 'Quote saved!'));
-    }
-
-    // Quote Filter: All vs Quotes vs Thoughts
-    function setQuoteTypeFilter(filterType) {
-      currentQuoteTypeFilter = filterType;
-      ['all', 'quote', 'thought'].forEach(t => {
-        const btn = document.getElementById(`qTypeFilter_${t}`);
-        if (!btn) return;
-        if (t === filterType) {
-          btn.className = "px-2.5 py-1 rounded-lg text-xs font-black bg-[#FF5B22] text-white";
-        } else {
-          btn.className = "px-2.5 py-1 rounded-lg text-xs font-bold text-slate-700";
-        }
-      });
-      renderQuotes();
-    }
-
-    // Quotes and Thoughts Feed with Distinct Visual Representations
-    function renderQuotes() {
-      const container = document.getElementById('quotesContainer');
-      if (!container) return;
-
-      let filteredQuotes = quotes;
-      if (currentQuoteTypeFilter === 'quote') {
-        filteredQuotes = quotes.filter(q => (q.type || 'quote') === 'quote');
-      } else if (currentQuoteTypeFilter === 'thought') {
-        filteredQuotes = quotes.filter(q => q.type === 'thought');
-      }
-
-      if (filteredQuotes.length === 0) {
-        container.innerHTML = `<div class="bg-[#FFF9EE] rounded-3xl p-8 text-center border-3 border-[#05244C] shadow-retro-orange text-xs font-bold text-slate-500">No entries saved in this view yet. Tap "+ Quote" or "+ Thought" above!</div>`;
-        return;
-      }
-
-      if (quoteViewMode === 'timeline') {
-        container.innerHTML = filteredQuotes.map(q => {
-          const isThought = (q.type === 'thought');
-          if (isThought) {
-            // DISTINCT STICKY-NOTE / THOUGHT BUBBLE DESIGN FOR READER THOUGHTS
-            return `
-              <div class="relative bg-[#FFF9EE] border-3 border-[#05244C] rounded-3xl p-6 shadow-retro-orange space-y-2.5">
-                <div class="flex items-center justify-between pb-1 border-b border-orange-200/70">
-                  <span class="bg-[#FFEDC9] text-amber-900 border border-[#05244C] text-[9px] font-black uppercase px-2 py-0.5 rounded-full flex items-center gap-1">
-                    <span>💭</span> Reader Thought
-                  </span>
-                  <div class="flex items-center gap-2">
-                    <button onclick="editQuoteEntry('${q.id}', null)" class="text-slate-400 hover:text-[#05244C] font-black text-xs">✏️ Edit</button>
-                    <button onclick="deleteQuote('${q.id}')" class="text-slate-400 hover:text-red-500 font-bold text-sm">✕</button>
-                  </div>
-                </div>
-
-                <div class="bg-amber-100/60 border-2 border-dashed border-[#05244C]/30 rounded-2xl p-4">
-                  <p class="font-sans text-sm text-[#05244C] font-semibold leading-relaxed">
-                    ${q.text}
-                  </p>
-                </div>
-
-                <div class="pt-1 flex items-center justify-between text-xs">
-                  <div class="min-w-0 pr-2">
-                    <span class="font-black text-[#FF5B22] uppercase tracking-wider block truncate">${q.bookTitle}</span>
-                    <span class="text-[10px] text-slate-500 font-bold">${q.page ? 'Page ' + q.page : ''} ${q.date ? '• ' + q.date : ''}</span>
-                  </div>
-                  <div class="flex items-center gap-1.5 flex-shrink-0">
-                    <span class="bg-[#FFA4C4] text-[#05244C] text-[10px] font-black px-2.5 py-0.5 rounded-full border border-[#05244C]">${q.tag || 'Thought'}</span>
-                    <button onclick="copyQuoteText('${q.id}')" class="text-xs font-bold text-[#446BA2] underline ml-1">Copy</button>
-                  </div>
-                </div>
-              </div>
-            `;
-          }
-
-          // EDITORIAL POSTER STYLE FOR QUOTES
-          return `
-            <div class="relative bg-[#FFF9EE] border-3 border-[#05244C] rounded-3xl p-6 shadow-retro-orange space-y-3">
-              <div class="flex items-center justify-between pb-1">
-                <span class="text-[9px] font-black uppercase tracking-wider text-[#1DBBB4]">“ Book Quote</span>
-                <div class="flex items-center gap-2">
-                  <button onclick="editQuoteEntry('${q.id}', null)" class="text-slate-400 hover:text-[#05244C] font-black text-xs">✏️ Edit</button>
-                  <button onclick="deleteQuote('${q.id}')" class="text-slate-400 hover:text-red-500 font-bold text-sm">✕</button>
-                </div>
-              </div>
-
-              <div class="font-quote-display text-6xl text-[#1DBBB4] font-black leading-none select-none -mb-3">“</div>
-              <p class="font-quote-display text-lg text-[#05244C] font-semibold italic leading-relaxed pt-1">
-                ${q.text}
-              </p>
-              <div class="pt-2 border-t-2 border-orange-200/80 flex items-center justify-between text-xs">
-                <div class="min-w-0 pr-2">
-                  <span class="font-black text-[#FF5B22] uppercase tracking-wider block truncate">${q.bookTitle}</span>
-                  <span class="text-[10px] text-slate-500 font-bold">${q.page ? 'Page ' + q.page : ''} ${q.date ? '• ' + q.date : ''}</span>
-                </div>
-                <div class="flex items-center gap-1.5 flex-shrink-0">
-                  <span class="bg-[#FFA4C4] text-[#05244C] text-[10px] font-black px-2.5 py-0.5 rounded-full border border-[#05244C]">${q.tag || 'Favorite'}</span>
-                  <button onclick="copyQuoteText('${q.id}')" class="text-xs font-bold text-[#446BA2] underline ml-1">Copy</button>
-                </div>
-              </div>
-            </div>
-          `;
-        }).join('');
-      } else {
-        const grouped = {};
-        filteredQuotes.forEach(q => {
-          if (!grouped[q.bookTitle]) grouped[q.bookTitle] = [];
-          grouped[q.bookTitle].push(q);
-        });
-
-        container.innerHTML = Object.keys(grouped).map(title => `
-          <div class="space-y-3">
-            <h4 class="text-xs font-extrabold text-[#FFF9EE] uppercase tracking-wider px-1">${title}</h4>
-            ${grouped[title].map(q => {
-              const isThought = (q.type === 'thought');
-              return `
-                <div class="relative bg-[#FFF9EE] border-3 border-[#05244C] rounded-3xl p-5 shadow-retro-orange space-y-2.5">
-                  <div class="flex items-center justify-between pb-1">
-                    <span class="text-[9px] font-black uppercase ${isThought ? 'text-amber-800' : 'text-[#1DBBB4]'}">${isThought ? '💭 Reader Thought' : '“ Book Quote'}</span>
-                    <div class="flex items-center gap-2">
-                      <button onclick="editQuoteEntry('${q.id}', null)" class="text-slate-400 hover:text-[#05244C] font-black text-xs">✏️ Edit</button>
-                      <button onclick="deleteQuote('${q.id}')" class="text-slate-400 hover:text-red-500 font-bold text-sm">✕</button>
-                    </div>
-                  </div>
-                  <p class="${isThought ? 'font-sans text-xs text-[#05244C] font-semibold bg-amber-100/60 p-3 rounded-xl' : 'font-quote-display text-base text-[#05244C] font-semibold italic'} leading-relaxed">
-                    ${isThought ? q.text : `“${q.text}”`}
-                  </p>
-                  <div class="pt-2 border-t border-orange-200 flex justify-between items-center text-[10px] text-slate-500">
-                    <span>${q.page ? 'Page ' + q.page : ''} ${q.date ? '• ' + q.date : ''}</span>
-                    <span class="bg-[#FFA4C4] text-[#05244C] px-2 py-0.5 rounded-full font-bold border border-[#05244C]">${q.tag || 'Favorite'}</span>
-                  </div>
-                </div>
-              `;
-            }).join('')}
-          </div>
-        `).join('');
-      }
-    }
-
-    function setQuoteView(mode) {
-      quoteViewMode = mode;
-      if (mode === 'timeline') {
-        document.getElementById('quoteViewTimelineBtn').className = "px-2 py-1 rounded-lg text-xs font-bold bg-[#FF5B22] text-white";
-        document.getElementById('quoteViewByBookBtn').className = "px-2 py-1 rounded-lg text-xs font-bold text-slate-700";
-      } else {
-        document.getElementById('quoteViewTimelineBtn').className = "px-2 py-1 rounded-lg text-xs font-bold text-slate-700";
-        document.getElementById('quoteViewByBookBtn').className = "px-2 py-1 rounded-lg text-xs font-bold bg-[#FF5B22] text-white";
-      }
-      renderQuotes();
-    }
-
-    function copyQuoteText(id) {
-      const q = quotes.find(item => item.id === id);
-      if (!q) return;
-      const textToCopy = q.type === 'thought' 
-        ? `💭 Reader Thought on "${q.bookTitle}" (p. ${q.page || 'N/A'}):\n"${q.text}"`
-        : `“${q.text}”\n— ${q.bookTitle}${q.page ? ' (p. ' + q.page + ')' : ''}`;
-      const t = document.createElement("textarea");
-      t.value = textToCopy;
-      document.body.appendChild(t);
-      t.select();
-      document.execCommand('copy');
-      document.body.removeChild(t);
-      showToast('Copied to clipboard!');
-    }
-
-    let activeSyncKey = localStorage.getItem('rianne_cloud_sync_key') || '';
-    let autoSyncTimer = null;
-
-    function initCloudSync() {
-      if (activeSyncKey) {
-        const input = document.getElementById('syncKeyInput');
-        if (input) input.value = activeSyncKey;
-      }
-    }
-
-    async function generateNewSyncKey() {
-      showToast('Connecting to sync vault...');
-      const payload = { books, sessions: readingSessions, quotes, goals: userGoals, updatedAt: Date.now() };
-      let newKey = null;
-
-      try {
-        const res = await fetch("https://superjsonblob.com/api/jsonBlob", {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-          body: JSON.stringify(payload)
-        });
-        if (res.ok) {
-          const data = await res.json().catch(() => null);
-          if (data && data.id) {
-            newKey = data.id;
-          } else {
-            const loc = res.headers.get('Location') || res.headers.get('location');
-            if (loc) newKey = loc.split('/').pop();
-          }
-        }
-      } catch (e) {
-        console.warn("Primary vault failed, trying fallback...", e);
-      }
-
-      if (!newKey) {
-        try {
-          const res = await fetch("https://jsonblob.com/api/jsonBlob", {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-            body: JSON.stringify(payload)
-          });
-          const loc = res.headers.get('Location') || res.headers.get('location') || res.headers.get('x-jsonblob');
-          if (loc) newKey = loc.split('/').pop();
-        } catch (e) {
-          console.warn("Secondary vault failed", e);
-        }
-      }
-
-      if (newKey) {
-        activeSyncKey = newKey;
-        localStorage.setItem('rianne_cloud_sync_key', newKey);
-        const input = document.getElementById('syncKeyInput');
-        if (input) input.value = newKey;
-        const badge = document.getElementById('syncStatusBadge');
-        if (badge) badge.innerText = 'Connected';
-        showToast('Sync Key Linked! Ready on all devices.');
-      } else {
-        showToast('Offline mode. Use "Copy Code" below!');
-      }
-    }
-
-    function connectSyncKey() {
-      const key = document.getElementById('syncKeyInput').value.trim();
-      if (!key) {
-        showToast('Please enter a Sync Key');
-        return;
-      }
-      activeSyncKey = key;
-      localStorage.setItem('rianne_cloud_sync_key', key);
-      pullFromCloudSync(true);
-    }
-
-    async function syncNowWithCloud() {
-      if (!activeSyncKey) {
-        generateNewSyncKey();
-        return;
-      }
-      showToast('Synchronizing...');
-      const pushOk = await pushToCloudSync();
-      const pullOk = await pullFromCloudSync(true);
-      if (!pushOk && !pullOk) {
-        showToast('Sync paused. Data remains safely saved on this device.');
-      }
-    }
-
-    async function pushToCloudSync() {
-      if (!activeSyncKey) return false;
-      const payload = { books, sessions: readingSessions, quotes, goals: userGoals, updatedAt: Date.now() };
-      let success = false;
-
-      try {
-        const res = await fetch(`https://superjsonblob.com/api/jsonBlob/${activeSyncKey}`, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
-        if (res.ok) success = true;
-      } catch(e) {}
-
-      if (!success) {
-        try {
-          const res = await fetch(`https://jsonblob.com/api/jsonBlob/${activeSyncKey}`, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-          });
-          if (res.ok) success = true;
-        } catch(e) {}
-      }
-
-      const badge = document.getElementById('syncStatusBadge');
-      if (badge) badge.innerText = success ? 'Synced' : 'Local Only';
-      return success;
-    }
-
-    async function pullFromCloudSync(notify = false) {
-      if (!activeSyncKey) return false;
-      let cloudData = null;
-
-      try {
-        const res = await fetch(`https://superjsonblob.com/api/jsonBlob/${activeSyncKey}`);
-        if (res.ok) cloudData = await res.json();
-      } catch(e) {}
-
-      if (!cloudData) {
-        try {
-          const res = await fetch(`https://jsonblob.com/api/jsonBlob/${activeSyncKey}`);
-          if (res.ok) cloudData = await res.json();
-        } catch(e) {}
-      }
-
-      if (!cloudData) {
-        const proxies = [
-          `https://api.allorigins.win/raw?url=${encodeURIComponent(`https://superjsonblob.com/api/jsonBlob/${activeSyncKey}`)}`,
-          `https://api.allorigins.win/raw?url=${encodeURIComponent(`https://jsonblob.com/api/jsonBlob/${activeSyncKey}`)}`
-        ];
-        for (const pUrl of proxies) {
-          try {
-            const res = await fetch(pUrl);
-            if (res.ok) {
-              cloudData = await res.json();
-              if (cloudData && Array.isArray(cloudData.books)) break;
-            }
-          } catch(e) {}
-        }
-      }
-
-      if (cloudData && Array.isArray(cloudData.books)) {
-        books = cloudData.books;
-        readingSessions = cloudData.sessions || [];
-        quotes = cloudData.quotes || [];
-        userGoals = cloudData.goals || userGoals;
-
-        localStorage.setItem('rianne_books_v1', JSON.stringify(books));
-        localStorage.setItem('rianne_sessions_v1', JSON.stringify(readingSessions));
-        localStorage.setItem('rianne_quotes_v1', JSON.stringify(quotes));
-        localStorage.setItem('rianne_goals_v1', JSON.stringify(userGoals));
-
-        determineActiveHeroBook();
-        renderAllViews();
-        if (notify) showToast('Cloud sync complete! Library updated.');
-        return true;
-      }
-      return false;
-    }
-
-    function triggerCloudAutoSync() {
-      if (!activeSyncKey) return;
-      clearTimeout(autoSyncTimer);
-      autoSyncTimer = setTimeout(() => { pushToCloudSync(); }, 2500);
-    }
-
-    function copyQuickTransferCode() {
-      try {
-        const packageData = { b: books, s: readingSessions, q: quotes, g: userGoals, t: Date.now() };
-        const jsonStr = JSON.stringify(packageData);
-        const code = btoa(encodeURIComponent(jsonStr));
-        const t = document.createElement("textarea");
-        t.value = code;
-        document.body.appendChild(t);
-        t.select();
-        document.execCommand('copy');
-        document.body.removeChild(t);
-        showToast('Copied Transfer Code to clipboard!');
-      } catch (err) {
-        showToast('Export failed. Use Download JSON Backup.');
-      }
-    }
-
-    function pasteQuickTransferCode() {
-      const code = prompt("Paste your Transfer Code here:");
-      if (!code || !code.trim()) return;
-      try {
-        const jsonStr = decodeURIComponent(atob(code.trim()));
-        const data = JSON.parse(jsonStr);
-        if (data && Array.isArray(data.b)) {
-          books = data.b;
-          readingSessions = data.s || [];
-          quotes = data.q || [];
-          userGoals = data.g || userGoals;
-
-          saveBooks();
-          saveSessions();
-          saveQuotes();
-          saveGoals();
-          determineActiveHeroBook();
-          renderAllViews();
-          showToast(`Successfully transferred ${books.length} books and history!`);
-        } else {
-          showToast('Invalid Transfer Code format.');
-        }
-      } catch (err) {
-        showToast('Could not read Transfer Code.');
-      }
-    }
-
-    function exportJsonBackup() {
-      const backupData = {
-        app: "RianneBookshelf",
-        version: APP_VERSION,
-        timestamp: new Date().toISOString(),
-        books,
-        sessions: readingSessions,
-        quotes,
-        goals: userGoals
-      };
-      const blob = new Blob([JSON.stringify(backupData, null, 2)], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `bookshelf_backup_${new Date().toISOString().split('T')[0]}.json`;
-      a.click();
-      URL.revokeObjectURL(url);
-      showToast('Backup downloaded!');
-    }
-
-    function clearSampleBooks() {
-      const sampleIds = ['b_1', 'b_2', 'b_3'];
-      const countBefore = books.length;
-      books = books.filter(b => !sampleIds.includes(b.id));
-      if (books.length === countBefore) {
-        showToast('No starter demo books found.');
-        return;
-      }
-      saveBooks();
-      determineActiveHeroBook();
-      renderAllViews();
-      showToast('Cleared starter demo books!');
-    }
-
-    function parseCsvRows(text) {
-      const rows = [];
-      let currentRow = [];
-      let currentField = '';
-      let insideQuotes = false;
-      
-      for (let i = 0; i < text.length; i++) {
-        const char = text[i];
-        const nextChar = text[i + 1];
-
-        if (char === '"') {
-          if (insideQuotes && nextChar === '"') {
-            currentField += '"';
-            i++;
-          } else {
-            insideQuotes = !insideQuotes;
-          }
-        } else if (char === ',' && !insideQuotes) {
-          currentRow.push(currentField.trim());
-          currentField = '';
-        } else if ((char === '\r' || char === '\n') && !insideQuotes) {
-          if (char === '\r' && nextChar === '\n') i++;
-          currentRow.push(currentField.trim());
-          if (currentRow.some(field => field.length > 0)) {
-            rows.push(currentRow);
-          }
-          currentRow = [];
-          currentField = '';
-        } else {
-          currentField += char;
-        }
-      }
-
-      if (currentField.length > 0 || currentRow.length > 0) {
-        currentRow.push(currentField.trim());
-        if (currentRow.some(field => field.length > 0)) {
-          rows.push(currentRow);
-        }
-      }
-      return rows;
-    }
-
-    async function handleUniversalFileImport(event) {
-      const files = event.target.files;
-      if (!files || files.length === 0) return;
-
-      let booksAdded = 0;
-      let sessionsAdded = 0;
-      let quotesAdded = 0;
-
-      const fileList = Array.from(files).sort((a, b) => {
-        const aIsBooks = a.name.toLowerCase().includes('books') ? -1 : 1;
-        const bIsBooks = b.name.toLowerCase().includes('books') ? -1 : 1;
-        return aIsBooks - bIsBooks;
-      });
-
-      for (const file of fileList) {
-        const content = await file.text();
-
-        if (file.name.endsWith('.json')) {
-          try {
-            const data = JSON.parse(content);
-            const importedBooks = data.books || data.library || (Array.isArray(data) ? data : []);
-            if (importedBooks.length > 0) {
-              books = importedBooks;
-              booksAdded += importedBooks.length;
-            }
-            if (data.sessions) { readingSessions = data.sessions; sessionsAdded += data.sessions.length; }
-            if (data.quotes) { quotes = data.quotes; quotesAdded += data.quotes.length; }
-          } catch(e) {
-            console.warn('JSON parse error', e);
-          }
-        } else if (file.name.endsWith('.csv')) {
-          const lower = file.name.toLowerCase();
-          if (lower.includes('reading_history')) {
-            sessionsAdded += parseBookshelfReadingHistoryCsv(content);
-          } else if (lower.includes('cards') || lower.includes('card')) {
-            quotesAdded += parseBookshelfCardsCsv(content);
-          } else if (lower.includes('collection')) {
-            parseBookshelfCollectionsCsv(content);
-          } else {
-            booksAdded += parseBooksCsv(content);
-          }
-        }
-      }
-
-      saveBooks();
-      saveSessions();
-      saveQuotes();
-      populateYearDropdown();
-      determineActiveHeroBook();
-      renderAllViews();
-      event.target.value = '';
-      showToast(`Imported ${booksAdded} books, ${sessionsAdded} sessions, ${quotesAdded} quotes!`);
-      fetchMissingCovers(false);
-    }
-
-    function parseBooksCsv(csvText) {
-      const rows = parseCsvRows(csvText);
-      if (rows.length < 2) return 0;
-
-      const headers = rows[0].map(h => h.toLowerCase().replace(/[^a-z0-9]/g, ''));
-
-      const idIdx = headers.findIndex(h => h === 'bookid' || h === 'id');
-      const titleIdx = headers.findIndex(h => h === 'title' || h === 'booktitle');
-      const authorIdx = headers.findIndex(h => h === 'author' || h === 'authors');
-      const pagesIdx = headers.findIndex(h => h.includes('pagecount') || h.includes('totalpage') || h === 'numberofpages' || h === 'pages');
-      const currentIdx = headers.findIndex(h => h.includes('currentpage') || h.includes('progress'));
-      const shelfIdx = headers.findIndex(h => h.includes('status') || h.includes('shelf') || h.includes('exclusiveshelf'));
-      const formatIdx = headers.findIndex(h => h.includes('format') || h.includes('binding') || h.includes('type'));
-      const coverIdx = headers.findIndex(h => h.includes('cover') || h.includes('thumbnail') || h.includes('image'));
-      const ratingIdx = headers.findIndex(h => h === 'myrating' || h.includes('rating'));
-      const reviewIdx = headers.findIndex(h => h === 'myreview' || h.includes('review') || h.includes('thought'));
-      const genreIdx = headers.findIndex(h => h.includes('genre') || h.includes('category') || h.includes('bookshelves') || h.includes('tag'));
-      const finDateIdx = headers.findIndex(h => h === 'dateread' || h.includes('finished') || h.includes('completed') || h.includes('readat'));
-      const isbnIdx = headers.findIndex(h => h === 'isbn');
-      const isbn13Idx = headers.findIndex(h => h === 'isbn13');
-
-      let count = 0;
-      for (let i = 1; i < rows.length; i++) {
-        const row = rows[i];
-        const title = row[titleIdx];
-        if (!title) continue;
-
-        const author = row[authorIdx] || 'Unknown';
-        const pages = Number(row[pagesIdx]) || 300;
-        const curP = Number(row[currentIdx]) || 0;
-        const rawId = row[idIdx] || ('b_csv_' + Date.now() + '_' + i);
-        
-        const rawIsbn = row[isbnIdx] ? row[isbnIdx].replace(/[^0-9X]/gi, '') : '';
-        const rawIsbn13 = row[isbn13Idx] ? row[isbn13Idx].replace(/[^0-9X]/gi, '') : '';
-        
-        let shelf = 'to-read';
-        const rawShelf = (row[shelfIdx] || '').toLowerCase();
-        if (rawShelf.includes('currently') || rawShelf.includes('reading') || rawShelf.includes('current')) shelf = 'reading';
-        else if (rawShelf.includes('read') || rawShelf.includes('finished') || rawShelf.includes('complete')) shelf = 'finished';
-        else if (rawShelf.includes('dnf') || rawShelf.includes('dropped')) shelf = 'dnf';
-        else if (rawShelf.includes('wish')) shelf = 'wishlist';
-
-        let existing = books.find(b => (b.externalId && b.externalId === rawId) || b.title.toLowerCase() === title.toLowerCase());
-        const genres = row[genreIdx] ? row[genreIdx].split(/[,;/]/).map(g => g.trim()).filter(Boolean) : ['General'];
-        
-        const rawFinDate = row[finDateIdx];
-        const normalizedFinDate = normalizeDateToYMD(rawFinDate) || (shelf === 'finished' ? new Date().toISOString().split('T')[0] : null);
-
-        let coverImg = cleanImageUrl(row[coverIdx] || '');
-        if (!coverImg) {
-          const usableIsbn = rawIsbn13 || rawIsbn;
-          if (usableIsbn && usableIsbn.length >= 10) {
-            coverImg = `https://covers.openlibrary.org/b/isbn/${usableIsbn}-L.jpg`;
-          }
-        }
-
-        const bookId = existing ? existing.id : ('b_' + Date.now() + '_' + i);
-        const importedFormat = row[formatIdx] || 'Paperback';
-
-        if (existing) {
-          existing.externalId = rawId;
-          if (pages > 0) existing.pageCount = pages;
-          if (curP > 0) existing.currentPage = curP;
-          if (shelf) existing.shelf = shelf;
-          if (coverImg && !existing.cover) existing.cover = coverImg;
-          if (rawIsbn) existing.isbn = rawIsbn;
-          if (rawIsbn13) existing.isbn13 = rawIsbn13;
-          if (row[ratingIdx]) existing.rating = Number(row[ratingIdx]) || existing.rating;
-          if (row[reviewIdx]) existing.review = row[reviewIdx];
-          if (normalizedFinDate) existing.finishedDate = normalizedFinDate;
-          if (!existing.formats) existing.formats = [importedFormat];
-        } else {
-          books.push({
-            id: bookId,
-            externalId: rawId,
-            title,
-            author,
-            isbn: rawIsbn,
-            isbn13: rawIsbn13,
-            pageCount: pages,
-            currentPage: (shelf === 'finished') ? pages : curP,
-            shelf,
-            formats: [importedFormat],
-            format: importedFormat,
-            ownership: 'Owned',
-            genres: genres.length > 0 ? genres : ['General'],
-            cover: coverImg,
-            rating: Number(row[ratingIdx]) || 0,
-            review: row[reviewIdx] || '',
-            finishedDate: normalizedFinDate,
-            lastSessionDate: normalizedFinDate || null
-          });
-          count++;
-        }
-
-        if (shelf === 'finished' && normalizedFinDate) {
-          const sessionExists = readingSessions.some(s => s.bookId === bookId && s.date === normalizedFinDate);
-          if (!sessionExists) {
-            readingSessions.push({
-              id: 'sess_import_' + Date.now() + '_' + i,
-              bookId: bookId,
-              date: normalizedFinDate,
-              timestamp: new Date(normalizedFinDate).getTime() || Date.now(),
-              durationMinutes: 30,
-              pagesRead: Math.min(25, pages),
-              startPage: Math.max(0, pages - 25),
-              endPage: pages,
-              notes: 'Finished reading!'
-            });
-          }
-        }
-      }
-      return count;
-    }
-
-    function parseBookshelfReadingHistoryCsv(csvText) {
-      const rows = parseCsvRows(csvText);
-      if (rows.length < 2) return 0;
-
-      const headers = rows[0].map(h => h.toLowerCase().replace(/[^a-z0-9]/g, ''));
-      const idIdx = headers.findIndex(h => h === 'bookid');
-      const titleIdx = headers.findIndex(h => h.includes('title') || h.includes('book'));
-      const dateIdx = headers.findIndex(h => h.includes('date'));
-      const pagesIdx = headers.findIndex(h => h.includes('pagesread') || h === 'pages' || h.includes('count'));
-      const minsIdx = headers.findIndex(h => h.includes('minute') || h.includes('duration'));
-      const startIdx = headers.findIndex(h => h.includes('start'));
-      const endIdx = headers.findIndex(h => h.includes('end'));
-      const notesIdx = headers.findIndex(h => h.includes('note') || h.includes('comment'));
-
-      let count = 0;
-      for (let i = 1; i < rows.length; i++) {
-        const row = rows[i];
-        const rawDate = row[dateIdx];
-        const date = normalizeDateToYMD(rawDate) || new Date().toISOString().slice(0, 10);
-        const pgs = Number(row[pagesIdx]) || 15;
-        const mins = Number(row[minsIdx]) || 20;
-        const rawBookId = row[idIdx];
-        const title = row[titleIdx];
-
-        let matchedBook = books.find(b => (rawBookId && b.externalId === rawBookId) || (title && b.title.toLowerCase() === title.toLowerCase()));
-
-        readingSessions.push({
-          id: 'sess_csv_' + Date.now() + '_' + i,
-          bookId: matchedBook ? matchedBook.id : 'imported_' + i,
-          date: date,
-          timestamp: new Date(date).getTime() || Date.now(),
-          durationMinutes: mins,
-          pagesRead: pgs,
-          startPage: Number(row[startIdx]) || 0,
-          endPage: Number(row[endIdx]) || pgs,
-          notes: row[notesIdx] || ''
-        });
-
-        if (matchedBook && (!matchedBook.lastSessionDate || matchedBook.lastSessionDate < date)) {
-          matchedBook.lastSessionDate = date;
-        }
-        count++;
-      }
-      return count;
-    }
-
-    function parseBookshelfCardsCsv(csvText) {
-      const rows = parseCsvRows(csvText);
-      if (rows.length < 2) return 0;
-
-      const headers = rows[0].map(h => h.toLowerCase().replace(/[^a-z0-9]/g, ''));
-      const idIdx = headers.findIndex(h => h === 'bookid');
-      const titleIdx = headers.findIndex(h => h.includes('title') || h.includes('book'));
-      const textIdx = headers.findIndex(h => h.includes('quote') || h.includes('text') || h.includes('content') || h.includes('card'));
-      const pageIdx = headers.findIndex(h => h.includes('page'));
-      const tagIdx = headers.findIndex(h => h.includes('tag') || h.includes('type') || h.includes('mood'));
-      const dateIdx = headers.findIndex(h => h.includes('date') || h.includes('created'));
-
-      let count = 0;
-      for (let i = 1; i < rows.length; i++) {
-        const row = rows[i];
-        const text = row[textIdx];
-        if (!text) continue;
-
-        const rawBookId = row[idIdx];
-        const title = row[titleIdx];
-        const matchedBook = books.find(b => (rawBookId && b.externalId === rawBookId) || (title && b.title.toLowerCase() === title.toLowerCase()));
-
-        quotes.unshift({
-          id: 'q_csv_' + Date.now() + '_' + i,
-          type: 'quote',
-          bookId: matchedBook ? matchedBook.id : 'imported',
-          bookTitle: matchedBook ? matchedBook.title : (title || 'Saved Passage'),
-          bookCover: matchedBook?.cover || '',
-          text: text,
-          page: row[pageIdx] || '',
-          tag: row[tagIdx] || 'Quote',
-          date: normalizeDateToYMD(row[dateIdx]) || new Date().toISOString().slice(0, 10)
-        });
-        count++;
-      }
-      return count;
-    }
-
-    function parseBookshelfCollectionsCsv(csvText) {
-      const rows = parseCsvRows(csvText);
-      if (rows.length < 2) return 0;
-
-      const headers = rows[0].map(h => h.toLowerCase().replace(/[^a-z0-9]/g, ''));
-      const collIdx = headers.findIndex(h => h.includes('collection'));
-      const idIdx = headers.findIndex(h => h === 'bookid');
-      const titleIdx = headers.findIndex(h => h.includes('title') || h.includes('book'));
-
-      let count = 0;
-      for (let i = 1; i < rows.length; i++) {
-        const row = rows[i];
-        const collName = row[collIdx];
-        if (!collName) continue;
-
-        const rawBookId = row[idIdx];
-        const title = row[titleIdx];
-        const matchedBook = books.find(b => (rawBookId && b.externalId === rawBookId) || (title && b.title.toLowerCase() === title.toLowerCase()));
-
-        if (matchedBook) {
-          if (!matchedBook.genres) matchedBook.genres = [];
-          if (!matchedBook.genres.includes(collName)) {
-            matchedBook.genres.push(collName);
-            count++;
-          }
-        }
-      }
-      return count;
-    }
-
-    function switchTab(tabId) {
-      document.querySelectorAll('.tab-content').forEach(t => t.classList.add('hidden'));
-      const target = document.getElementById('tab-' + tabId);
-      if (target) target.classList.remove('hidden');
-
-      document.querySelectorAll('.nav-tab').forEach(b => {
-        if (b.getAttribute('data-tab') === tabId) {
-          b.className = "nav-tab flex flex-col items-center gap-1 text-[#FFD034]";
-        } else {
-          b.className = "nav-tab flex flex-col items-center gap-1 text-white/70 hover:text-white";
-        }
-      });
-
-      if (tabId === 'calendar') { renderCalendar(); renderStatsDashboard(); }
-      if (tabId === 'quotes') renderQuotes();
-      if (tabId === 'library') renderLibrary();
-      if (tabId === 'reading') { renderHeroCard(); renderCarousel(); }
-    }
-
+    // --- UI HELPERS & MODAL UTILITIES ---
     function openModal(id) { 
       const el = document.getElementById(id);
       if (el) { el.classList.remove('hidden'); el.classList.add('flex'); }
@@ -3947,6 +1349,25 @@
       t.innerText = msg;
       t.classList.remove('opacity-0', 'pointer-events-none');
       setTimeout(() => { t.classList.add('opacity-0', 'pointer-events-none'); }, 2500);
+    }
+
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(t => t.classList.add('hidden'));
+      const target = document.getElementById('tab-' + tabId);
+      if (target) target.classList.remove('hidden');
+
+      document.querySelectorAll('.nav-tab').forEach(b => {
+        if (b.getAttribute('data-tab') === tabId) {
+          b.className = "nav-tab flex flex-col items-center gap-1 text-[#FFD034]";
+        } else {
+          b.className = "nav-tab flex flex-col items-center gap-1 text-white/70 hover:text-white";
+        }
+      });
+
+      if (tabId === 'calendar') { renderCalendar(); renderStatsDashboard(); }
+      if (tabId === 'quotes') renderQuotes();
+      if (tabId === 'library') renderLibrary();
+      if (tabId === 'reading') { renderHeroCard(); renderCarousel(); }
     }
 
     function renderAllViews() {
