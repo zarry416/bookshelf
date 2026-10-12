@@ -239,7 +239,7 @@
         <div class="flex items-center justify-between mb-2.5 px-1">
           <h3 class="text-xs font-extrabold text-[#FFF9EE] uppercase tracking-wider flex items-center gap-2">
             <span>Also In Progress</span>
-            <span id="activeCountBadge" class="bg-[#FFA4C4] text-[#05244C] text-[10px] font-black px-2 py-0.5 rounded-full border border-[#05244C]">0</span>
+            <span id="activeCountBadge" class="bg-[#FFA4C4] text-[#05244C] text-[10px] font-black px-2.5 py-0.5 rounded-full border border-[#05244C]">0</span>
           </h3>
           <span class="text-[11px] font-bold text-[#FFD034]">Tap to switch</span>
         </div>
@@ -262,7 +262,7 @@
       </div>
     </section>
 
-    <!-- TAB 2: LIBRARY -->
+    <!-- TAB 2: LIBRARY (WITH TASTEFUL COUNT BUBBLES) -->
     <section id="tab-library" class="tab-content hidden space-y-4">
       <div class="bg-[#FFF9EE] border-3 border-[#05244C] rounded-2xl p-3 shadow-retro-orange space-y-2.5">
         <div class="flex items-center gap-2">
@@ -283,17 +283,39 @@
           <button onclick="toggleBatchSelectMode()" id="batchSelectModeBtn" class="h-9 px-3 bg-amber-100 hover:bg-amber-200 border-2 border-[#05244C] rounded-xl text-[11px] font-black text-[#05244C] shadow-retro-navy flex items-center justify-center flex-shrink-0 whitespace-nowrap retro-btn">Select</button>
         </div>
 
+        <!-- Shelf Pills with Integrated Mini Count Badges -->
         <div class="space-y-1.5 pt-1">
           <div class="grid grid-cols-4 gap-1.5">
-            <button onclick="setShelfFilter('all')" class="shelf-pill py-1.5 rounded-xl text-[11px] font-black border-2 border-[#05244C] bg-[#05244C] text-[#FFF9EE] shadow-retro-navy text-center transition-all" data-shelf="all">All</button>
-            <button onclick="setShelfFilter('reading')" class="shelf-pill py-1.5 rounded-xl text-[11px] font-bold border border-[#FF5B22] bg-[#FF5B22]/15 text-[#FF5B22] text-center transition-all" data-shelf="reading">Reading</button>
-            <button onclick="setShelfFilter('to-read')" class="shelf-pill py-1.5 rounded-xl text-[11px] font-bold border border-[#D97706] bg-[#FFD034]/25 text-[#B45309] text-center transition-all" data-shelf="to-read">TBR</button>
-            <button onclick="setShelfFilter('finished')" class="shelf-pill py-1.5 rounded-xl text-[11px] font-bold border border-[#10B981] bg-[#10B981]/15 text-[#047857] text-center transition-all" data-shelf="finished">Finished</button>
+            <button onclick="setShelfFilter('all')" class="shelf-pill py-1.5 px-1 rounded-xl text-[11px] font-black border-2 border-[#05244C] bg-[#05244C] text-[#FFF9EE] shadow-retro-navy flex items-center justify-center gap-1 transition-all" data-shelf="all">
+              <span>All</span>
+              <span id="count-shelf-all" class="text-[9px] px-1.5 py-0.2 rounded-full bg-white/20 font-bold">0</span>
+            </button>
+            <button onclick="setShelfFilter('reading')" class="shelf-pill py-1.5 px-1 rounded-xl text-[11px] font-bold border border-[#05244C]/30 bg-white/70 text-slate-700 flex items-center justify-center gap-1 transition-all" data-shelf="reading">
+              <span>Reading</span>
+              <span id="count-shelf-reading" class="text-[9px] px-1.5 py-0.2 rounded-full bg-slate-200/80 font-bold">0</span>
+            </button>
+            <button onclick="setShelfFilter('to-read')" class="shelf-pill py-1.5 px-1 rounded-xl text-[11px] font-bold border border-[#05244C]/30 bg-white/70 text-slate-700 flex items-center justify-center gap-1 transition-all" data-shelf="to-read">
+              <span>TBR</span>
+              <span id="count-shelf-to-read" class="text-[9px] px-1.5 py-0.2 rounded-full bg-slate-200/80 font-bold">0</span>
+            </button>
+            <button onclick="setShelfFilter('finished')" class="shelf-pill py-1.5 px-1 rounded-xl text-[11px] font-bold border border-[#05244C]/30 bg-white/70 text-slate-700 flex items-center justify-center gap-1 transition-all" data-shelf="finished">
+              <span>Finished</span>
+              <span id="count-shelf-finished" class="text-[9px] px-1.5 py-0.2 rounded-full bg-slate-200/80 font-bold">0</span>
+            </button>
           </div>
           <div class="grid grid-cols-3 gap-1.5">
-            <button onclick="setShelfFilter('faves')" class="shelf-pill py-1.5 rounded-xl text-[11px] font-bold border border-rose-400 bg-rose-100 text-rose-700 text-center transition-all" data-shelf="faves">Faves</button>
-            <button onclick="setShelfFilter('dnf')" class="shelf-pill py-1.5 rounded-xl text-[11px] font-bold border border-[#A855F7] bg-[#A855F7]/15 text-[#7E22CE] text-center transition-all" data-shelf="dnf">DNF</button>
-            <button onclick="setShelfFilter('wishlist')" class="shelf-pill py-1.5 rounded-xl text-[11px] font-bold border border-[#FFA4C4] bg-[#FFA4C4]/35 text-[#BE185D] text-center transition-all" data-shelf="wishlist">Wishlist</button>
+            <button onclick="setShelfFilter('faves')" class="shelf-pill py-1.5 px-1 rounded-xl text-[11px] font-bold border border-[#05244C]/30 bg-white/70 text-slate-700 flex items-center justify-center gap-1 transition-all" data-shelf="faves">
+              <span>Faves</span>
+              <span id="count-shelf-faves" class="text-[9px] px-1.5 py-0.2 rounded-full bg-slate-200/80 font-bold">0</span>
+            </button>
+            <button onclick="setShelfFilter('dnf')" class="shelf-pill py-1.5 px-1 rounded-xl text-[11px] font-bold border border-[#05244C]/30 bg-white/70 text-slate-700 flex items-center justify-center gap-1 transition-all" data-shelf="dnf">
+              <span>DNF</span>
+              <span id="count-shelf-dnf" class="text-[9px] px-1.5 py-0.2 rounded-full bg-slate-200/80 font-bold">0</span>
+            </button>
+            <button onclick="setShelfFilter('wishlist')" class="shelf-pill py-1.5 px-1 rounded-xl text-[11px] font-bold border border-[#05244C]/30 bg-white/70 text-slate-700 flex items-center justify-center gap-1 transition-all" data-shelf="wishlist">
+              <span>Wishlist</span>
+              <span id="count-shelf-wishlist" class="text-[9px] px-1.5 py-0.2 rounded-full bg-slate-200/80 font-bold">0</span>
+            </button>
           </div>
         </div>
 
@@ -1095,7 +1117,7 @@
     Notice
   </div>
   <script>
-    const APP_VERSION = "5.5";
+    const APP_VERSION = "5.6";
     let books = [];
     let readingSessions = [];
     let quotes = [];
@@ -1146,7 +1168,7 @@
       'Adventure': ['adventure', 'survival', 'expedition', 'quest']
     };
 
-    // 7 CUSTOM VIBE & IMPACT METRICS (CLEAN SVG SHAPES)
+    // 7 CUSTOM VIBE & IMPACT METRICS (NO EXTERNAL TAGS, CLEAN PATHS)
     const VIBE_DEFINITIONS = [
       {
         key: 'vibeHeartfelt',
@@ -1178,11 +1200,10 @@
         color: '#DB2777',
         svgPath: 'M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'
       },
-     {
+      {
         key: 'vibeSpice',
         label: 'Spice',
         color: '#EA580C',
-        // Flame silhouette
         svgPath: 'M12 2c-.5 2.5-2 4.5-3.5 6.5C7 10.5 6 12.5 6 15c0 3.31 2.69 6 6 6s6-2.69 6-6c0-4-3-7.5-3.5-9.5-.5 1.5-1.5 2.5-2.5 2.5-.5-1.5 0-4.5 0-6z'
       },
       {
@@ -1645,6 +1666,24 @@
       setVibeShapes(vibeKey, next);
     }
 
+    // SHELF COUNT BADGES UPDATE
+    function updateShelfCountBadges() {
+      const counts = {
+        'all': books.filter(b => b.shelf !== 'wishlist').length,
+        'reading': books.filter(b => b.shelf === 'reading').length,
+        'to-read': books.filter(b => b.shelf === 'to-read').length,
+        'finished': books.filter(b => b.shelf === 'finished').length,
+        'faves': books.filter(b => !!b.isFavorite).length,
+        'dnf': books.filter(b => b.shelf === 'dnf').length,
+        'wishlist': books.filter(b => b.shelf === 'wishlist').length
+      };
+
+      Object.entries(counts).forEach(([shelf, count]) => {
+        const el = document.getElementById(`count-shelf-${shelf}`);
+        if (el) el.innerText = count;
+      });
+    }
+
     function safeJsonParse(key, fallback) {
       try {
         const val = localStorage.getItem(key);
@@ -1855,10 +1894,14 @@
       document.querySelectorAll('.shelf-pill').forEach(btn => {
         const btnShelf = btn.getAttribute('data-shelf');
         const info = getShelfInfo(btnShelf);
+        const badge = btn.querySelector('span:last-child');
+
         if (btnShelf === shelf) {
-          btn.className = `shelf-pill py-1.5 rounded-xl text-[11px] font-black border-2 border-[#05244C] ${info.bg} ${info.text} shadow-retro-navy text-center transition-all`;
+          btn.className = `shelf-pill py-1.5 px-1 rounded-xl text-[11px] font-black border-2 border-[#05244C] ${info.bg} ${info.text} shadow-retro-navy flex items-center justify-center gap-1 transition-all`;
+          if (badge) badge.className = "text-[9px] px-1.5 py-0.2 rounded-full bg-black/20 text-white font-bold";
         } else {
-          btn.className = `shelf-pill py-1.5 rounded-xl text-[11px] font-bold border border-[#05244C]/30 bg-white/70 text-slate-700 text-center transition-all`;
+          btn.className = `shelf-pill py-1.5 px-1 rounded-xl text-[11px] font-bold border border-[#05244C]/30 bg-white/70 text-slate-700 flex items-center justify-center gap-1 transition-all`;
+          if (badge) badge.className = "text-[9px] px-1.5 py-0.2 rounded-full bg-slate-200/80 text-slate-600 font-bold";
         }
       });
       renderLibrary();
@@ -1984,6 +2027,7 @@
     }
 
     function renderLibrary() {
+      updateShelfCountBadges();
       const container = document.getElementById('libraryContainer');
       if (!container) return;
 
@@ -2295,6 +2339,7 @@
         : "w-8 h-8 rounded-full border-2 border-[#05244C] bg-white text-base flex items-center justify-center retro-btn shadow-sm";
     }
 
+    // CLEAN OVERALL RATING: No number on top right
     function setEditBookStarRating(rating) {
       const hiddenInput = document.getElementById('editBookStarRating');
       if (hiddenInput) hiddenInput.value = rating;
@@ -2317,6 +2362,7 @@
       });
     }
 
+    // QUARTER-STAR STEPPING: 4 -> 3.75 (¾) -> 3.5 (½) -> 3.25 (¼) -> 0
     function cycleStarRating(starNum) {
       const curRating = Number(document.getElementById('editBookStarRating')?.value) || 0;
       let newRating = starNum;
