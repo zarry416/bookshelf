@@ -105,28 +105,20 @@
   <header id="appHeader" class="relative z-40 bg-[#446BA2] border-b-2 border-[#FFA4C4] px-4 pb-3 shadow-md">
     <div class="max-w-md mx-auto flex items-center justify-between">
       <div class="flex items-center gap-3">
-      <!-- CELESTIAL SUN & MOON (ACCURATE VECTOR TRACING) -->
+        <!-- CELESTIAL SUN & MOON VECTOR -->
         <svg class="w-11 h-11 flex-shrink-0 drop-shadow-[0_2px_4px_rgba(5,36,76,0.35)]" viewBox="0 0 200 200" fill="none" stroke="#FFF9EE" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
           <defs>
-            <!-- 1. Double-Lined Sharp Ray (Repeated at 0, 45, 90, 135, 180, 225, 270, 315 deg) -->
             <g id="sharp-ray">
               <line x1="100" y1="67" x2="100" y2="4" stroke-width="1.8"/>
               <line x1="94" y1="68" x2="100" y2="4" stroke-width="1.5"/>
               <line x1="106" y1="68" x2="100" y2="4" stroke-width="1.5"/>
             </g>
-
-            <!-- 2. Dual-Wave S-Curve Ray (Alternates between the sharp rays at 22.5, 67.5, etc.) -->
             <g id="wavy-ray">
-              <!-- Left Edge of Wavy Ray -->
               <path d="M93 69 C 91 54, 98 47, 95 38 C 92 29, 90 24, 96 16 C 97 14, 98 13, 99 12" stroke-width="1.6"/>
-              <!-- Right Edge of Wavy Ray with Curved Taper Tip -->
               <path d="M103 69 C 101 54, 108 47, 105 38 C 102 29, 100 24, 106 16 C 106 14, 104 12, 99 12" stroke-width="1.6"/>
-              <!-- Internal flowing spine line -->
               <path d="M98 68 C 96 54, 103 47, 100 38 C 97 29, 95 24, 101 16" stroke-width="1.1" opacity="0.85"/>
             </g>
           </defs>
-
-          <!-- 8 Double-Lined Sharp Rays -->
           <use href="#sharp-ray"/>
           <use href="#sharp-ray" transform="rotate(45 100 100)"/>
           <use href="#sharp-ray" transform="rotate(90 100 100)"/>
@@ -135,8 +127,6 @@
           <use href="#sharp-ray" transform="rotate(225 100 100)"/>
           <use href="#sharp-ray" transform="rotate(270 100 100)"/>
           <use href="#sharp-ray" transform="rotate(315 100 100)"/>
-
-          <!-- 8 Organic Wavy Rays -->
           <use href="#wavy-ray" transform="rotate(22.5 100 100)"/>
           <use href="#wavy-ray" transform="rotate(67.5 100 100)"/>
           <use href="#wavy-ray" transform="rotate(112.5 100 100)"/>
@@ -145,27 +135,18 @@
           <use href="#wavy-ray" transform="rotate(247.5 100 100)"/>
           <use href="#wavy-ray" transform="rotate(292.5 100 100)"/>
           <use href="#wavy-ray" transform="rotate(337.5 100 100)"/>
-
-          <!-- Central Round Face Body -->
           <circle cx="100" cy="100" r="32" stroke-width="2.2" fill="#05244C" fill-opacity="0.3"/>
-
-          <!-- Crescent Moon Inner Boundary Arc -->
           <path d="M100 68 C 118 68, 132 82, 132 100 C 132 118, 118 132, 100 132 C 121 123, 126 109, 126 100 C 126 91, 121 77, 100 68 Z" stroke-width="1.8" fill="#FFF9EE" fill-opacity="0.15"/>
-
-          <!-- Four-Pointed Diamond Star in Center -->
           <path d="M108 81 Q 108 94, 95 94 Q 108 94, 108 107 Q 108 94, 121 94 Q 108 94, 108 81 Z" stroke-width="1.6" fill="#FFD034"/>
-          <!-- Star Accent Rays -->
           <line x1="99" y1="85" x2="117" y2="103" stroke-width="1"/>
           <line x1="117" y1="85" x2="99" y2="103" stroke-width="1"/>
-
-          <!-- Delicate Moon Crater Arcs -->
           <path d="M78 86 C 81 87, 82 91, 79 93" stroke-width="1.4"/>
           <path d="M75 99 C 78 100, 78 103, 76 105" stroke-width="1.3"/>
           <path d="M82 110 C 85 111, 86 114, 83 117" stroke-width="1.4"/>
           <path d="M93 121 C 95 122, 95 125, 92 126" stroke-width="1.2"/>
         </svg>
 
-        <!-- VACATION RETRO TITLE WITH LAYERED DROP SHADOW -->
+        <!-- VACATION RETRO TITLE -->
         <h1 class="text-2xl font-retro-title italic text-[#FFF9EE] tracking-tight leading-none drop-shadow-[2px_3px_0px_#05244C]">
           Rianne's Bookshelf
         </h1>
@@ -661,7 +642,7 @@
           <div class="grid grid-cols-2 gap-1.5" id="editBookFormatButtonsContainer"></div>
         </div>
 
-        <!-- Cover Image with Individual Auto-Find & Upload -->
+        <!-- Cover Image with Auto-Find & Upload -->
         <div>
           <div class="flex items-center justify-between mb-1">
             <label class="block">Cover Image</label>
@@ -1280,7 +1261,7 @@
       try {
         const cleanTitle = title.replace(/[^\w\s]/gi, ' ').trim();
         const gq = `intitle:${encodeURIComponent(cleanTitle)}${author ? `+inauthor:${encodeURIComponent(author)}` : ''}`;
-        const gres = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${gq}&maxResults=3`);
+        const gres = await fetch(`[https://www.googleapis.com/books/v1/volumes?q=$](https://www.googleapis.com/books/v1/volumes?q=$){gq}&maxResults=3`);
         if (gres.ok) {
           const gdata = await gres.json();
           if (Array.isArray(gdata.items)) {
@@ -1293,7 +1274,7 @@
       } catch (e) {}
 
       try {
-        const olRes = await fetch(`https://openlibrary.org/search.json?q=${encodeURIComponent(`${title} ${author || ''}`.trim())}&limit=3`);
+        const olRes = await fetch(`[https://openlibrary.org/search.json?q=$](https://openlibrary.org/search.json?q=$){encodeURIComponent(`${title} ${author || ''}`.trim())}&limit=3`);
         if (olRes.ok) {
           const odata = await olRes.json();
           if (Array.isArray(odata.docs)) {
@@ -1306,7 +1287,7 @@
 
       if (gatheredTags.length <= 1) {
         try {
-          const wRes = await fetch(`https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(`${title} novel`)}&format=json&origin=*`);
+          const wRes = await fetch(`[https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=$](https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=$){encodeURIComponent(`${title} novel`)}&format=json&origin=*`);
           if (wRes.ok) {
             const wData = await wRes.json();
             if (wData.query?.search?.length > 0) {
@@ -1357,7 +1338,7 @@
       if (!rawUrl) return '';
       let url = String(rawUrl).trim().replace(/^["']|["']$/g, '');
       if (!url) return '';
-      if (url.includes('google.com/imgres') || url.includes('google.com/url')) {
+      if (url.includes('[google.com/imgres](https://google.com/imgres)') || url.includes('[google.com/url](https://google.com/url)')) {
         try {
           const parsed = new URL(url);
           const imgParam = parsed.searchParams.get('imgurl') || parsed.searchParams.get('url');
@@ -1371,7 +1352,7 @@
     function handleCoverError(imgElement) {
       if (!imgElement) return;
       imgElement.onerror = null;
-      imgElement.src = 'https://placehold.co/200x300/446BA2/FFF9EE?text=Cover';
+      imgElement.src = '[https://placehold.co/200x300/446BA2/FFF9EE?text=Cover](https://placehold.co/200x300/446BA2/FFF9EE?text=Cover)';
     }
 
     function handleCoverImageUpload(e) {
@@ -1412,7 +1393,7 @@
       const title = document.getElementById('editBookTitle')?.value.trim() || '';
       const author = document.getElementById('editBookAuthor')?.value.trim() || '';
       const q = encodeURIComponent(`${title} ${author} book cover`.trim() || 'book cover');
-      window.open(`https://www.google.com/search?tbm=isch&q=${q}`, '_blank');
+      window.open(`[https://www.google.com/search?tbm=isch&q=$](https://www.google.com/search?tbm=isch&q=$){q}`, '_blank');
     }
 
     async function autoFindSingleCover() {
@@ -1428,7 +1409,7 @@
 
       try {
         const gq = `intitle:${encodeURIComponent(title)}${author ? `+inauthor:${encodeURIComponent(author)}` : ''}`;
-        const gres = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${gq}&maxResults=4`);
+        const gres = await fetch(`[https://www.googleapis.com/books/v1/volumes?q=$](https://www.googleapis.com/books/v1/volumes?q=$){gq}&maxResults=4`);
         if (gres.ok) {
           const gdata = await gres.json();
           if (Array.isArray(gdata.items)) {
@@ -1443,13 +1424,13 @@
 
       try {
         const q = `title=${encodeURIComponent(title)}${author ? `&author=${encodeURIComponent(author)}` : ''}`;
-        const res = await fetch(`https://openlibrary.org/search.json?${q}&limit=4`);
+        const res = await fetch(`[https://openlibrary.org/search.json?$](https://openlibrary.org/search.json?$){q}&limit=4`);
         if (res.ok) {
           const data = await res.json();
           if (Array.isArray(data.docs)) {
             for (const doc of data.docs) {
               if (doc.cover_i) {
-                const olUrl = `https://covers.openlibrary.org/b/id/${doc.cover_i}-L.jpg`;
+                const olUrl = `[https://covers.openlibrary.org/b/id/$](https://covers.openlibrary.org/b/id/$){doc.cover_i}-L.jpg`;
                 if (!candidates.some(c => c.url === olUrl)) candidates.push({ source: 'Open Library', url: olUrl });
               }
             }
@@ -1690,7 +1671,7 @@
       }
 
       const coverEl = document.getElementById('heroCover');
-      if (coverEl) coverEl.src = book.cover || 'https://placehold.co/200x300/446BA2/FFF9EE?text=Cover';
+      if (coverEl) coverEl.src = book.cover || '[https://placehold.co/200x300/446BA2/FFF9EE?text=Cover](https://placehold.co/200x300/446BA2/FFF9EE?text=Cover)';
       document.getElementById('heroTitle').innerText = book.title;
       document.getElementById('heroAuthor').innerText = book.author;
       document.getElementById('heroLastDate').innerText = book.lastSessionDate ? `Last read: ${book.lastSessionDate}` : 'No sessions yet';
@@ -1738,7 +1719,7 @@
         return `
           <div onclick="selectHeroBook('${b.id}')" class="flex-shrink-0 w-44 bg-[#FFF9EE] border-2 border-[#05244C] rounded-2xl p-3 shadow-retro-navy cursor-pointer transition-transform hover:-translate-y-1">
             <div class="flex gap-2.5 items-center">
-              <img src="${b.cover || 'https://placehold.co/100x150/446BA2/FFF9EE?text=Cover'}" class="w-11 aspect-[2/3] object-cover rounded-lg border border-[#05244C]" onerror="handleCoverError(this)">
+              <img src="${b.cover || '[https://placehold.co/100x150/446BA2/FFF9EE?text=Cover](https://placehold.co/100x150/446BA2/FFF9EE?text=Cover)'}" class="w-11 aspect-[2/3] object-cover rounded-lg border border-[#05244C]" onerror="handleCoverError(this)">
               <div class="flex-1 min-w-0">
                 <h4 class="text-xs font-bold text-[#05244C] truncate">${b.title}</h4>
                 <p class="text-[10px] text-slate-500 truncate font-editorial italic">${b.author}</p>
@@ -1861,7 +1842,8 @@
       if (query) {
         filtered = filtered.filter(b => 
           b.title.toLowerCase().includes(query) || 
-          b.author.toLowerCase().includes(query)
+          b.author.toLowerCase().includes(query) ||
+          (b.genres && b.genres.some(g => g.toLowerCase().includes(query)))
         );
       }
 
@@ -2015,7 +1997,7 @@
                 return `
                   <div onclick="${isBatchMode ? `toggleSelectBook('${b.id}', event)` : `openBookDetailModal('${b.id}')`}" class="relative group cursor-pointer">
                     <div class="relative rounded-xl overflow-hidden border-2 border-[#05244C] shadow-retro-navy aspect-[2/3] bg-slate-200 ${isSelected ? 'ring-4 ring-[#FF5B22]' : ''}">
-                      <img src="${b.cover || 'https://placehold.co/200x300/446BA2/FFF9EE?text=Cover'}" class="w-full h-full object-cover" onerror="handleCoverError(this)">
+                      <img src="${b.cover || '[https://placehold.co/200x300/446BA2/FFF9EE?text=Cover](https://placehold.co/200x300/446BA2/FFF9EE?text=Cover)'}" class="w-full h-full object-cover" onerror="handleCoverError(this)">
                       ${isBatchMode ? `
                         <div class="absolute top-1.5 left-1.5 w-5 h-5 rounded-md bg-white border border-[#05244C] flex items-center justify-center">
                           ${isSelected ? '<span class="text-[#FF5B22] font-black text-xs">✓</span>' : ''}
@@ -2029,7 +2011,7 @@
                       </span>
                     </div>
                     <p class="text-[10px] font-bold text-[#FFF9EE] truncate mt-1">${b.title}</p>
-                  ${starStr ? `<div class="text-[#FF5B22] text-xs font-bold leading-none mt-0.5">${starStr}</div>` : ''}
+                    ${starStr ? `<div class="text-[10px] text-[#FFD034] font-bold leading-none drop-shadow-sm truncate">${starStr}</div>` : ''}
                   </div>
                 `;
               }).join('')}
@@ -2041,7 +2023,6 @@
                 const isSelected = selectedBookIds.has(b.id);
                 const info = getShelfInfo(b.shelf);
                 const starStr = getStarDisplayHtml(b.rating);
-                const starDisplayNum = b.rating ? (b.rating % 1 === 0 ? b.rating : b.rating.toFixed(2).replace(/\.?0+$/, '')) : '';
                 const fmts = getBookFormatsList(b);
                 return `
                   <div class="bg-[#FFF9EE] border-2 border-[#05244C] rounded-2xl p-3 shadow-retro-orange flex gap-3 items-center ${isSelected ? 'ring-4 ring-[#FF5B22]' : ''}">
@@ -2050,7 +2031,7 @@
                         ${isSelected ? '<span class="text-[#FF5B22] font-black text-xs">✓</span>' : ''}
                       </div>
                     ` : ''}
-                    <img src="${b.cover || 'https://placehold.co/100x150/446BA2/FFF9EE?text=Cover'}" class="w-14 aspect-[2/3] object-cover rounded-xl border border-[#05244C] flex-shrink-0 bg-slate-200" onerror="handleCoverError(this)">
+                    <img src="${b.cover || '[https://placehold.co/100x150/446BA2/FFF9EE?text=Cover](https://placehold.co/100x150/446BA2/FFF9EE?text=Cover)'}" class="w-14 aspect-[2/3] object-cover rounded-xl border border-[#05244C] flex-shrink-0 bg-slate-200" onerror="handleCoverError(this)">
                     <div class="flex-1 min-w-0">
                       <div class="flex items-center gap-1.5">
                         <span class="text-[9px] uppercase font-black px-2 py-0.5 rounded-full ${info.bg} ${info.text} border border-[#05244C] shadow-sm">${info.label}</span>
@@ -2059,7 +2040,7 @@
                       </div>
                       <h4 class="text-xs font-retro-title text-[#05244C] truncate mt-1">${b.title}</h4>
                       <p class="text-[10px] font-editorial text-slate-600 truncate italic">${b.author}</p>
-                      ${starStr ? `<div class="text-[#FF5B22] text-xs font-bold leading-none mt-0.5">${starStr} <span class="text-[9px] text-slate-500 font-normal">(${starDisplayNum}★)</span></div>` : ''}
+                      ${starStr ? `<div class="text-[#FF5B22] text-xs font-bold leading-none mt-0.5">${starStr}</div>` : ''}
                       <div class="mt-1 flex justify-between items-center text-[10px] font-bold">
                         <span>${b.currentPage} / ${b.pageCount} pgs</span>
                         <span class="text-[#FF5B22] font-black">${pct}%</span>
@@ -2232,54 +2213,33 @@
         : "w-8 h-8 rounded-full border-2 border-[#05244C] bg-white text-base flex items-center justify-center retro-btn shadow-sm";
     }
 
-  function setEditBookStarRating(rating) {
-  const hiddenInput = document.getElementById('editBookStarRating');
-  const textVal = document.getElementById('starRatingTextVal');
-  if (hiddenInput) hiddenInput.value = rating;
+    function setEditBookStarRating(rating) {
+      const hiddenInput = document.getElementById('editBookStarRating');
+      const textVal = document.getElementById('starRatingTextVal');
+      if (hiddenInput) hiddenInput.value = rating;
 
-  const formattedNum = rating ? (rating % 1 === 0 ? rating.toFixed(1) : rating.toFixed(2)) : '0.0';
+      const formattedNum = rating ? (rating % 1 === 0 ? rating.toFixed(1) : rating.toFixed(2)) : '0.0';
+      if (textVal) {
+        textVal.innerText = `${formattedNum} ★`;
+      }
 
-  // Clean badge: only the number and single star (e.g., "4.50 ★" or "5.0 ★")
-  if (textVal) {
-    textVal.innerText = `${formattedNum} ★`;
-  }
+      const starElements = document.querySelectorAll('#starRatingSelector .star-item');
+      const fullStars = Math.floor(rating);
+      const remainder = Math.round((rating - fullStars) * 100) / 100;
 
-  // Update the interactive 5-star row with fractional support
-  const starElements = document.querySelectorAll('#starRatingSelector .star-item');
-  const fullStars = Math.floor(rating);
-  const remainder = Math.round((rating - fullStars) * 100) / 100;
-
-  starElements.forEach((el, idx) => {
-    if (idx < fullStars) {
-      el.className = "star-item text-[#FF5B22] transition-transform";
-      el.innerText = '★';
-    } else if (idx === fullStars && remainder > 0) {
-      el.className = "star-item text-[#FF5B22] transition-transform";
-      el.innerText = remainder >= 0.75 ? '¾' : remainder >= 0.5 ? '½' : '¼';
-    } else {
-      el.className = "star-item text-slate-300 transition-transform";
-      el.innerText = '★';
+      starElements.forEach((el, idx) => {
+        if (idx < fullStars) {
+          el.className = "star-item text-[#FF5B22] transition-transform";
+          el.innerText = '★';
+        } else if (idx === fullStars && remainder > 0) {
+          el.className = "star-item text-[#FF5B22] transition-transform";
+          el.innerText = remainder >= 0.75 ? '¾' : remainder >= 0.5 ? '½' : '¼';
+        } else {
+          el.className = "star-item text-slate-300 transition-transform";
+          el.innerText = '★';
+        }
+      });
     }
-  });
-}
-  // Update the interactive 5-star row with fractional indicator
-  const starElements = document.querySelectorAll('#starRatingSelector .star-item');
-  const fullStars = Math.floor(rating);
-  const remainder = Math.round((rating - fullStars) * 100) / 100;
-
-  starElements.forEach((el, idx) => {
-    if (idx < fullStars) {
-      el.className = "star-item text-[#FF5B22] transition-transform";
-      el.innerText = '★';
-    } else if (idx === fullStars && remainder > 0) {
-      el.className = "star-item text-[#FF5B22] transition-transform";
-      el.innerText = remainder >= 0.75 ? '¾' : remainder >= 0.5 ? '½' : '¼';
-    } else {
-      el.className = "star-item text-slate-300 transition-transform";
-      el.innerText = '★';
-    }
-  });
-}
 
     function cycleStarRating(starNum) {
       const curRating = Number(document.getElementById('editBookStarRating')?.value) || 0;
@@ -2399,7 +2359,7 @@
     function deleteBookDetail() {
       const id = document.getElementById('editBookId').value;
       if (!id) return;
-      books = books.filter(b => b.id !== id);
+      books = books.filter(b => !selectedBookIds.has(b.id));
       readingSessions = readingSessions.filter(s => s.bookId !== id);
       quotes = quotes.filter(q => q.bookId !== id);
 
@@ -2495,7 +2455,7 @@
       let items = [];
 
       try {
-        const res = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(query)}&maxResults=10`);
+        const res = await fetch(`[https://www.googleapis.com/books/v1/volumes?q=$](https://www.googleapis.com/books/v1/volumes?q=$){encodeURIComponent(query)}&maxResults=10`);
         if (res.ok) {
           const data = await res.json();
           if (Array.isArray(data.items)) {
@@ -2516,7 +2476,7 @@
 
       if (items.length === 0) {
         try {
-          const olRes = await fetch(`https://openlibrary.org/search.json?q=${encodeURIComponent(query)}&limit=10`);
+          const olRes = await fetch(`[https://openlibrary.org/search.json?q=$](https://openlibrary.org/search.json?q=$){encodeURIComponent(query)}&limit=10`);
           if (olRes.ok) {
             const olData = await olRes.json();
             if (Array.isArray(olData.docs)) {
@@ -2525,7 +2485,7 @@
                 author: Array.isArray(doc.author_name) ? doc.author_name.join(', ') : 'Unknown Author',
                 pageCount: Number(doc.number_of_pages_median) || 300,
                 genres: [],
-                cover: doc.cover_i ? `https://covers.openlibrary.org/b/id/${doc.cover_i}-L.jpg` : ''
+                cover: doc.cover_i ? `[https://covers.openlibrary.org/b/id/$](https://covers.openlibrary.org/b/id/$){doc.cover_i}-L.jpg` : ''
               }));
             }
           }
@@ -2540,7 +2500,7 @@
       currentSearchResults = items;
       resultsContainer.innerHTML = items.map((book, index) => `
         <div class="bg-white border-2 border-[#05244C] rounded-2xl p-2.5 flex items-center justify-between gap-2.5 shadow-sm">
-          <img src="${book.cover || 'https://placehold.co/80x120/446BA2/FFF9EE?text=Cover'}" class="w-10 aspect-[2/3] object-cover rounded-lg border border-[#05244C] flex-shrink-0 bg-slate-200" onerror="handleCoverError(this)">
+          <img src="${book.cover || '[https://placehold.co/80x120/446BA2/FFF9EE?text=Cover](https://placehold.co/80x120/446BA2/FFF9EE?text=Cover)'}" class="w-10 aspect-[2/3] object-cover rounded-lg border border-[#05244C] flex-shrink-0 bg-slate-200" onerror="handleCoverError(this)">
           <div class="flex-1 min-w-0">
             <h4 class="text-xs font-bold text-[#05244C] truncate">${book.title}</h4>
             <p class="text-[10px] text-slate-500 font-editorial italic truncate">${book.author}</p>
@@ -2766,7 +2726,7 @@
         container.innerHTML = bookEntries.map(e => `
           <div onclick="closeModal('modalGenericList'); openBookDetailModal('${e.book.id}')" class="bg-white border-2 border-[#05244C] rounded-2xl p-2.5 flex items-center justify-between cursor-pointer hover:bg-teal-50 transition-colors shadow-sm">
             <div class="flex items-center gap-2.5 min-w-0 pr-2">
-              <img src="${e.book.cover || 'https://placehold.co/80x120/446BA2/FFF9EE?text=Cover'}" class="w-10 aspect-[2/3] object-cover rounded-lg border border-[#05244C] flex-shrink-0 bg-slate-200" onerror="handleCoverError(this)">
+              <img src="${e.book.cover || '[https://placehold.co/80x120/446BA2/FFF9EE?text=Cover](https://placehold.co/80x120/446BA2/FFF9EE?text=Cover)'}" class="w-10 aspect-[2/3] object-cover rounded-lg border border-[#05244C] flex-shrink-0 bg-slate-200" onerror="handleCoverError(this)">
               <div class="min-w-0">
                 <h4 class="text-xs font-bold text-[#05244C] truncate">${e.book.title}</h4>
                 <p class="text-[10px] text-slate-500 truncate italic">${e.book.author}</p>
@@ -2797,7 +2757,7 @@
       } else {
         container.innerHTML = finishedBooks.map(b => `
           <div onclick="closeModal('modalGenericList'); openBookDetailModal('${b.id}')" class="bg-white border-2 border-[#05244C] rounded-2xl p-2.5 flex gap-3 items-center cursor-pointer hover:bg-orange-50 transition-colors shadow-sm">
-            <img src="${b.cover || 'https://placehold.co/80x120/446BA2/FFF9EE?text=Cover'}" class="w-12 aspect-[2/3] object-cover rounded-lg border border-[#05244C] flex-shrink-0 bg-slate-200" onerror="handleCoverError(this)">
+            <img src="${b.cover || '[https://placehold.co/80x120/446BA2/FFF9EE?text=Cover](https://placehold.co/80x120/446BA2/FFF9EE?text=Cover)'}" class="w-12 aspect-[2/3] object-cover rounded-lg border border-[#05244C] flex-shrink-0 bg-slate-200" onerror="handleCoverError(this)">
             <div class="flex-1 min-w-0">
               <h4 class="text-xs font-bold text-[#05244C] truncate">${b.title}</h4>
               <p class="text-[10px] text-slate-500 truncate italic">${b.author}</p>
@@ -2845,7 +2805,7 @@
         coversRow.innerHTML = `<span class="text-xs text-slate-300 italic py-2">No completed books logged.</span>`;
       } else {
         coversRow.innerHTML = finishedBooks.map(b => `
-          <img src="${b.cover || 'https://placehold.co/80x120/446BA2/FFF9EE?text=Cover'}" alt="${b.title}" class="w-14 aspect-[2/3] object-cover rounded-xl border border-white/40 shadow-sm flex-shrink-0" onerror="handleCoverError(this)">
+          <img src="${b.cover || '[https://placehold.co/80x120/446BA2/FFF9EE?text=Cover](https://placehold.co/80x120/446BA2/FFF9EE?text=Cover)'}" alt="${b.title}" class="w-14 aspect-[2/3] object-cover rounded-xl border border-white/40 shadow-sm flex-shrink-0" onerror="handleCoverError(this)">
         `).join('');
       }
 
@@ -3209,7 +3169,7 @@
               <span class="text-[9px] font-black uppercase ${isThought ? 'text-amber-800' : 'text-[#FF5B22]'}">${isThought ? '💭 Reader Thought' : '“ Quote'}</span>
               <button type="button" onclick="deleteQuote('${q.id}', '${bookId}')" class="text-slate-400 hover:text-red-500 font-bold text-xs">✕</button>
             </div>
-            <p class="${isThought ? 'font-sans text-xs text-slate-800' : 'font-editorial text-xs italic text-[#05244C]'} leading-snug">${isThought ? q.text : `“${q.text}”`}</p>
+            <p class="${isThought ? 'font-sans text-xs text-[#05244C] font-semibold bg-amber-100/60 p-3 rounded-xl' : 'font-quote-display text-base text-[#05244C] font-semibold italic'} leading-snug">${isThought ? q.text : `“${q.text}”`}</p>
             <div class="flex items-center gap-2 text-[10px] text-slate-500 pt-0.5">
               ${q.page ? `<span>Page ${q.page}</span>` : ''}
               <span>• ${q.date || ''}</span>
@@ -3376,7 +3336,7 @@
       let newKey = null;
 
       try {
-        const res = await fetch("https://jsonblob.com/api/jsonBlob", {
+        const res = await fetch("[https://jsonblob.com/api/jsonBlob](https://jsonblob.com/api/jsonBlob)", {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
           body: JSON.stringify(payload)
@@ -3420,7 +3380,7 @@
       const payload = { books, sessions: readingSessions, quotes, goals: userGoals, updatedAt: Date.now() };
       let success = false;
       try {
-        const res = await fetch(`https://jsonblob.com/api/jsonBlob/${activeSyncKey}`, {
+        const res = await fetch(`[https://jsonblob.com/api/jsonBlob/$](https://jsonblob.com/api/jsonBlob/$){activeSyncKey}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
@@ -3435,7 +3395,7 @@
       if (!activeSyncKey) return false;
       let cloudData = null;
       try {
-        const res = await fetch(`https://jsonblob.com/api/jsonBlob/${activeSyncKey}`);
+        const res = await fetch(`[https://jsonblob.com/api/jsonBlob/$](https://jsonblob.com/api/jsonBlob/$){activeSyncKey}`);
         if (res.ok) cloudData = await res.json();
       } catch(e) {}
 
