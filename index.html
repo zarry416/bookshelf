@@ -1235,7 +1235,7 @@
   </div>
 
   <script>
-    const APP_VERSION = "4.8";
+    const APP_VERSION = "4.9";
     let books = [];
     let readingSessions = [];
     let quotes = [];
@@ -1250,7 +1250,6 @@
     let selectedBookIds = new Set();
     let currentLogMode = 'pages';
 
-    // Default format changed to eBook
     let editingBookFormats = ['eBook'];
     let editingBookGenres = [];
 
@@ -1858,19 +1857,31 @@
       renderLibrary();
     }
 
+    // STRICT CLEAN GENRE FILTER DROPDOWN: Shows PRESET_GENRES present on your books
     function populateGenreDropdown() {
       const select = document.getElementById('libraryGenreSelect');
       if (!select) return;
       const currentVal = select.value;
-      const genreSet = new Set();
+      
+      const activePresetGenres = new Set();
       books.forEach(b => {
         if (Array.isArray(b.genres)) {
-          b.genres.forEach(g => { if (g) genreSet.add(g.trim()); });
+          b.genres.forEach(g => {
+            if (PRESET_GENRES.includes(g)) {
+              activePresetGenres.add(g);
+            }
+          });
         }
       });
-      const sorted = Array.from(genreSet).sort();
-      select.innerHTML = '<option value="all">All Genres</option>' + sorted.map(g => `<option value="${g}">${g}</option>`).join('');
-      if (sorted.includes(currentVal)) select.value = currentVal;
+
+      // Always display all PRESET_GENRES in clean order
+      select.innerHTML = '<option value="all">All Genres</option>' + PRESET_GENRES.map(g => {
+        const hasBooks = activePresetGenres.has(g);
+        return `<option value="${g}">${g}${hasBooks ? '' : ' (0)'}</option>`;
+      }).join('');
+
+      if (PRESET_GENRES.includes(currentVal)) select.value = currentVal;
+      else select.value = 'all';
     }
 
     function toggleBatchSelectMode() {
@@ -2166,8 +2177,9 @@
       document.getElementById('editBookShelf').value = bk.shelf || 'reading';
       document.getElementById('editBookOwnership').value = bk.ownership || 'Owned';
       
-      // Setup Genre Pills
-      editingBookGenres = Array.isArray(bk.genres) ? [...bk.genres] : (bk.genres ? bk.genres.split(',').map(g => g.trim()) : []);
+      // Filter existing genres strictly against PRESET_GENRES to eliminate stale strings & ghost counts
+      const rawGenres = Array.isArray(bk.genres) ? bk.genres : (bk.genres ? bk.genres.split(/[,;/]/).map(g => g.trim()) : []);
+      editingBookGenres = rawGenres.filter(g => PRESET_GENRES.includes(g));
       renderGenrePills();
 
       document.getElementById('editBookCover').value = bk.cover || '';
@@ -2363,7 +2375,7 @@
       bk.formats = [...editingBookFormats];
       bk.isFavorite = isEditingFavorite;
 
-      // Save Genres from Selected Array
+      // Cleaned genres restricted to selected pills
       bk.genres = [...editingBookGenres];
 
       const rawCover = document.getElementById('editBookCover').value;
@@ -2503,7 +2515,7 @@
                 title: info.title || 'Untitled',
                 author: info.authors ? info.authors.join(', ') : 'Unknown Author',
                 pageCount: Number(info.pageCount) || 300,
-                genres: Array.isArray(info.categories) ? info.categories : ['Fiction'],
+                genres: [],
                 cover: cleanImageUrl((links.thumbnail || links.smallThumbnail || '').replace(/^http:\/\//i, 'https://'))
               };
             });
@@ -2522,7 +2534,7 @@
                 title: doc.title || 'Untitled',
                 author: Array.isArray(doc.author_name) ? doc.author_name.join(', ') : 'Unknown Author',
                 pageCount: Number(doc.number_of_pages_median) || 300,
-                genres: Array.isArray(doc.subject) ? doc.subject.slice(0, 2) : ['Fiction'],
+                genres: [],
                 cover: doc.cover_i ? `https://covers.openlibrary.org/b/id/${doc.cover_i}-L.jpg` : ''
               }));
             }
@@ -2563,7 +2575,7 @@
         shelf: 'to-read',
         ownership: 'Owned',
         formats: ['eBook'],
-        genres: item.genres,
+        genres: [],
         cover: item.cover,
         rating: 0,
         review: '',
@@ -2853,8 +2865,9 @@
       finishedBooks.forEach(b => {
         if (Array.isArray(b.genres)) {
           b.genres.forEach(g => {
-            const clean = g.trim();
-            if (clean) genreCounts[clean] = (genreCounts[clean] || 0) + 1;
+            if (PRESET_GENRES.includes(g)) {
+              genreCounts[g] = (genreCounts[g] || 0) + 1;
+            }
           });
         }
       });
