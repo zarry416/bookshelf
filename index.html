@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <!-- Ensure external book cover images from Google Books & Open Library load without 403 referrer blocks -->
+  <!-- Ensure external book cover images from Google Books, Open Library & external CDNs load without 403 referrer blocks -->
   <meta name="referrer" content="no-referrer">
   <title>Rianne's Bookshelf</title>
 
@@ -154,7 +154,7 @@
 
         <!-- Book Cover & Info Row -->
         <div class="flex gap-3.5 items-start">
-          <img id="heroCover" src="https://images.unsplash.com/photo-1544947950-fa07a98d237f?auto=format&fit=crop&w=400&q=80" alt="Book Cover" class="w-24 aspect-[2/3] object-cover rounded-xl border-2 border-[#05244C] shadow-md flex-shrink-0 bg-slate-200" onerror="this.src='https://placehold.co/200x300/446BA2/FFF9EE?text=Cover'">
+          <img id="heroCover" src="https://images.unsplash.com/photo-1544947950-fa07a98d237f?auto=format&fit=crop&w=400&q=80" alt="Book Cover" class="w-24 aspect-[2/3] object-cover rounded-xl border-2 border-[#05244C] shadow-md flex-shrink-0 bg-slate-200" onerror="handleCoverError(this)">
           
           <div class="flex-1 min-w-0">
             <h2 id="heroTitle" class="text-lg font-retro-title text-[#05244C] leading-snug line-clamp-2">The Butterfly Garden</h2>
@@ -622,9 +622,19 @@
           </select>
         </div>
 
+        <!-- Cover Image URL with Live Preview & Error Diagnostics -->
         <div>
-          <label class="block mb-1">Cover Image URL</label>
-          <input type="url" id="editBookCover" class="w-full bg-white border-2 border-[#05244C] rounded-xl p-2 font-semibold">
+          <div class="flex items-center justify-between mb-1">
+            <label class="block">Cover Image URL</label>
+            <span id="coverPreviewStatus" class="text-[9px] font-bold text-slate-500">Live preview below</span>
+          </div>
+          <div class="flex gap-2 items-center">
+            <input type="url" id="editBookCover" oninput="updateLiveCoverPreview(this.value)" placeholder="Paste image link..." class="flex-1 min-w-0 bg-white border-2 border-[#05244C] rounded-xl p-2 font-semibold text-xs">
+            <div class="w-10 h-14 rounded-lg border-2 border-[#05244C] overflow-hidden bg-slate-200 flex-shrink-0 relative shadow-sm">
+              <img id="editBookCoverPreviewImg" src="" alt="" class="w-full h-full object-cover hidden" onload="handlePreviewImgLoaded()" onerror="handlePreviewImgError()">
+              <div id="editBookCoverPreviewPlaceholder" class="w-full h-full flex items-center justify-center text-[10px] text-slate-400 font-bold">🖼️</div>
+            </div>
+          </div>
         </div>
 
         <!-- FINISHED REVIEWS SECTION -->
@@ -1050,7 +1060,7 @@
   </div>
 
   <script>
-    const APP_VERSION = "3.3";
+    const APP_VERSION = "3.4";
     let books = [];
     let readingSessions = [];
     let quotes = [];
@@ -1071,6 +1081,38 @@
     let calendarMonth = new Date().getMonth();
     let quoteViewMode = 'timeline';
     let isEditingFavorite = false;
+
+    // Smart Image URL Cleaner & Resolver (handles Google Images, direct links, extra quotes/spaces)
+    function cleanImageUrl(rawUrl) {
+      if (!rawUrl) return '';
+      let url = String(rawUrl).trim().replace(/^["']|["']$/g, '');
+      if (!url) return '';
+
+      // Resolve Google Image Search redirect URLs
+      if (url.includes('google.com/imgres') || url.includes('google.com/url')) {
+        try {
+          const parsed = new URL(url);
+          const imgParam = parsed.searchParams.get('imgurl') || parsed.searchParams.get('url');
+          if (imgParam) {
+            url = decodeURIComponent(imgParam);
+          }
+        } catch (e) {}
+      }
+
+      // Upgrade insecure HTTP links to HTTPS to avoid mixed content blocking
+      if (url.startsWith('http://')) {
+        url = url.replace('http://', 'https://');
+      }
+
+      return url;
+    }
+
+    // Safe error handler for book covers in the UI (never crashes on apostrophes)
+    function handleCoverError(imgElement) {
+      if (!imgElement) return;
+      imgElement.onerror = null;
+      imgElement.src = 'https://placehold.co/200x300/446BA2/FFF9EE?text=Cover';
+    }
 
     // Universal Date Normalizer: Converts any format (Goodreads, Bookshelf, text dates) to YYYY-MM-DD
     function normalizeDateToYMD(val) {
@@ -1203,6 +1245,11 @@
 
       quotes = safeJsonParse('rianne_quotes_v1', []);
       userGoals = safeJsonParse('rianne_goals_v1', userGoals);
+
+      // Clean existing book covers in case raw URLs need fixing
+      books.forEach(b => {
+        if (b.cover) b.cover = cleanImageUrl(b.cover);
+      });
 
       // Auto-migrate dates in stored books & sessions
       let dataChanged = false;
@@ -1473,7 +1520,7 @@
         return `
           <div onclick="selectHeroBook('${b.id}')" class="flex-shrink-0 w-44 bg-[#FFF9EE] border-2 border-[#05244C] rounded-2xl p-3 shadow-retro-navy cursor-pointer transition-transform hover:-translate-y-1">
             <div class="flex gap-2.5 items-center">
-              <img src="${b.cover || 'https://placehold.co/100x150/446BA2/FFF9EE?text=Cover'}" class="w-11 aspect-[2/3] object-cover rounded-lg border border-[#05244C]" onerror="this.src='https://placehold.co/100x150/446BA2/FFF9EE?text=Cover'">
+              <img src="${b.cover || 'https://placehold.co/100x150/446BA2/FFF9EE?text=Cover'}" class="w-11 aspect-[2/3] object-cover rounded-lg border border-[#05244C]" onerror="handleCoverError(this)">
               <div class="flex-1 min-w-0">
                 <h4 class="text-xs font-bold text-[#05244C] truncate">${b.title}</h4>
                 <p class="text-[10px] text-slate-500 truncate font-editorial italic">${b.author}</p>
@@ -1729,7 +1776,7 @@
               return `
                 <div onclick="${isBatchMode ? `toggleSelectBook('${b.id}', event)` : `openBookDetailModal('${b.id}')`}" class="relative group cursor-pointer">
                   <div class="relative rounded-xl overflow-hidden border-2 border-[#05244C] shadow-retro-navy aspect-[2/3] bg-slate-200 ${isSelected ? 'ring-4 ring-[#FF5B22]' : ''}">
-                    <img src="${b.cover || 'https://placehold.co/200x300/446BA2/FFF9EE?text=' + encodeURIComponent(b.title.slice(0, 15))}" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/200x300/446BA2/FFF9EE?text=' + encodeURIComponent('${b.title.slice(0, 15)}')">
+                    <img src="${b.cover || 'https://placehold.co/200x300/446BA2/FFF9EE?text=Cover'}" class="w-full h-full object-cover" onerror="handleCoverError(this)">
                     ${isBatchMode ? `
                       <div class="absolute top-1.5 left-1.5 w-5 h-5 rounded-md bg-white border border-[#05244C] flex items-center justify-center">
                         ${isSelected ? '<span class="text-[#FF5B22] font-black text-xs">✓</span>' : ''}
@@ -1768,7 +1815,7 @@
                       ${isSelected ? '<span class="text-[#FF5B22] font-black text-xs">✓</span>' : ''}
                     </div>
                   ` : ''}
-                  <img src="${b.cover || 'https://placehold.co/100x150/446BA2/FFF9EE?text=' + encodeURIComponent(b.title.slice(0, 10))}" class="w-14 aspect-[2/3] object-cover rounded-xl border border-[#05244C] flex-shrink-0 bg-slate-200" onerror="this.src='https://placehold.co/100x150/446BA2/FFF9EE?text=' + encodeURIComponent('${b.title.slice(0, 10)}')">
+                  <img src="${b.cover || 'https://placehold.co/100x150/446BA2/FFF9EE?text=Cover'}" class="w-14 aspect-[2/3] object-cover rounded-xl border border-[#05244C] flex-shrink-0 bg-slate-200" onerror="handleCoverError(this)">
                   <div class="flex-1 min-w-0">
                     <div class="flex items-center gap-1.5">
                       <span class="text-[9px] uppercase font-black px-2 py-0.5 rounded-full ${info.bg} ${info.text} border border-[#05244C] shadow-sm">${info.label}</span>
@@ -2011,7 +2058,7 @@
           const fDate = b.finishedDate || (Array.isArray(b.finishedDates) && b.finishedDates[0]) || 'Finished';
           return `
             <div onclick="closeModal('modalFinishedBooks'); openBookDetailModal('${b.id}')" class="bg-white border-2 border-[#05244C] rounded-2xl p-2.5 flex gap-3 items-center cursor-pointer hover:bg-orange-50 transition-colors shadow-sm">
-              <img src="${b.cover || 'https://placehold.co/80x120/446BA2/FFF9EE?text=' + encodeURIComponent(b.title.slice(0, 10))}" class="w-12 aspect-[2/3] object-cover rounded-lg border border-[#05244C] flex-shrink-0 bg-slate-200" onerror="this.src='https://placehold.co/80x120/446BA2/FFF9EE?text=' + encodeURIComponent('${b.title.slice(0, 10)}')">
+              <img src="${b.cover || 'https://placehold.co/80x120/446BA2/FFF9EE?text=Cover'}" class="w-12 aspect-[2/3] object-cover rounded-lg border border-[#05244C] flex-shrink-0 bg-slate-200" onerror="handleCoverError(this)">
               <div class="flex-1 min-w-0">
                 <h4 class="text-xs font-bold text-[#05244C] truncate">${b.title}</h4>
                 <p class="text-[10px] text-slate-500 truncate font-editorial italic">${b.author}</p>
@@ -2129,6 +2176,56 @@
       showToast('Session logged to calendar!');
     }
 
+    // Live Cover Image Preview & Diagnostics
+    function updateLiveCoverPreview(url) {
+      const cleaned = cleanImageUrl(url);
+      const img = document.getElementById('editBookCoverPreviewImg');
+      const placeholder = document.getElementById('editBookCoverPreviewPlaceholder');
+      const statusLbl = document.getElementById('coverPreviewStatus');
+
+      if (!cleaned) {
+        if (img) img.classList.add('hidden');
+        if (placeholder) placeholder.classList.remove('hidden');
+        if (statusLbl) {
+          statusLbl.innerText = 'No link entered';
+          statusLbl.className = 'text-[9px] font-bold text-slate-400';
+        }
+        return;
+      }
+
+      if (img) {
+        img.src = cleaned;
+        if (statusLbl) {
+          statusLbl.innerText = 'Checking link...';
+          statusLbl.className = 'text-[9px] font-bold text-amber-600';
+        }
+      }
+    }
+
+    function handlePreviewImgLoaded() {
+      const img = document.getElementById('editBookCoverPreviewImg');
+      const placeholder = document.getElementById('editBookCoverPreviewPlaceholder');
+      const statusLbl = document.getElementById('coverPreviewStatus');
+      if (img) img.classList.remove('hidden');
+      if (placeholder) placeholder.classList.add('hidden');
+      if (statusLbl) {
+        statusLbl.innerText = '✓ Valid image';
+        statusLbl.className = 'text-[9px] font-bold text-emerald-600';
+      }
+    }
+
+    function handlePreviewImgError() {
+      const img = document.getElementById('editBookCoverPreviewImg');
+      const placeholder = document.getElementById('editBookCoverPreviewPlaceholder');
+      const statusLbl = document.getElementById('coverPreviewStatus');
+      if (img) img.classList.add('hidden');
+      if (placeholder) placeholder.classList.remove('hidden');
+      if (statusLbl) {
+        statusLbl.innerText = '⚠️ Could not load image';
+        statusLbl.className = 'text-[9px] font-bold text-rose-500';
+      }
+    }
+
     function openBookDetailModal(id) {
       const bk = books.find(b => b.id === id);
       if (!bk) return;
@@ -2145,7 +2242,10 @@
       document.getElementById('editBookShelf').value = bk.shelf || 'reading';
       document.getElementById('editBookFormat').value = bk.format || 'Paperback';
       document.getElementById('editBookOwnership').value = bk.ownership || 'Owned';
-      document.getElementById('editBookCover').value = bk.cover || '';
+      
+      const rawCover = bk.cover || '';
+      document.getElementById('editBookCover').value = rawCover;
+      updateLiveCoverPreview(rawCover);
 
       isEditingFavorite = !!bk.isFavorite;
       updateFavoriteButtonDisplay();
@@ -2324,7 +2424,7 @@
       bk.pageCount = Number(document.getElementById('editBookTotalPages').value) || bk.pageCount;
       bk.format = document.getElementById('editBookFormat').value;
       bk.ownership = document.getElementById('editBookOwnership').value;
-      bk.cover = document.getElementById('editBookCover').value.trim();
+      bk.cover = cleanImageUrl(document.getElementById('editBookCover').value.trim());
       bk.isFavorite = isEditingFavorite;
 
       const pct = bk.pageCount > 0 ? Math.round((bk.currentPage / bk.pageCount) * 100) : 0;
@@ -2496,7 +2596,7 @@
       const shelf = document.getElementById('manualBookShelf').value;
       const format = document.getElementById('manualBookFormat').value;
       const ownership = document.getElementById('manualBookOwnership').value;
-      const cover = document.getElementById('manualBookCover').value.trim();
+      const cover = cleanImageUrl(document.getElementById('manualBookCover').value.trim());
       const genres = document.getElementById('manualBookGenres').value.split(',').map(g => g.trim()).filter(Boolean);
 
       const newBook = {
@@ -2554,7 +2654,7 @@
               author: v.authors ? v.authors.join(', ') : 'Unknown',
               pageCount: v.pageCount || 300,
               genres: v.categories || ['Fiction'],
-              cover: cover
+              cover: cleanImageUrl(cover)
             };
           });
         }
@@ -2588,7 +2688,7 @@
       window._tempSearchResults = results;
       list.innerHTML = results.map((r, idx) => `
         <div class="bg-white border-2 border-[#05244C] rounded-2xl p-3 flex gap-3 items-center">
-          <img src="${r.cover || 'https://placehold.co/80x120/446BA2/FFF9EE?text=' + encodeURIComponent(r.title.slice(0, 10))}" class="w-12 aspect-[2/3] object-cover rounded-lg border border-[#05244C]" onerror="this.src='https://placehold.co/80x120/446BA2/FFF9EE?text=' + encodeURIComponent('${r.title.slice(0, 10)}')">
+          <img src="${r.cover || 'https://placehold.co/80x120/446BA2/FFF9EE?text=Cover'}" class="w-12 aspect-[2/3] object-cover rounded-lg border border-[#05244C]" onerror="handleCoverError(this)">
           <div class="flex-1 min-w-0">
             <h4 class="text-xs font-bold text-[#05244C] truncate">${r.title}</h4>
             <p class="text-[10px] text-slate-500 truncate font-editorial italic">${r.author}</p>
@@ -2863,7 +2963,6 @@
       if (activeSyncKey) {
         const input = document.getElementById('syncKeyInput');
         if (input) input.value = activeSyncKey;
-        // Do NOT pull automatically on startup so existing local library covers are never overwritten
       }
     }
 
@@ -3255,8 +3354,7 @@
         const rawFinDate = row[finDateIdx];
         const normalizedFinDate = normalizeDateToYMD(rawFinDate) || (shelf === 'finished' ? new Date().toISOString().split('T')[0] : null);
 
-        let coverImg = row[coverIdx] || '';
-        // If no cover is present in CSV but ISBN is available, set direct Open Library cover URL
+        let coverImg = cleanImageUrl(row[coverIdx] || '');
         if (!coverImg) {
           const usableIsbn = rawIsbn13 || rawIsbn;
           if (usableIsbn && usableIsbn.length >= 10) {
@@ -3300,7 +3398,6 @@
           count++;
         }
 
-        // Generate calendar reading session for finished books so they appear on the calendar
         if (shelf === 'finished' && normalizedFinDate) {
           const sessionExists = readingSessions.some(s => s.bookId === bookId && s.date === normalizedFinDate);
           if (!sessionExists) {
