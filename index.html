@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <!-- Ensure external book cover images from Amazon, Google Books, Open Library load without 403 referrer blocks -->
+  <!-- Ensure external book cover images load without 403 referrer blocks -->
   <meta name="referrer" content="no-referrer">
   <title>Rianne's Bookshelf</title>
 
@@ -18,7 +18,7 @@
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Global Image Preview Handlers Safeguard (placed early in head) -->
+  <!-- Global Image Preview Handlers Safeguard -->
   <script>
     window.handlePreviewImgLoaded = function() {
       const img = document.getElementById('editBookCoverPreviewImg');
@@ -89,7 +89,6 @@
       font-family: 'Playfair Display', 'Bodoni Moda', Georgia, serif;
     }
 
-    /* 3D Extruded Retro Shadows */
     .shadow-retro-orange {
       box-shadow: 4px 4px 0px var(--retro-orange), 7px 7px 0px var(--retro-navy);
     }
@@ -100,13 +99,11 @@
       box-shadow: 3px 3px 0px var(--retro-pink);
     }
 
-    /* Tactile button press effect */
     .retro-btn:active {
       transform: translate(2px, 2px);
       box-shadow: 1px 1px 0px var(--retro-navy) !important;
     }
 
-    /* Prevent native number spinners from covering the % symbol */
     input[type=number]::-webkit-inner-spin-button,
     input[type=number]::-webkit-outer-spin-button {
       -webkit-appearance: none;
@@ -116,7 +113,6 @@
       -moz-appearance: textfield;
     }
 
-    /* iOS Notch, Dynamic Island & Home Bar Safe Area Insets */
     header.sticky {
       padding-top: calc(env(safe-area-inset-top, 0px) + 12px) !important;
     }
@@ -130,7 +126,6 @@
       padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 1.5rem);
     }
 
-    /* Hide scrollbars for clean mobile viewing */
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
   </style>
@@ -141,7 +136,6 @@
   <header class="sticky top-0 z-40 bg-[#446BA2]/95 backdrop-blur-md border-b-2 border-[#FFA4C4] px-4 pb-3 transition-all shadow-md">
     <div class="max-w-md mx-auto flex items-center justify-between">
       <div class="flex items-center gap-2.5">
-        <!-- Cute Retro Tropical Palm Island Emblem -->
         <div class="w-10 h-10 rounded-2xl bg-[#FFF9EE] border-2 border-[#FFA4C4] shadow-retro-navy flex items-center justify-center overflow-hidden flex-shrink-0">
           <svg class="w-6 h-6" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
             <circle cx="23" cy="9" r="4.5" fill="#FFD034" stroke="#05244C" stroke-width="1.5"/>
@@ -160,7 +154,6 @@
         </div>
       </div>
 
-      <!-- Settings Menu Drawer Button -->
       <button onclick="openMenuDrawer()" aria-label="Open Settings" class="w-9 h-9 rounded-full bg-[#FFF9EE] text-[#05244C] border-2 border-[#05244C] shadow-retro-navy flex items-center justify-center retro-btn flex-shrink-0">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M4 12h16M4 18h16"/></svg>
       </button>
@@ -173,9 +166,7 @@
     <!-- TAB 1: READING HERO & ACTIVE PROGRESS -->
     <section id="tab-reading" class="tab-content space-y-6">
 
-      <!-- 1. LAST SESSION TOP HERO CARD -->
       <div id="heroReadingCard" class="bg-[#FFF9EE] border-3 border-[#05244C] rounded-3xl p-5 pt-4 pb-5 shadow-retro-orange relative transition-all">
-        <!-- Top Status Bar -->
         <div class="flex items-center justify-between mb-3.5 pb-2 border-b-2 border-orange-200/70">
           <div class="flex items-center gap-2">
             <span class="bg-[#FF5B22] text-white text-[10px] font-extrabold uppercase px-2.5 py-0.5 rounded-full border border-[#05244C] tracking-wider shadow-sm">Last Session</span>
@@ -184,7 +175,6 @@
           <span id="heroFormatBadge" class="bg-[#FFA4C4] text-[#05244C] text-[10px] font-black px-2.5 py-0.5 rounded-full border border-[#05244C] shadow-sm">eBook • Owned</span>
         </div>
 
-        <!-- Book Cover & Info Row -->
         <div class="flex gap-3.5 items-start">
           <img id="heroCover" src="https://images.unsplash.com/photo-1544947950-fa07a98d237f?auto=format&fit=crop&w=400&q=80" alt="Book Cover" class="w-24 aspect-[2/3] object-cover rounded-xl border-2 border-[#05244C] shadow-md flex-shrink-0 bg-slate-200" onerror="handleCoverError(this)">
           
@@ -192,12 +182,10 @@
             <h2 id="heroTitle" class="text-lg font-retro-title text-[#05244C] leading-snug line-clamp-2">The Butterfly Garden</h2>
             <p id="heroAuthor" class="text-sm font-editorial text-slate-600 italic line-clamp-1 mb-2.5">Dot Hutchison</p>
             
-            <!-- Progress Bar -->
             <div class="bg-amber-100 rounded-full h-3.5 border-2 border-[#05244C] overflow-hidden p-[1px] mb-2">
               <div id="heroProgressBar" class="bg-gradient-to-r from-[#FF5B22] to-[#FFD034] h-full rounded-full transition-all duration-500" style="width: 50%"></div>
             </div>
 
-            <!-- Page Count & Integer Percentage Badge -->
             <div class="flex justify-between items-center text-xs font-bold text-[#05244C]">
               <span id="heroProgressText">145 / 288 pages</span>
               <span id="heroPercentBadge" class="bg-[#1DBBB4] text-white px-2 py-0.5 rounded-md text-[11px] font-black border border-[#05244C]">50%</span>
@@ -205,7 +193,6 @@
           </div>
         </div>
 
-        <!-- Smart Dynamic Finish Estimate -->
         <div class="mt-3.5 bg-[#FFEDC9] border-2 border-[#05244C] rounded-2xl p-3 flex items-center justify-between">
           <div class="flex items-center gap-2.5">
             <div class="w-7 h-7 rounded-full bg-[#FF5B22] text-white flex items-center justify-center font-bold text-xs shadow-sm">⏳</div>
@@ -217,7 +204,6 @@
           <span id="heroPaceMetric" class="text-[10px] font-bold text-[#05244C] bg-white/80 px-2 py-1 rounded-lg border border-orange-200">~ 40 pgs/hr</span>
         </div>
 
-        <!-- Four Action Buttons (Log, Timer, Quote, DNF) -->
         <div class="grid grid-cols-4 gap-2 mt-3.5 pt-1">
           <button onclick="openPastSessionModal()" class="retro-btn bg-[#FF5B22] text-white py-2 px-1 rounded-xl text-xs font-black border-2 border-[#05244C] shadow-retro-navy text-center flex flex-col items-center justify-center gap-1">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
@@ -241,7 +227,6 @@
         </div>
       </div>
 
-      <!-- 2. ALSO IN PROGRESS SHELF (BELOW LAST SESSION) -->
       <div>
         <div class="flex items-center justify-between mb-2.5 px-1">
           <h3 class="text-xs font-extrabold text-[#FFF9EE] uppercase tracking-wider flex items-center gap-2">
@@ -251,12 +236,9 @@
           <span class="text-[11px] font-bold text-[#FFD034]">Tap to switch</span>
         </div>
 
-        <div id="inProgressCarousel" class="flex gap-3 overflow-x-auto no-scrollbar pb-2 pt-1">
-          <!-- Populated dynamically -->
-        </div>
+        <div id="inProgressCarousel" class="flex gap-3 overflow-x-auto no-scrollbar pb-2 pt-1"></div>
       </div>
 
-      <!-- 3. LIVE TIMER DRAWER WITH PROCEDURAL AUDIO -->
       <div id="liveTimerBox" class="hidden bg-[#05244C] border-3 border-[#FFD034] rounded-3xl p-5 shadow-retro-orange text-[#FFF9EE]">
         <div class="flex items-center justify-between mb-3">
           <div class="flex items-center gap-2">
@@ -271,7 +253,6 @@
           <button onclick="finishTimerSession()" class="flex-1 py-2 bg-[#FF5B22] text-white rounded-xl text-xs font-bold border border-[#05244C] shadow-retro-navy">End & Log Pages</button>
         </div>
 
-        <!-- Procedural Focus Atmosphere (Rain & Ocean Waves) -->
         <div class="pt-3 border-t border-white/10 flex items-center justify-between">
           <span class="text-xs font-bold text-slate-300">Focus Atmosphere</span>
           <div class="flex gap-2">
@@ -287,15 +268,13 @@
 
     </section>
 
-    <!-- TAB 2: LIBRARY (WITH 2 CLEAN CATEGORY ROWS, FORMAT FILTERS & VIEWS) -->
+    <!-- TAB 2: LIBRARY -->
     <section id="tab-library" class="tab-content hidden space-y-4">
       
-      <!-- Search, Views, and Batch Toggle Bar -->
       <div class="bg-[#FFF9EE] border-3 border-[#05244C] rounded-2xl p-3 shadow-retro-orange space-y-2.5">
         <div class="flex items-center gap-2">
           <input type="text" id="librarySearchInput" oninput="renderLibrary()" placeholder="Filter title, author, genre..." class="flex-1 min-w-0 bg-white border-2 border-[#05244C] rounded-xl px-3 py-2 text-xs font-semibold focus:outline-none">
           
-          <!-- View Switchers (Covers, Cards, List) -->
           <div class="flex bg-amber-200/70 p-1 rounded-xl border border-[#05244C] flex-shrink-0">
             <button onclick="setLibraryView('covers')" id="viewBtnCovers" class="px-2 py-1 rounded-lg text-xs font-bold bg-[#FF5B22] text-white" title="Covers Grid">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
@@ -308,20 +287,16 @@
             </button>
           </div>
 
-          <!-- Batch Edit Toggle Button -->
           <button onclick="toggleBatchSelectMode()" id="batchSelectModeBtn" class="h-9 px-3 bg-amber-100 hover:bg-amber-200 border-2 border-[#05244C] rounded-xl text-[11px] font-black text-[#05244C] shadow-retro-navy flex items-center justify-center flex-shrink-0 whitespace-nowrap retro-btn">Select</button>
         </div>
 
-        <!-- 2 CLEAN AESTHETIC ROWS FOR CATEGORIES (NO HORIZONTAL SCROLLING OR CLIPPED SHADOWS) -->
         <div class="space-y-1.5 pt-1">
-          <!-- Row 1: All, Reading, TBR, Finished -->
           <div class="grid grid-cols-4 gap-1.5">
             <button onclick="setShelfFilter('all')" class="shelf-pill py-1.5 rounded-xl text-[11px] font-black border-2 border-[#05244C] bg-[#05244C] text-[#FFF9EE] shadow-retro-navy text-center transition-all" data-shelf="all">All</button>
             <button onclick="setShelfFilter('reading')" class="shelf-pill py-1.5 rounded-xl text-[11px] font-bold border border-[#FF5B22] bg-[#FF5B22]/15 text-[#FF5B22] text-center transition-all" data-shelf="reading">Reading</button>
             <button onclick="setShelfFilter('to-read')" class="shelf-pill py-1.5 rounded-xl text-[11px] font-bold border border-[#D97706] bg-[#FFD034]/25 text-[#B45309] text-center transition-all" data-shelf="to-read">TBR</button>
             <button onclick="setShelfFilter('finished')" class="shelf-pill py-1.5 rounded-xl text-[11px] font-bold border border-[#10B981] bg-[#10B981]/15 text-[#047857] text-center transition-all" data-shelf="finished">Finished</button>
           </div>
-          <!-- Row 2: Faves, DNF, Wishlist -->
           <div class="grid grid-cols-3 gap-1.5">
             <button onclick="setShelfFilter('faves')" class="shelf-pill py-1.5 rounded-xl text-[11px] font-bold border border-rose-400 bg-rose-100 text-rose-700 text-center transition-all" data-shelf="faves">Faves</button>
             <button onclick="setShelfFilter('dnf')" class="shelf-pill py-1.5 rounded-xl text-[11px] font-bold border border-[#A855F7] bg-[#A855F7]/15 text-[#7E22CE] text-center transition-all" data-shelf="dnf">DNF</button>
@@ -329,7 +304,6 @@
           </div>
         </div>
 
-        <!-- Format Filter Pills -->
         <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1.5 px-0.5 border-t border-orange-200/60">
           <span class="text-[10px] font-bold text-slate-500 uppercase tracking-wider pl-0.5">Format:</span>
           <button onclick="setFormatFilter('all')" id="formatFilter-all" class="px-2 py-0.5 rounded-lg text-[10px] font-bold border border-[#05244C] bg-[#FFD034] text-[#05244C] whitespace-nowrap">All</button>
@@ -339,7 +313,6 @@
           <button onclick="setFormatFilter('Audiobook')" id="formatFilter-Audiobook" class="px-2 py-0.5 rounded-lg text-[10px] font-bold border border-[#05244C]/40 bg-white/60 text-[#05244C] whitespace-nowrap">Audiobook</button>
         </div>
 
-        <!-- Genre Filter & Sort Row -->
         <div class="grid grid-cols-2 gap-2 pt-1 border-t border-orange-200/60 text-[10px]">
           <div>
             <label class="block text-slate-500 font-bold mb-0.5">Genre</label>
@@ -361,7 +334,6 @@
         </div>
       </div>
 
-      <!-- Bulk Actions Bar -->
       <div id="batchActionBar" class="hidden bg-[#FFEDC9] border-2 border-[#05244C] rounded-2xl p-3 flex items-center justify-between shadow-retro-navy">
         <span id="batchCountLabel" class="text-xs font-black text-[#05244C]">0 books selected</span>
         <div class="flex gap-2">
@@ -370,7 +342,6 @@
         </div>
       </div>
 
-      <!-- Add Book Action Bar -->
       <div class="flex gap-2">
         <button onclick="openOnlineSearchModal()" class="flex-1 retro-btn bg-[#FFD034] text-[#05244C] py-2.5 rounded-2xl text-xs font-black border-2 border-[#05244C] shadow-retro-navy flex items-center justify-center gap-1.5">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
@@ -381,15 +352,11 @@
         </button>
       </div>
 
-      <!-- Library Grid/List Display -->
-      <div id="libraryContainer" class="pt-1">
-        <!-- Rendered dynamically -->
-      </div>
+      <div id="libraryContainer" class="pt-1"></div>
     </section>
 
     <!-- TAB 3: STATS & VISUAL CALENDAR -->
     <section id="tab-calendar" class="tab-content hidden space-y-5">
-      <!-- Calendar View with Book Covers -->
       <div class="bg-[#FFF9EE] border-3 border-[#05244C] rounded-3xl p-5 shadow-retro-orange">
         <div class="flex items-center justify-between mb-4">
           <div>
@@ -397,7 +364,6 @@
             <p class="text-[11px] text-slate-500 font-editorial">Days you logged reading time</p>
           </div>
           
-          <!-- Month Switcher -->
           <div class="flex items-center gap-1.5">
             <button onclick="changeCalendarMonth(-1)" class="w-8 h-8 rounded-full bg-white border border-[#05244C] flex items-center justify-center font-bold text-sm shadow-sm">‹</button>
             <span id="calendarMonthTitle" class="text-xs font-extrabold text-[#05244C] px-2 min-w-[110px] text-center">October 2026</span>
@@ -405,31 +371,23 @@
           </div>
         </div>
 
-        <!-- Velocity Projection Banner -->
         <div id="calendarVelocityBanner" class="bg-[#FFEDC9] border-2 border-[#05244C] rounded-2xl p-3 mb-4 flex items-center gap-2.5">
           <span class="text-lg">✨</span>
           <p id="velocityBannerText" class="text-xs font-bold text-[#05244C]">Calculating your reading pace...</p>
         </div>
 
-        <!-- Calendar Day Grid Header -->
         <div class="grid grid-cols-7 gap-1 text-center font-bold text-[10px] text-slate-500 mb-1">
           <div>S</div><div>M</div><div>T</div><div>W</div><div>T</div><div>F</div><div>S</div>
         </div>
-        <div id="calendarDaysGrid" class="grid grid-cols-7 gap-1.5">
-          <!-- Populated dynamically with covers -->
-        </div>
+        <div id="calendarDaysGrid" class="grid grid-cols-7 gap-1.5"></div>
       </div>
 
-      <!-- Multi-Year Stats Dashboard -->
       <div class="bg-[#FFF9EE] border-3 border-[#05244C] rounded-3xl p-5 shadow-retro-orange space-y-4">
         <div class="flex items-center justify-between">
           <h3 class="text-base font-retro-title text-[#05244C]">Reading Statistics</h3>
-          <select id="statsYearSelect" onchange="renderStatsDashboard()" class="bg-white border-2 border-[#05244C] rounded-xl px-2.5 py-1 text-xs font-bold text-[#05244C]">
-            <!-- Generated dynamically based on years -->
-          </select>
+          <select id="statsYearSelect" onchange="renderStatsDashboard()" class="bg-white border-2 border-[#05244C] rounded-xl px-2.5 py-1 text-xs font-bold text-[#05244C]"></select>
         </div>
 
-        <!-- Target Progress Card -->
         <div class="bg-gradient-to-br from-[#446BA2] to-[#2B4B79] text-[#FFF9EE] p-4 rounded-2xl border-2 border-[#FFD034] shadow-md">
           <div class="flex items-center justify-between mb-2">
             <span class="text-xs font-bold uppercase tracking-wider text-[#FFD034]">Daily Goal</span>
@@ -446,7 +404,6 @@
           </div>
         </div>
 
-        <!-- KPI Grid (Books Finished is clickable to view finished books) -->
         <div class="grid grid-cols-2 gap-2.5">
           <div onclick="openFinishedBooksModal()" class="bg-white border-2 border-[#05244C] p-3 rounded-2xl shadow-sm cursor-pointer hover:bg-orange-50 transition-colors group">
             <div class="flex items-center justify-between">
@@ -471,7 +428,7 @@
       </div>
     </section>
 
-    <!-- TAB 4: AESTHETIC QUOTES WITH GIANT QUOTATION POSTER DESIGN[cite: 4] -->
+    <!-- TAB 4: AESTHETIC QUOTES WITH GIANT QUOTATION POSTER DESIGN -->
     <section id="tab-quotes" class="tab-content hidden space-y-4">
       <div class="bg-[#FFF9EE] border-3 border-[#05244C] rounded-3xl p-4 shadow-retro-orange flex items-center justify-between">
         <div>
@@ -487,9 +444,7 @@
         </div>
       </div>
 
-      <div id="quotesContainer" class="space-y-4">
-        <!-- Rendered dynamically as editorial quote poster cards[cite: 4] -->
-      </div>
+      <div id="quotesContainer" class="space-y-4"></div>
     </section>
 
   </main>
@@ -527,7 +482,6 @@
         <button onclick="closeModal('modalPastSession')" class="text-slate-500 font-bold text-lg">✕</button>
       </div>
 
-      <!-- Mode Selector: Log by Pages or Log by % -->
       <div class="flex bg-amber-100 p-1 rounded-xl border border-[#05244C]">
         <button type="button" onclick="setLogSessionMode('pages')" id="btnLogModePages" class="flex-1 py-1 rounded-lg text-xs font-black bg-[#FF5B22] text-white">Pages</button>
         <button type="button" onclick="setLogSessionMode('percent')" id="btnLogModePercent" class="flex-1 py-1 rounded-lg text-xs font-black text-slate-700">Percentage (%)</button>
@@ -543,7 +497,6 @@
           <input type="date" id="pastSessionDate" class="w-full bg-white border-2 border-[#05244C] rounded-xl p-2.5">
         </div>
 
-        <!-- Pages Mode Inputs -->
         <div id="logSectionPages" class="grid grid-cols-3 gap-2">
           <div>
             <label class="block mb-1">Start Page</label>
@@ -559,7 +512,6 @@
           </div>
         </div>
 
-        <!-- Percentage Mode Inputs -->
         <div id="logSectionPercent" class="hidden grid-cols-3 gap-2">
           <div>
             <label class="block mb-1">Start %</label>
@@ -591,7 +543,6 @@
       <div class="flex justify-between items-center pb-2 border-b-2 border-orange-200">
         <div class="flex items-center gap-2">
           <h3 class="text-base font-retro-title text-[#05244C]">Edit Book</h3>
-          <!-- Minimalist Heart Suit Toggle -->
           <button type="button" onclick="toggleBookFavorite()" id="btnFavoriteToggle" class="w-8 h-8 rounded-full border-2 border-[#05244C] bg-white text-base flex items-center justify-center retro-btn shadow-sm" title="Toggle Favorite">♡</button>
         </div>
         <button onclick="closeModal('modalBookDetail')" class="text-slate-500 font-bold text-lg">✕</button>
@@ -607,7 +558,6 @@
           <input type="text" id="editBookAuthor" class="w-full bg-white border-2 border-[#05244C] rounded-xl p-2 font-semibold">
         </div>
 
-        <!-- Synced Page / Integer Percent / Total (Uncovered %) -->
         <div class="grid grid-cols-3 gap-2">
           <div>
             <label class="block mb-1">Current Pg</label>
@@ -647,14 +597,12 @@
           </div>
         </div>
 
-        <!-- NEW: Genres & Categories Input Field -->
         <div>
           <label class="block mb-1">Genres & Categories</label>
           <input type="text" id="editBookGenres" placeholder="Thriller, Mystery, Contemporary (comma separated)" class="w-full bg-white border-2 border-[#05244C] rounded-xl p-2 font-semibold text-xs">
           <p class="text-[9px] text-slate-400 mt-0.5">Separate multiple genres with commas (e.g. Fantasy, Romance)</p>
         </div>
 
-        <!-- Clean Formats Header (No subtext) -->
         <div>
           <label class="block mb-1">Formats</label>
           <div class="grid grid-cols-2 gap-1.5" id="editBookFormatButtonsContainer">
@@ -665,14 +613,12 @@
           </div>
         </div>
 
-        <!-- Cover Image with Direct "Add Image", "Auto-Find" from Google/OpenLibrary, and Google Images Search Shortcut[cite: 5] -->
         <div>
           <div class="flex items-center justify-between mb-1">
             <label class="block">Cover Image</label>
             <span id="coverPreviewStatus" class="text-[9px] font-bold text-slate-500">Live preview below</span>
           </div>
 
-          <!-- Quick Action Buttons: Add Image (File/Camera) & Auto-Find -->
           <div class="flex gap-2 mb-2">
             <label class="flex-1 py-1.5 px-2 bg-[#FFD034] text-[#05244C] border-2 border-[#05244C] rounded-xl text-[11px] font-black shadow-retro-navy text-center cursor-pointer flex items-center justify-center gap-1 retro-btn">
               <span>📷 Add Image</span>
@@ -691,7 +637,6 @@
             </div>
           </div>
 
-          <!-- Direct Web Search Shortcut: Google Images Only[cite: 5] -->
           <div class="flex items-center justify-between pt-1.5 px-1 text-[10px] text-slate-500">
             <span class="font-bold">Browse covers:</span>
             <button type="button" onclick="openGoogleImagesSearch()" class="text-[#1DBBB4] font-black hover:underline flex items-center gap-0.5">
@@ -707,20 +652,17 @@
             <button type="button" onclick="unmarkBookFinished()" class="text-[10px] font-black bg-rose-100 hover:bg-rose-200 text-rose-700 px-2 py-0.5 rounded-lg border border-rose-300 retro-btn">✕ Unmark Finished</button>
           </div>
 
-          <!-- Date Finished Field -->
           <div>
             <label class="block text-[10px] uppercase text-slate-500 mb-1">Date Finished</label>
             <input type="date" id="editBookFinishedDate" class="w-full bg-white border-2 border-[#05244C] rounded-xl p-2 font-bold text-xs">
           </div>
 
-          <!-- CLEAN TAP-TO-CYCLE STAR RATING -->
           <div class="bg-white border-2 border-[#05244C] p-3 rounded-2xl shadow-sm space-y-1.5">
             <div class="flex items-center justify-between">
               <span class="text-[10px] uppercase font-bold text-slate-500">Overall Rating</span>
               <span id="starRatingTextVal" class="text-sm font-black text-[#FF5B22] font-mono bg-amber-50 px-2.5 py-0.5 rounded-lg border border-orange-200">0.0 ★</span>
             </div>
 
-            <!-- 5 Big Centered Cycling Stars -->
             <div class="pt-1 flex justify-center">
               <div id="starRatingSelector" class="flex gap-2.5 text-3xl cursor-pointer select-none">
                 <span onclick="cycleStarRating(1)" class="star-item text-slate-300 hover:scale-110 active:scale-95 transition-transform">★</span>
@@ -733,14 +675,12 @@
             <input type="hidden" id="editBookStarRating" value="0">
           </div>
 
-          <!-- VIBE & EMOTIONAL IMPACT: 5 STARS FOR EVERY EMOTION -->
           <div class="bg-white/95 border-2 border-[#05244C] p-3 rounded-2xl shadow-sm space-y-2">
             <div class="flex items-center justify-between">
               <span class="text-[10px] font-black uppercase text-[#05244C] tracking-wider">Vibe & Emotional Impact</span>
             </div>
             
             <div class="space-y-2 text-[11px] font-bold text-[#05244C]">
-              <!-- 1. Tears -->
               <div class="bg-[#FFF9EE] border border-orange-200 rounded-xl p-2.5 flex items-center justify-between">
                 <span class="flex items-center gap-1.5 font-bold"><span>😭</span> Tears</span>
                 <div class="flex gap-1 text-lg select-none cursor-pointer" id="stars_vibeTears">
@@ -753,7 +693,6 @@
                 <input type="hidden" id="vibeTears" value="0">
               </div>
 
-              <!-- 2. Spook -->
               <div class="bg-[#FFF9EE] border border-orange-200 rounded-xl p-2.5 flex items-center justify-between">
                 <span class="flex items-center gap-1.5 font-bold"><span>👻</span> Spook</span>
                 <div class="flex gap-1 text-lg select-none cursor-pointer" id="stars_vibeScary">
@@ -766,7 +705,6 @@
                 <input type="hidden" id="vibeScary" value="0">
               </div>
 
-              <!-- 3. Romance & Spice -->
               <div class="bg-[#FFF9EE] border border-orange-200 rounded-xl p-2.5 flex items-center justify-between">
                 <span class="flex items-center gap-1.5 font-bold"><span>🌶️</span> Romance & Spice</span>
                 <div class="flex gap-1 text-lg select-none cursor-pointer" id="stars_vibeSpice">
@@ -779,7 +717,6 @@
                 <input type="hidden" id="vibeSpice" value="0">
               </div>
 
-              <!-- 4. Angst -->
               <div class="bg-[#FFF9EE] border border-orange-200 rounded-xl p-2.5 flex items-center justify-between">
                 <span class="flex items-center gap-1.5 font-bold"><span>💔</span> Angst</span>
                 <div class="flex gap-1 text-lg select-none cursor-pointer" id="stars_vibeHeartbreak">
@@ -794,7 +731,6 @@
             </div>
           </div>
 
-          <!-- Finished Review Thoughts -->
           <div>
             <label class="block mb-1 text-[10px] uppercase text-slate-500">Thoughts & Final Review</label>
             <textarea id="editBookReviewText" rows="3" placeholder="What stayed with you? Favorite parts, character thoughts..." class="w-full bg-white border-2 border-[#05244C] rounded-xl p-2 font-editorial italic text-xs leading-relaxed"></textarea>
@@ -812,7 +748,6 @@
             </button>
           </div>
 
-          <!-- Reading Sessions List -->
           <div class="bg-white/80 border-2 border-[#05244C] rounded-2xl p-3 space-y-2">
             <div class="flex items-center justify-between border-b border-orange-100 pb-1.5">
               <div class="flex items-center gap-2">
@@ -822,7 +757,6 @@
               <button type="button" onclick="openNewInlineSessionForm()" class="px-2 py-0.5 bg-[#FF5B22] text-white rounded-lg text-[10px] font-black border border-[#05244C] shadow-sm retro-btn">+ Log Session</button>
             </div>
 
-            <!-- Inline Quick Session Logger Form (Add OR Edit Existing) -->
             <div id="inlineSessionForm" class="hidden bg-[#FFF9EE] border-2 border-[#05244C] rounded-xl p-2.5 space-y-2 shadow-sm">
               <div class="flex items-center justify-between pb-1 border-b border-orange-200">
                 <span id="inlineSessFormTitle" class="text-[10px] font-black uppercase text-[#FF5B22]">Quick Log Session</span>
@@ -859,9 +793,7 @@
               </div>
             </div>
 
-            <div id="bookSessionsList" class="space-y-1.5 max-h-48 overflow-y-auto no-scrollbar text-xs">
-              <!-- Rendered dynamically with Edit & Delete options -->
-            </div>
+            <div id="bookSessionsList" class="space-y-1.5 max-h-48 overflow-y-auto no-scrollbar text-xs"></div>
           </div>
         </div>
 
@@ -872,7 +804,6 @@
             <button type="button" onclick="toggleEditQuoteForm()" class="px-2 py-0.5 bg-[#1DBBB4] text-white rounded-lg text-[10px] font-black border border-[#05244C] shadow-sm retro-btn">+ Add Quote</button>
           </div>
 
-          <!-- Inline Quote Form -->
           <div id="editBookQuoteForm" class="hidden bg-[#FFF9EE] border-2 border-[#05244C] rounded-xl p-2.5 space-y-2 shadow-sm">
             <div class="flex justify-between items-center pb-1 border-b border-orange-200">
               <span class="text-[10px] font-black uppercase text-[#1DBBB4]">New Book Quote</span>
@@ -895,10 +826,7 @@
             </div>
           </div>
 
-          <!-- Book Quotes List Inside Modal -->
-          <div id="editBookQuotesList" class="space-y-2 max-h-48 overflow-y-auto no-scrollbar text-xs">
-            <!-- Populated dynamically -->
-          </div>
+          <div id="editBookQuotesList" class="space-y-2 max-h-48 overflow-y-auto no-scrollbar text-xs"></div>
         </div>
 
       </div>
@@ -909,7 +837,7 @@
     </div>
   </div>
 
-  <!-- MODAL: MULTI-COVER PICKER (GOOGLE & OPENLIBRARY) -->
+  <!-- MODAL: MULTI-COVER PICKER -->
   <div id="modalCoverPicker" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4">
     <div class="bg-[#FFF9EE] border-3 border-[#05244C] rounded-3xl p-5 w-full max-w-sm shadow-retro-orange space-y-3 max-h-[85vh] flex flex-col">
       <div class="flex justify-between items-center pb-2 border-b-2 border-orange-200">
@@ -919,9 +847,7 @@
         </div>
         <button onclick="closeModal('modalCoverPicker')" class="text-slate-500 font-bold text-lg">✕</button>
       </div>
-      <div id="coverPickerGrid" class="flex-1 overflow-y-auto grid grid-cols-2 gap-3 pr-1 no-scrollbar pt-1">
-        <!-- Populated dynamically -->
-      </div>
+      <div id="coverPickerGrid" class="flex-1 overflow-y-auto grid grid-cols-2 gap-3 pr-1 no-scrollbar pt-1"></div>
       <p class="text-[10px] text-center text-slate-400 italic">Tap any cover to apply it to your book.</p>
     </div>
   </div>
@@ -936,9 +862,7 @@
         </div>
         <button onclick="closeModal('modalFinishedBooks')" class="text-slate-500 font-bold text-lg">✕</button>
       </div>
-      <div id="finishedBooksModalList" class="flex-1 overflow-y-auto space-y-2 pr-1 no-scrollbar">
-        <!-- Populated dynamically -->
-      </div>
+      <div id="finishedBooksModalList" class="flex-1 overflow-y-auto space-y-2 pr-1 no-scrollbar"></div>
       <button onclick="closeModal('modalFinishedBooks'); switchTab('library'); setShelfFilter('finished');" class="w-full py-2 bg-[#FFD034] text-[#05244C] rounded-xl text-xs font-black border-2 border-[#05244C] shadow-retro-navy">View All Finished in Library ➔</button>
     </div>
   </div>
@@ -1017,7 +941,7 @@
     </div>
   </div>
 
-  <!-- MODAL: ADD MANUAL CUSTOM BOOK (WITH MULTI-FORMAT SELECTION) -->
+  <!-- MODAL: ADD MANUAL CUSTOM BOOK -->
   <div id="modalManualBook" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4">
     <div class="bg-[#FFF9EE] border-3 border-[#05244C] rounded-3xl p-6 w-full max-w-sm shadow-retro-orange space-y-3 max-h-[90vh] overflow-y-auto">
       <div class="flex justify-between items-center pb-2 border-b-2 border-orange-200">
@@ -1059,7 +983,6 @@
           </select>
         </div>
 
-        <!-- Clean Formats Header (No subtext) -->
         <div>
           <label class="block mb-1">Formats</label>
           <div class="grid grid-cols-2 gap-1.5" id="manualBookFormatButtonsContainer">
@@ -1142,7 +1065,7 @@
     </div>
   </div>
 
-  <!-- DRAWER: MENU & AUTOMATIC REAL-TIME CLOUD SYNC -->
+  <!-- DRAWER: MENU & CLOUD SYNC -->
   <div id="drawerMenu" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden">
     <div class="absolute right-0 top-0 bottom-0 w-80 bg-[#FFF9EE] border-l-4 border-[#05244C] p-6 shadow-2xl flex flex-col justify-between overflow-y-auto">
       <div class="space-y-5">
@@ -1151,7 +1074,6 @@
           <button onclick="closeMenuDrawer()" class="text-xl font-bold text-slate-500">✕</button>
         </div>
 
-        <!-- ☁️ REAL-TIME CLOUD SYNC SECTION -->
         <div class="bg-gradient-to-br from-[#446BA2] to-[#2B4B79] text-[#FFF9EE] p-4 rounded-2xl border-2 border-[#FFD034] shadow-md">
           <div class="flex items-center justify-between mb-2">
             <span class="text-xs font-black uppercase tracking-wider text-[#FFD034] flex items-center gap-1.5">
@@ -1172,7 +1094,6 @@
               <button onclick="syncNowWithCloud()" class="flex-1 py-1.5 bg-[#FF5B22] text-white rounded-xl text-[11px] font-bold border border-[#05244C] shadow-sm">Sync Now ↻</button>
             </div>
 
-            <!-- Instant Device-to-Device Quick Transfer -->
             <div class="pt-2 border-t border-white/15">
               <div class="flex gap-1.5">
                 <button onclick="copyQuickTransferCode()" class="flex-1 py-1 bg-white/10 hover:bg-white/20 text-slate-200 rounded-lg text-[10px] font-bold border border-white/20">📋 Copy Code</button>
@@ -1182,14 +1103,12 @@
           </div>
         </div>
 
-        <!-- Data Import/Export & Cover Recovery Tools -->
         <div class="space-y-2 pt-1">
           <div class="flex items-center justify-between">
             <p class="text-xs font-bold text-slate-500 uppercase tracking-wider">File Backup & Covers</p>
             <span class="text-[10px] font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-full">Auto-Saved</span>
           </div>
 
-          <!-- Cover Recovery Button for Imported Books -->
           <button onclick="fetchMissingCovers()" class="w-full py-2.5 bg-amber-100 hover:bg-amber-200 border-2 border-[#05244C] rounded-xl text-xs font-black text-[#05244C] shadow-retro-navy text-left px-3 flex items-center justify-between">
             <span>🖼️ Fetch Missing Book Covers</span>
             <span class="text-[10px] text-amber-800 font-bold">Auto</span>
@@ -1223,14 +1142,13 @@
   </div>
 
   <script>
-    const APP_VERSION = "4.4";
+    const APP_VERSION = "4.5";
     let books = [];
     let readingSessions = [];
     let quotes = [];
     let userGoals = { dailyTarget: 30, dailyTargetType: 'pages', yearlyTarget: 25 };
     let activeBookId = null;
 
-    // View & Filter States
     let currentLibraryView = 'covers';
     let currentGridCols = 4;
     let currentShelfFilter = 'all';
@@ -1239,27 +1157,30 @@
     let selectedBookIds = new Set();
     let currentLogMode = 'pages';
 
-    // Multi-format selection arrays for modals
     let editingBookFormats = ['Paperback'];
     let manualBookFormats = ['Paperback'];
 
-    // Calendar & Stats State
     let calendarYear = new Date().getFullYear();
     let calendarMonth = new Date().getMonth();
     let quoteViewMode = 'timeline';
     let isEditingFavorite = false;
 
-    // Reading Timer State
     let timerInterval = null;
     let timerRunning = false;
     let timerSeconds = 0;
     let timerStartTimestamp = null;
     let timerStartPage = 0;
 
-    // Web Audio Synthesizer State
     let audioCtx = null;
     let currentSoundType = null;
     let activeSoundNodes = [];
+
+    // Robust Year Extractor (Guarantees full 4-digit years between 1900-2099)
+    function extractValidYear(dateStr) {
+      if (!dateStr) return null;
+      const match = String(dateStr).match(/\b(19\d\d|20\d\d)\b/);
+      return match ? parseInt(match[1], 10) : null;
+    }
 
     function testImageUrl(url) {
       return new Promise((resolve) => {
@@ -1687,9 +1608,12 @@
         if (allDates.length > 0) {
           const latestYMD = normalizeDateToYMD(allDates[0]);
           if (latestYMD) {
-            const parts = latestYMD.split('-');
-            calendarYear = parseInt(parts[0], 10);
-            calendarMonth = parseInt(parts[1], 10) - 1;
+            const yr = extractValidYear(latestYMD);
+            if (yr) {
+              const parts = latestYMD.split('-');
+              calendarYear = yr;
+              calendarMonth = parseInt(parts[1], 10) - 1;
+            }
           }
         }
       }
@@ -2055,7 +1979,10 @@
         filtered = filtered.filter(b => b.genres && b.genres.includes(genre));
       }
       if (query) {
-        filtered = filtered.filter(b => b.title.toLowerCase().includes(query) || b.author.toLowerCase().includes(query));
+        filtered = filtered.filter(b => 
+          b.title.toLowerCase().includes(query) || 
+          b.author.toLowerCase().includes(query)
+        );
       }
 
       filtered.forEach(b => selectedBookIds.add(b.id));
@@ -2357,28 +2284,27 @@
       renderCalendar();
     }
 
+    // Fixed Dropdown Builder with extractValidYear()
     function populateYearDropdown() {
       const select = document.getElementById('statsYearSelect');
       if (!select) return;
 
       const currentRealYear = new Date().getFullYear();
-      const yearsSet = new Set([currentRealYear, currentRealYear - 1, currentRealYear + 1]);
+      const yearsSet = new Set([currentRealYear]);
 
       readingSessions.forEach(s => {
-        if (s.date) {
-          const yr = parseInt(s.date.slice(0, 4), 10);
-          if (!isNaN(yr)) yearsSet.add(yr);
-        }
+        const yr = extractValidYear(s.date);
+        if (yr) yearsSet.add(yr);
       });
+
       books.forEach(b => {
-        if (b.finishedDate) {
-          const yr = parseInt(b.finishedDate.slice(0, 4), 10);
-          if (!isNaN(yr)) yearsSet.add(yr);
-        }
+        const yr = extractValidYear(b.finishedDate);
+        if (yr) yearsSet.add(yr);
+
         if (Array.isArray(b.finishedDates)) {
           b.finishedDates.forEach(d => {
-            const yr = parseInt(d.slice(0, 4), 10);
-            if (!isNaN(yr)) yearsSet.add(yr);
+            const fYr = extractValidYear(d);
+            if (fYr) yearsSet.add(fYr);
           });
         }
       });
@@ -2395,7 +2321,10 @@
       const year = yearSelect ? yearSelect.value : String(calendarYear);
       let filteredSessions = readingSessions;
       if (year !== 'all') {
-        filteredSessions = readingSessions.filter(s => s.date && s.date.startsWith(year));
+        filteredSessions = readingSessions.filter(s => {
+          const yr = extractValidYear(s.date);
+          return yr && String(yr) === year;
+        });
       }
 
       const totalPages = filteredSessions.reduce((acc, s) => acc + (s.pagesRead || 0), 0);
@@ -2404,8 +2333,12 @@
       const finishedInYear = books.filter(b => {
         if (b.shelf !== 'finished') return false;
         if (year === 'all') return true;
-        if (b.finishedDate && b.finishedDate.startsWith(year)) return true;
-        if (Array.isArray(b.finishedDates) && b.finishedDates.some(d => d.startsWith(year))) return true;
+        const bYr = extractValidYear(b.finishedDate);
+        if (bYr && String(bYr) === year) return true;
+        if (Array.isArray(b.finishedDates) && b.finishedDates.some(d => {
+          const dy = extractValidYear(d);
+          return dy && String(dy) === year;
+        })) return true;
         return false;
       }).length;
 
@@ -2449,8 +2382,12 @@
       const finishedBooks = books.filter(b => {
         if (b.shelf !== 'finished') return false;
         if (year === 'all') return true;
-        if (b.finishedDate && b.finishedDate.startsWith(year)) return true;
-        if (Array.isArray(b.finishedDates) && b.finishedDates.some(d => d.startsWith(year))) return true;
+        const bYr = extractValidYear(b.finishedDate);
+        if (bYr && String(bYr) === year) return true;
+        if (Array.isArray(b.finishedDates) && b.finishedDates.some(d => {
+          const dy = extractValidYear(d);
+          return dy && String(dy) === year;
+        })) return true;
         return false;
       });
 
@@ -2885,7 +2822,6 @@
       document.getElementById('editBookShelf').value = bk.shelf || 'reading';
       document.getElementById('editBookOwnership').value = bk.ownership || 'Owned';
       
-      // Populate genres input
       const genresInput = document.getElementById('editBookGenres');
       if (genresInput) {
         genresInput.value = Array.isArray(bk.genres) ? bk.genres.join(', ') : (bk.genres || '');
@@ -3087,7 +3023,6 @@
       bk.currentPage = Number(document.getElementById('editBookCurrentPage').value) || 0;
       bk.pageCount = Number(document.getElementById('editBookTotalPages').value) || bk.pageCount;
       
-      // Save genres from input field
       const rawGenres = document.getElementById('editBookGenres')?.value || '';
       bk.genres = rawGenres.split(',').map(g => g.trim()).filter(Boolean);
 
