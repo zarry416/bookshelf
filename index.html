@@ -3341,19 +3341,111 @@
       renderQuotes();
     }
 
-    // MAIN TAB QUOTES: Big Quotation Mark & No Tags
-    function renderQuotes() {
-      const container = document.getElementById('quotesContainer');
-      if (!container) return;
+    // --- QUOTE VIEW SWITCHER & RENDERER ---
+function setQuoteView(mode) {
+  quoteViewMode = mode;
+  const timeBtn = document.getElementById('quoteViewTimelineBtn');
+  const bookBtn = document.getElementById('quoteViewByBookBtn');
 
-      let filteredQuotes = quotes;
-      if (currentQuoteTypeFilter === 'quote') filteredQuotes = quotes.filter(q => (q.type || 'quote') === 'quote');
-      else if (currentQuoteTypeFilter === 'thought') filteredQuotes = quotes.filter(q => q.type === 'thought');
+  if (timeBtn && bookBtn) {
+    if (mode === 'timeline') {
+      timeBtn.className = "px-2 py-1 rounded-lg text-xs font-bold bg-[#FF5B22] text-white";
+      bookBtn.className = "px-2 py-1 rounded-lg text-xs font-bold text-slate-700";
+    } else {
+      timeBtn.className = "px-2 py-1 rounded-lg text-xs font-bold text-slate-700";
+      bookBtn.className = "px-2 py-1 rounded-lg text-xs font-bold bg-[#FF5B22] text-white";
+    }
+  }
+  renderQuotes();
+}
 
-      if (filteredQuotes.length === 0) {
-        container.innerHTML = `<div class="bg-[#FFF9EE] rounded-3xl p-8 text-center border-3 border-[#05244C] shadow-retro-orange text-xs font-bold text-slate-500">No entries saved yet.</div>`;
-        return;
-      }
+function renderQuotes() {
+  const container = document.getElementById('quotesContainer');
+  if (!container) return;
+
+  let filteredQuotes = quotes;
+  if (currentQuoteTypeFilter === 'quote') {
+    filteredQuotes = quotes.filter(q => (q.type || 'quote') === 'quote');
+  } else if (currentQuoteTypeFilter === 'thought') {
+    filteredQuotes = quotes.filter(q => q.type === 'thought');
+  }
+
+  if (filteredQuotes.length === 0) {
+    container.innerHTML = `<div class="bg-[#FFF9EE] rounded-3xl p-6 text-center border-3 border-[#05244C] shadow-retro-orange text-xs font-bold text-slate-500">No entries saved in this view yet.</div>`;
+    return;
+  }
+
+  // Helper to render an individual card with tight padding
+  function renderSingleQuoteCard(q) {
+    const isThought = (q.type === 'thought');
+    if (isThought) {
+      return `
+        <div class="relative bg-[#FFF9EE] border-3 border-[#05244C] rounded-2xl p-3.5 shadow-retro-orange space-y-2">
+          <div class="flex items-center justify-between pb-1 border-b border-orange-200/70">
+            <span class="bg-[#FFEDC9] text-amber-900 border border-[#05244C] text-[9px] font-black uppercase px-2 py-0.5 rounded-full flex items-center gap-1">
+              <span>💭</span> Thought
+            </span>
+            <div class="flex items-center gap-2">
+              <button onclick="editStandaloneQuote('${q.id}')" class="text-slate-500 hover:text-[#05244C] font-black text-xs">✏️ Edit</button>
+              <button onclick="deleteQuote('${q.id}')" class="text-slate-400 hover:text-red-500 font-bold text-xs">✕</button>
+            </div>
+          </div>
+          <div class="bg-amber-100/60 border-2 border-dashed border-[#05244C]/25 rounded-xl p-2.5">
+            <p class="font-sans text-xs text-[#05244C] font-semibold leading-relaxed">${q.text}</p>
+          </div>
+          <div class="pt-0.5 flex items-center justify-between text-[10px] text-slate-500 font-bold">
+            <span class="truncate pr-2">${q.bookTitle} ${q.page ? '• p. ' + q.page : ''} ${q.date ? '• ' + q.date : ''}</span>
+            <button onclick="copyQuoteText('${q.id}')" class="text-xs font-bold text-[#446BA2] underline flex-shrink-0">Copy</button>
+          </div>
+        </div>
+      `;
+    }
+
+    // Tight padding, absolute top action buttons, and compact quotation mark
+    return `
+      <div class="relative bg-[#FFF9EE] border-3 border-[#05244C] rounded-2xl p-4 pt-3 shadow-retro-orange">
+        <div class="absolute top-2.5 right-3 flex items-center gap-2">
+          <button onclick="editStandaloneQuote('${q.id}')" class="text-slate-500 hover:text-[#05244C] font-black text-xs">✏️ Edit</button>
+          <button onclick="deleteQuote('${q.id}')" class="text-slate-400 hover:text-red-500 font-bold text-xs">✕</button>
+        </div>
+
+        <div class="font-quote-display text-4xl text-[#1DBBB4] font-black leading-none select-none mb-1">“</div>
+        <p class="font-quote-display text-base text-[#05244C] font-semibold italic leading-snug pr-8">${q.text}</p>
+        
+        <div class="mt-2.5 pt-2 border-t border-orange-200/80 flex items-center justify-between text-[10px] text-slate-500 font-bold">
+          <span class="truncate pr-2 text-[#05244C]">${q.bookTitle} ${q.page ? '• p. ' + q.page : ''} ${q.date ? '• ' + q.date : ''}</span>
+          <button onclick="copyQuoteText('${q.id}')" class="text-xs font-bold text-[#446BA2] underline flex-shrink-0">Copy</button>
+        </div>
+      </div>
+    `;
+  }
+
+  // Branch between timeline view and book-grouped view
+  if (quoteViewMode === 'timeline') {
+    container.innerHTML = filteredQuotes.map(renderSingleQuoteCard).join('');
+  } else {
+    const grouped = {};
+    filteredQuotes.forEach(q => {
+      const bookKey = q.bookTitle || 'Unknown Title';
+      if (!grouped[bookKey]) grouped[bookKey] = [];
+      grouped[bookKey].push(q);
+    });
+
+    container.innerHTML = Object.keys(grouped).sort().map(bookTitle => `
+      <div class="space-y-2 mb-4">
+        <div class="flex items-center gap-2 pt-1">
+          <span class="inline-block bg-[#05244C] text-[#FFF9EE] text-[10px] font-black uppercase px-2.5 py-0.5 rounded-full border border-[#FFA4C4] shadow-sm tracking-wider">
+            ${bookTitle}
+          </span>
+          <div class="flex-1 h-[1.5px] bg-[#FFA4C4]/40 rounded-full"></div>
+        </div>
+        <div class="space-y-2.5">
+          ${grouped[bookTitle].map(renderSingleQuoteCard).join('')}
+        </div>
+      </div>
+    `).join('');
+  }
+}
 
       container.innerHTML = filteredQuotes.map(q => {
         const isThought = (q.type === 'thought');
@@ -3408,12 +3500,6 @@
       }).join('');
     }
 
-    function setQuoteView(mode) {
-      quoteViewMode = mode;
-      document.getElementById('quoteViewTimelineBtn').className = (mode === 'timeline') ? "px-2 py-1 rounded-lg text-xs font-bold bg-[#FF5B22] text-white" : "px-2 py-1 rounded-lg text-xs font-bold text-slate-700";
-      document.getElementById('quoteViewByBookBtn').className = (mode === 'bybook') ? "px-2 py-1 rounded-lg text-xs font-bold bg-[#FF5B22] text-white" : "px-2 py-1 rounded-lg text-xs font-bold text-slate-700";
-      renderQuotes();
-    }
 
     function copyQuoteText(id) {
       const q = quotes.find(item => item.id === id);
