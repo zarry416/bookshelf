@@ -133,6 +133,7 @@
 </head>
 <body class="text-slate-800 antialiased selection:bg-[#FFA4C4] selection:text-[#05244C]">
 
+  <!-- STICKY RETRO TOP HEADER WITH TROPICAL PALM ISLAND EMBLEM -->
   <header class="sticky top-0 z-40 bg-[#446BA2]/95 backdrop-blur-md border-b-2 border-[#FFA4C4] px-4 pb-3 transition-all shadow-md">
     <div class="max-w-md mx-auto flex items-center justify-between">
       <div class="flex items-center gap-2.5">
@@ -162,6 +163,7 @@
     </div>
   </header>
 
+  <!-- MAIN TAB CONTENT CONTAINER -->
   <main class="max-w-md mx-auto px-4 pt-4 pb-28">
 
     <!-- TAB 1: READING HERO & ACTIVE PROGRESS -->
@@ -629,23 +631,27 @@
             </select>
           </div>
           <div>
-            <label class="block mb-1">Format</label>
-            <select id="editBookFormat" class="w-full bg-white border-2 border-[#05244C] rounded-xl p-2 font-semibold">
-              <option value="Paperback">Paperback</option>
-              <option value="Hardcover">Hardcover</option>
-              <option value="eBook">eBook</option>
-              <option value="Audiobook">Audiobook</option>
+            <label class="block mb-1">Ownership</label>
+            <select id="editBookOwnership" class="w-full bg-white border-2 border-[#05244C] rounded-xl p-2 font-semibold">
+              <option value="Owned">Owned</option>
+              <option value="Borrowed">Borrowed</option>
+              <option value="Not Owned">Not Owned</option>
             </select>
           </div>
         </div>
 
+        <!-- Multi-Format Selection Buttons (Select Any Combination) -->
         <div>
-          <label class="block mb-1">Ownership</label>
-          <select id="editBookOwnership" class="w-full bg-white border-2 border-[#05244C] rounded-xl p-2 font-semibold">
-            <option value="Owned">Owned</option>
-            <option value="Borrowed">Borrowed</option>
-            <option value="Not Owned">Not Owned</option>
-          </select>
+          <div class="flex items-center justify-between mb-1">
+            <label class="block">Formats (Select All That Apply)</label>
+            <span class="text-[9px] font-bold text-slate-400">Tap to toggle</span>
+          </div>
+          <div class="grid grid-cols-2 gap-1.5" id="editBookFormatButtonsContainer">
+            <button type="button" onclick="toggleEditBookFormat('Paperback')" id="fmtBtn_edit_Paperback" class="py-2 px-2 rounded-xl text-[11px] font-bold border-2 border-[#05244C] bg-white text-slate-700 text-center transition-all">📖 Paperback</button>
+            <button type="button" onclick="toggleEditBookFormat('Hardcover')" id="fmtBtn_edit_Hardcover" class="py-2 px-2 rounded-xl text-[11px] font-bold border-2 border-[#05244C] bg-white text-slate-700 text-center transition-all">📚 Hardcover</button>
+            <button type="button" onclick="toggleEditBookFormat('eBook')" id="fmtBtn_edit_eBook" class="py-2 px-2 rounded-xl text-[11px] font-bold border-2 border-[#05244C] bg-white text-slate-700 text-center transition-all">📱 eBook</button>
+            <button type="button" onclick="toggleEditBookFormat('Audiobook')" id="fmtBtn_edit_Audiobook" class="py-2 px-2 rounded-xl text-[11px] font-bold border-2 border-[#05244C] bg-white text-slate-700 text-center transition-all">🎧 Audiobook</button>
+          </div>
         </div>
 
         <!-- Cover Image URL with Live Preview & Error Diagnostics -->
@@ -926,7 +932,7 @@
     </div>
   </div>
 
-  <!-- MODAL: ADD MANUAL CUSTOM BOOK -->
+  <!-- MODAL: ADD MANUAL CUSTOM BOOK (WITH MULTI-FORMAT SELECTION) -->
   <div id="modalManualBook" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4">
     <div class="bg-[#FFF9EE] border-3 border-[#05244C] rounded-3xl p-6 w-full max-w-sm shadow-retro-orange space-y-3 max-h-[90vh] overflow-y-auto">
       <div class="flex justify-between items-center pb-2 border-b-2 border-orange-200">
@@ -958,25 +964,30 @@
             </select>
           </div>
         </div>
-        <div class="grid grid-cols-2 gap-2">
-          <div>
-            <label class="block mb-1">Format</label>
-            <select id="manualBookFormat" class="w-full bg-white border-2 border-[#05244C] rounded-xl p-2 font-semibold">
-              <option value="Paperback">Paperback</option>
-              <option value="Hardcover">Hardcover</option>
-              <option value="eBook">eBook</option>
-              <option value="Audiobook">Audiobook</option>
-            </select>
+
+        <div>
+          <label class="block mb-1">Ownership</label>
+          <select id="manualBookOwnership" class="w-full bg-white border-2 border-[#05244C] rounded-xl p-2 font-semibold">
+            <option value="Owned">Owned</option>
+            <option value="Borrowed">Borrowed</option>
+            <option value="Not Owned">Not Owned</option>
+          </select>
+        </div>
+
+        <!-- Multi-Format Selection Buttons for Custom Book -->
+        <div>
+          <div class="flex items-center justify-between mb-1">
+            <label class="block">Formats (Select All That Apply)</label>
+            <span class="text-[9px] font-bold text-slate-400">Tap to toggle</span>
           </div>
-          <div>
-            <label class="block mb-1">Ownership</label>
-            <select id="manualBookOwnership" class="w-full bg-white border-2 border-[#05244C] rounded-xl p-2 font-semibold">
-              <option value="Owned">Owned</option>
-              <option value="Borrowed">Borrowed</option>
-              <option value="Not Owned">Not Owned</option>
-            </select>
+          <div class="grid grid-cols-2 gap-1.5" id="manualBookFormatButtonsContainer">
+            <button type="button" onclick="toggleManualBookFormat('Paperback')" id="fmtBtn_manual_Paperback" class="py-2 px-2 rounded-xl text-[11px] font-bold border-2 border-[#05244C] bg-white text-slate-700 text-center transition-all">📖 Paperback</button>
+            <button type="button" onclick="toggleManualBookFormat('Hardcover')" id="fmtBtn_manual_Hardcover" class="py-2 px-2 rounded-xl text-[11px] font-bold border-2 border-[#05244C] bg-white text-slate-700 text-center transition-all">📚 Hardcover</button>
+            <button type="button" onclick="toggleManualBookFormat('eBook')" id="fmtBtn_manual_eBook" class="py-2 px-2 rounded-xl text-[11px] font-bold border-2 border-[#05244C] bg-white text-slate-700 text-center transition-all">📱 eBook</button>
+            <button type="button" onclick="toggleManualBookFormat('Audiobook')" id="fmtBtn_manual_Audiobook" class="py-2 px-2 rounded-xl text-[11px] font-bold border-2 border-[#05244C] bg-white text-slate-700 text-center transition-all">🎧 Audiobook</button>
           </div>
         </div>
+
         <div>
           <label class="block mb-1">Cover Image URL (optional)</label>
           <input type="url" id="manualBookCover" placeholder="https://..." class="w-full bg-white border-2 border-[#05244C] rounded-xl p-2 font-semibold">
@@ -1126,7 +1137,7 @@
   </div>
 
   <script>
-    const APP_VERSION = "3.4";
+    const APP_VERSION = "3.8";
     let books = [];
     let readingSessions = [];
     let quotes = [];
@@ -1142,11 +1153,27 @@
     let selectedBookIds = new Set();
     let currentLogMode = 'pages';
 
+    // Multi-format selection arrays for modals
+    let editingBookFormats = ['Paperback'];
+    let manualBookFormats = ['Paperback'];
+
     // Calendar & Stats State
     let calendarYear = new Date().getFullYear();
     let calendarMonth = new Date().getMonth();
     let quoteViewMode = 'timeline';
     let isEditingFavorite = false;
+
+    // Reading Timer State
+    let timerInterval = null;
+    let timerRunning = false;
+    let timerSeconds = 0;
+    let timerStartTimestamp = null;
+    let timerStartPage = 0;
+
+    // Web Audio Synthesizer State
+    let audioCtx = null;
+    let currentSoundType = null;
+    let activeSoundNodes = [];
 
     // Smart Image URL Cleaner & Resolver (handles Google Images, direct links, extra quotes/spaces)
     function cleanImageUrl(rawUrl) {
@@ -1173,7 +1200,7 @@
       return url;
     }
 
-    // Safe error handler for book covers in the UI (never crashes on apostrophes)
+    // Safe error handler for book covers in the UI
     function handleCoverError(imgElement) {
       if (!imgElement) return;
       imgElement.onerror = null;
@@ -1221,17 +1248,80 @@
     }
     window.renderStarGlyphs = getStarDisplayHtml;
 
-    // Reading Timer State
-    let timerInterval = null;
-    let timerRunning = false;
-    let timerSeconds = 0;
-    let timerStartTimestamp = null;
-    let timerStartPage = 0;
+    // Multi-format array normalizer
+    function getBookFormatsList(book) {
+      if (!book) return ['Paperback'];
+      if (Array.isArray(book.formats) && book.formats.length > 0) {
+        return book.formats;
+      }
+      if (book.format && typeof book.format === 'string') {
+        const split = book.format.split(/[,•/]/).map(s => s.trim()).filter(Boolean);
+        if (split.length > 0) return split;
+      }
+      return ['Paperback'];
+    }
 
-    // Web Audio Synthesizer State
-    let audioCtx = null;
-    let currentSoundType = null;
-    let activeSoundNodes = [];
+    function toggleEditBookFormat(fmtName) {
+      if (editingBookFormats.includes(fmtName)) {
+        if (editingBookFormats.length > 1) {
+          editingBookFormats = editingBookFormats.filter(f => f !== fmtName);
+        } else {
+          showToast('Book must have at least 1 format');
+          return;
+        }
+      } else {
+        editingBookFormats.push(fmtName);
+      }
+      renderEditBookFormatButtons();
+    }
+
+    function renderEditBookFormatButtons() {
+      const allFormats = ['Paperback', 'Hardcover', 'eBook', 'Audiobook'];
+      const icons = { 'Paperback': '📖', 'Hardcover': '📚', 'eBook': '📱', 'Audiobook': '🎧' };
+      allFormats.forEach(fmt => {
+        const btn = document.getElementById(`fmtBtn_edit_${fmt}`);
+        if (!btn) return;
+        const isSelected = editingBookFormats.includes(fmt);
+        if (isSelected) {
+          btn.className = "py-2 px-2 rounded-xl text-[11px] font-black border-2 border-[#05244C] bg-[#FF5B22] text-white shadow-retro-navy text-center transition-all";
+          btn.innerHTML = `${icons[fmt]} ${fmt} ✓`;
+        } else {
+          btn.className = "py-2 px-2 rounded-xl text-[11px] font-bold border-2 border-[#05244C] bg-white text-slate-700 text-center transition-all opacity-80 hover:opacity-100";
+          btn.innerHTML = `${icons[fmt]} ${fmt}`;
+        }
+      });
+    }
+
+    function toggleManualBookFormat(fmtName) {
+      if (manualBookFormats.includes(fmtName)) {
+        if (manualBookFormats.length > 1) {
+          manualBookFormats = manualBookFormats.filter(f => f !== fmtName);
+        } else {
+          showToast('Book must have at least 1 format');
+          return;
+        }
+      } else {
+        manualBookFormats.push(fmtName);
+      }
+      renderManualBookFormatButtons();
+    }
+
+    function renderManualBookFormatButtons() {
+      const allFormats = ['Paperback', 'Hardcover', 'eBook', 'Audiobook'];
+      const icons = { 'Paperback': '📖', 'Hardcover': '📚', 'eBook': '📱', 'Audiobook': '🎧' };
+      allFormats.forEach(fmt => {
+        const btn = document.getElementById(`fmtBtn_manual_${fmt}`);
+        if (!btn) return;
+        const isSelected = manualBookFormats.includes(fmt);
+        if (isSelected) {
+          btn.className = "py-2 px-2 rounded-xl text-[11px] font-black border-2 border-[#05244C] bg-[#FF5B22] text-white shadow-retro-navy text-center transition-all";
+          btn.innerHTML = `${icons[fmt]} ${fmt} ✓`;
+        } else {
+          btn.className = "py-2 px-2 rounded-xl text-[11px] font-bold border-2 border-[#05244C] bg-white text-slate-700 text-center transition-all opacity-80 hover:opacity-100";
+          btn.innerHTML = `${icons[fmt]} ${fmt}`;
+        }
+      });
+    }
 
     // Safe JSON parser
     function safeJsonParse(key, fallback) {
@@ -1268,7 +1358,7 @@
             pageCount: 288,
             currentPage: 145,
             shelf: 'reading',
-            format: 'eBook',
+            formats: ['eBook', 'Paperback'],
             ownership: 'Owned',
             genres: ['Thriller', 'Mystery'],
             lastSessionDate: '2026-10-09'
@@ -1281,7 +1371,7 @@
             pageCount: 688,
             currentPage: 210,
             shelf: 'reading',
-            format: 'Paperback',
+            formats: ['Paperback'],
             ownership: 'Owned',
             genres: ['Sci-Fi', 'Classic'],
             lastSessionDate: '2026-10-08'
@@ -1294,7 +1384,7 @@
             pageCount: 416,
             currentPage: 0,
             shelf: 'to-read',
-            format: 'Hardcover',
+            formats: ['Hardcover', 'eBook'],
             ownership: 'Owned',
             genres: ['Fiction', 'Contemporary'],
             lastSessionDate: null
@@ -1315,6 +1405,9 @@
       // Clean existing book covers in case raw URLs need fixing
       books.forEach(b => {
         if (b.cover) b.cover = cleanImageUrl(b.cover);
+        if (!b.formats) {
+          b.formats = b.format ? [b.format] : ['Paperback'];
+        }
       });
 
       // Auto-migrate dates in stored books & sessions
@@ -1399,7 +1492,7 @@
           coverUrl = `https://covers.openlibrary.org/b/isbn/${cleanIsbn}-L.jpg`;
           b.cover = coverUrl;
           foundCount++;
-          saveBooks(); // Incremental save immediately preserves recovered covers
+          saveBooks();
           continue;
         }
 
@@ -1533,7 +1626,8 @@
       if (lastDateEl) lastDateEl.innerText = book.lastSessionDate ? `Last read: ${book.lastSessionDate}` : 'No sessions yet';
 
       const formatEl = document.getElementById('heroFormatBadge');
-      if (formatEl) formatEl.innerText = `${book.format || 'Paperback'} • ${book.ownership || 'Owned'}`;
+      const fmts = getBookFormatsList(book);
+      if (formatEl) formatEl.innerText = `${fmts.join(' • ')} • ${book.ownership || 'Owned'}`;
 
       const pct = book.pageCount > 0 ? Math.min(100, Math.round((book.currentPage / book.pageCount) * 100)) : 0;
       
@@ -1715,7 +1809,7 @@
       });
 
       if (currentFormatFilter !== 'all') {
-        filtered = filtered.filter(b => (b.format || 'Paperback') === currentFormatFilter);
+        filtered = filtered.filter(b => getBookFormatsList(b).includes(currentFormatFilter));
       }
       if (genre !== 'all') {
         filtered = filtered.filter(b => b.genres && b.genres.includes(genre));
@@ -1752,7 +1846,10 @@
         const bk = books.find(b => b.id === id);
         if (bk) {
           if (shelf !== 'no-change') bk.shelf = shelf;
-          if (format !== 'no-change') bk.format = format;
+          if (format !== 'no-change') {
+            bk.formats = [format];
+            bk.format = format;
+          }
           if (ownership !== 'no-change') bk.ownership = ownership;
         }
       });
@@ -1791,7 +1888,7 @@
       });
 
       if (currentFormatFilter !== 'all') {
-        filtered = filtered.filter(b => (b.format || 'Paperback') === currentFormatFilter);
+        filtered = filtered.filter(b => getBookFormatsList(b).includes(currentFormatFilter));
       }
 
       if (genre !== 'all') {
@@ -1874,6 +1971,7 @@
               const info = getShelfInfo(b.shelf);
               const starStr = getStarDisplayHtml(b.rating);
               const starDisplayNum = b.rating ? (b.rating % 1 === 0 ? b.rating : b.rating.toFixed(2).replace(/\.?0+$/, '')) : '';
+              const fmts = getBookFormatsList(b);
               return `
                 <div class="bg-[#FFF9EE] border-2 border-[#05244C] rounded-2xl p-3.5 shadow-retro-orange flex gap-3 items-center ${isSelected ? 'ring-4 ring-[#FF5B22]' : ''}">
                   ${isBatchMode ? `
@@ -1885,7 +1983,7 @@
                   <div class="flex-1 min-w-0">
                     <div class="flex items-center gap-1.5">
                       <span class="text-[9px] uppercase font-black px-2 py-0.5 rounded-full ${info.bg} ${info.text} border border-[#05244C] shadow-sm">${info.label}</span>
-                      <span class="text-[9px] font-bold text-slate-500">${b.format || 'Paperback'}</span>
+                      <span class="text-[9px] font-bold text-slate-500">${fmts.join(', ')}</span>
                       ${b.isFavorite ? `<span class="text-xs text-rose-600 font-bold">♥️</span>` : ''}
                     </div>
                     <h4 class="text-xs font-retro-title text-[#05244C] truncate mt-1">${b.title}</h4>
@@ -1913,6 +2011,7 @@
               const info = getShelfInfo(b.shelf);
               const pct = b.pageCount > 0 ? Math.round((b.currentPage / b.pageCount) * 100) : 0;
               const starStr = getStarDisplayHtml(b.rating);
+              const fmts = getBookFormatsList(b);
               return `
                 <div onclick="${isBatchMode ? `toggleSelectBook('${b.id}', event)` : `openBookDetailModal('${b.id}')`}" class="p-3 flex items-center justify-between cursor-pointer hover:bg-amber-50 ${isSelected ? 'bg-orange-100/60' : ''}">
                   ${isBatchMode ? `
@@ -1926,7 +2025,7 @@
                       <h4 class="text-xs font-bold text-[#05244C] truncate">${b.title}</h4>
                       ${b.isFavorite ? `<span class="text-xs text-rose-600 font-bold">♥️</span>` : ''}
                     </div>
-                    <p class="text-[10px] text-slate-500 truncate mt-0.5">${b.author} ${starStr ? `• <span class="text-[#FF5B22] font-bold">${starStr}</span>` : ''}</p>
+                    <p class="text-[10px] text-slate-500 truncate mt-0.5">${b.author} • <span class="text-slate-400">${fmts.join(', ')}</span> ${starStr ? `• <span class="text-[#FF5B22] font-bold">${starStr}</span>` : ''}</p>
                   </div>
                   <div class="text-right flex-shrink-0">
                     <span class="text-xs font-mono font-black text-[#05244C]">${pct}%</span>
@@ -2243,34 +2342,6 @@
     }
 
     // Live Cover Image Preview & Diagnostics
-    function handlePreviewImgLoaded() {
-      const img = document.getElementById('editBookCoverPreviewImg');
-      const placeholder = document.getElementById('editBookCoverPreviewPlaceholder');
-      const statusLbl = document.getElementById('coverPreviewStatus');
-      if (img) img.classList.remove('hidden');
-      if (placeholder) placeholder.classList.add('hidden');
-      if (statusLbl) {
-        statusLbl.innerText = '✓ Valid image';
-        statusLbl.className = 'text-[9px] font-bold text-emerald-600';
-      }
-    }
-
-    function handlePreviewImgError() {
-      const img = document.getElementById('editBookCoverPreviewImg');
-      const placeholder = document.getElementById('editBookCoverPreviewPlaceholder');
-      const statusLbl = document.getElementById('coverPreviewStatus');
-      if (img) img.classList.add('hidden');
-      if (placeholder) placeholder.classList.remove('hidden');
-      if (statusLbl) {
-        statusLbl.innerText = '⚠️ Could not load image';
-        statusLbl.className = 'text-[9px] font-bold text-rose-500';
-      }
-    }
-
-    // Expose handlers globally to ensure no ReferenceError occurs
-    window.handlePreviewImgLoaded = handlePreviewImgLoaded;
-    window.handlePreviewImgError = handlePreviewImgError;
-
     function updateLiveCoverPreview(url) {
       const cleaned = cleanImageUrl(url);
       const img = document.getElementById('editBookCoverPreviewImg');
@@ -2293,8 +2364,8 @@
       }
 
       if (img) {
-        img.onload = handlePreviewImgLoaded;
-        img.onerror = handlePreviewImgError;
+        img.onload = window.handlePreviewImgLoaded;
+        img.onerror = window.handlePreviewImgError;
         img.src = cleaned;
         if (statusLbl) {
           statusLbl.innerText = 'Checking link...';
@@ -2380,14 +2451,17 @@
       document.getElementById('editBookPercent').value = pct;
 
       document.getElementById('editBookShelf').value = bk.shelf || 'reading';
-      document.getElementById('editBookFormat').value = bk.format || 'Paperback';
       document.getElementById('editBookOwnership').value = bk.ownership || 'Owned';
       
+      // Multi-format array setup for this book
+      editingBookFormats = getBookFormatsList(bk);
+      renderEditBookFormatButtons();
+
       const rawCover = bk.cover || '';
       document.getElementById('editBookCover').value = rawCover;
       updateLiveCoverPreview(rawCover);
 
-      // Pre-fill inline session form with smart defaults if elements exist
+      // Pre-fill inline session form with smart defaults
       const sessDateEl = document.getElementById('inlineSessDate');
       if (sessDateEl) sessDateEl.value = new Date().toISOString().split('T')[0];
       const sessMinsEl = document.getElementById('inlineSessMinutes');
@@ -2575,7 +2649,11 @@
       bk.author = document.getElementById('editBookAuthor').value.trim() || bk.author;
       bk.currentPage = Number(document.getElementById('editBookCurrentPage').value) || 0;
       bk.pageCount = Number(document.getElementById('editBookTotalPages').value) || bk.pageCount;
-      bk.format = document.getElementById('editBookFormat').value;
+      
+      // Save chosen formats array and legacy string format
+      bk.formats = editingBookFormats.length > 0 ? [...editingBookFormats] : ['Paperback'];
+      bk.format = bk.formats.join(', ');
+
       bk.ownership = document.getElementById('editBookOwnership').value;
       bk.cover = cleanImageUrl(document.getElementById('editBookCover').value.trim());
       bk.isFavorite = isEditingFavorite;
@@ -2730,10 +2808,13 @@
       document.getElementById('manualBookAuthor').value = '';
       document.getElementById('manualBookPages').value = '';
       document.getElementById('manualBookShelf').value = 'to-read';
-      document.getElementById('manualBookFormat').value = 'Paperback';
       document.getElementById('manualBookOwnership').value = 'Owned';
       document.getElementById('manualBookCover').value = '';
       document.getElementById('manualBookGenres').value = '';
+      
+      manualBookFormats = ['Paperback'];
+      renderManualBookFormatButtons();
+
       openModal('modalManualBook');
     }
 
@@ -2747,10 +2828,11 @@
 
       const pages = Number(document.getElementById('manualBookPages').value) || 0;
       const shelf = document.getElementById('manualBookShelf').value;
-      const format = document.getElementById('manualBookFormat').value;
       const ownership = document.getElementById('manualBookOwnership').value;
       const cover = cleanImageUrl(document.getElementById('manualBookCover').value.trim());
       const genres = document.getElementById('manualBookGenres').value.split(',').map(g => g.trim()).filter(Boolean);
+
+      const chosenFormats = manualBookFormats.length > 0 ? [...manualBookFormats] : ['Paperback'];
 
       const newBook = {
         id: 'b_' + Date.now(),
@@ -2760,7 +2842,8 @@
         pageCount: pages,
         currentPage: 0,
         shelf: shelf,
-        format: format,
+        formats: chosenFormats,
+        format: chosenFormats.join(', '),
         ownership: ownership,
         genres: genres.length > 0 ? genres : ['Fiction'],
         lastSessionDate: null
@@ -2864,6 +2947,7 @@
         pageCount: item.pageCount,
         currentPage: 0,
         shelf: 'to-read',
+        formats: ['Paperback'],
         format: 'Paperback',
         ownership: 'Owned',
         genres: item.genres,
@@ -3490,7 +3574,6 @@
         const curP = Number(row[currentIdx]) || 0;
         const rawId = row[idIdx] || ('b_csv_' + Date.now() + '_' + i);
         
-        // Clean ISBN from Goodreads Excel format (e.g., ="0439064872")
         const rawIsbn = row[isbnIdx] ? row[isbnIdx].replace(/[^0-9X]/gi, '') : '';
         const rawIsbn13 = row[isbn13Idx] ? row[isbn13Idx].replace(/[^0-9X]/gi, '') : '';
         
@@ -3516,6 +3599,7 @@
         }
 
         const bookId = existing ? existing.id : ('b_' + Date.now() + '_' + i);
+        const importedFormat = row[formatIdx] || 'Paperback';
 
         if (existing) {
           existing.externalId = rawId;
@@ -3528,6 +3612,7 @@
           if (row[ratingIdx]) existing.rating = Number(row[ratingIdx]) || existing.rating;
           if (row[reviewIdx]) existing.review = row[reviewIdx];
           if (normalizedFinDate) existing.finishedDate = normalizedFinDate;
+          if (!existing.formats) existing.formats = [importedFormat];
         } else {
           books.push({
             id: bookId,
@@ -3539,7 +3624,8 @@
             pageCount: pages,
             currentPage: (shelf === 'finished') ? pages : curP,
             shelf,
-            format: row[formatIdx] || 'Paperback',
+            formats: [importedFormat],
+            format: importedFormat,
             ownership: 'Owned',
             genres: genres.length > 0 ? genres : ['General'],
             cover: coverImg,
