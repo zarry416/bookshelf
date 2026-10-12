@@ -82,7 +82,7 @@
       -moz-appearance: textfield;
     }
 
-    #appHeader.sticky {
+    #appHeader {
       padding-top: calc(env(safe-area-inset-top, 0px) + 12px) !important;
     }
 
@@ -101,21 +101,18 @@
 </head>
 <body class="text-slate-800 antialiased selection:bg-[#FFA4C4] selection:text-[#05244C]">
 
-  <!-- TOP HEADER -->
-  <header id="appHeader" class="sticky top-0 z-40 bg-[#446BA2]/95 backdrop-blur-md border-b-2 border-[#FFA4C4] px-4 pb-3 transition-all shadow-md">
+  <!-- TOP HEADER (NON-STICKY) -->
+  <header id="appHeader" class="relative z-40 bg-[#446BA2] border-b-2 border-[#FFA4C4] px-4 pb-3 shadow-md">
     <div class="max-w-md mx-auto flex items-center justify-between">
       <div class="flex items-center gap-3">
         <!-- ORGANIC MONSTERA LEAF (FREE-STANDING WITH FENESTRATIONS) -->
         <svg class="w-9 h-9 flex-shrink-0 drop-shadow-[0_2px_4px_rgba(5,36,76,0.35)]" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <!-- Main Blade -->
           <path d="M50 8C33 13 18 29 17 48C16 67 29 83 48 93C52 90 53 84 53 84C49 83 47 77 46 71C52 74 56 71 56 71C53 64 51 57 44 54C52 56 57 53 57 53C53 43 49 37 40 37C48 37 53 33 53 33C48 24 43 20 33 22C42 19 48 16 50 8Z" fill="#2E9E5B"/>
           <path d="M50 8C67 13 82 29 83 48C84 67 71 83 52 93C48 90 47 84 47 84C51 83 53 77 54 71C48 74 44 71 44 71C47 64 49 57 56 54C48 56 43 53 43 53C47 43 51 37 60 37C52 37 47 33 47 33C52 24 57 20 67 22C58 19 52 16 50 8Z" fill="#238249"/>
-          <!-- Fenestrations / Cut-outs -->
           <ellipse cx="37" cy="48" rx="3.5" ry="8" transform="rotate(-28 37 48)" fill="#688FDE" opacity="0.95"/>
           <ellipse cx="63" cy="48" rx="3.5" ry="8" transform="rotate(28 63 48)" fill="#688FDE" opacity="0.95"/>
           <ellipse cx="39" cy="67" rx="3" ry="6.5" transform="rotate(-38 39 67)" fill="#688FDE" opacity="0.95"/>
           <ellipse cx="61" cy="67" rx="3" ry="6.5" transform="rotate(38 61 67)" fill="#688FDE" opacity="0.95"/>
-          <!-- Midrib / Stem -->
           <path d="M50 12C50 40 50 70 50 95" stroke="#FFE082" stroke-width="2.5" stroke-linecap="round"/>
         </svg>
 
@@ -141,8 +138,6 @@
 
     <!-- TAB 1: READING PROGRESS -->
     <section id="tab-reading" class="tab-content space-y-6">
-
-      <!-- Hero Card -->
       <div id="heroReadingCard" class="bg-[#FFF9EE] border-3 border-[#05244C] rounded-3xl p-5 pt-4 pb-5 shadow-retro-orange relative transition-all">
         <div class="flex items-center justify-between mb-3.5 pb-2 border-b-2 border-orange-200/70">
           <div class="flex items-center gap-2">
@@ -435,7 +430,7 @@
 
   </main>
 
-  <!-- BOTTOM DOCKED NAVIGATION -->
+  <!-- BOTTOM NAVIGATION -->
   <nav class="fixed bottom-0 left-0 right-0 z-50 bg-[#446BA2]/95 backdrop-blur-lg border-t-2 border-[#FFA4C4] px-6 py-2 shadow-lg">
     <div class="max-w-md mx-auto flex items-center justify-between">
       <button onclick="switchTab('reading')" class="nav-tab flex flex-col items-center gap-1 text-[#FFD034]" data-tab="reading">
@@ -1031,19 +1026,6 @@
           <button onclick="closeMenuDrawer()" class="text-xl font-bold text-slate-500">✕</button>
         </div>
 
-        <!-- Sticky Header vs Scroll To Top Button -->
-        <div class="bg-amber-100/70 border-2 border-[#05244C] rounded-2xl p-3.5 space-y-2">
-          <label class="text-xs font-black uppercase text-[#05244C] tracking-wide block">Scrolling Mode</label>
-          <div class="grid grid-cols-2 gap-2 text-[10px] font-bold">
-            <button type="button" onclick="setScrollBehaviorMode('sticky')" id="btnScrollModeSticky" class="py-2 px-1 rounded-xl border-2 border-[#05244C] bg-[#FF5B22] text-white shadow-retro-navy text-center">
-              📌 Sticky Top
-            </button>
-            <button type="button" onclick="setScrollBehaviorMode('totop')" id="btnScrollModeToTop" class="py-2 px-1 rounded-xl border border-[#05244C]/40 bg-white text-[#05244C] text-center">
-              ⬆️ Back to Top
-            </button>
-          </div>
-        </div>
-
         <div class="bg-gradient-to-br from-[#446BA2] to-[#2B4B79] text-[#FFF9EE] p-4 rounded-2xl border-2 border-[#FFD034] shadow-md space-y-2.5">
           <div class="flex items-center justify-between">
             <span class="text-xs font-black uppercase tracking-wider text-[#FFD034] flex items-center gap-1.5">
@@ -1161,46 +1143,10 @@
     let timerSeconds = 0;
     let timerStartTimestamp = null;
 
-    let scrollBehaviorMode = localStorage.getItem('rianne_scroll_mode') || 'sticky';
-
-    function setScrollBehaviorMode(mode) {
-      scrollBehaviorMode = mode;
-      localStorage.setItem('rianne_scroll_mode', mode);
-      applyScrollBehavior();
-      updateScrollSettingsButtons();
-      showToast(mode === 'sticky' ? 'Header set to Sticky' : 'Scroll button active');
-    }
-
-    function applyScrollBehavior() {
-      const header = document.getElementById('appHeader');
-      const btn = document.getElementById('scrollToTopBtn');
-      if (!header || !btn) return;
-      if (scrollBehaviorMode === 'sticky') {
-        header.classList.add('sticky');
-        btn.classList.add('opacity-0', 'pointer-events-none');
-      } else {
-        header.classList.remove('sticky');
-        handleScrollButtonVisibility();
-      }
-    }
-
-    function updateScrollSettingsButtons() {
-      const btnSticky = document.getElementById('btnScrollModeSticky');
-      const btnToTop = document.getElementById('btnScrollModeToTop');
-      if (!btnSticky || !btnToTop) return;
-      if (scrollBehaviorMode === 'sticky') {
-        btnSticky.className = "py-2 px-1 rounded-xl border-2 border-[#05244C] bg-[#FF5B22] text-white shadow-retro-navy text-center";
-        btnToTop.className = "py-2 px-1 rounded-xl border border-[#05244C]/40 bg-white text-[#05244C] text-center";
-      } else {
-        btnSticky.className = "py-2 px-1 rounded-xl border border-[#05244C]/40 bg-white text-[#05244C] text-center";
-        btnToTop.className = "py-2 px-1 rounded-xl border-2 border-[#05244C] bg-[#FF5B22] text-white shadow-retro-navy text-center";
-      }
-    }
-
     function handleScrollButtonVisibility() {
       const btn = document.getElementById('scrollToTopBtn');
       if (!btn) return;
-      if (scrollBehaviorMode === 'totop' && window.scrollY > 280) {
+      if (window.scrollY > 280) {
         btn.classList.remove('opacity-0', 'pointer-events-none');
       } else {
         btn.classList.add('opacity-0', 'pointer-events-none');
@@ -1620,8 +1566,6 @@
       populateYearDropdown();
       renderAllViews();
       initCloudSync();
-      applyScrollBehavior();
-      updateScrollSettingsButtons();
     }
 
     function createVaultSnapshot() {
@@ -2708,7 +2652,6 @@
       }
     }
 
-    // Consolidated Modal for Reading Hours
     function openBookHoursModal() {
       const year = document.getElementById('statsYearSelect')?.value || String(calendarYear);
       let filteredSessions = readingSessions;
@@ -2753,7 +2696,6 @@
       openModal('modalGenericList');
     }
 
-    // Consolidated Modal for Finished Books
     function openFinishedBooksModal() {
       const year = document.getElementById('statsYearSelect')?.value || String(calendarYear);
       const finishedBooks = books.filter(b => {
