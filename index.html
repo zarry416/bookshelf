@@ -2234,13 +2234,21 @@
 }
 
     function cycleStarRating(starNum) {
-      const curRating = Number(document.getElementById('editBookStarRating')?.value) || 0;
-      let newRating = starNum;
-      if (curRating === starNum) newRating = starNum - 0.5;
-      else if (curRating === starNum - 0.5) newRating = starNum - 0.75;
-      else if (curRating === starNum - 0.25) newRating = 0;
-      setEditBookStarRating(newRating);
-    }
+  const curRating = Number(document.getElementById('editBookStarRating')?.value) || 0;
+  let newRating = starNum;
+
+  if (curRating === starNum) {
+    newRating = starNum - 0.25;      // 4.00 -> 3.75 (¾)
+  } else if (curRating === starNum - 0.25) {
+    newRating = starNum - 0.5;       // 3.75 -> 3.50 (½)
+  } else if (curRating === starNum - 0.5) {
+    newRating = starNum - 0.75;      // 3.50 -> 3.25 (¼)
+  } else if (curRating === starNum - 0.75) {
+    newRating = 0;                   // 3.25 -> 0 (Clear)
+  }
+
+  setEditBookStarRating(newRating);
+}
 
     function setVibeStars(vibeKey, val) {
       const hiddenInput = document.getElementById(vibeKey);
