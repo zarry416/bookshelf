@@ -515,7 +515,7 @@
       </button>
     </div>
   </nav>
-  <!-- MODAL: MANUAL PAST SESSION -->
+<!-- MODAL: MANUAL PAST SESSION -->
   <div id="modalPastSession" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4">
     <div class="bg-[#FFF9EE] border-3 border-[#05244C] rounded-3xl p-6 w-full max-w-sm shadow-retro-orange space-y-3.5">
       <div class="flex justify-between items-center pb-2 border-b-2 border-orange-200">
@@ -758,12 +758,20 @@
               <button type="button" onclick="openNewInlineSessionForm()" class="px-2 py-0.5 bg-[#FF5B22] text-white rounded-lg text-[10px] font-black border border-[#05244C] shadow-sm retro-btn">+ Session</button>
             </div>
 
+            <!-- QUICK LOG FORM WITH PAGES VS % TOGGLE -->
             <div id="inlineSessionForm" class="hidden bg-[#FFF9EE] border-2 border-[#05244C] rounded-xl p-2.5 space-y-2 shadow-sm">
               <div class="flex items-center justify-between pb-1 border-b border-orange-200">
                 <span id="inlineSessFormTitle" class="text-[10px] font-black uppercase text-[#FF5B22]">Quick Log</span>
                 <button type="button" onclick="toggleInlineSessionForm(false)" class="text-slate-400 font-bold text-xs">✕</button>
               </div>
               <input type="hidden" id="inlineSessEditId" value="">
+              <input type="hidden" id="inlineSessModeVal" value="pages">
+
+              <!-- Toggle: Pages vs Percentage -->
+              <div class="flex bg-amber-100 p-0.5 rounded-lg border border-[#05244C]">
+                <button type="button" onclick="setInlineSessionMode('pages')" id="btnInlineModePages" class="flex-1 py-0.5 rounded-md text-[10px] font-black bg-[#FF5B22] text-white">Pages</button>
+                <button type="button" onclick="setInlineSessionMode('percent')" id="btnInlineModePercent" class="flex-1 py-0.5 rounded-md text-[10px] font-black text-slate-700">% Percent</button>
+              </div>
               
               <div class="grid grid-cols-2 gap-2 text-[10px]">
                 <div>
@@ -776,7 +784,8 @@
                 </div>
               </div>
 
-              <div class="grid grid-cols-2 gap-2 text-[10px]">
+              <!-- Pages Inputs -->
+              <div id="inlineSectionPages" class="grid grid-cols-2 gap-2 text-[10px]">
                 <div>
                   <label class="block font-bold mb-0.5">Start Page</label>
                   <input type="number" id="inlineSessStartPage" oninput="syncInlineSessionInputs('startPage')" placeholder="0" class="w-full bg-white border border-[#05244C] rounded-lg p-1.5 font-bold text-[10px]">
@@ -784,6 +793,18 @@
                 <div>
                   <label class="block font-bold mb-0.5">End Page</label>
                   <input type="number" id="inlineSessEndPage" oninput="syncInlineSessionInputs('endPage')" placeholder="25" class="w-full bg-white border border-[#05244C] rounded-lg p-1.5 font-bold text-[10px]">
+                </div>
+              </div>
+
+              <!-- Percent Inputs -->
+              <div id="inlineSectionPercent" class="hidden grid-cols-2 gap-2 text-[10px]">
+                <div>
+                  <label class="block font-bold mb-0.5">Start %</label>
+                  <input type="number" id="inlineSessStartPercent" min="0" max="100" placeholder="0" class="w-full bg-white border border-[#05244C] rounded-lg p-1.5 font-bold text-[10px] text-[#FF5B22]">
+                </div>
+                <div>
+                  <label class="block font-bold mb-0.5">End %</label>
+                  <input type="number" id="inlineSessEndPercent" min="0" max="100" placeholder="25" class="w-full bg-white border border-[#05244C] rounded-lg p-1.5 font-bold text-[10px] text-[#FF5B22]">
                 </div>
               </div>
 
