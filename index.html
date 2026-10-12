@@ -1710,8 +1710,8 @@
               const starDisplayNum = b.rating ? (b.rating % 1 === 0 ? b.rating : b.rating.toFixed(2).replace(/\.?0+$/, '')) : '';
               return `
                 <div onclick="${isBatchMode ? `toggleSelectBook('${b.id}', event)` : `openBookDetailModal('${b.id}')`}" class="relative group cursor-pointer">
-                  <div class="relative rounded-xl overflow-hidden border-2 border-[#05244C] shadow-retro-navy ${isSelected ? 'ring-4 ring-[#FF5B22]' : ''}">
-                    <img src="${b.cover || 'https://placehold.co/200x300/446BA2/FFF9EE?text=' + encodeURIComponent(b.title.slice(0, 15))}" class="w-full h-28 object-cover bg-slate-200">
+                  <div class="relative rounded-xl overflow-hidden border-2 border-[#05244C] shadow-retro-navy aspect-[2/3] bg-slate-200 ${isSelected ? 'ring-4 ring-[#FF5B22]' : ''}">
+                    <img src="${b.cover || 'https://placehold.co/200x300/446BA2/FFF9EE?text=' + encodeURIComponent(b.title.slice(0, 15))}" class="w-full h-full object-cover">
                     ${isBatchMode ? `
                       <div class="absolute top-1.5 left-1.5 w-5 h-5 rounded-md bg-white border border-[#05244C] flex items-center justify-center">
                         ${isSelected ? '<span class="text-[#FF5B22] font-black text-xs">✓</span>' : ''}
@@ -1750,7 +1750,7 @@
                       ${isSelected ? '<span class="text-[#FF5B22] font-black text-xs">✓</span>' : ''}
                     </div>
                   ` : ''}
-                  <img src="${b.cover || 'https://placehold.co/100x150/446BA2/FFF9EE?text=' + encodeURIComponent(b.title.slice(0, 10))}" class="w-14 h-20 object-cover rounded-xl border border-[#05244C] flex-shrink-0">
+                  <img src="${b.cover || 'https://placehold.co/100x150/446BA2/FFF9EE?text=' + encodeURIComponent(b.title.slice(0, 10))}" class="w-14 aspect-[2/3] object-cover rounded-xl border border-[#05244C] flex-shrink-0">
                   <div class="flex-1 min-w-0">
                     <div class="flex items-center gap-1.5">
                       <span class="text-[9px] uppercase font-black px-2 py-0.5 rounded-full ${info.bg} ${info.text} border border-[#05244C] shadow-sm">${info.label}</span>
