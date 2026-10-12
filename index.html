@@ -1251,7 +1251,7 @@
     let selectedBookIds = new Set();
     let currentLogMode = 'pages';
 
-    let editingBookFormats = ['Paperback'];
+    let editingBookFormats = ['eBook'];
     let calendarYear = new Date().getFullYear();
     let calendarMonth = new Date().getMonth();
     let quoteViewMode = 'timeline';
@@ -2147,7 +2147,7 @@ async function autoFetchGenresForCurrentBook() {
         currentPage: 0,
         shelf: 'to-read',
         ownership: 'Owned',
-        formats: ['Paperback'],
+        formats: ['eBook'],
         genres: [],
         cover: '',
         rating: 0,
@@ -2581,7 +2581,7 @@ function addBookFromSearchIndex(index) {
     currentPage: 0,
     shelf: 'to-read',
     ownership: 'Owned',
-    formats: ['Paperback'],
+    formats: ['eBook'],
     genres: item.genres,
     cover: item.cover,
     rating: 0,
