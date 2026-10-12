@@ -46,7 +46,7 @@
   <!-- Google Fonts: Vacation & Retro Typography -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Fraunces:ital,opsz,wght@0,9..144,400..900;1,9..144,400..900&family=Playfair+Display:ital,wght@0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Fraunces:ital,opsz,wght@0,9..144,400..900;1,9..144,400..900&family=Playfair+Display:ital,wght@0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
 
   <style>
     :root {
@@ -621,6 +621,7 @@
           </div>
         </div>
 
+        <!-- Genres & Categories Input Field with Auto-Fetch -->
         <div>
           <div class="flex items-center justify-between mb-1">
             <label class="block">Genres & Categories</label>
@@ -1081,135 +1082,6 @@
     </div>
   </div>
 
-  <!-- MODAL: ADD QUOTE (STANDALONE) -->
-  <div id="modalAddQuote" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4">
-    <div class="bg-[#FFF9EE] border-3 border-[#05244C] rounded-3xl p-6 w-full max-w-sm shadow-retro-orange space-y-4">
-      <div class="flex justify-between items-center pb-2 border-b-2 border-orange-200">
-        <h3 id="standaloneModalTitle" class="text-base font-retro-title text-[#05244C]">Save Passage</h3>
-        <button onclick="closeModal('modalAddQuote')" class="text-slate-500 font-bold text-lg">✕</button>
-      </div>
-
-      <input type="hidden" id="standaloneQuoteEditId" value="">
-
-      <div class="flex bg-amber-100 p-1 rounded-xl border border-[#05244C]">
-        <button type="button" onclick="setStandaloneEntryType('quote')" id="btnEntryTypeQuote" class="flex-1 py-1 rounded-lg text-xs font-black bg-[#FF5B22] text-white">“ Book Quote</button>
-        <button type="button" onclick="setStandaloneEntryType('thought')" id="btnEntryTypeThought" class="flex-1 py-1 rounded-lg text-xs font-black text-slate-700">💭 Reader Thought</button>
-      </div>
-      <input type="hidden" id="standaloneEntryTypeVal" value="quote">
-
-      <div class="space-y-2.5 text-xs font-bold text-[#05244C]">
-        <div>
-          <label class="block mb-1">Select Book</label>
-          <select id="quoteBookSelect" class="w-full bg-white border-2 border-[#05244C] rounded-xl p-2.5"></select>
-        </div>
-        <div>
-          <label id="standaloneContentLabel" class="block mb-1">Quote Passage</label>
-          <textarea id="quoteTextInput" rows="3.5" placeholder="Type quote or personal reaction..." class="w-full bg-white border-2 border-[#05244C] rounded-xl p-3 font-editorial text-sm italic"></textarea>
-        </div>
-
-        <div class="grid grid-cols-2 gap-2">
-          <div>
-            <label class="block mb-1">Date</label>
-            <input type="date" id="quoteDateInput" class="w-full bg-white border-2 border-[#05244C] rounded-xl p-2">
-          </div>
-          <div>
-            <label class="block mb-1">Page #</label>
-            <input type="text" id="quotePageInput" placeholder="142" class="w-full bg-white border-2 border-[#05244C] rounded-xl p-2">
-          </div>
-        </div>
-
-        <div>
-          <label class="block mb-1">Tag / Mood</label>
-          <input type="text" id="quoteTagInput" placeholder="sad, thoughtful, crazy..." class="w-full bg-white border-2 border-[#05244C] rounded-xl p-2 mb-1.5">
-          <div class="flex flex-wrap gap-1">
-            <button type="button" onclick="applyPresetTag('quoteTagInput', 'sad')" class="px-2 py-0.5 rounded-full text-[9px] font-bold border border-[#05244C] bg-rose-100 text-rose-800">😢 sad</button>
-            <button type="button" onclick="applyPresetTag('quoteTagInput', 'thoughtful')" class="px-2 py-0.5 rounded-full text-[9px] font-bold border border-[#05244C] bg-blue-100 text-blue-800">🤔 thoughtful</button>
-            <button type="button" onclick="applyPresetTag('quoteTagInput', 'crazy')" class="px-2 py-0.5 rounded-full text-[9px] font-bold border border-[#05244C] bg-purple-100 text-purple-800">🤯 crazy</button>
-            <button type="button" onclick="applyPresetTag('quoteTagInput', 'funny')" class="px-2 py-0.5 rounded-full text-[9px] font-bold border border-[#05244C] bg-amber-100 text-amber-800">😂 funny</button>
-            <button type="button" onclick="applyPresetTag('quoteTagInput', 'spicy')" class="px-2 py-0.5 rounded-full text-[9px] font-bold border border-[#05244C] bg-red-100 text-red-800">🌶️ spicy</button>
-            <button type="button" onclick="applyPresetTag('quoteTagInput', 'deep')" class="px-2 py-0.5 rounded-full text-[9px] font-bold border border-[#05244C] bg-emerald-100 text-emerald-800">✨ deep</button>
-          </div>
-        </div>
-      </div>
-
-      <button onclick="saveQuote()" id="standaloneQuoteSaveBtn" class="w-full py-3 bg-[#FFD034] text-[#05244C] rounded-2xl font-black border-2 border-[#05244C] shadow-retro-navy">Save to Collection</button>
-    </div>
-  </div>
-
-  <!-- MODAL: HOURS READ BREAKDOWN BY BOOK -->
-  <div id="modalBookHours" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4">
-    <div class="bg-[#FFF9EE] border-3 border-[#05244C] rounded-3xl p-5 w-full max-w-sm shadow-retro-orange space-y-3 max-h-[85vh] flex flex-col">
-      <div class="flex justify-between items-center pb-2 border-b-2 border-orange-200">
-        <div>
-          <h3 class="text-base font-retro-title text-[#05244C]">Hours Spent Per Book</h3>
-          <p id="bookHoursSubtext" class="text-[11px] font-editorial text-slate-500 italic">Total reading time breakdown</p>
-        </div>
-        <button onclick="closeModal('modalBookHours')" class="text-slate-500 font-bold text-lg">✕</button>
-      </div>
-      <div id="bookHoursList" class="flex-1 overflow-y-auto space-y-2 pr-1 no-scrollbar pt-1"></div>
-    </div>
-  </div>
-
-  <!-- MODAL: ANNUAL INFOGRAPHIC (STORYGRAPH / FABLE STYLE WRAP) -->
-  <div id="modalInfographic" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden items-center justify-center p-4">
-    <div class="bg-[#FFF9EE] border-3 border-[#05244C] rounded-3xl p-5 w-full max-w-md shadow-retro-orange space-y-4 max-h-[92vh] overflow-y-auto no-scrollbar">
-      <div class="flex justify-between items-center pb-2 border-b-2 border-orange-200">
-        <h3 class="text-base font-retro-title text-[#05244C]">Annual Reading Wrap</h3>
-        <button onclick="closeModal('modalInfographic')" class="text-slate-500 font-bold text-lg">✕</button>
-      </div>
-
-      <div id="infographicPoster" class="bg-gradient-to-br from-[#446BA2] via-[#2D548C] to-[#05244C] text-[#FFF9EE] rounded-3xl p-6 border-3 border-[#FFD034] shadow-retro-navy space-y-5 relative overflow-hidden">
-        <div class="flex justify-between items-center border-b border-white/20 pb-3">
-          <div>
-            <span class="text-[10px] font-extrabold uppercase tracking-widest text-[#FFD034]">Year in Books</span>
-            <h2 id="infoYearTitle" class="text-2xl font-retro-title text-white">2026 Reading Wrap</h2>
-            <p class="text-[11px] font-editorial italic text-slate-200">Rianne's Bookshelf Edition</p>
-          </div>
-          <span class="text-3xl">🌴</span>
-        </div>
-
-        <div class="grid grid-cols-3 gap-2 text-center">
-          <div class="bg-white/10 rounded-2xl p-2.5 border border-white/20 backdrop-blur-sm">
-            <span class="text-[9px] uppercase font-bold text-slate-300">Books</span>
-            <p id="infoTotalBooks" class="text-2xl font-retro-title text-[#FFD034]">0</p>
-          </div>
-          <div class="bg-white/10 rounded-2xl p-2.5 border border-white/20 backdrop-blur-sm">
-            <span class="text-[9px] uppercase font-bold text-slate-300">Pages</span>
-            <p id="infoTotalPages" class="text-2xl font-retro-title text-white">0</p>
-          </div>
-          <div class="bg-white/10 rounded-2xl p-2.5 border border-white/20 backdrop-blur-sm">
-            <span class="text-[9px] uppercase font-bold text-slate-300">Hours</span>
-            <p id="infoTotalHours" class="text-2xl font-retro-title text-[#FFA4C4]">0h</p>
-          </div>
-        </div>
-
-        <div class="space-y-1.5">
-          <div class="flex justify-between items-center text-[10px] font-bold text-slate-300">
-            <span>Completed Titles</span>
-            <span id="infoBooksFinishedSub">0 books</span>
-          </div>
-          <div id="infoCoversRow" class="flex gap-2 overflow-x-auto no-scrollbar py-1"></div>
-        </div>
-
-        <div class="grid grid-cols-2 gap-2 text-xs">
-          <div class="bg-white/10 rounded-2xl p-3 border border-white/20">
-            <p class="text-[9px] font-black uppercase text-[#FFD034] tracking-wider mb-1">Top Genres</p>
-            <div id="infoTopGenresList" class="space-y-0.5 text-[11px] font-bold"></div>
-          </div>
-          <div class="bg-white/10 rounded-2xl p-3 border border-white/20">
-            <p class="text-[9px] font-black uppercase text-[#FFA4C4] tracking-wider mb-1">Avg Star Rating</p>
-            <p id="infoAvgRating" class="text-xl font-retro-title text-white">0.0 ★</p>
-            <p id="infoReadingPace" class="text-[10px] text-slate-300 mt-1">~ 0 pgs/hr</p>
-          </div>
-        </div>
-      </div>
-
-      <button onclick="shareInfographicText()" class="w-full py-3 bg-[#FF5B22] text-white rounded-2xl font-black border-2 border-[#05244C] shadow-retro-navy flex items-center justify-center gap-2">
-        <span>📋 Copy Year In Review Summary</span>
-      </button>
-    </div>
-  </div>
-
   <!-- MODAL: GOAL & TARGET EDITOR -->
   <div id="modalGoalEditor" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4">
     <div class="bg-[#FFF9EE] border-3 border-[#05244C] rounded-3xl p-6 w-full max-w-sm shadow-retro-orange space-y-4">
@@ -1238,13 +1110,22 @@
     </div>
   </div>
 
-  <!-- DRAWER: MENU & CLOUD SYNC -->
+  <!-- DRAWER: MENU, SETTINGS & 1-TAP HTML EXPORT -->
   <div id="drawerMenu" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden">
     <div class="absolute right-0 top-0 bottom-0 w-80 bg-[#FFF9EE] border-l-4 border-[#05244C] p-6 shadow-2xl flex flex-col justify-between overflow-y-auto">
       <div class="space-y-5">
         <div class="flex items-center justify-between pb-3 border-b-2 border-[#FFA4C4]">
           <h2 class="text-lg font-retro-title text-[#05244C]">Bookshelf Settings</h2>
           <button onclick="closeMenuDrawer()" class="text-xl font-bold text-slate-500">✕</button>
+        </div>
+
+        <!-- 1-TAP HTML DOWNLOAD BUTTON -->
+        <div class="bg-[#FFEDC9] p-3.5 rounded-2xl border-2 border-[#05244C] shadow-retro-navy space-y-2">
+          <p class="text-xs font-black text-[#05244C] uppercase tracking-wider">💾 Download App File</p>
+          <p class="text-[11px] text-slate-600 leading-tight">Save a local copy of this exact code file directly to your device.</p>
+          <button onclick="downloadSelfHtmlFile()" class="w-full py-2.5 bg-[#FF5B22] text-white rounded-xl text-xs font-black border-2 border-[#05244C] shadow-sm flex items-center justify-center gap-1.5 retro-btn">
+            <span>📥 Download index.html</span>
+          </button>
         </div>
 
         <div class="bg-gradient-to-br from-[#446BA2] to-[#2B4B79] text-[#FFF9EE] p-4 rounded-2xl border-2 border-[#FFD034] shadow-md">
@@ -1315,6 +1196,21 @@
   </div>
 
   <script>
+    // Self-Download function to export active index.html code file
+    function downloadSelfHtmlFile() {
+      const htmlContent = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
+      const blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'index.html';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      showToast('Downloaded index.html!');
+    }
+
     // --- UI HELPERS & MODAL UTILITIES ---
     function openModal(id) { 
       const el = document.getElementById(id);
