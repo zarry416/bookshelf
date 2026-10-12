@@ -3230,6 +3230,40 @@
       }
     }
 
+    function setInlineSessionMode(mode) {
+      const modeInput = document.getElementById('inlineSessModeVal');
+      if (modeInput) modeInput.value = mode;
+
+      const btnPages = document.getElementById('btnInlineModePages');
+      const btnPercent = document.getElementById('btnInlineModePercent');
+      const secPages = document.getElementById('inlineSectionPages');
+      const secPercent = document.getElementById('inlineSectionPercent');
+
+      if (mode === 'pages') {
+        if (btnPages) btnPages.className = "flex-1 py-0.5 rounded-md text-[10px] font-black bg-[#FF5B22] text-white";
+        if (btnPercent) btnPercent.className = "flex-1 py-0.5 rounded-md text-[10px] font-black text-slate-700";
+        if (secPages) {
+          secPages.classList.remove('hidden');
+          secPages.classList.add('grid');
+        }
+        if (secPercent) {
+          secPercent.classList.add('hidden');
+          secPercent.classList.remove('grid');
+        }
+      } else {
+        if (btnPages) btnPages.className = "flex-1 py-0.5 rounded-md text-[10px] font-black text-slate-700";
+        if (btnPercent) btnPercent.className = "flex-1 py-0.5 rounded-md text-[10px] font-black bg-[#FF5B22] text-white";
+        if (secPages) {
+          secPages.classList.add('hidden');
+          secPages.classList.remove('grid');
+        }
+        if (secPercent) {
+          secPercent.classList.remove('hidden');
+          secPercent.classList.add('grid');
+        }
+      }
+    }
+
     function openNewInlineSessionForm() {
       const idInput = document.getElementById('inlineSessEditId');
       if (idInput) idInput.value = '';
@@ -3237,11 +3271,29 @@
       const cur = bk ? bk.currentPage : 0;
       const tot = bk ? (bk.pageCount || 300) : 300;
 
-      document.getElementById('inlineSessDate').value = new Date().toISOString().split('T')[0];
-      document.getElementById('inlineSessMinutes').value = 30;
-      document.getElementById('inlineSessStartPage').value = cur;
-      document.getElementById('inlineSessEndPage').value = Math.min(tot, cur + 15);
-      document.getElementById('inlineSessNotes').value = '';
+      const dateEl = document.getElementById('inlineSessDate');
+      if (dateEl) dateEl.value = new Date().toISOString().split('T')[0];
+
+      const minsEl = document.getElementById('inlineSessMinutes');
+      if (minsEl) minsEl.value = 30;
+
+      const startPageEl = document.getElementById('inlineSessStartPage');
+      if (startPageEl) startPageEl.value = cur;
+
+      const endPageEl = document.getElementById('inlineSessEndPage');
+      if (endPageEl) endPageEl.value = Math.min(tot, cur + 15);
+
+      const curPct = tot > 0 ? Math.round((cur / tot) * 100) : 0;
+      const startPctEl = document.getElementById('inlineSessStartPercent');
+      if (startPctEl) startPctEl.value = curPct;
+
+      const endPctEl = document.getElementById('inlineSessEndPercent');
+      if (endPctEl) endPctEl.value = Math.min(100, curPct + 5);
+
+      const notesEl = document.getElementById('inlineSessNotes');
+      if (notesEl) notesEl.value = '';
+
+      setInlineSessionMode('pages');
       toggleInlineSessionForm(true);
     }
 
@@ -3250,11 +3302,23 @@
       const bk = books.find(b => b.id === bookId);
       if (!bk) return;
 
-      const dateStr = document.getElementById('inlineSessDate').value || new Date().toISOString().split('T')[0];
-      const minutes = Number(document.getElementById('inlineSessMinutes').value) || 20;
-      const startP = Number(document.getElementById('inlineSessStartPage').value) || 0;
-      const endP = Number(document.getElementById('inlineSessEndPage').value) || startP;
-      const notes = document.getElementById('inlineSessNotes').value.trim();
+      const dateStr = document.getElementById('inlineSessDate')?.value || new Date().toISOString().split('T')[0];
+      const minutes = Number(document.getElementById('inlineSessMinutes')?.value) || 20;
+      const notes = document.getElementById('inlineSessNotes')?.value.trim() || '';
+      const mode = document.getElementById('inlineSessModeVal')?.value || 'pages';
+
+      let startP = 0, endP = 0;
+
+      if (mode === 'pages') {
+        startP = Number(document.getElementById('inlineSessStartPage')?.value) || 0;
+        endP = Number(document.getElementById('inlineSessEndPage')?.value) || startP;
+      } else {
+        const startPct = Math.max(0, Math.min(100, Number(document.getElementById('inlineSessStartPercent')?.value) || 0));
+        const endPct = Math.max(0, Math.min(100, Number(document.getElementById('inlineSessEndPercent')?.value) || startPct));
+        const totalPgs = bk.pageCount || 300;
+        startP = Math.round((startPct / 100) * totalPgs);
+        endP = Math.round((endPct / 100) * totalPgs);
+      }
 
       readingSessions.push({
         id: 'sess_' + Date.now(),
@@ -3271,9 +3335,24 @@
       bk.currentPage = Math.max(bk.currentPage, endP);
       bk.lastSessionDate = dateStr;
 
-      document.getElementById('editBookCurrentPage').value = bk.currentPage;
-      const pct = bk.pageCount > 0 ? Math.min(100, Math.round((bk.currentPage / bk.pageCount) * 100)) : 0;
-      document.getElementById('editBookPercent').value = pct;
+      if (bk.pageCount > 0 && bk.currentPage >= bk.pageCount) {
+        bk.currentPage = bk.pageCount;
+        bk.shelf = 'finished';
+        bk.finishedDate = dateStr;
+        if (!bk.finishedDates) bk.finishedDates = [];
+        if (!bk.finishedDates.includes(dateStr)) bk.finishedDates.push(dateStr);
+        const shelfSelect = document.getElementById('editBookShelf');
+        if (shelfSelect) shelfSelect.value = 'finished';
+        toggleReviewSectionDisplay();
+        showToast(`🎉 You finished ${bk.title}! Moved to Finished.`);
+      }
+
+      const curPageInput = document.getElementById('editBookCurrentPage');
+      if (curPageInput) curPageInput.value = bk.currentPage;
+
+      const curPct = bk.pageCount > 0 ? Math.min(100, Math.round((bk.currentPage / bk.pageCount) * 100)) : 0;
+      const pctInput = document.getElementById('editBookPercent');
+      if (pctInput) pctInput.value = curPct;
 
       saveSessions();
       saveBooks();
