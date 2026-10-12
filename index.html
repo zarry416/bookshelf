@@ -895,6 +895,14 @@
               <button onclick="generateNewSyncKey()" class="flex-1 py-1.5 bg-white/20 hover:bg-white/30 text-white rounded-xl text-[11px] font-bold border border-white/30">New Key</button>
               <button onclick="syncNowWithCloud()" class="flex-1 py-1.5 bg-[#FF5B22] text-white rounded-xl text-[11px] font-bold border border-[#05244C] shadow-sm">Sync Now ↻</button>
             </div>
+
+            <!-- Instant Device-to-Device Quick Transfer -->
+            <div class="pt-2 border-t border-white/15">
+              <div class="flex gap-1.5">
+                <button onclick="copyQuickTransferCode()" class="flex-1 py-1 bg-white/10 hover:bg-white/20 text-slate-200 rounded-lg text-[10px] font-bold border border-white/20">📋 Copy Transfer Code</button>
+                <button onclick="pasteQuickTransferCode()" class="flex-1 py-1 bg-white/10 hover:bg-white/20 text-slate-200 rounded-lg text-[10px] font-bold border border-white/20">📥 Paste Code</button>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -2443,7 +2451,7 @@
       showToast('Copied quote card!');
     }
 
-    const CLOUD_SYNC_ENDPOINT = "https://jsonblob.com/api/jsonBlob";
+    // --- BULLETPROOF MULTI-PROVIDER CLOUD SYNC ENGINE ---
     let activeSyncKey = localStorage.getItem('rianne_cloud_sync_key') || '';
     let autoSyncTimer = null;
 
@@ -2456,30 +2464,64 @@
     }
 
     async function generateNewSyncKey() {
-      showToast('Creating cloud vault...');
+      showToast('Connecting to sync vault...');
+      const payload = { books, sessions: readingSessions, quotes, goals: userGoals, updatedAt: Date.now() };
+      let newKey = null;
+
+      // Primary Vault Provider (superjsonblob with CORS response body)
       try {
-        const payload = { books, sessions: readingSessions, quotes, goals: userGoals, updatedAt: Date.now() };
-        const res = await fetch(CLOUD_SYNC_ENDPOINT, {
+        const res = await fetch("https://superjsonblob.com/api/jsonBlob", {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
           body: JSON.stringify(payload)
         });
-        const blobLocation = res.headers.get('Location');
-        if (blobLocation) {
-          const key = blobLocation.split('/').pop();
-          activeSyncKey = key;
-          localStorage.setItem('rianne_cloud_sync_key', key);
-          document.getElementById('syncKeyInput').value = key;
-          showToast('Sync Key Linked!');
+        if (res.ok) {
+          const data = await res.json().catch(() => null);
+          if (data && data.id) {
+            newKey = data.id;
+          } else {
+            const loc = res.headers.get('Location') || res.headers.get('location');
+            if (loc) newKey = loc.split('/').pop();
+          }
         }
-      } catch (err) {
-        showToast('Connection error. Will retry.');
+      } catch (e) {
+        console.warn("Primary vault failed, trying fallback...", e);
+      }
+
+      // Secondary Fallback Provider (jsonblob)
+      if (!newKey) {
+        try {
+          const res = await fetch("https://jsonblob.com/api/jsonBlob", {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+          const loc = res.headers.get('Location') || res.headers.get('location') || res.headers.get('x-jsonblob');
+          if (loc) newKey = loc.split('/').pop();
+        } catch (e) {
+          console.warn("Secondary vault failed", e);
+        }
+      }
+
+      if (newKey) {
+        activeSyncKey = newKey;
+        localStorage.setItem('rianne_cloud_sync_key', newKey);
+        const input = document.getElementById('syncKeyInput');
+        if (input) input.value = newKey;
+        const badge = document.getElementById('syncStatusBadge');
+        if (badge) badge.innerText = 'Connected';
+        showToast('Sync Key Linked! Ready on all devices.');
+      } else {
+        showToast('Offline mode. Use "Copy Transfer Code" below!');
       }
     }
 
     function connectSyncKey() {
       const key = document.getElementById('syncKeyInput').value.trim();
-      if (!key) return;
+      if (!key) {
+        showToast('Please enter a Sync Key');
+        return;
+      }
       activeSyncKey = key;
       localStorage.setItem('rianne_cloud_sync_key', key);
       pullFromCloudSync(true);
@@ -2491,55 +2533,149 @@
         return;
       }
       showToast('Synchronizing...');
-      await pushToCloudSync();
-      await pullFromCloudSync(true);
+      const pushOk = await pushToCloudSync();
+      const pullOk = await pullFromCloudSync(true);
+      if (!pushOk && !pullOk) {
+        showToast('Sync paused. Data remains safely saved on this device.');
+      }
     }
 
     async function pushToCloudSync() {
-      if (!activeSyncKey) return;
+      if (!activeSyncKey) return false;
+      const payload = { books, sessions: readingSessions, quotes, goals: userGoals, updatedAt: Date.now() };
+      let success = false;
+
+      // 1. Try superjsonblob endpoint
       try {
-        const payload = { books, sessions: readingSessions, quotes, goals: userGoals, updatedAt: Date.now() };
-        await fetch(`${CLOUD_SYNC_ENDPOINT}/${activeSyncKey}`, {
+        const res = await fetch(`https://superjsonblob.com/api/jsonBlob/${activeSyncKey}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
         });
-        document.getElementById('syncStatusBadge').innerText = 'Synced';
-      } catch(e) {
-        console.warn('Sync push error', e);
+        if (res.ok) success = true;
+      } catch(e) {}
+
+      // 2. Try jsonblob endpoint
+      if (!success) {
+        try {
+          const res = await fetch(`https://jsonblob.com/api/jsonBlob/${activeSyncKey}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+          if (res.ok) success = true;
+        } catch(e) {}
       }
+
+      const badge = document.getElementById('syncStatusBadge');
+      if (badge) badge.innerText = success ? 'Synced' : 'Local Only';
+      return success;
     }
 
     async function pullFromCloudSync(notify = false) {
-      if (!activeSyncKey) return;
+      if (!activeSyncKey) return false;
+      let cloudData = null;
+
+      // 1. Try superjsonblob
       try {
-        const res = await fetch(`${CLOUD_SYNC_ENDPOINT}/${activeSyncKey}`);
-        if (!res.ok) return;
-        const cloudData = await res.json();
-        if (cloudData && Array.isArray(cloudData.books)) {
-          books = cloudData.books;
-          readingSessions = cloudData.sessions || [];
-          quotes = cloudData.quotes || [];
-          userGoals = cloudData.goals || userGoals;
+        const res = await fetch(`https://superjsonblob.com/api/jsonBlob/${activeSyncKey}`);
+        if (res.ok) cloudData = await res.json();
+      } catch(e) {}
 
-          localStorage.setItem('rianne_books_v1', JSON.stringify(books));
-          localStorage.setItem('rianne_sessions_v1', JSON.stringify(readingSessions));
-          localStorage.setItem('rianne_quotes_v1', JSON.stringify(quotes));
-          localStorage.setItem('rianne_goals_v1', JSON.stringify(userGoals));
-
-          determineActiveHeroBook();
-          renderAllViews();
-          if (notify) showToast('Cloud sync complete!');
-        }
-      } catch(e) {
-        console.warn('Sync pull error', e);
+      // 2. Try jsonblob
+      if (!cloudData) {
+        try {
+          const res = await fetch(`https://jsonblob.com/api/jsonBlob/${activeSyncKey}`);
+          if (res.ok) cloudData = await res.json();
+        } catch(e) {}
       }
+
+      // 3. Try via CORS proxy fallback
+      if (!cloudData) {
+        const proxies = [
+          `https://api.allorigins.win/raw?url=${encodeURIComponent(`https://superjsonblob.com/api/jsonBlob/${activeSyncKey}`)}`,
+          `https://api.allorigins.win/raw?url=${encodeURIComponent(`https://jsonblob.com/api/jsonBlob/${activeSyncKey}`)}`
+        ];
+        for (const pUrl of proxies) {
+          try {
+            const res = await fetch(pUrl);
+            if (res.ok) {
+              cloudData = await res.json();
+              if (cloudData && Array.isArray(cloudData.books)) break;
+            }
+          } catch(e) {}
+        }
+      }
+
+      if (cloudData && Array.isArray(cloudData.books)) {
+        books = cloudData.books;
+        readingSessions = cloudData.sessions || [];
+        quotes = cloudData.quotes || [];
+        userGoals = cloudData.goals || userGoals;
+
+        localStorage.setItem('rianne_books_v1', JSON.stringify(books));
+        localStorage.setItem('rianne_sessions_v1', JSON.stringify(readingSessions));
+        localStorage.setItem('rianne_quotes_v1', JSON.stringify(quotes));
+        localStorage.setItem('rianne_goals_v1', JSON.stringify(userGoals));
+
+        determineActiveHeroBook();
+        renderAllViews();
+        if (notify) showToast('Cloud sync complete! Library updated.');
+        return true;
+      }
+      return false;
     }
 
     function triggerCloudAutoSync() {
       if (!activeSyncKey) return;
       clearTimeout(autoSyncTimer);
       autoSyncTimer = setTimeout(() => { pushToCloudSync(); }, 2500);
+    }
+
+    // --- INSTANT DEVICE-TO-DEVICE QUICK TRANSFER CODE ---
+    function copyQuickTransferCode() {
+      try {
+        const packageData = { b: books, s: readingSessions, q: quotes, g: userGoals, t: Date.now() };
+        const jsonStr = JSON.stringify(packageData);
+        // Base64 encode using UTF-8 safe method
+        const code = btoa(encodeURIComponent(jsonStr));
+        const t = document.createElement("textarea");
+        t.value = code;
+        document.body.appendChild(t);
+        t.select();
+        document.execCommand('copy');
+        document.body.removeChild(t);
+        showToast('Copied Transfer Code to clipboard! Paste it on your other device.');
+      } catch (err) {
+        showToast('Export failed. Use Download JSON Backup.');
+      }
+    }
+
+    function pasteQuickTransferCode() {
+      const code = prompt("Paste your Transfer Code here:");
+      if (!code || !code.trim()) return;
+      try {
+        const jsonStr = decodeURIComponent(atob(code.trim()));
+        const data = JSON.parse(jsonStr);
+        if (data && Array.isArray(data.b)) {
+          books = data.b;
+          readingSessions = data.s || [];
+          quotes = data.q || [];
+          userGoals = data.g || userGoals;
+
+          saveBooks();
+          saveSessions();
+          saveQuotes();
+          saveGoals();
+          determineActiveHeroBook();
+          renderAllViews();
+          showToast(`Successfully transferred ${books.length} books and history!`);
+        } else {
+          showToast('Invalid Transfer Code format.');
+        }
+      } catch (err) {
+        showToast('Could not read Transfer Code.');
+      }
     }
 
     function exportJsonBackup() {
@@ -2595,7 +2731,8 @@
       // Use CORS proxies to fetch RSS feed in-browser
       const proxyUrls = [
         `https://api.allorigins.win/raw?url=${encodeURIComponent(grFeedUrl)}`,
-        `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(grFeedUrl)}`
+        `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(grFeedUrl)}`,
+        `https://corsproxy.io/?url=${encodeURIComponent(grFeedUrl)}`
       ];
 
       let xmlText = null;
