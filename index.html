@@ -82,19 +82,19 @@
       -moz-appearance: textfield;
     }
 
-    /* Hide scrollbars for slick mobile viewing */
+    /* Hide scrollbars for clean mobile viewing */
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
   </style>
 </head>
 <body class="text-slate-800 antialiased selection:bg-[#FFA4C4] selection:text-[#05244C]">
 
-  <!-- STICKY RETRO TOP HEADER WITH TROPICAL PALM ISLAND EMBLEM -->
+  <!-- STICKY RETRO TOP HEADER WITH CUTE TROPICAL PALM ISLAND EMBLEM -->
   <header class="sticky top-0 z-40 bg-[#446BA2]/95 backdrop-blur-md border-b-2 border-[#FFA4C4] px-4 pt-3.5 pb-3 transition-all shadow-md">
     <div class="max-w-md mx-auto flex items-center justify-between">
       <div class="flex items-center gap-2.5">
         <!-- Cute Tropical Palm Island Icon -->
-        <div class="w-10 h-10 rounded-2xl bg-[#FFF9EE] border-2 border-[#FFA4C4] shadow-retro-navy flex items-center justify-center overflow-hidden">
+        <div class="w-10 h-10 rounded-2xl bg-[#FFF9EE] border-2 border-[#FFA4C4] shadow-retro-navy flex items-center justify-center overflow-hidden flex-shrink-0">
           <svg class="w-6 h-6" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
             <circle cx="23" cy="9" r="4.5" fill="#FFD034" stroke="#05244C" stroke-width="1.5"/>
             <path d="M4 27C9 24.5 23 24.5 28 27" stroke="#05244C" stroke-width="2" stroke-linecap="round"/>
@@ -113,7 +113,7 @@
       </div>
 
       <!-- Settings Menu Drawer Button -->
-      <button onclick="openMenuDrawer()" aria-label="Open Settings" class="w-9 h-9 rounded-full bg-[#FFF9EE] text-[#05244C] border-2 border-[#05244C] shadow-retro-navy flex items-center justify-center retro-btn">
+      <button onclick="openMenuDrawer()" aria-label="Open Settings" class="w-9 h-9 rounded-full bg-[#FFF9EE] text-[#05244C] border-2 border-[#05244C] shadow-retro-navy flex items-center justify-center retro-btn flex-shrink-0">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M4 12h16M4 18h16"/></svg>
       </button>
     </div>
@@ -208,7 +208,7 @@
         </div>
       </div>
 
-      <!-- 3. LIVE TIMER DRAWER WITH FOCUS ATMOSPHERE -->
+      <!-- 3. LIVE TIMER DRAWER WITH PROCEDURAL AUDIO -->
       <div id="liveTimerBox" class="hidden bg-[#05244C] border-3 border-[#FFD034] rounded-3xl p-5 shadow-retro-orange text-[#FFF9EE]">
         <div class="flex items-center justify-between mb-3">
           <div class="flex items-center gap-2">
@@ -239,7 +239,7 @@
 
     </section>
 
-    <!-- TAB 2: LIBRARY -->
+    <!-- TAB 2: LIBRARY (WITH 2 CLEAN CATEGORY ROWS, FORMAT FILTERS & VIEWS) -->
     <section id="tab-library" class="tab-content hidden space-y-4">
       
       <!-- Search, Views, and Batch Toggle Bar -->
@@ -264,7 +264,7 @@
           <button onclick="toggleBatchSelectMode()" id="batchSelectModeBtn" class="h-9 px-3 bg-amber-100 hover:bg-amber-200 border-2 border-[#05244C] rounded-xl text-[11px] font-black text-[#05244C] shadow-retro-navy flex items-center justify-center flex-shrink-0 whitespace-nowrap retro-btn">Select</button>
         </div>
 
-        <!-- 2 CLEAN AESTHETIC ROWS FOR CATEGORIES (NO SCROLLING OR CLIPPING) -->
+        <!-- 2 CLEAN AESTHETIC ROWS FOR CATEGORIES (NO HORIZONTAL SCROLLING OR CLIPPED SHADOWS) -->
         <div class="space-y-1.5 pt-1">
           <!-- Row 1: All, Reading, TBR, Finished -->
           <div class="grid grid-cols-4 gap-1.5">
@@ -534,7 +534,7 @@
     </div>
   </div>
 
-  <!-- MODAL: BOOK DETAIL & EDIT (CLEAN STARS, NO INSTRUCTION TEXT, NO MICRO BUTTONS, STARS FOR VIBES) -->
+  <!-- MODAL: BOOK DETAIL & EDIT -->
   <div id="modalBookDetail" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4">
     <div class="bg-[#FFF9EE] border-3 border-[#05244C] rounded-3xl p-6 w-full max-w-sm shadow-retro-orange space-y-3.5 max-h-[90vh] overflow-y-auto">
       <div class="flex justify-between items-center pb-2 border-b-2 border-orange-200">
@@ -624,7 +624,7 @@
             <input type="date" id="editBookFinishedDate" class="w-full bg-white border-2 border-[#05244C] rounded-xl p-2 font-bold text-xs">
           </div>
 
-          <!-- CLEAN TAP-TO-CYCLE STAR RATING: NO INSTRUCTIONS, NO MICRO-BUTTONS -->
+          <!-- CLEAN TAP-TO-CYCLE STAR RATING: NO INSTRUCTION TEXT, NO MICRO BUTTONS -->
           <div class="bg-white border-2 border-[#05244C] p-3 rounded-2xl shadow-sm space-y-1.5">
             <div class="flex items-center justify-between">
               <span class="text-[10px] uppercase font-bold text-slate-500">Overall Rating</span>
@@ -986,20 +986,25 @@
             <!-- Instant Device-to-Device Quick Transfer -->
             <div class="pt-2 border-t border-white/15">
               <div class="flex gap-1.5">
-                <button onclick="copyQuickTransferCode()" class="flex-1 py-1 bg-white/10 hover:bg-white/20 text-slate-200 rounded-lg text-[10px] font-bold border border-white/20">📋 Copy Transfer Code</button>
+                <button onclick="copyQuickTransferCode()" class="flex-1 py-1 bg-white/10 hover:bg-white/20 text-slate-200 rounded-lg text-[10px] font-bold border border-white/20">📋 Copy Code</button>
                 <button onclick="pasteQuickTransferCode()" class="flex-1 py-1 bg-white/10 hover:bg-white/20 text-slate-200 rounded-lg text-[10px] font-bold border border-white/20">📥 Paste Code</button>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Data Import/Export Tools -->
+        <!-- Data Import/Export & Cover Recovery Tools -->
         <div class="space-y-2 pt-1">
           <div class="flex items-center justify-between">
-            <p class="text-xs font-bold text-slate-500 uppercase tracking-wider">File Backup & Safety</p>
+            <p class="text-xs font-bold text-slate-500 uppercase tracking-wider">File Backup & Covers</p>
             <span class="text-[10px] font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-full">Auto-Saved</span>
           </div>
-          <p class="text-[11px] text-slate-500 leading-tight">Your library is saved in your browser's persistent storage and will remain intact across code updates.</p>
+
+          <!-- Cover Recovery Button for Imported Books -->
+          <button onclick="fetchMissingCovers()" class="w-full py-2.5 bg-amber-100 hover:bg-amber-200 border-2 border-[#05244C] rounded-xl text-xs font-black text-[#05244C] shadow-retro-navy text-left px-3 flex items-center justify-between">
+            <span>🖼️ Fetch Missing Book Covers</span>
+            <span class="text-[10px] text-amber-800 font-bold">Auto</span>
+          </button>
 
           <button onclick="exportJsonBackup()" class="w-full py-2.5 bg-white border-2 border-[#05244C] rounded-xl text-xs font-black text-[#05244C] shadow-retro-navy text-left px-3 flex items-center justify-between">
             <span>📥 Download JSON Backup</span>
@@ -1029,7 +1034,7 @@
   </div>
 
   <script>
-    const APP_VERSION = "3.0";
+    const APP_VERSION = "3.2";
     let books = [];
     let readingSessions = [];
     let quotes = [];
@@ -1050,6 +1055,34 @@
     let calendarMonth = new Date().getMonth();
     let quoteViewMode = 'timeline';
     let isEditingFavorite = false;
+
+    // Universal Date Normalizer: Converts any format (Goodreads, Bookshelf, text dates) to YYYY-MM-DD
+    function normalizeDateToYMD(val) {
+      if (!val) return null;
+      val = String(val).trim();
+      if (!val || val === 'null' || val === 'undefined') return null;
+
+      // Match YYYY-MM-DD or YYYY/MM/DD
+      const ymd = val.match(/^(\d{4})[-/.](\d{1,2})[-/.](\d{1,2})/);
+      if (ymd) {
+        return `${ymd[1]}-${String(ymd[2]).padStart(2, '0')}-${String(ymd[3]).padStart(2, '0')}`;
+      }
+
+      // Match MM/DD/YYYY or M/D/YYYY
+      const mdy = val.match(/^(\d{1,2})[-/.](\d{1,2})[-/.](\d{4})/);
+      if (mdy) {
+        return `${mdy[3]}-${String(mdy[1]).padStart(2, '0')}-${String(mdy[2]).padStart(2, '0')}`;
+      }
+
+      // Try Date.parse for text strings like "May 18, 2024"
+      const parsed = Date.parse(val);
+      if (!isNaN(parsed)) {
+        const d = new Date(parsed);
+        return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+      }
+
+      return null;
+    }
 
     // Helper: Star glyph formatter for full, quarter, half, and three-quarter stars
     function getStarDisplayHtml(rating) {
@@ -1076,7 +1109,7 @@
     let currentSoundType = null;
     let activeSoundNodes = [];
 
-    // Helper: Safe JSON parser
+    // Safe JSON parser
     function safeJsonParse(key, fallback) {
       try {
         const val = localStorage.getItem(key);
@@ -1155,12 +1188,129 @@
       quotes = safeJsonParse('rianne_quotes_v1', []);
       userGoals = safeJsonParse('rianne_goals_v1', userGoals);
 
+      // Auto-migrate dates in stored books & sessions
+      let dataChanged = false;
+      books.forEach(b => {
+        if (b.finishedDate) {
+          const norm = normalizeDateToYMD(b.finishedDate);
+          if (norm && norm !== b.finishedDate) { b.finishedDate = norm; dataChanged = true; }
+        }
+        if (b.lastSessionDate) {
+          const norm = normalizeDateToYMD(b.lastSessionDate);
+          if (norm && norm !== b.lastSessionDate) { b.lastSessionDate = norm; dataChanged = true; }
+        }
+        if (Array.isArray(b.finishedDates)) {
+          b.finishedDates = b.finishedDates.map(d => normalizeDateToYMD(d) || d);
+        }
+      });
+
+      readingSessions.forEach(s => {
+        if (s.date) {
+          const norm = normalizeDateToYMD(s.date);
+          if (norm && norm !== s.date) { s.date = norm; dataChanged = true; }
+        }
+      });
+
+      // Jump calendar to most recent session or finish if current month is empty
+      const currentMonthPrefix = `${calendarYear}-${String(calendarMonth + 1).padStart(2, '0')}`;
+      const hasSessionsInCurrentMonth = readingSessions.some(s => s.date && s.date.startsWith(currentMonthPrefix));
+      const hasFinishesInCurrentMonth = books.some(b => b.finishedDate && b.finishedDate.startsWith(currentMonthPrefix));
+
+      if (!hasSessionsInCurrentMonth && !hasFinishesInCurrentMonth) {
+        const allDates = [
+          ...readingSessions.map(s => s.date),
+          ...books.map(b => b.finishedDate)
+        ].filter(Boolean).sort().reverse();
+
+        if (allDates.length > 0) {
+          const latestYMD = normalizeDateToYMD(allDates[0]);
+          if (latestYMD) {
+            const parts = latestYMD.split('-');
+            calendarYear = parseInt(parts[0], 10);
+            calendarMonth = parseInt(parts[1], 10) - 1;
+          }
+        }
+      }
+
+      if (dataChanged) {
+        saveBooks();
+        saveSessions();
+      }
+
       updateBackupCountBadge();
       determineActiveHeroBook();
       populateGenreDropdown();
       populateYearDropdown();
       renderAllViews();
       initCloudSync();
+
+      // Automatically recover missing covers in background if any book lacks cover
+      setTimeout(() => {
+        const missingCount = books.filter(b => !b.cover || b.cover.trim() === '').length;
+        if (missingCount > 0) fetchMissingCovers(false);
+      }, 1500);
+    }
+
+    async function fetchMissingCovers(showNotifications = true) {
+      const missingBooks = books.filter(b => !b.cover || b.cover.trim() === '');
+      if (missingBooks.length === 0) {
+        if (showNotifications) showToast('All books already have covers!');
+        return;
+      }
+
+      if (showNotifications) showToast(`Finding covers for ${missingBooks.length} books...`);
+
+      let foundCount = 0;
+      for (const b of missingBooks) {
+        let coverUrl = '';
+
+        // 1. Try ISBN if available
+        const cleanIsbn = (b.isbn || b.isbn13 || '').replace(/[^0-9X]/gi, '');
+        if (cleanIsbn && cleanIsbn.length >= 10) {
+          coverUrl = `https://covers.openlibrary.org/b/isbn/${cleanIsbn}-L.jpg`;
+          b.cover = coverUrl;
+          foundCount++;
+          continue;
+        }
+
+        // 2. Try Open Library search by title & author
+        try {
+          const q = `title=${encodeURIComponent(b.title)}${b.author ? `&author=${encodeURIComponent(b.author)}` : ''}`;
+          const res = await fetch(`https://openlibrary.org/search.json?${q}&limit=1`);
+          if (res.ok) {
+            const data = await res.json();
+            if (data.docs && data.docs[0] && data.docs[0].cover_i) {
+              coverUrl = `https://covers.openlibrary.org/b/id/${data.docs[0].cover_i}-L.jpg`;
+              b.cover = coverUrl;
+              foundCount++;
+              continue;
+            }
+          }
+        } catch(e) {}
+
+        // 3. Fallback: Google Books search
+        try {
+          const gq = `intitle:${encodeURIComponent(b.title)}${b.author ? `+inauthor:${encodeURIComponent(b.author)}` : ''}`;
+          const gres = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${gq}&maxResults=1`);
+          if (gres.ok) {
+            const gdata = await gres.json();
+            const links = gdata.items?.[0]?.volumeInfo?.imageLinks;
+            if (links?.thumbnail || links?.smallThumbnail) {
+              coverUrl = (links.thumbnail || links.smallThumbnail).replace(/^http:\/\//i, 'https://').replace('&edge=curl', '');
+              b.cover = coverUrl;
+              foundCount++;
+            }
+          }
+        } catch(e) {}
+      }
+
+      if (foundCount > 0) {
+        saveBooks();
+        renderAllViews();
+        if (showNotifications) showToast(`Retrieved ${foundCount} book covers!`);
+      } else {
+        if (showNotifications) showToast('Could not find covers for remaining titles.');
+      }
     }
 
     function createVaultSnapshot() {
@@ -1323,6 +1473,7 @@
       showToast('Switched active book');
     }
 
+    // Helper: Category colors and labels
     function getShelfInfo(shelf) {
       switch(shelf) {
         case 'reading':
@@ -1484,7 +1635,7 @@
     }
 
     function batchDeleteSelectedBooks() {
-      if (!confirm(`Delete ${selectedBookIds.size} selected books from your library?`)) return;
+      if (selectedBookIds.size === 0) return;
       books = books.filter(b => !selectedBookIds.has(b.id));
       saveBooks();
       closeModal('modalBulkEdit');
@@ -1560,7 +1711,7 @@
               return `
                 <div onclick="${isBatchMode ? `toggleSelectBook('${b.id}', event)` : `openBookDetailModal('${b.id}')`}" class="relative group cursor-pointer">
                   <div class="relative rounded-xl overflow-hidden border-2 border-[#05244C] shadow-retro-navy ${isSelected ? 'ring-4 ring-[#FF5B22]' : ''}">
-                    <img src="${b.cover || 'https://placehold.co/200x300/446BA2/FFF9EE?text=Cover'}" class="w-full h-28 object-cover bg-slate-200">
+                    <img src="${b.cover || 'https://placehold.co/200x300/446BA2/FFF9EE?text=' + encodeURIComponent(b.title.slice(0, 15))}" class="w-full h-28 object-cover bg-slate-200">
                     ${isBatchMode ? `
                       <div class="absolute top-1.5 left-1.5 w-5 h-5 rounded-md bg-white border border-[#05244C] flex items-center justify-center">
                         ${isSelected ? '<span class="text-[#FF5B22] font-black text-xs">✓</span>' : ''}
@@ -1599,7 +1750,7 @@
                       ${isSelected ? '<span class="text-[#FF5B22] font-black text-xs">✓</span>' : ''}
                     </div>
                   ` : ''}
-                  <img src="${b.cover || 'https://placehold.co/100x150/446BA2/FFF9EE?text=Cover'}" class="w-14 h-20 object-cover rounded-xl border border-[#05244C] flex-shrink-0">
+                  <img src="${b.cover || 'https://placehold.co/100x150/446BA2/FFF9EE?text=' + encodeURIComponent(b.title.slice(0, 10))}" class="w-14 h-20 object-cover rounded-xl border border-[#05244C] flex-shrink-0">
                   <div class="flex-1 min-w-0">
                     <div class="flex items-center gap-1.5">
                       <span class="text-[9px] uppercase font-black px-2 py-0.5 rounded-full ${info.bg} ${info.text} border border-[#05244C] shadow-sm">${info.label}</span>
@@ -1683,19 +1834,25 @@
         if (daySessions.length > 0 || dayFinishedBooks.length > 0) {
           const isFinished = dayFinishedBooks.length > 0;
           let cover = '';
+          let bookTitle = '';
           if (isFinished) {
-            cover = dayFinishedBooks[dayFinishedBooks.length - 1].cover;
+            const bk = dayFinishedBooks[dayFinishedBooks.length - 1];
+            cover = bk?.cover;
+            bookTitle = bk?.title || '';
           } else {
             const lastSess = daySessions[daySessions.length - 1];
             const bk = books.find(b => b.id === lastSess.bookId);
             cover = bk?.cover;
+            bookTitle = bk?.title || '';
           }
-          cover = cover || 'https://placehold.co/50x70/446BA2/FFF9EE?text=%F0%9F%93%96';
+          cover = cover || '';
 
           grid.innerHTML += `
-            <div class="h-14 rounded-xl border-2 border-[#05244C] relative overflow-hidden shadow-sm bg-cover bg-center" style="background-image: url('${cover}')">
-              <div class="absolute inset-0 bg-black/30"></div>
-              <span class="absolute top-0.5 left-1 text-[9px] font-black text-white drop-shadow">${day}</span>
+            <div class="h-14 rounded-xl border-2 border-[#05244C] relative overflow-hidden shadow-sm bg-[#446BA2] bg-cover bg-center" style="${cover ? `background-image: url('${cover}')` : ''}">
+              <div class="absolute inset-0 bg-black/35 flex flex-col justify-between p-1">
+                <span class="text-[9px] font-black text-white drop-shadow">${day}</span>
+                ${!cover ? `<span class="text-[7px] text-white/90 font-bold truncate leading-tight">${bookTitle}</span>` : ''}
+              </div>
               ${isFinished ? `<span class="absolute bottom-0.5 right-0.5 bg-emerald-500 text-white text-[8px] px-1 rounded-full font-black border border-white shadow">✓</span>` : ''}
             </div>
           `;
@@ -1836,7 +1993,7 @@
           const fDate = b.finishedDate || (Array.isArray(b.finishedDates) && b.finishedDates[0]) || 'Finished';
           return `
             <div onclick="closeModal('modalFinishedBooks'); openBookDetailModal('${b.id}')" class="bg-white border-2 border-[#05244C] rounded-2xl p-2.5 flex gap-3 items-center cursor-pointer hover:bg-orange-50 transition-colors shadow-sm">
-              <img src="${b.cover || 'https://placehold.co/80x120/446BA2/FFF9EE?text=Cover'}" class="w-12 h-16 object-cover rounded-lg border border-[#05244C] flex-shrink-0 bg-slate-200">
+              <img src="${b.cover || 'https://placehold.co/80x120/446BA2/FFF9EE?text=' + encodeURIComponent(b.title.slice(0, 10))}" class="w-12 h-16 object-cover rounded-lg border border-[#05244C] flex-shrink-0 bg-slate-200">
               <div class="flex-1 min-w-0">
                 <h4 class="text-xs font-bold text-[#05244C] truncate">${b.title}</h4>
                 <p class="text-[10px] text-slate-500 truncate font-editorial italic">${b.author}</p>
@@ -2066,7 +2223,6 @@
       if (revSec) revSec.style.display = shelf === 'finished' ? 'block' : 'none';
     }
 
-    // Interactive Tap-to-Cycle Star Rating Logic (Full -> 3/4 -> 1/2 -> 1/4)
     function cycleStarRating(starIdx) {
       const curRating = Number(document.getElementById('editBookStarRating').value) || 0;
       let newRating = starIdx;
@@ -2415,7 +2571,7 @@
       window._tempSearchResults = results;
       list.innerHTML = results.map((r, idx) => `
         <div class="bg-white border-2 border-[#05244C] rounded-2xl p-3 flex gap-3 items-center">
-          <img src="${r.cover || 'https://placehold.co/80x120/446BA2/FFF9EE?text=Cover'}" class="w-12 h-18 object-cover rounded-lg border border-[#05244C]">
+          <img src="${r.cover || 'https://placehold.co/80x120/446BA2/FFF9EE?text=' + encodeURIComponent(r.title.slice(0, 10))}" class="w-12 h-18 object-cover rounded-lg border border-[#05244C]">
           <div class="flex-1 min-w-0">
             <h4 class="text-xs font-bold text-[#05244C] truncate">${r.title}</h4>
             <p class="text-[10px] text-slate-500 truncate font-editorial italic">${r.author}</p>
@@ -2741,7 +2897,7 @@
         if (badge) badge.innerText = 'Connected';
         showToast('Sync Key Linked! Ready on all devices.');
       } else {
-        showToast('Offline mode. Use "Copy Transfer Code" below!');
+        showToast('Offline mode. Use "Copy Code" below!');
       }
     }
 
@@ -2867,7 +3023,7 @@
         t.select();
         document.execCommand('copy');
         document.body.removeChild(t);
-        showToast('Copied Transfer Code to clipboard! Paste it on your other device.');
+        showToast('Copied Transfer Code to clipboard!');
       } catch (err) {
         showToast('Export failed. Use Download JSON Backup.');
       }
@@ -3023,10 +3179,14 @@
       saveBooks();
       saveSessions();
       saveQuotes();
+      populateYearDropdown();
       determineActiveHeroBook();
       renderAllViews();
       event.target.value = '';
       showToast(`Imported ${booksAdded} books, ${sessionsAdded} sessions, ${quotesAdded} quotes!`);
+
+      // Trigger automatic background cover search for newly imported items
+      fetchMissingCovers(false);
     }
 
     function parseBooksCsv(csvText) {
@@ -3038,15 +3198,17 @@
       const idIdx = headers.findIndex(h => h === 'bookid' || h === 'id');
       const titleIdx = headers.findIndex(h => h === 'title' || h === 'booktitle');
       const authorIdx = headers.findIndex(h => h === 'author' || h === 'authors');
-      const pagesIdx = headers.findIndex(h => h.includes('pagecount') || h.includes('totalpage') || h === 'pages');
+      const pagesIdx = headers.findIndex(h => h.includes('pagecount') || h.includes('totalpage') || h === 'numberofpages' || h === 'pages');
       const currentIdx = headers.findIndex(h => h.includes('currentpage') || h.includes('progress'));
-      const shelfIdx = headers.findIndex(h => h.includes('status') || h.includes('shelf'));
-      const formatIdx = headers.findIndex(h => h.includes('format') || h.includes('type'));
+      const shelfIdx = headers.findIndex(h => h.includes('status') || h.includes('shelf') || h.includes('exclusiveshelf'));
+      const formatIdx = headers.findIndex(h => h.includes('format') || h.includes('binding') || h.includes('type'));
       const coverIdx = headers.findIndex(h => h.includes('cover') || h.includes('thumbnail') || h.includes('image'));
-      const ratingIdx = headers.findIndex(h => h.includes('rating'));
-      const reviewIdx = headers.findIndex(h => h.includes('review') || h.includes('thought'));
-      const genreIdx = headers.findIndex(h => h.includes('genre') || h.includes('category') || h.includes('tag'));
-      const finDateIdx = headers.findIndex(h => h.includes('finished') || h.includes('completed') || h.includes('readat'));
+      const ratingIdx = headers.findIndex(h => h === 'myrating' || h.includes('rating'));
+      const reviewIdx = headers.findIndex(h => h === 'myreview' || h.includes('review') || h.includes('thought'));
+      const genreIdx = headers.findIndex(h => h.includes('genre') || h.includes('category') || h.includes('bookshelves') || h.includes('tag'));
+      const finDateIdx = headers.findIndex(h => h === 'dateread' || h.includes('finished') || h.includes('completed') || h.includes('readat'));
+      const isbnIdx = headers.findIndex(h => h === 'isbn');
+      const isbn13Idx = headers.findIndex(h => h === 'isbn13');
 
       let count = 0;
       for (let i = 1; i < rows.length; i++) {
@@ -3059,45 +3221,84 @@
         const curP = Number(row[currentIdx]) || 0;
         const rawId = row[idIdx] || ('b_csv_' + Date.now() + '_' + i);
         
+        // Clean ISBN from Goodreads Excel format (e.g., ="0439064872")
+        const rawIsbn = row[isbnIdx] ? row[isbnIdx].replace(/[^0-9X]/gi, '') : '';
+        const rawIsbn13 = row[isbn13Idx] ? row[isbn13Idx].replace(/[^0-9X]/gi, '') : '';
+        
         let shelf = 'to-read';
         const rawShelf = (row[shelfIdx] || '').toLowerCase();
-        if (rawShelf.includes('reading') || rawShelf.includes('current')) shelf = 'reading';
-        else if (rawShelf.includes('finished') || rawShelf.includes('read') || rawShelf.includes('complete')) shelf = 'finished';
+        if (rawShelf.includes('currently') || rawShelf.includes('reading') || rawShelf.includes('current')) shelf = 'reading';
+        else if (rawShelf.includes('read') || rawShelf.includes('finished') || rawShelf.includes('complete')) shelf = 'finished';
         else if (rawShelf.includes('dnf') || rawShelf.includes('dropped')) shelf = 'dnf';
         else if (rawShelf.includes('wish')) shelf = 'wishlist';
 
         let existing = books.find(b => (b.externalId && b.externalId === rawId) || b.title.toLowerCase() === title.toLowerCase());
         const genres = row[genreIdx] ? row[genreIdx].split(/[,;/]/).map(g => g.trim()).filter(Boolean) : ['General'];
-        const finDate = row[finDateIdx] ? row[finDateIdx].slice(0, 10) : (shelf === 'finished' ? new Date().toISOString().split('T')[0] : null);
+        
+        const rawFinDate = row[finDateIdx];
+        const normalizedFinDate = normalizeDateToYMD(rawFinDate) || (shelf === 'finished' ? new Date().toISOString().split('T')[0] : null);
+
+        let coverImg = row[coverIdx] || '';
+        // If no cover is present in CSV but ISBN is available, set direct Open Library cover URL
+        if (!coverImg) {
+          const usableIsbn = rawIsbn13 || rawIsbn;
+          if (usableIsbn && usableIsbn.length >= 10) {
+            coverImg = `https://covers.openlibrary.org/b/isbn/${usableIsbn}-L.jpg`;
+          }
+        }
+
+        const bookId = existing ? existing.id : ('b_' + Date.now() + '_' + i);
 
         if (existing) {
           existing.externalId = rawId;
           if (pages > 0) existing.pageCount = pages;
           if (curP > 0) existing.currentPage = curP;
           if (shelf) existing.shelf = shelf;
-          if (row[coverIdx]) existing.cover = row[coverIdx];
+          if (coverImg && !existing.cover) existing.cover = coverImg;
+          if (rawIsbn) existing.isbn = rawIsbn;
+          if (rawIsbn13) existing.isbn13 = rawIsbn13;
           if (row[ratingIdx]) existing.rating = Number(row[ratingIdx]) || existing.rating;
           if (row[reviewIdx]) existing.review = row[reviewIdx];
-          if (finDate) existing.finishedDate = finDate;
+          if (normalizedFinDate) existing.finishedDate = normalizedFinDate;
         } else {
           books.push({
-            id: 'b_' + Date.now() + '_' + i,
+            id: bookId,
             externalId: rawId,
             title,
             author,
+            isbn: rawIsbn,
+            isbn13: rawIsbn13,
             pageCount: pages,
-            currentPage: curP,
+            currentPage: (shelf === 'finished') ? pages : curP,
             shelf,
             format: row[formatIdx] || 'Paperback',
             ownership: 'Owned',
             genres: genres.length > 0 ? genres : ['General'],
-            cover: row[coverIdx] || '',
+            cover: coverImg,
             rating: Number(row[ratingIdx]) || 0,
             review: row[reviewIdx] || '',
-            finishedDate: finDate,
-            lastSessionDate: finDate || null
+            finishedDate: normalizedFinDate,
+            lastSessionDate: normalizedFinDate || null
           });
           count++;
+        }
+
+        // Generate calendar reading session for finished books so they appear on the calendar
+        if (shelf === 'finished' && normalizedFinDate) {
+          const sessionExists = readingSessions.some(s => s.bookId === bookId && s.date === normalizedFinDate);
+          if (!sessionExists) {
+            readingSessions.push({
+              id: 'sess_import_' + Date.now() + '_' + i,
+              bookId: bookId,
+              date: normalizedFinDate,
+              timestamp: new Date(normalizedFinDate).getTime() || Date.now(),
+              durationMinutes: 30,
+              pagesRead: Math.min(25, pages),
+              startPage: Math.max(0, pages - 25),
+              endPage: pages,
+              notes: 'Finished reading!'
+            });
+          }
         }
       }
       return count;
@@ -3120,7 +3321,8 @@
       let count = 0;
       for (let i = 1; i < rows.length; i++) {
         const row = rows[i];
-        const date = (row[dateIdx] || new Date().toISOString()).slice(0, 10);
+        const rawDate = row[dateIdx];
+        const date = normalizeDateToYMD(rawDate) || new Date().toISOString().slice(0, 10);
         const pgs = Number(row[pagesIdx]) || 15;
         const mins = Number(row[minsIdx]) || 20;
         const rawBookId = row[idIdx];
@@ -3178,7 +3380,7 @@
           text: text,
           page: row[pageIdx] || '',
           tag: row[tagIdx] || 'Quote',
-          date: (row[dateIdx] || new Date().toISOString()).slice(0, 10)
+          date: normalizeDateToYMD(row[dateIdx]) || new Date().toISOString().slice(0, 10)
         });
         count++;
       }
