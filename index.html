@@ -18,6 +18,32 @@
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
 
+  <!-- Global Image Preview Handlers Safeguard -->
+  <script>
+    window.handlePreviewImgLoaded = function() {
+      const img = document.getElementById('editBookCoverPreviewImg');
+      const placeholder = document.getElementById('editBookCoverPreviewPlaceholder');
+      const statusLbl = document.getElementById('coverPreviewStatus');
+      if (img) img.classList.remove('hidden');
+      if (placeholder) placeholder.classList.add('hidden');
+      if (statusLbl) {
+        statusLbl.innerText = '✓ Valid image';
+        statusLbl.className = 'text-[9px] font-bold text-emerald-600';
+      }
+    };
+    window.handlePreviewImgError = function() {
+      const img = document.getElementById('editBookCoverPreviewImg');
+      const placeholder = document.getElementById('editBookCoverPreviewPlaceholder');
+      const statusLbl = document.getElementById('coverPreviewStatus');
+      if (img) img.classList.add('hidden');
+      if (placeholder) placeholder.classList.remove('hidden');
+      if (statusLbl) {
+        statusLbl.innerText = '⚠️ Could not load image';
+        statusLbl.className = 'text-[9px] font-bold text-rose-500';
+      }
+    };
+  </script>
+
   <!-- Google Fonts: Vacation & Retro 80s Typography -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -631,7 +657,7 @@
           <div class="flex gap-2 items-center">
             <input type="url" id="editBookCover" oninput="updateLiveCoverPreview(this.value)" placeholder="Paste image link..." class="flex-1 min-w-0 bg-white border-2 border-[#05244C] rounded-xl p-2 font-semibold text-xs">
             <div class="w-10 h-14 rounded-lg border-2 border-[#05244C] overflow-hidden bg-slate-200 flex-shrink-0 relative shadow-sm">
-              <img id="editBookCoverPreviewImg" src="" alt="" class="w-full h-full object-cover hidden" onload="handlePreviewImgLoaded()" onerror="handlePreviewImgError()">
+              <img id="editBookCoverPreviewImg" alt="" class="w-full h-full object-cover hidden">
               <div id="editBookCoverPreviewPlaceholder" class="w-full h-full flex items-center justify-center text-[10px] text-slate-400 font-bold">🖼️</div>
             </div>
           </div>
@@ -752,9 +778,49 @@
           <!-- Reading Sessions List -->
           <div class="bg-white/80 border-2 border-[#05244C] rounded-2xl p-3 space-y-2">
             <div class="flex items-center justify-between border-b border-orange-100 pb-1.5">
-              <span class="text-[10px] uppercase font-black text-[#05244C] tracking-wide">Reading Sessions Log</span>
-              <span id="bookTotalSessionTime" class="text-[10px] font-bold text-slate-500">0 mins total</span>
+              <div class="flex items-center gap-2">
+                <span class="text-[10px] uppercase font-black text-[#05244C] tracking-wide">Reading Sessions Log</span>
+                <span id="bookTotalSessionTime" class="text-[10px] font-bold text-slate-500">0 mins total</span>
+              </div>
+              <button type="button" onclick="toggleInlineSessionForm()" class="px-2 py-0.5 bg-[#FF5B22] text-white rounded-lg text-[10px] font-black border border-[#05244C] shadow-sm retro-btn">+ Log Session</button>
             </div>
+
+            <!-- Inline Quick Session Logger Form -->
+            <div id="inlineSessionForm" class="hidden bg-[#FFF9EE] border-2 border-[#05244C] rounded-xl p-2.5 space-y-2 shadow-sm">
+              <div class="flex items-center justify-between pb-1 border-b border-orange-200">
+                <span class="text-[10px] font-black uppercase text-[#FF5B22]">Quick Log Session</span>
+                <button type="button" onclick="toggleInlineSessionForm(false)" class="text-slate-400 hover:text-slate-600 font-bold text-xs">✕</button>
+              </div>
+              <div class="grid grid-cols-2 gap-2 text-[10px]">
+                <div>
+                  <label class="block font-bold text-slate-600 mb-0.5">Date</label>
+                  <input type="date" id="inlineSessDate" class="w-full bg-white border border-[#05244C] rounded-lg p-1.5 font-bold text-[10px]">
+                </div>
+                <div>
+                  <label class="block font-bold text-slate-600 mb-0.5">Minutes</label>
+                  <input type="number" id="inlineSessMinutes" placeholder="30" class="w-full bg-white border border-[#05244C] rounded-lg p-1.5 font-bold text-[10px]">
+                </div>
+              </div>
+              <div class="grid grid-cols-2 gap-2 text-[10px]">
+                <div>
+                  <label class="block font-bold text-slate-600 mb-0.5">Start Page</label>
+                  <input type="number" id="inlineSessStartPage" placeholder="0" class="w-full bg-white border border-[#05244C] rounded-lg p-1.5 font-bold text-[10px]">
+                </div>
+                <div>
+                  <label class="block font-bold text-slate-600 mb-0.5">End Page</label>
+                  <input type="number" id="inlineSessEndPage" placeholder="25" class="w-full bg-white border border-[#05244C] rounded-lg p-1.5 font-bold text-[10px]">
+                </div>
+              </div>
+              <div>
+                <label class="block font-bold text-slate-600 text-[10px] mb-0.5">Notes (optional)</label>
+                <input type="text" id="inlineSessNotes" placeholder="Thoughts or bookmark..." class="w-full bg-white border border-[#05244C] rounded-lg p-1.5 font-editorial italic text-[10px]">
+              </div>
+              <div class="flex gap-1.5 pt-0.5">
+                <button type="button" onclick="submitInlineSession()" class="flex-1 py-1.5 bg-[#FF5B22] text-white rounded-lg text-[10px] font-black border border-[#05244C] shadow-sm">Save Session</button>
+                <button type="button" onclick="toggleInlineSessionForm(false)" class="px-2.5 py-1.5 bg-white text-slate-600 rounded-lg text-[10px] font-bold border border-slate-300">Cancel</button>
+              </div>
+            </div>
+
             <div id="bookSessionsList" class="space-y-1.5 max-h-44 overflow-y-auto no-scrollbar text-xs">
               <!-- Rendered dynamically -->
             </div>
@@ -2177,31 +2243,6 @@
     }
 
     // Live Cover Image Preview & Diagnostics
-    function updateLiveCoverPreview(url) {
-      const cleaned = cleanImageUrl(url);
-      const img = document.getElementById('editBookCoverPreviewImg');
-      const placeholder = document.getElementById('editBookCoverPreviewPlaceholder');
-      const statusLbl = document.getElementById('coverPreviewStatus');
-
-      if (!cleaned) {
-        if (img) img.classList.add('hidden');
-        if (placeholder) placeholder.classList.remove('hidden');
-        if (statusLbl) {
-          statusLbl.innerText = 'No link entered';
-          statusLbl.className = 'text-[9px] font-bold text-slate-400';
-        }
-        return;
-      }
-
-      if (img) {
-        img.src = cleaned;
-        if (statusLbl) {
-          statusLbl.innerText = 'Checking link...';
-          statusLbl.className = 'text-[9px] font-bold text-amber-600';
-        }
-      }
-    }
-
     function handlePreviewImgLoaded() {
       const img = document.getElementById('editBookCoverPreviewImg');
       const placeholder = document.getElementById('editBookCoverPreviewPlaceholder');
@@ -2226,6 +2267,105 @@
       }
     }
 
+    // Expose handlers globally to ensure no ReferenceError occurs
+    window.handlePreviewImgLoaded = handlePreviewImgLoaded;
+    window.handlePreviewImgError = handlePreviewImgError;
+
+    function updateLiveCoverPreview(url) {
+      const cleaned = cleanImageUrl(url);
+      const img = document.getElementById('editBookCoverPreviewImg');
+      const placeholder = document.getElementById('editBookCoverPreviewPlaceholder');
+      const statusLbl = document.getElementById('coverPreviewStatus');
+
+      if (!cleaned) {
+        if (img) {
+          img.onload = null;
+          img.onerror = null;
+          img.removeAttribute('src');
+          img.classList.add('hidden');
+        }
+        if (placeholder) placeholder.classList.remove('hidden');
+        if (statusLbl) {
+          statusLbl.innerText = 'No link entered';
+          statusLbl.className = 'text-[9px] font-bold text-slate-400';
+        }
+        return;
+      }
+
+      if (img) {
+        img.onload = handlePreviewImgLoaded;
+        img.onerror = handlePreviewImgError;
+        img.src = cleaned;
+        if (statusLbl) {
+          statusLbl.innerText = 'Checking link...';
+          statusLbl.className = 'text-[9px] font-bold text-amber-600';
+        }
+      }
+    }
+
+    function toggleInlineSessionForm(forceState) {
+      const form = document.getElementById('inlineSessionForm');
+      if (!form) return;
+      if (typeof forceState === 'boolean') {
+        form.classList.toggle('hidden', !forceState);
+      } else {
+        form.classList.toggle('hidden');
+      }
+    }
+
+    function submitInlineSession() {
+      const bookId = document.getElementById('editBookId').value;
+      const bk = books.find(b => b.id === bookId);
+      if (!bk) return;
+
+      const dateStr = document.getElementById('inlineSessDate').value || new Date().toISOString().split('T')[0];
+      const minutes = Number(document.getElementById('inlineSessMinutes').value) || 20;
+      const startP = Number(document.getElementById('inlineSessStartPage').value) || 0;
+      const endP = Number(document.getElementById('inlineSessEndPage').value) || startP;
+      const notes = document.getElementById('inlineSessNotes').value.trim();
+
+      const pagesRead = Math.max(0, endP - startP);
+      const session = {
+        id: 'sess_' + Date.now(),
+        bookId: bk.id,
+        date: dateStr,
+        timestamp: Date.now(),
+        durationMinutes: minutes,
+        startPage: startP,
+        endPage: endP,
+        pagesRead: pagesRead,
+        notes: notes
+      };
+
+      readingSessions.push(session);
+      bk.currentPage = Math.max(bk.currentPage, endP);
+      bk.lastSessionDate = dateStr;
+
+      // Update current page & percent inputs inside the modal in real time
+      document.getElementById('editBookCurrentPage').value = bk.currentPage;
+      const pct = bk.pageCount > 0 ? Math.min(100, Math.round((bk.currentPage / bk.pageCount) * 100)) : 0;
+      document.getElementById('editBookPercent').value = pct;
+
+      // Auto-finish if complete
+      if (bk.pageCount > 0 && bk.currentPage >= bk.pageCount) {
+        bk.currentPage = bk.pageCount;
+        bk.shelf = 'finished';
+        bk.finishedDate = dateStr;
+        if (!bk.finishedDates) bk.finishedDates = [];
+        if (!bk.finishedDates.includes(dateStr)) bk.finishedDates.push(dateStr);
+        document.getElementById('editBookShelf').value = 'finished';
+        toggleReviewSectionDisplay();
+      }
+
+      saveSessions();
+      saveBooks();
+      renderBookSessionsList(bk.id);
+      toggleInlineSessionForm(false);
+      determineActiveHeroBook();
+      renderAllViews();
+      showToast('Session logged!');
+    }
+
     function openBookDetailModal(id) {
       const bk = books.find(b => b.id === id);
       if (!bk) return;
@@ -2247,12 +2387,25 @@
       document.getElementById('editBookCover').value = rawCover;
       updateLiveCoverPreview(rawCover);
 
+      // Pre-fill inline session form with smart defaults if elements exist
+      const sessDateEl = document.getElementById('inlineSessDate');
+      if (sessDateEl) sessDateEl.value = new Date().toISOString().split('T')[0];
+      const sessMinsEl = document.getElementById('inlineSessMinutes');
+      if (sessMinsEl) sessMinsEl.value = 30;
+      const sessStartEl = document.getElementById('inlineSessStartPage');
+      if (sessStartEl) sessStartEl.value = bk.currentPage || 0;
+      const sessEndEl = document.getElementById('inlineSessEndPage');
+      if (sessEndEl) sessEndEl.value = bk.pageCount ? Math.min(bk.pageCount, (bk.currentPage || 0) + 15) : (bk.currentPage || 0) + 15;
+      const sessNotesEl = document.getElementById('inlineSessNotes');
+      if (sessNotesEl) sessNotesEl.value = '';
+      toggleInlineSessionForm(false);
+
       isEditingFavorite = !!bk.isFavorite;
       updateFavoriteButtonDisplay();
 
       const count = bk.readCount || (bk.shelf === 'finished' ? 1 : 0);
       const reBadge = document.getElementById('reReadCountBadge');
-      if (reBadge) reBadge.innerText = count > 1 ? `Re-read ${count} times` : (count === 1 ? `Finished 1 time` : `In progress`);
+      if (reBadge) reBadge.innerText = count > 1 ? `Read ${count} times` : (count === 1 ? `Finished 1 time` : `In progress`);
 
       const finishDateInput = document.getElementById('editBookFinishedDate');
       if (finishDateInput) {
