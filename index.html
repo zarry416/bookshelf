@@ -471,7 +471,7 @@
       </div>
     </section>
 
-    <!-- TAB 4: AESTHETIC QUOTES WITH GIANT QUOTATION POSTER DESIGN -->
+    <!-- TAB 4: AESTHETIC QUOTES WITH GIANT QUOTATION POSTER DESIGN[cite: 4] -->
     <section id="tab-quotes" class="tab-content hidden space-y-4">
       <div class="bg-[#FFF9EE] border-3 border-[#05244C] rounded-3xl p-4 shadow-retro-orange flex items-center justify-between">
         <div>
@@ -585,7 +585,7 @@
     </div>
   </div>
 
-  <!-- MODAL: BOOK DETAIL & EDIT -->
+  <!-- MODAL: BOOK DETAIL & EDIT (WITH GENRES & TAGS FIELD) -->
   <div id="modalBookDetail" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4">
     <div class="bg-[#FFF9EE] border-3 border-[#05244C] rounded-3xl p-6 w-full max-w-sm shadow-retro-orange space-y-3.5 max-h-[90vh] overflow-y-auto">
       <div class="flex justify-between items-center pb-2 border-b-2 border-orange-200">
@@ -645,6 +645,13 @@
               <option value="Not Owned">Not Owned</option>
             </select>
           </div>
+        </div>
+
+        <!-- NEW: Genres & Categories Input Field -->
+        <div>
+          <label class="block mb-1">Genres & Categories</label>
+          <input type="text" id="editBookGenres" placeholder="Thriller, Mystery, Contemporary (comma separated)" class="w-full bg-white border-2 border-[#05244C] rounded-xl p-2 font-semibold text-xs">
+          <p class="text-[9px] text-slate-400 mt-0.5">Separate multiple genres with commas (e.g. Fantasy, Romance)</p>
         </div>
 
         <!-- Clean Formats Header (No subtext) -->
@@ -1216,7 +1223,7 @@
   </div>
 
   <script>
-    const APP_VERSION = "4.3";
+    const APP_VERSION = "4.4";
     let books = [];
     let readingSessions = [];
     let quotes = [];
@@ -1254,7 +1261,6 @@
     let currentSoundType = null;
     let activeSoundNodes = [];
 
-    // Verify image URL by testing real dimensions
     function testImageUrl(url) {
       return new Promise((resolve) => {
         if (!url) return resolve(false);
@@ -1282,7 +1288,6 @@
       });
     }
 
-    // Smart Image URL Cleaner & Resolver
     function cleanImageUrl(rawUrl) {
       if (!rawUrl) return '';
       let url = String(rawUrl).trim().replace(/^["']|["']$/g, '');
@@ -1354,7 +1359,6 @@
       window.open(`https://www.google.com/search?tbm=isch&q=${q}`, '_blank');
     }
 
-    // Auto-Find Cover from Google Books & Open Library
     async function autoFindSingleCover() {
       const title = document.getElementById('editBookTitle')?.value.trim();
       const author = document.getElementById('editBookAuthor')?.value.trim();
@@ -2139,7 +2143,6 @@
         );
       }
 
-      // Sorting
       if (sort === 'rating_high') {
         filtered.sort((a, b) => (b.rating || 0) - (a.rating || 0));
       } else if (sort === 'rating_low') {
@@ -2163,7 +2166,7 @@
         return;
       }
 
-      // VIEW 1: COVERS GRID (STANDARD 2:3 BOOK RATIO)
+      // VIEW 1: COVERS GRID
       if (currentLibraryView === 'covers') {
         container.innerHTML = `
           <div class="grid grid-cols-4 gap-2">
@@ -2732,7 +2735,6 @@
       showToast(editSessionId ? 'Entry updated!' : 'Session logged!');
     }
 
-    // Unmark book as finished & clean milestone records
     function unmarkBookFinished() {
       const id = document.getElementById('editBookId').value;
       const bk = books.find(b => b.id === id);
@@ -2747,7 +2749,6 @@
       bk.vibeSpice = 0;
       bk.vibeHeartbreak = 0;
 
-      // Also clean auto-generated finish sessions so calendar updates properly
       readingSessions = readingSessions.filter(s => !(s.bookId === bk.id && (s.id.startsWith('sess_fin_') || s.notes === 'Finished reading!' || s.notes === 'Completed book!')));
 
       document.getElementById('editBookShelf').value = 'reading';
@@ -2793,7 +2794,6 @@
       showToast('Finished milestone removed.');
     }
 
-    // Quotes Management Inside Edit Modal
     function toggleEditQuoteForm(forceState) {
       const form = document.getElementById('editBookQuoteForm');
       if (!form) return;
@@ -2885,6 +2885,12 @@
       document.getElementById('editBookShelf').value = bk.shelf || 'reading';
       document.getElementById('editBookOwnership').value = bk.ownership || 'Owned';
       
+      // Populate genres input
+      const genresInput = document.getElementById('editBookGenres');
+      if (genresInput) {
+        genresInput.value = Array.isArray(bk.genres) ? bk.genres.join(', ') : (bk.genres || '');
+      }
+
       editingBookFormats = getBookFormatsList(bk);
       renderEditBookFormatButtons();
 
@@ -3081,6 +3087,10 @@
       bk.currentPage = Number(document.getElementById('editBookCurrentPage').value) || 0;
       bk.pageCount = Number(document.getElementById('editBookTotalPages').value) || bk.pageCount;
       
+      // Save genres from input field
+      const rawGenres = document.getElementById('editBookGenres')?.value || '';
+      bk.genres = rawGenres.split(',').map(g => g.trim()).filter(Boolean);
+
       bk.formats = editingBookFormats.length > 0 ? [...editingBookFormats] : ['Paperback'];
       bk.format = bk.formats.join(', ');
 
@@ -3123,6 +3133,7 @@
       }
 
       saveBooks();
+      populateGenreDropdown();
       populateYearDropdown();
       closeModal('modalBookDetail');
       determineActiveHeroBook();
@@ -3195,7 +3206,7 @@
               <span class="bg-[#FF5B22] text-white px-1.5 py-0.2 rounded text-[9px] font-black">+${s.pagesRead || (s.endPage - s.startPage)} pgs</span>
               <span class="text-slate-500 font-bold">${s.durationMinutes}m</span>
             </div>
-            <p class="text-[10px] text-slate-500 truncate">Pgs ${s.startPage || 0} ➔ ${s.endPage || 0}${s.notes ? ` • “${s.notes}"` : ''}</p>
+            <p class="text-[10px] text-slate-500 truncate">Pgs ${s.startPage || 0} ➔ ${s.endPage || 0}${s.notes ? ` • “${s.notes}”` : ''}</p>
           </div>
           <div class="flex items-center gap-1 flex-shrink-0">
             <button type="button" onclick="editSessionInBook('${s.id}', '${bookId}')" class="px-2 py-0.5 bg-white border border-[#05244C] rounded-lg text-[10px] font-black text-[#05244C] shadow-sm hover:bg-amber-100" title="Edit Session">✏️ Edit</button>
@@ -3559,7 +3570,6 @@
       showToast('Quote saved to collection!');
     }
 
-    // Editorial Poster Quote Design with Giant Quotation Mark[cite: 4]
     function renderQuotes() {
       const container = document.getElementById('quotesContainer');
       if (!container) return;
@@ -3572,7 +3582,6 @@
         container.innerHTML = quotes.map(q => `
           <div class="relative bg-[#FFF9EE] border-3 border-[#05244C] rounded-3xl p-6 shadow-retro-orange space-y-3">
             <button onclick="deleteQuote('${q.id}')" class="absolute top-4 right-4 text-slate-400 hover:text-red-500 font-bold text-sm p-1">✕</button>
-            <!-- Giant Signature Quotation Mark[cite: 4] -->
             <div class="font-quote-display text-6xl text-[#1DBBB4] font-black leading-none select-none -mb-3">“</div>
             <p class="font-quote-display text-lg text-[#05244C] font-semibold italic leading-relaxed pt-1">
               ${q.text}
