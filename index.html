@@ -2606,71 +2606,91 @@
 
     // --- CALENDAR & STATS FUNCTIONS ---
     function renderCalendar() {
-      const monthTitleEl = document.getElementById('calendarMonthTitle');
-      if (!monthTitleEl) return;
+  const monthTitleEl = document.getElementById('calendarMonthTitle');
+  if (!monthTitleEl) return;
 
-      const monthTitle = new Date(calendarYear, calendarMonth).toLocaleString('default', { month: 'long', year: 'numeric' });
-      monthTitleEl.innerText = monthTitle;
+  const monthTitle = new Date(calendarYear, calendarMonth).toLocaleString('default', { month: 'long', year: 'numeric' });
+  monthTitleEl.innerText = monthTitle;
 
-      const firstDayIndex = new Date(calendarYear, calendarMonth, 1).getDay();
-      const daysInMonth = new Date(calendarYear, calendarMonth + 1, 0).getDate();
-      const grid = document.getElementById('calendarDaysGrid');
-      if (!grid) return;
-      grid.innerHTML = '';
+  const firstDayIndex = new Date(calendarYear, calendarMonth, 1).getDay();
+  const daysInMonth = new Date(calendarYear, calendarMonth + 1, 0).getDate();
+  const grid = document.getElementById('calendarDaysGrid');
+  if (!grid) return;
+  grid.innerHTML = '';
 
-      for (let i = 0; i < firstDayIndex; i++) {
-        grid.innerHTML += `<div class="h-14 rounded-xl bg-amber-50/40 border border-transparent"></div>`;
+  for (let i = 0; i < firstDayIndex; i++) {
+    grid.innerHTML += `<div class="h-14 rounded-xl bg-amber-50/40 border border-transparent"></div>`;
+  }
+
+  for (let day = 1; day <= daysInMonth; day++) {
+    const dateStr = `${calendarYear}-${String(calendarMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+    
+    // Find sessions matching this date (with date normalization support)
+    const daySessions = readingSessions.filter(s => {
+      const sDate = normalizeDateToYMD(s.date) || s.date;
+      return sDate === dateStr;
+    });
+
+    // Find books finished on this date
+    const dayFinishedBooks = books.filter(b => {
+      const fDate = normalizeDateToYMD(b.finishedDate) || b.finishedDate;
+      const fDates = Array.isArray(b.finishedDates) ? b.finishedDates.map(d => normalizeDateToYMD(d) || d) : [];
+      return fDate === dateStr || fDates.includes(dateStr);
+    });
+
+    const hasRead = daySessions.length > 0;
+    const isFinished = dayFinishedBooks.length > 0;
+
+    if (hasRead || isFinished) {
+      let cover = '';
+      let bookTitle = '';
+
+      if (isFinished) {
+        const bk = dayFinishedBooks[dayFinishedBooks.length - 1];
+        cover = bk?.cover || '';
+        bookTitle = bk?.title || '';
+      } else if (hasRead) {
+        const lastSess = daySessions[daySessions.length - 1];
+        // Match by internal ID, external Goodreads ID, or book title
+        const bk = books.find(b => 
+          b.id === lastSess.bookId || 
+          (b.externalId && b.externalId === lastSess.bookId) ||
+          (lastSess.bookTitle && b.title.toLowerCase() === lastSess.bookTitle.toLowerCase())
+        );
+        cover = bk?.cover || '';
+        bookTitle = bk?.title || '';
       }
 
-      for (let day = 1; day <= daysInMonth; day++) {
-        const dateStr = `${calendarYear}-${String(calendarMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-        const daySessions = readingSessions.filter(s => s.date === dateStr);
-        const dayFinishedBooks = books.filter(b => b.finishedDate === dateStr || (Array.isArray(b.finishedDates) && b.finishedDates.includes(dateStr)));
+      const hasValidCover = Boolean(cover && cover.trim() !== '');
 
-        if (daySessions.length > 0 || dayFinishedBooks.length > 0) {
-          const isFinished = dayFinishedBooks.length > 0;
-          let cover = '';
-          let bookTitle = '';
-          if (isFinished) {
-            const bk = dayFinishedBooks[dayFinishedBooks.length - 1];
-            cover = bk?.cover;
-            bookTitle = bk?.title || '';
-          } else {
-            const lastSess = daySessions[daySessions.length - 1];
-            const bk = books.find(b => b.id === lastSess.bookId);
-            cover = bk?.cover;
-            bookTitle = bk?.title || '';
-          }
-          cover = cover || '';
-
-          grid.innerHTML += `
-            <div class="h-14 rounded-xl border-2 border-[#05244C] relative overflow-hidden shadow-sm bg-[#446BA2] bg-cover bg-center" style="${cover ? `background-image: url('${cover}')` : ''}">
-              <div class="absolute inset-0 bg-black/35 flex flex-col justify-between p-1">
-                <span class="text-[9px] font-black text-white drop-shadow">${day}</span>
-                ${!cover ? `<span class="text-[7px] text-white/90 font-bold truncate leading-tight">${bookTitle}</span>` : ''}
-              </div>
-              ${isFinished ? `<span class="absolute bottom-0.5 right-0.5 bg-emerald-500 text-white text-[8px] px-1 rounded-full font-black border border-white shadow">✓</span>` : ''}
-            </div>
-          `;
-        } else {
-          grid.innerHTML += `
-            <div class="h-14 rounded-xl border border-orange-200 bg-white flex flex-col items-center justify-between p-1">
-              <span class="text-[9px] font-bold text-slate-400 self-start">${day}</span>
-            </div>
-          `;
-        }
-      }
-
-      const completedBooksThisYear = books.filter(b => b.shelf === 'finished').length;
-      const currentMonthNum = new Date().getMonth() + 1;
-      const rate = (completedBooksThisYear / currentMonthNum).toFixed(1);
-      const proj = (rate * 12).toFixed(1);
-
-      const bannerText = document.getElementById('velocityBannerText');
-      if (bannerText) {
-        bannerText.innerText = `At your current rate of ${rate} books/month, you'll read ${proj} books this year!`;
-      }
+      grid.innerHTML += `
+        <div class="h-14 rounded-xl border-2 border-[#05244C] relative overflow-hidden shadow-sm bg-[#446BA2] bg-cover bg-center" style="${hasValidCover ? `background-image: url('${cover}'); background-size: cover; background-position: center;` : ''}">
+          <div class="absolute inset-0 ${hasValidCover ? 'bg-black/30' : 'bg-transparent'} flex flex-col justify-between p-1">
+            <span class="text-[9px] font-black text-white drop-shadow">${day}</span>
+            ${!hasValidCover ? `<span class="text-[7px] text-white font-extrabold truncate leading-tight">${bookTitle}</span>` : ''}
+          </div>
+          ${isFinished ? `<span class="absolute bottom-0.5 right-0.5 bg-emerald-500 text-white text-[8px] px-1 rounded-full font-black border border-white shadow">✓</span>` : ''}
+        </div>
+      `;
+    } else {
+      grid.innerHTML += `
+        <div class="h-14 rounded-xl border border-orange-200 bg-white flex flex-col items-center justify-between p-1">
+          <span class="text-[9px] font-bold text-slate-400 self-start">${day}</span>
+        </div>
+      `;
     }
+  }
+
+  const completedBooksThisYear = books.filter(b => b.shelf === 'finished').length;
+  const currentMonthNum = new Date().getMonth() + 1;
+  const rate = (completedBooksThisYear / currentMonthNum).toFixed(1);
+  const proj = (rate * 12).toFixed(1);
+
+  const bannerText = document.getElementById('velocityBannerText');
+  if (bannerText) {
+    bannerText.innerText = `At your current rate of ${rate} books/month, you'll read ${proj} books this year!`;
+  }
+}
 
     function changeCalendarMonth(offset) {
       calendarMonth += offset;
