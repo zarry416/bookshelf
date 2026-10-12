@@ -906,49 +906,7 @@
           </div>
         </div>
 
-        <!-- 📚 LIVE GOODREADS SYNC SECTION -->
-        <div class="bg-[#FFF9EE] border-2 border-[#05244C] rounded-2xl p-4 shadow-retro-navy space-y-2.5">
-          <div class="flex items-center justify-between">
-            <span class="text-xs font-black uppercase tracking-wider text-[#05244C] flex items-center gap-1.5">
-              <span>📖</span> Goodreads Live Sync
-            </span>
-            <span id="grSyncStatus" class="text-[10px] bg-amber-100 text-amber-900 border border-amber-300 px-2 py-0.5 rounded-full font-bold">Ready</span>
-          </div>
-          <p class="text-[11px] text-slate-600 leading-tight">Continuously pull your <strong>Wishlist</strong> or <strong>Want to Read</strong> shelf using your Goodreads User ID or profile URL.</p>
-          
-          <div class="space-y-2">
-            <div>
-              <label class="block text-[10px] font-bold text-slate-500 uppercase mb-0.5">Goodreads ID or Profile Link</label>
-              <input type="text" id="goodreadsUserInput" placeholder="e.g. 17276318 or profile URL" class="w-full bg-white border-2 border-[#05244C] rounded-xl px-2.5 py-1.5 text-xs font-bold text-[#05244C] focus:outline-none">
-            </div>
-
-            <div class="grid grid-cols-2 gap-2">
-              <div>
-                <label class="block text-[10px] font-bold text-slate-500 uppercase mb-0.5">Shelf to Sync</label>
-                <select id="goodreadsShelfSelect" class="w-full bg-white border border-[#05244C] rounded-lg p-1.5 text-xs font-bold text-[#05244C]">
-                  <option value="to-read" selected>to-read (TBR)</option>
-                  <option value="wishlist">wishlist</option>
-                  <option value="currently-reading">currently-reading</option>
-                  <option value="read">read (Finished)</option>
-                </select>
-              </div>
-              <div>
-                <label class="block text-[10px] font-bold text-slate-500 uppercase mb-0.5">Save To</label>
-                <select id="goodreadsTargetShelfSelect" class="w-full bg-white border border-[#05244C] rounded-lg p-1.5 text-xs font-bold text-[#05244C]">
-                  <option value="wishlist" selected>Wishlist Shelf</option>
-                  <option value="to-read">TBR Shelf</option>
-                  <option value="reading">Reading Shelf</option>
-                </select>
-              </div>
-            </div>
-
-            <button onclick="syncGoodreadsShelfNow()" id="btnSyncGoodreads" class="w-full py-2 bg-[#FFA4C4] hover:bg-[#ff8cb3] text-[#05244C] rounded-xl text-xs font-black border-2 border-[#05244C] shadow-retro-navy flex items-center justify-center gap-1.5 retro-btn">
-              <span>↻ Sync Goodreads Books</span>
-            </button>
-          </div>
-        </div>
-
-        <!-- Data Import/Export Tools (Multi-CSV Enabled) -->
+        <!-- Data Import/Export Tools (Multi-CSV & Goodreads Export Enabled) -->
         <div class="space-y-2 pt-1">
           <p class="text-xs font-bold text-slate-500 uppercase tracking-wider">File Backup & Import</p>
           <button onclick="exportJsonBackup()" class="w-full py-2.5 bg-white border-2 border-[#05244C] rounded-xl text-xs font-black text-[#05244C] shadow-retro-navy text-left px-3">
@@ -956,7 +914,7 @@
           </button>
           
           <label class="w-full py-2.5 bg-white border-2 border-[#05244C] rounded-xl text-xs font-black text-[#05244C] shadow-retro-navy text-left px-3 block cursor-pointer">
-            📤 Restore / Import (Bookshelf & Goodreads CSVs)
+            📤 Restore / Import (Goodreads & Bookshelf CSVs)
             <input type="file" id="universalFileInput" onchange="handleUniversalFileImport(event)" accept=".json,.csv" multiple class="hidden">
           </label>
 
@@ -2698,120 +2656,6 @@
       showToast('Backup downloaded!');
     }
 
-    // --- GOODREADS LIVE RSS SHELF SYNC ENGINE ---
-    function extractGoodreadsUserId(input) {
-      if (!input) return '';
-      const trimmed = input.trim();
-      // If user typed only numbers
-      if (/^\d+$/.test(trimmed)) return trimmed;
-      // Match ID from URLs like https://www.goodreads.com/user/show/17276318-user or review/list/17276318
-      const match = trimmed.match(/(?:user\/show\/|review\/list(?:_rss)?\/)(\d+)/i);
-      return match ? match[1] : trimmed;
-    }
-
-    async function syncGoodreadsShelfNow() {
-      const rawInput = document.getElementById('goodreadsUserInput').value.trim();
-      const userId = extractGoodreadsUserId(rawInput);
-      if (!userId) {
-        showToast('Enter your Goodreads numeric User ID or profile URL');
-        return;
-      }
-
-      localStorage.setItem('rianne_goodreads_id', rawInput);
-
-      const grShelf = document.getElementById('goodreadsShelfSelect').value || 'to-read';
-      const targetShelf = document.getElementById('goodreadsTargetShelfSelect').value || 'wishlist';
-      const btn = document.getElementById('btnSyncGoodreads');
-      const statusBadge = document.getElementById('grSyncStatus');
-
-      if (btn) btn.innerHTML = '<span>⏳ Fetching feed...</span>';
-      if (statusBadge) statusBadge.innerText = 'Syncing...';
-
-      const grFeedUrl = `https://www.goodreads.com/review/list_rss/${userId}?shelf=${grShelf}`;
-      // Use CORS proxies to fetch RSS feed in-browser
-      const proxyUrls = [
-        `https://api.allorigins.win/raw?url=${encodeURIComponent(grFeedUrl)}`,
-        `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(grFeedUrl)}`,
-        `https://corsproxy.io/?url=${encodeURIComponent(grFeedUrl)}`
-      ];
-
-      let xmlText = null;
-      for (const pUrl of proxyUrls) {
-        try {
-          const res = await fetch(pUrl);
-          if (res.ok) {
-            xmlText = await res.text();
-            if (xmlText && xmlText.includes('<item>')) break;
-          }
-        } catch(e) {
-          console.warn('Proxy fetch attempt failed', e);
-        }
-      }
-
-      if (!xmlText || !xmlText.includes('<item>')) {
-        if (btn) btn.innerHTML = '<span>↻ Sync Goodreads Books</span>';
-        if (statusBadge) statusBadge.innerText = 'Feed Error';
-        showToast('Could not fetch feed. Ensure profile is public & User ID is numeric.');
-        return;
-      }
-
-      try {
-        const parser = new DOMParser();
-        const xmlDoc = parser.parseFromString(xmlText, "text/xml");
-        const items = xmlDoc.querySelectorAll("item");
-
-        let addedCount = 0;
-        items.forEach(item => {
-          const title = item.querySelector("title")?.textContent?.trim() || 'Untitled';
-          const author = item.querySelector("author_name")?.textContent?.trim() || 
-                         item.querySelector("creator")?.textContent?.trim() || 'Unknown Author';
-          
-          // Image / Cover extraction
-          let cover = item.querySelector("book_large_image_url")?.textContent?.trim() ||
-                      item.querySelector("book_image_url")?.textContent?.trim() || '';
-          if (cover && cover.includes('nophoto')) cover = '';
-
-          // Pages extraction
-          const pages = Number(item.querySelector("num_pages")?.textContent) || 300;
-
-          // Prevent duplicates by title
-          const exists = books.some(b => b.title.toLowerCase() === title.toLowerCase());
-          if (!exists) {
-            books.push({
-              id: 'b_gr_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5),
-              title: title,
-              author: author,
-              cover: cover,
-              pageCount: pages,
-              currentPage: 0,
-              shelf: targetShelf,
-              format: 'Paperback',
-              ownership: targetShelf === 'wishlist' ? 'Not Owned' : 'Owned',
-              genres: ['Goodreads'],
-              lastSessionDate: null
-            });
-            addedCount++;
-          }
-        });
-
-        saveBooks();
-        renderAllViews();
-
-        if (statusBadge) statusBadge.innerText = `${addedCount} Added`;
-        if (btn) btn.innerHTML = '<span>✓ Synced!</span>';
-        setTimeout(() => {
-          if (btn) btn.innerHTML = '<span>↻ Sync Goodreads Books</span>';
-          if (statusBadge) statusBadge.innerText = 'Ready';
-        }, 3000);
-
-        showToast(`Imported ${addedCount} new books into ${targetShelf.toUpperCase()}!`);
-      } catch(err) {
-        console.error('XML parse error', err);
-        if (btn) btn.innerHTML = '<span>↻ Sync Goodreads Books</span>';
-        showToast('Failed to parse Goodreads feed.');
-      }
-    }
-
     function clearSampleBooks() {
       const sampleIds = ['b_1', 'b_2', 'b_3'];
       const countBefore = books.length;
@@ -2826,16 +2670,7 @@
       showToast('Cleared starter demo books!');
     }
 
-    // Auto-load saved Goodreads ID if previously stored
-    const savedGrId = localStorage.getItem('rianne_goodreads_id');
-    if (savedGrId) {
-      setTimeout(() => {
-        const input = document.getElementById('goodreadsUserInput');
-        if (input) input.value = savedGrId;
-      }, 300);
-    }
-
-    // --- ROBUST QUOTE-AWARE CSV ENGINE FOR ALL BOOKSHELF APP FILES ---
+    // --- ROBUST QUOTE-AWARE CSV ENGINE FOR ALL BOOKSHELF & GOODREADS FILES ---
     function parseCsvRows(text) {
       const rows = [];
       let currentRow = [];
