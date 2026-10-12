@@ -2698,6 +2698,49 @@
       }, 300);
     }
 
+    // --- ROBUST QUOTE-AWARE CSV ENGINE FOR ALL BOOKSHELF APP FILES ---
+    function parseCsvRows(text) {
+      const rows = [];
+      let currentRow = [];
+      let currentField = '';
+      let insideQuotes = false;
+      
+      for (let i = 0; i < text.length; i++) {
+        const char = text[i];
+        const nextChar = text[i + 1];
+
+        if (char === '"') {
+          if (insideQuotes && nextChar === '"') {
+            currentField += '"';
+            i++;
+          } else {
+            insideQuotes = !insideQuotes;
+          }
+        } else if (char === ',' && !insideQuotes) {
+          currentRow.push(currentField.trim());
+          currentField = '';
+        } else if ((char === '\r' || char === '\n') && !insideQuotes) {
+          if (char === '\r' && nextChar === '\n') i++;
+          currentRow.push(currentField.trim());
+          if (currentRow.some(field => field.length > 0)) {
+            rows.push(currentRow);
+          }
+          currentRow = [];
+          currentField = '';
+        } else {
+          currentField += char;
+        }
+      }
+
+      if (currentField.length > 0 || currentRow.length > 0) {
+        currentRow.push(currentField.trim());
+        if (currentRow.some(field => field.length > 0)) {
+          rows.push(currentRow);
+        }
+      }
+      return rows;
+    }
+
     async function handleUniversalFileImport(event) {
       const files = event.target.files;
       if (!files || files.length === 0) return;
@@ -2705,9 +2748,16 @@
       let booksAdded = 0;
       let sessionsAdded = 0;
       let quotesAdded = 0;
+      let collectionsAdded = 0;
 
-      for (let i = 0; i < files.length; i++) {
-        const file = files[i];
+      // Sort files so Books are parsed before Reading History, Cards, and Collections
+      const fileList = Array.from(files).sort((a, b) => {
+        const aIsBooks = a.name.toLowerCase().includes('books') ? -1 : 1;
+        const bIsBooks = b.name.toLowerCase().includes('books') ? -1 : 1;
+        return aIsBooks - bIsBooks;
+      });
+
+      for (const file of fileList) {
         const content = await file.text();
 
         if (file.name.endsWith('.json')) {
@@ -2724,11 +2774,13 @@
             console.warn('JSON parse error', e);
           }
         } else if (file.name.endsWith('.csv')) {
-          const lowerName = file.name.toLowerCase();
-          if (lowerName.includes('reading_history')) {
+          const lower = file.name.toLowerCase();
+          if (lower.includes('reading_history')) {
             sessionsAdded += parseBookshelfReadingHistoryCsv(content);
-          } else if (lowerName.includes('card')) {
+          } else if (lower.includes('cards') || lower.includes('card')) {
             quotesAdded += parseBookshelfCardsCsv(content);
+          } else if (lower.includes('collection')) {
+            collectionsAdded += parseBookshelfCollectionsCsv(content);
           } else {
             // Bookshelf-Books or Goodreads CSV
             booksAdded += parseBooksCsv(content);
@@ -2746,111 +2798,189 @@
     }
 
     function parseBooksCsv(csvText) {
-      const lines = csvText.split('\n');
-      if (lines.length < 2) return 0;
-      const headers = lines[0].split(',').map(h => h.trim().replace(/^"|"$/g, '').toLowerCase());
+      const rows = parseCsvRows(csvText);
+      if (rows.length < 2) return 0;
 
-      const titleIdx = headers.findIndex(h => h.includes('title'));
-      const authorIdx = headers.findIndex(h => h.includes('author'));
-      const pagesIdx = headers.findIndex(h => h.includes('page') || h.includes('total_page'));
-      const currentIdx = headers.findIndex(h => h.includes('current_page') || h.includes('progress'));
-      const shelfIdx = headers.findIndex(h => h.includes('shelf') || h.includes('status'));
+      const headers = rows[0].map(h => h.toLowerCase().replace(/[^a-z0-9]/g, ''));
+
+      const idIdx = headers.findIndex(h => h === 'bookid' || h === 'id');
+      const titleIdx = headers.findIndex(h => h === 'title' || h === 'booktitle');
+      const authorIdx = headers.findIndex(h => h === 'author' || h === 'authors');
+      const pagesIdx = headers.findIndex(h => h.includes('pagecount') || h.includes('totalpage') || h === 'pages');
+      const currentIdx = headers.findIndex(h => h.includes('currentpage') || h.includes('progress'));
+      const shelfIdx = headers.findIndex(h => h.includes('status') || h.includes('shelf'));
       const formatIdx = headers.findIndex(h => h.includes('format') || h.includes('type'));
-      const coverIdx = headers.findIndex(h => h.includes('cover') || h.includes('image'));
+      const coverIdx = headers.findIndex(h => h.includes('cover') || h.includes('thumbnail') || h.includes('image'));
+      const ratingIdx = headers.findIndex(h => h.includes('rating'));
+      const reviewIdx = headers.findIndex(h => h.includes('review') || h.includes('thought'));
+      const genreIdx = headers.findIndex(h => h.includes('genre') || h.includes('category') || h.includes('tag'));
+      const finDateIdx = headers.findIndex(h => h.includes('finished') || h.includes('completed') || h.includes('readat'));
 
       let count = 0;
-      for (let i = 1; i < lines.length; i++) {
-        if (!lines[i].trim()) continue;
-        const row = lines[i].split(',').map(c => c.trim().replace(/^"|"$/g, ''));
-        if (row[titleIdx]) {
-          const title = row[titleIdx];
-          const author = row[authorIdx] || 'Unknown';
-          const pages = Number(row[pagesIdx]) || 300;
-          const curP = Number(row[currentIdx]) || 0;
-          let shelf = 'to-read';
-          const rawShelf = (row[shelfIdx] || '').toLowerCase();
-          if (rawShelf.includes('reading')) shelf = 'reading';
-          else if (rawShelf.includes('finished') || rawShelf.includes('read')) shelf = 'finished';
-          else if (rawShelf.includes('dnf')) shelf = 'dnf';
-          else if (rawShelf.includes('wish')) shelf = 'wishlist';
+      for (let i = 1; i < rows.length; i++) {
+        const row = rows[i];
+        const title = row[titleIdx];
+        if (!title) continue;
 
-          // Prevent exact duplicate by title
-          if (!books.some(b => b.title.toLowerCase() === title.toLowerCase())) {
-            books.push({
-              id: 'b_csv_' + Date.now() + '_' + i,
-              title,
-              author,
-              pageCount: pages,
-              currentPage: curP,
-              shelf,
-              format: row[formatIdx] || 'Paperback',
-              ownership: 'Owned',
-              genres: ['General'],
-              cover: row[coverIdx] || '',
-              lastSessionDate: null
-            });
-            count++;
-          }
+        const author = row[authorIdx] || 'Unknown';
+        const pages = Number(row[pagesIdx]) || 300;
+        const curP = Number(row[currentIdx]) || 0;
+        const rawId = row[idIdx] || ('b_csv_' + Date.now() + '_' + i);
+        
+        let shelf = 'to-read';
+        const rawShelf = (row[shelfIdx] || '').toLowerCase();
+        if (rawShelf.includes('reading') || rawShelf.includes('current')) shelf = 'reading';
+        else if (rawShelf.includes('finished') || rawShelf.includes('read') || rawShelf.includes('complete')) shelf = 'finished';
+        else if (rawShelf.includes('dnf') || rawShelf.includes('dropped')) shelf = 'dnf';
+        else if (rawShelf.includes('wish')) shelf = 'wishlist';
+
+        // Check if book is already present (by title or Bookshelf Book ID)
+        let existing = books.find(b => (b.externalId && b.externalId === rawId) || b.title.toLowerCase() === title.toLowerCase());
+        
+        const genres = row[genreIdx] ? row[genreIdx].split(/[,;/]/).map(g => g.trim()).filter(Boolean) : ['General'];
+        const finDate = row[finDateIdx] ? row[finDateIdx].slice(0, 10) : (shelf === 'finished' ? new Date().toISOString().split('T')[0] : null);
+
+        if (existing) {
+          existing.externalId = rawId;
+          if (pages > 0) existing.pageCount = pages;
+          if (curP > 0) existing.currentPage = curP;
+          if (shelf) existing.shelf = shelf;
+          if (row[coverIdx]) existing.cover = row[coverIdx];
+          if (row[ratingIdx]) existing.rating = Number(row[ratingIdx]) || existing.rating;
+          if (row[reviewIdx]) existing.review = row[reviewIdx];
+          if (finDate) existing.finishedDate = finDate;
+        } else {
+          books.push({
+            id: 'b_' + Date.now() + '_' + i,
+            externalId: rawId,
+            title,
+            author,
+            pageCount: pages,
+            currentPage: curP,
+            shelf,
+            format: row[formatIdx] || 'Paperback',
+            ownership: 'Owned',
+            genres: genres.length > 0 ? genres : ['General'],
+            cover: row[coverIdx] || '',
+            rating: Number(row[ratingIdx]) || 0,
+            review: row[reviewIdx] || '',
+            finishedDate: finDate,
+            lastSessionDate: finDate || null
+          });
+          count++;
         }
       }
       return count;
     }
 
     function parseBookshelfReadingHistoryCsv(csvText) {
-      const lines = csvText.split('\n');
-      if (lines.length < 2) return 0;
-      const headers = lines[0].split(',').map(h => h.trim().replace(/^"|"$/g, '').toLowerCase());
+      const rows = parseCsvRows(csvText);
+      if (rows.length < 2) return 0;
+
+      const headers = rows[0].map(h => h.toLowerCase().replace(/[^a-z0-9]/g, ''));
+      const idIdx = headers.findIndex(h => h === 'bookid');
+      const titleIdx = headers.findIndex(h => h.includes('title') || h.includes('book'));
       const dateIdx = headers.findIndex(h => h.includes('date'));
-      const bookIdx = headers.findIndex(h => h.includes('title') || h.includes('book'));
-      const pagesIdx = headers.findIndex(h => h.includes('pages') || h.includes('page_count'));
+      const pagesIdx = headers.findIndex(h => h.includes('pagesread') || h === 'pages' || h.includes('count'));
       const minsIdx = headers.findIndex(h => h.includes('minute') || h.includes('duration'));
+      const startIdx = headers.findIndex(h => h.includes('start'));
+      const endIdx = headers.findIndex(h => h.includes('end'));
+      const notesIdx = headers.findIndex(h => h.includes('note') || h.includes('comment'));
 
       let count = 0;
-      for (let i = 1; i < lines.length; i++) {
-        if (!lines[i].trim()) continue;
-        const row = lines[i].split(',').map(c => c.trim().replace(/^"|"$/g, ''));
-        const date = row[dateIdx] || new Date().toISOString().split('T')[0];
+      for (let i = 1; i < rows.length; i++) {
+        const row = rows[i];
+        const date = (row[dateIdx] || new Date().toISOString()).slice(0, 10);
         const pgs = Number(row[pagesIdx]) || 15;
         const mins = Number(row[minsIdx]) || 20;
+        const rawBookId = row[idIdx];
+        const title = row[titleIdx];
+
+        // Link session to matching imported book
+        let matchedBook = books.find(b => (rawBookId && b.externalId === rawBookId) || (title && b.title.toLowerCase() === title.toLowerCase()));
 
         readingSessions.push({
           id: 'sess_csv_' + Date.now() + '_' + i,
-          bookId: 'imported',
-          date: date.slice(0, 10),
+          bookId: matchedBook ? matchedBook.id : 'imported_' + i,
+          date: date,
+          timestamp: new Date(date).getTime() || Date.now(),
           durationMinutes: mins,
           pagesRead: pgs,
-          startPage: 0,
-          endPage: pgs,
-          notes: ''
+          startPage: Number(row[startIdx]) || 0,
+          endPage: Number(row[endIdx]) || pgs,
+          notes: row[notesIdx] || ''
         });
+
+        if (matchedBook && (!matchedBook.lastSessionDate || matchedBook.lastSessionDate < date)) {
+          matchedBook.lastSessionDate = date;
+        }
         count++;
       }
       return count;
     }
 
     function parseBookshelfCardsCsv(csvText) {
-      const lines = csvText.split('\n');
-      if (lines.length < 2) return 0;
-      const headers = lines[0].split(',').map(h => h.trim().replace(/^"|"$/g, '').toLowerCase());
-      const textIdx = headers.findIndex(h => h.includes('quote') || h.includes('text') || h.includes('content'));
-      const bookIdx = headers.findIndex(h => h.includes('title') || h.includes('book'));
+      const rows = parseCsvRows(csvText);
+      if (rows.length < 2) return 0;
+
+      const headers = rows[0].map(h => h.toLowerCase().replace(/[^a-z0-9]/g, ''));
+      const idIdx = headers.findIndex(h => h === 'bookid');
+      const titleIdx = headers.findIndex(h => h.includes('title') || h.includes('book'));
+      const textIdx = headers.findIndex(h => h.includes('quote') || h.includes('text') || h.includes('content') || h.includes('card'));
       const pageIdx = headers.findIndex(h => h.includes('page'));
+      const tagIdx = headers.findIndex(h => h.includes('tag') || h.includes('type') || h.includes('mood'));
+      const dateIdx = headers.findIndex(h => h.includes('date') || h.includes('created'));
 
       let count = 0;
-      for (let i = 1; i < lines.length; i++) {
-        if (!lines[i].trim()) continue;
-        const row = lines[i].split(',').map(c => c.trim().replace(/^"|"$/g, ''));
-        if (row[textIdx]) {
-          quotes.unshift({
-            id: 'q_csv_' + Date.now() + '_' + i,
-            bookId: 'imported',
-            bookTitle: row[bookIdx] || 'Saved Passage',
-            text: row[textIdx],
-            page: row[pageIdx] || '',
-            tag: 'Quote',
-            date: new Date().toISOString().split('T')[0]
-          });
-          count++;
+      for (let i = 1; i < rows.length; i++) {
+        const row = rows[i];
+        const text = row[textIdx];
+        if (!text) continue;
+
+        const rawBookId = row[idIdx];
+        const title = row[titleIdx];
+        const matchedBook = books.find(b => (rawBookId && b.externalId === rawBookId) || (title && b.title.toLowerCase() === title.toLowerCase()));
+
+        quotes.unshift({
+          id: 'q_csv_' + Date.now() + '_' + i,
+          bookId: matchedBook ? matchedBook.id : 'imported',
+          bookTitle: matchedBook ? matchedBook.title : (title || 'Saved Passage'),
+          bookCover: matchedBook?.cover || '',
+          text: text,
+          page: row[pageIdx] || '',
+          tag: row[tagIdx] || 'Quote',
+          date: (row[dateIdx] || new Date().toISOString()).slice(0, 10)
+        });
+        count++;
+      }
+      return count;
+    }
+
+    function parseBookshelfCollectionsCsv(csvText) {
+      const rows = parseCsvRows(csvText);
+      if (rows.length < 2) return 0;
+
+      const headers = rows[0].map(h => h.toLowerCase().replace(/[^a-z0-9]/g, ''));
+      const collIdx = headers.findIndex(h => h.includes('collection'));
+      const idIdx = headers.findIndex(h => h === 'bookid');
+      const titleIdx = headers.findIndex(h => h.includes('title') || h.includes('book'));
+
+      let count = 0;
+      for (let i = 1; i < rows.length; i++) {
+        const row = rows[i];
+        const collName = row[collIdx];
+        if (!collName) continue;
+
+        const rawBookId = row[idIdx];
+        const title = row[titleIdx];
+        const matchedBook = books.find(b => (rawBookId && b.externalId === rawBookId) || (title && b.title.toLowerCase() === title.toLowerCase()));
+
+        if (matchedBook) {
+          if (!matchedBook.genres) matchedBook.genres = [];
+          if (!matchedBook.genres.includes(collName)) {
+            matchedBook.genres.push(collName);
+            count++;
+          }
         }
       }
       return count;
