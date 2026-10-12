@@ -617,13 +617,37 @@
           </div>
         </div>
 
-        <!-- MULTI-SELECT PRESET GENRE PILLS -->
-        <div>
-          <div class="flex items-center justify-between mb-1">
+        <!-- TWO-TIER GENRE SELECTOR WITH SMART ONLINE MATCH -->
+        <div class="space-y-1.5">
+          <div class="flex items-center justify-between">
             <label class="block text-slate-700 font-bold">Genres</label>
-            <span id="selectedGenreCount" class="text-[9px] font-black text-[#FF5B22]">0 selected</span>
+            <div class="flex items-center gap-2">
+              <button type="button" onclick="autoMatchBookGenresOnline()" class="text-[10px] font-black text-[#1DBBB4] hover:underline flex items-center gap-0.5">
+                <span>✨ Smart-Match Online</span>
+              </button>
+              <span id="selectedGenreCount" class="text-[10px] font-black text-[#FF5B22]">0 selected</span>
+            </div>
           </div>
-          <div id="genrePillsSelector" class="flex flex-wrap gap-1.5 p-2 bg-white border-2 border-[#05244C] rounded-2xl max-h-36 overflow-y-auto no-scrollbar shadow-inner"></div>
+
+          <!-- Tray of Currently Selected Genres -->
+          <div class="bg-amber-100/70 border-2 border-[#05244C] rounded-2xl p-2.5 min-h-[46px]">
+            <div class="text-[9px] font-black uppercase text-slate-500 mb-1 flex items-center justify-between">
+              <span>Active Book Tags</span>
+              <span class="text-slate-400 font-normal">Tap to remove</span>
+            </div>
+            <div id="selectedPillsTray" class="flex flex-wrap gap-1.5">
+              <span class="text-[11px] text-slate-400 italic">No genres selected yet.</span>
+            </div>
+          </div>
+
+          <!-- Collapsible Unselected Genres Catalog -->
+          <div class="border-2 border-[#05244C]/30 bg-white rounded-2xl p-2">
+            <div class="flex items-center justify-between pb-1 cursor-pointer" onclick="toggleUnselectedGenresDropdown()">
+              <span class="text-[10px] font-black text-[#05244C]">Browse Preset Genres</span>
+              <button type="button" id="unselectedToggleBtn" class="text-[10px] font-black text-[#1DBBB4] underline">Show all (+)</button>
+            </div>
+            <div id="unselectedPillsCatalog" class="hidden flex-wrap gap-1.5 pt-2 border-t border-slate-200 max-h-36 overflow-y-auto no-scrollbar"></div>
+          </div>
           <input type="hidden" id="editBookGenres">
         </div>
 
@@ -1235,7 +1259,7 @@
   </div>
 
   <script>
-    const APP_VERSION = "4.9";
+    const APP_VERSION = "5.0";
     let books = [];
     let readingSessions = [];
     let quotes = [];
@@ -1252,8 +1276,9 @@
 
     let editingBookFormats = ['eBook'];
     let editingBookGenres = [];
+    let showUnselectedCatalog = false;
 
-    // Expanded Curated Preset Genre Tags
+    // Curated Preset Genre Tags
     const PRESET_GENRES = [
       'Fiction',
       'Classics',
@@ -1278,6 +1303,30 @@
       'Adventure'
     ];
 
+    // Smart Keyword Heuristic Map to Auto-Select Presets
+    const GENRE_KEYWORDS_MAP = {
+      'Classics': ['classic', 'classics', 'canonical', 'antiquity', 'literature'],
+      'Manga': ['manga', 'manhwa', 'manhua', 'anime'],
+      'Graphic Novel / Comic': ['comic', 'graphic novel', 'comics', 'cartoon', 'webtoon'],
+      'Coming of Age / YA': ['young adult', 'ya', 'coming of age', 'juvenile', 'teen', 'adolescen'],
+      'Romance': ['romance', 'love story', 'romantic', 'chick lit', 'contemporary romance'],
+      'Horror': ['horror', 'ghost stories', 'macabre', 'haunted', 'gothic', 'monsters'],
+      'Thriller': ['thriller', 'suspense', 'action', 'conspiracy', 'espionage'],
+      'Psychological': ['psychological', 'mental health', 'psychology', 'mind game'],
+      'Mystery / Crime': ['mystery', 'crime', 'detective', 'murder', 'investigation', 'whodunit'],
+      'Fantasy': ['fantasy', 'magic', 'wizards', 'mythology', 'fairy tale', 'dragons', 'epic fantasy'],
+      'Sci-Fi': ['science fiction', 'sci-fi', 'scifi', 'space', 'alien', 'cyberpunk', 'time travel'],
+      'Dystopian': ['dystopia', 'dystopian', 'post-apocalyptic', 'apocalypse'],
+      'Contemporary': ['contemporary', 'modern fiction', 'women fiction', 'literary fiction'],
+      'Historical Fiction': ['historical', 'history', 'world war', 'period piece', 'victorian', 'medieval'],
+      'Anthology': ['anthology', 'collection of stories', 'collected works'],
+      'Short Stories': ['short stories', 'short story'],
+      'Non-Fiction / Memoir': ['biography', 'memoir', 'autobiography', 'non-fiction', 'nonfiction', 'essay'],
+      'True Crime': ['true crime', 'serial killer', 'criminology'],
+      'Paranormal / Supernatural': ['paranormal', 'supernatural', 'vampire', 'werewolf', 'witch', 'occult'],
+      'Adventure': ['adventure', 'survival', 'expedition', 'quest']
+    };
+
     let calendarYear = new Date().getFullYear();
     let calendarMonth = new Date().getMonth();
     let quoteViewMode = 'timeline';
@@ -1289,34 +1338,46 @@
     let timerSeconds = 0;
     let timerStartTimestamp = null;
 
+    // --- TWO-TIER GENRE PILLS UI ---
     function renderGenrePills() {
-      const container = document.getElementById('genrePillsSelector');
+      const selectedTray = document.getElementById('selectedPillsTray');
+      const unselectedCatalog = document.getElementById('unselectedPillsCatalog');
       const countLabel = document.getElementById('selectedGenreCount');
-      if (!container) return;
+      const hiddenInput = document.getElementById('editBookGenres');
 
-      if (countLabel) {
-        countLabel.innerText = `${editingBookGenres.length} selected`;
-      }
+      if (!selectedTray || !unselectedCatalog) return;
 
-      container.innerHTML = PRESET_GENRES.map(genre => {
-        const isSelected = editingBookGenres.includes(genre);
-        return `
+      if (countLabel) countLabel.innerText = `${editingBookGenres.length} selected`;
+      if (hiddenInput) hiddenInput.value = editingBookGenres.join(', ');
+
+      // 1. Render active/selected tray
+      if (editingBookGenres.length === 0) {
+        selectedTray.innerHTML = `<span class="text-[11px] text-slate-400 italic">No genres selected yet.</span>`;
+      } else {
+        selectedTray.innerHTML = editingBookGenres.map(genre => `
           <button 
             type="button" 
             onclick="toggleGenreSelection('${genre.replace(/'/g, "\\'")}')" 
-            class="px-2.5 py-1 rounded-xl text-[10px] font-black border-2 border-[#05244C] transition-all select-none ${
-              isSelected 
-                ? 'bg-[#FF5B22] text-white shadow-retro-navy scale-100' 
-                : 'bg-amber-50 text-[#05244C] opacity-75 hover:opacity-100 hover:bg-amber-100'
-            }">
-            ${genre} ${isSelected ? '✓' : '+'}
+            class="px-2.5 py-1 rounded-xl text-[10px] font-black border-2 border-[#05244C] bg-[#FF5B22] text-white shadow-retro-navy flex items-center gap-1 active:scale-95 transition-all">
+            <span>${genre}</span>
+            <span class="text-xs leading-none">✕</span>
           </button>
-        `;
-      }).join('');
+        `).join('');
+      }
 
-      const hiddenInput = document.getElementById('editBookGenres');
-      if (hiddenInput) {
-        hiddenInput.value = editingBookGenres.join(', ');
+      // 2. Render unselected catalog
+      const unselectedList = PRESET_GENRES.filter(g => !editingBookGenres.includes(g));
+      if (unselectedList.length === 0) {
+        unselectedCatalog.innerHTML = `<span class="text-[10px] text-slate-400 italic py-1">All preset genres selected!</span>`;
+      } else {
+        unselectedCatalog.innerHTML = unselectedList.map(genre => `
+          <button 
+            type="button" 
+            onclick="toggleGenreSelection('${genre.replace(/'/g, "\\'")}')" 
+            class="px-2 py-0.5 rounded-lg text-[10px] font-bold border border-[#05244C]/40 bg-amber-50/80 hover:bg-amber-100 text-[#05244C] select-none transition-colors">
+            + ${genre}
+          </button>
+        `).join('');
       }
     }
 
@@ -1329,34 +1390,95 @@
       renderGenrePills();
     }
 
+    function toggleUnselectedGenresDropdown() {
+      showUnselectedCatalog = !showUnselectedCatalog;
+      const catalog = document.getElementById('unselectedPillsCatalog');
+      const btn = document.getElementById('unselectedToggleBtn');
+      if (!catalog) return;
+
+      if (showUnselectedCatalog) {
+        catalog.classList.remove('hidden');
+        catalog.classList.add('flex');
+        if (btn) btn.innerText = 'Hide catalog (-)';
+      } else {
+        catalog.classList.add('hidden');
+        catalog.classList.remove('flex');
+        if (btn) btn.innerText = 'Show all (+)';
+      }
+    }
+
+    // Smart-Match closest preset genres using Google Books + Open Library
+    async function autoMatchBookGenresOnline() {
+      const title = document.getElementById('editBookTitle')?.value.trim();
+      const author = document.getElementById('editBookAuthor')?.value.trim();
+      if (!title) {
+        showToast('Please enter a title first');
+        return;
+      }
+
+      showToast(`Analyzing metadata for "${title}"...`);
+      const gatheredTags = [];
+
+      try {
+        const gq = `intitle:${encodeURIComponent(title)}${author ? `+inauthor:${encodeURIComponent(author)}` : ''}`;
+        const gres = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${gq}&maxResults=3`);
+        if (gres.ok) {
+          const gdata = await gres.json();
+          if (Array.isArray(gdata.items)) {
+            gdata.items.forEach(it => {
+              if (Array.isArray(it.volumeInfo?.categories)) {
+                gatheredTags.push(...it.volumeInfo.categories);
+              }
+              if (it.volumeInfo?.description) {
+                gatheredTags.push(it.volumeInfo.description.slice(0, 300));
+              }
+            });
+          }
+        }
+      } catch (e) {}
+
+      try {
+        const olRes = await fetch(`https://openlibrary.org/search.json?title=${encodeURIComponent(title)}${author ? `&author=${encodeURIComponent(author)}` : ''}&limit=3`);
+        if (olRes.ok) {
+          const odata = await olRes.json();
+          if (Array.isArray(odata.docs)) {
+            odata.docs.forEach(d => {
+              if (Array.isArray(d.subject)) gatheredTags.push(...d.subject.slice(0, 15));
+            });
+          }
+        }
+      } catch (e) {}
+
+      if (gatheredTags.length === 0) {
+        showToast('No online info found to classify.');
+        return;
+      }
+
+      const textCorpus = gatheredTags.join(' ').toLowerCase();
+      let matchedCount = 0;
+
+      Object.entries(GENRE_KEYWORDS_MAP).forEach(([preset, keywords]) => {
+        const hits = keywords.some(k => textCorpus.includes(k));
+        if (hits && !editingBookGenres.includes(preset)) {
+          editingBookGenres.push(preset);
+          matchedCount++;
+        }
+      });
+
+      // Default to Fiction if nothing specific triggered and it's not marked non-fiction
+      if (editingBookGenres.length === 0 && !textCorpus.includes('non-fiction') && !textCorpus.includes('biography')) {
+        editingBookGenres.push('Fiction');
+        matchedCount++;
+      }
+
+      renderGenrePills();
+      showToast(matchedCount > 0 ? `Matched ${matchedCount} genre(s)!` : 'No new genre matches found.');
+    }
+
     function extractValidYear(dateStr) {
       if (!dateStr) return null;
       const match = String(dateStr).match(/\b(19\d\d|20\d\d)\b/);
       return match ? parseInt(match[1], 10) : null;
-    }
-
-    function testImageUrl(url) {
-      return new Promise((resolve) => {
-        if (!url) return resolve(false);
-        const img = new Image();
-        img.referrerPolicy = 'no-referrer';
-        const timer = setTimeout(() => {
-          img.onload = null;
-          img.onerror = null;
-          resolve(false);
-        }, 3500);
-
-        img.onload = function() {
-          clearTimeout(timer);
-          if (img.naturalWidth > 15 && img.naturalHeight > 15) resolve(true);
-          else resolve(false);
-        };
-        img.onerror = function() {
-          clearTimeout(timer);
-          resolve(false);
-        };
-        img.src = url;
-      });
     }
 
     function cleanImageUrl(rawUrl) {
@@ -1428,8 +1550,6 @@
     async function autoFindSingleCover() {
       const title = document.getElementById('editBookTitle')?.value.trim();
       const author = document.getElementById('editBookAuthor')?.value.trim();
-      const id = document.getElementById('editBookId')?.value;
-      const bk = books.find(b => b.id === id);
 
       if (!title) {
         showToast('Please enter a title first');
@@ -1438,13 +1558,6 @@
 
       showToast(`Searching Google Books & Open Library for "${title}"...`);
       const candidates = [];
-
-      const rawIsbn = (bk?.isbn || bk?.isbn13 || '').replace(/[^0-9X]/gi, '');
-      if (rawIsbn && rawIsbn.length >= 10) {
-        const olIsbnUrl = `https://covers.openlibrary.org/b/isbn/${rawIsbn}-L.jpg`;
-        const isValidOl = await testImageUrl(olIsbnUrl);
-        if (isValidOl) candidates.push({ source: 'Open Library', url: olIsbnUrl, label: 'Open Library (ISBN)' });
-      }
 
       try {
         const gq = `intitle:${encodeURIComponent(title)}${author ? `+inauthor:${encodeURIComponent(author)}` : ''}`;
@@ -1456,7 +1569,7 @@
               const links = item.volumeInfo?.imageLinks;
               const gUrl = (links?.thumbnail || links?.smallThumbnail || '').replace(/^http:\/\//i, 'https://').replace('&edge=curl', '');
               if (gUrl && !candidates.some(c => c.url === gUrl)) {
-                candidates.push({ source: 'Google Books', url: gUrl, label: 'Google Books' });
+                candidates.push({ source: 'Google Books', url: gUrl });
               }
             }
           }
@@ -1473,7 +1586,7 @@
               if (doc.cover_i) {
                 const olUrl = `https://covers.openlibrary.org/b/id/${doc.cover_i}-L.jpg`;
                 if (!candidates.some(c => c.url === olUrl)) {
-                  candidates.push({ source: 'Open Library', url: olUrl, label: 'Open Library' });
+                  candidates.push({ source: 'Open Library', url: olUrl });
                 }
               }
             }
@@ -1482,13 +1595,12 @@
       } catch(e) {}
 
       if (candidates.length === 0) {
-        showToast('No covers found. Try "📷 Add Image" or "Google Images ↗"');
+        showToast('No covers found.');
         return;
       }
 
       if (candidates.length === 1) {
         applyChosenCover(candidates[0].url);
-        showToast(`Applied cover from ${candidates[0].source}!`);
         return;
       }
 
@@ -1614,11 +1726,7 @@
         }
       }
 
-      if (storedBooks && Array.isArray(storedBooks)) {
-        books = storedBooks;
-      } else {
-        books = [];
-      }
+      books = (storedBooks && Array.isArray(storedBooks)) ? storedBooks : [];
 
       readingSessions = safeJsonParse('rianne_sessions_v1', []);
       quotes = safeJsonParse('rianne_quotes_v1', []);
@@ -1857,7 +1965,6 @@
       renderLibrary();
     }
 
-    // STRICT CLEAN GENRE FILTER DROPDOWN: Shows PRESET_GENRES present on your books
     function populateGenreDropdown() {
       const select = document.getElementById('libraryGenreSelect');
       if (!select) return;
@@ -1867,14 +1974,11 @@
       books.forEach(b => {
         if (Array.isArray(b.genres)) {
           b.genres.forEach(g => {
-            if (PRESET_GENRES.includes(g)) {
-              activePresetGenres.add(g);
-            }
+            if (PRESET_GENRES.includes(g)) activePresetGenres.add(g);
           });
         }
       });
 
-      // Always display all PRESET_GENRES in clean order
       select.innerHTML = '<option value="all">All Genres</option>' + PRESET_GENRES.map(g => {
         const hasBooks = activePresetGenres.has(g);
         return `<option value="${g}">${g}${hasBooks ? '' : ' (0)'}</option>`;
@@ -1977,6 +2081,7 @@
       showToast('Books deleted');
     }
 
+    // --- LIBRARY RENDERER WITH DYNAMIC SECTION DIVIDERS ---
     function renderLibrary() {
       const container = document.getElementById('libraryContainer');
       if (!container) return;
@@ -2024,112 +2129,155 @@
         return;
       }
 
-      if (currentLibraryView === 'covers') {
-        container.innerHTML = `
-          <div class="grid grid-cols-4 gap-2">
-            ${filtered.map(b => {
-              const isSelected = selectedBookIds.has(b.id);
-              const info = getShelfInfo(b.shelf);
-              const starStr = getStarDisplayHtml(b.rating);
-              const starDisplayNum = b.rating ? (b.rating % 1 === 0 ? b.rating : b.rating.toFixed(2).replace(/\.?0+$/, '')) : '';
-              return `
-                <div onclick="${isBatchMode ? `toggleSelectBook('${b.id}', event)` : `openBookDetailModal('${b.id}')`}" class="relative group cursor-pointer">
-                  <div class="relative rounded-xl overflow-hidden border-2 border-[#05244C] shadow-retro-navy aspect-[2/3] bg-slate-200 ${isSelected ? 'ring-4 ring-[#FF5B22]' : ''}">
-                    <img src="${b.cover || 'https://placehold.co/200x300/446BA2/FFF9EE?text=Cover'}" class="w-full h-full object-cover" onerror="handleCoverError(this)">
+      // Group books for Section Dividers (letters for title/author, stars for ratings, brackets for progress)
+      const groups = [];
+      let currentGroupHeader = null;
+
+      filtered.forEach(b => {
+        let header = '';
+        if (sort === 'title') {
+          const firstChar = (b.title || '').trim().charAt(0).toUpperCase();
+          header = /^[A-Z]$/.test(firstChar) ? firstChar : '#';
+        } else if (sort === 'author') {
+          const firstChar = (b.author || '').trim().charAt(0).toUpperCase();
+          header = /^[A-Z]$/.test(firstChar) ? firstChar : '#';
+        } else if (sort === 'rating_high' || sort === 'rating_low') {
+          const r = Math.floor(b.rating || 0);
+          header = r > 0 ? `${r} Star${r === 1 ? '' : 's'} (${'★'.repeat(r)})` : 'Unrated (0★)';
+        } else if (sort === 'progress') {
+          const pct = b.pageCount > 0 ? Math.round((b.currentPage / b.pageCount) * 100) : 0;
+          if (pct >= 100) header = 'Finished (100%)';
+          else if (pct >= 75) header = '75% - 99%';
+          else if (pct >= 50) header = '50% - 74%';
+          else if (pct >= 25) header = '25% - 49%';
+          else if (pct > 0) header = '1% - 24%';
+          else header = 'Not Started (0%)';
+        }
+
+        if (header && header !== currentGroupHeader) {
+          currentGroupHeader = header;
+          groups.push({ header: currentGroupHeader, books: [b] });
+        } else if (groups.length > 0 && header) {
+          groups[groups.length - 1].books.push(b);
+        } else {
+          if (groups.length === 0) groups.push({ header: null, books: [] });
+          groups[0].books.push(b);
+        }
+      });
+
+      // Render Layout
+      container.innerHTML = groups.map(group => `
+        <div class="space-y-2 mb-4">
+          ${group.header ? `
+            <div class="sticky top-[68px] z-20 bg-[#688FDE]/95 backdrop-blur-sm py-1">
+              <span class="inline-block bg-[#05244C] text-[#FFF9EE] text-[10px] font-black uppercase px-2.5 py-0.5 rounded-full border border-[#FFA4C4] shadow-sm tracking-wider">
+                ${group.header}
+              </span>
+            </div>
+          ` : ''}
+
+          ${currentLibraryView === 'covers' ? `
+            <div class="grid grid-cols-4 gap-2">
+              ${group.books.map(b => {
+                const isSelected = selectedBookIds.has(b.id);
+                const info = getShelfInfo(b.shelf);
+                const starStr = getStarDisplayHtml(b.rating);
+                const starDisplayNum = b.rating ? (b.rating % 1 === 0 ? b.rating : b.rating.toFixed(2).replace(/\.?0+$/, '')) : '';
+                return `
+                  <div onclick="${isBatchMode ? `toggleSelectBook('${b.id}', event)` : `openBookDetailModal('${b.id}')`}" class="relative group cursor-pointer">
+                    <div class="relative rounded-xl overflow-hidden border-2 border-[#05244C] shadow-retro-navy aspect-[2/3] bg-slate-200 ${isSelected ? 'ring-4 ring-[#FF5B22]' : ''}">
+                      <img src="${b.cover || 'https://placehold.co/200x300/446BA2/FFF9EE?text=Cover'}" class="w-full h-full object-cover" onerror="handleCoverError(this)">
+                      ${isBatchMode ? `
+                        <div class="absolute top-1.5 left-1.5 w-5 h-5 rounded-md bg-white border border-[#05244C] flex items-center justify-center">
+                          ${isSelected ? '<span class="text-[#FF5B22] font-black text-xs">✓</span>' : ''}
+                        </div>
+                      ` : ''}
+                      ${b.isFavorite ? `
+                        <span class="absolute top-1 left-1 bg-white/95 rounded-full p-0.5 px-1 text-[11px] border border-[#05244C] shadow-sm leading-none text-rose-600 font-bold">♥️</span>
+                      ` : ''}
+                      <span class="absolute top-1 right-1 ${info.bg} ${info.text} text-[8px] font-black px-1.5 py-0.5 rounded-md border border-[#05244C] shadow-sm leading-none">
+                        ${b.shelf === 'finished' ? '✓' : info.label}
+                      </span>
+                    </div>
+                    <p class="text-[10px] font-bold text-[#FFF9EE] truncate mt-1">${b.title}</p>
+                    ${starStr ? `<div class="text-[10px] text-[#FFD034] font-bold leading-none drop-shadow-sm truncate">${starStr} <span class="text-[8px] text-white/90 font-mono">(${starDisplayNum}★)</span></div>` : ''}
+                  </div>
+                `;
+              }).join('')}
+            </div>
+          ` : currentLibraryView === 'cards' ? `
+            <div class="space-y-2.5">
+              ${group.books.map(b => {
+                const pct = b.pageCount > 0 ? Math.round((b.currentPage / b.pageCount) * 100) : 0;
+                const isSelected = selectedBookIds.has(b.id);
+                const info = getShelfInfo(b.shelf);
+                const starStr = getStarDisplayHtml(b.rating);
+                const starDisplayNum = b.rating ? (b.rating % 1 === 0 ? b.rating : b.rating.toFixed(2).replace(/\.?0+$/, '')) : '';
+                const fmts = getBookFormatsList(b);
+                return `
+                  <div class="bg-[#FFF9EE] border-2 border-[#05244C] rounded-2xl p-3 shadow-retro-orange flex gap-3 items-center ${isSelected ? 'ring-4 ring-[#FF5B22]' : ''}">
                     ${isBatchMode ? `
-                      <div class="absolute top-1.5 left-1.5 w-5 h-5 rounded-md bg-white border border-[#05244C] flex items-center justify-center">
+                      <div onclick="toggleSelectBook('${b.id}', event)" class="w-5 h-5 rounded-md bg-white border border-[#05244C] flex items-center justify-center flex-shrink-0 cursor-pointer">
                         ${isSelected ? '<span class="text-[#FF5B22] font-black text-xs">✓</span>' : ''}
                       </div>
                     ` : ''}
-                    ${b.isFavorite ? `
-                      <span class="absolute top-1 left-1 bg-white/95 rounded-full p-0.5 px-1 text-[11px] border border-[#05244C] shadow-sm leading-none text-rose-600 font-bold">♥️</span>
+                    <img src="${b.cover || 'https://placehold.co/100x150/446BA2/FFF9EE?text=Cover'}" class="w-14 aspect-[2/3] object-cover rounded-xl border border-[#05244C] flex-shrink-0 bg-slate-200" onerror="handleCoverError(this)">
+                    <div class="flex-1 min-w-0">
+                      <div class="flex items-center gap-1.5">
+                        <span class="text-[9px] uppercase font-black px-2 py-0.5 rounded-full ${info.bg} ${info.text} border border-[#05244C] shadow-sm">${info.label}</span>
+                        <span class="text-[9px] font-bold text-slate-500">${fmts.join(', ')}</span>
+                        ${b.isFavorite ? `<span class="text-xs text-rose-600 font-bold">♥️</span>` : ''}
+                      </div>
+                      <h4 class="text-xs font-retro-title text-[#05244C] truncate mt-1">${b.title}</h4>
+                      <p class="text-[10px] font-editorial text-slate-600 truncate italic">${b.author}</p>
+                      ${starStr ? `<div class="text-[#FF5B22] text-xs font-bold leading-none mt-0.5">${starStr} <span class="text-[9px] text-slate-500 font-normal">(${starDisplayNum}★)</span></div>` : ''}
+                      <div class="mt-1 flex justify-between items-center text-[10px] font-bold">
+                        <span>${b.currentPage} / ${b.pageCount} pgs</span>
+                        <span class="text-[#FF5B22] font-black">${pct}%</span>
+                      </div>
+                    </div>
+                    <button onclick="openBookDetailModal('${b.id}')" class="px-2.5 py-1.5 bg-white border border-[#05244C] rounded-xl text-xs font-bold text-[#05244C] flex-shrink-0">Edit</button>
+                  </div>
+                `;
+              }).join('')}
+            </div>
+          ` : `
+            <div class="bg-[#FFF9EE] border-2 border-[#05244C] rounded-2xl divide-y-2 divide-orange-100 overflow-hidden shadow-retro-orange">
+              ${group.books.map(b => {
+                const isSelected = selectedBookIds.has(b.id);
+                const info = getShelfInfo(b.shelf);
+                const pct = b.pageCount > 0 ? Math.round((b.currentPage / b.pageCount) * 100) : 0;
+                const starStr = getStarDisplayHtml(b.rating);
+                const fmts = getBookFormatsList(b);
+                return `
+                  <div onclick="${isBatchMode ? `toggleSelectBook('${b.id}', event)` : `openBookDetailModal('${b.id}')`}" class="p-3 flex items-center justify-between cursor-pointer hover:bg-amber-50 ${isSelected ? 'bg-orange-100/60' : ''}">
+                    ${isBatchMode ? `
+                      <div class="w-4 h-4 rounded-md bg-white border border-[#05244C] flex items-center justify-center mr-2.5 flex-shrink-0">
+                        ${isSelected ? '<span class="text-[#FF5B22] font-black text-[10px]">✓</span>' : ''}
+                      </div>
                     ` : ''}
-                    <span class="absolute top-1 right-1 ${info.bg} ${info.text} text-[8px] font-black px-1.5 py-0.5 rounded-md border border-[#05244C] shadow-sm leading-none">
-                      ${b.shelf === 'finished' ? '✓' : info.label}
-                    </span>
-                  </div>
-                  <p class="text-[10px] font-bold text-[#FFF9EE] truncate mt-1">${b.title}</p>
-                  ${starStr ? `<div class="text-[10px] text-[#FFD034] font-bold leading-none drop-shadow-sm truncate">${starStr} <span class="text-[8px] text-white/90 font-mono">(${starDisplayNum}★)</span></div>` : ''}
-                </div>
-              `;
-            }).join('')}
-          </div>
-        `;
-      } else if (currentLibraryView === 'cards') {
-        container.innerHTML = `
-          <div class="space-y-3">
-            ${filtered.map(b => {
-              const pct = b.pageCount > 0 ? Math.round((b.currentPage / b.pageCount) * 100) : 0;
-              const isSelected = selectedBookIds.has(b.id);
-              const info = getShelfInfo(b.shelf);
-              const starStr = getStarDisplayHtml(b.rating);
-              const starDisplayNum = b.rating ? (b.rating % 1 === 0 ? b.rating : b.rating.toFixed(2).replace(/\.?0+$/, '')) : '';
-              const fmts = getBookFormatsList(b);
-              return `
-                <div class="bg-[#FFF9EE] border-2 border-[#05244C] rounded-2xl p-3.5 shadow-retro-orange flex gap-3 items-center ${isSelected ? 'ring-4 ring-[#FF5B22]' : ''}">
-                  ${isBatchMode ? `
-                    <div onclick="toggleSelectBook('${b.id}', event)" class="w-5 h-5 rounded-md bg-white border border-[#05244C] flex items-center justify-center flex-shrink-0 cursor-pointer">
-                      ${isSelected ? '<span class="text-[#FF5B22] font-black text-xs">✓</span>' : ''}
+                    <div class="min-w-0 flex-1 pr-2">
+                      <div class="flex items-center gap-1.5">
+                        <span class="text-[8px] font-black uppercase px-1.5 py-0.5 rounded border border-[#05244C] ${info.bg} ${info.text}">${info.label}</span>
+                        <h4 class="text-xs font-bold text-[#05244C] truncate">${b.title}</h4>
+                        ${b.isFavorite ? `<span class="text-xs text-rose-600 font-bold">♥️</span>` : ''}
+                      </div>
+                      <p class="text-[10px] text-slate-500 truncate mt-0.5">${b.author} • <span class="text-slate-400">${fmts.join(', ')}</span> ${starStr ? `• <span class="text-[#FF5B22] font-bold">${starStr}</span>` : ''}</p>
                     </div>
-                  ` : ''}
-                  <img src="${b.cover || 'https://placehold.co/100x150/446BA2/FFF9EE?text=Cover'}" class="w-14 aspect-[2/3] object-cover rounded-xl border border-[#05244C] flex-shrink-0 bg-slate-200" onerror="handleCoverError(this)">
-                  <div class="flex-1 min-w-0">
-                    <div class="flex items-center gap-1.5">
-                      <span class="text-[9px] uppercase font-black px-2 py-0.5 rounded-full ${info.bg} ${info.text} border border-[#05244C] shadow-sm">${info.label}</span>
-                      <span class="text-[9px] font-bold text-slate-500">${fmts.join(', ')}</span>
-                      ${b.isFavorite ? `<span class="text-xs text-rose-600 font-bold">♥️</span>` : ''}
-                    </div>
-                    <h4 class="text-xs font-retro-title text-[#05244C] truncate mt-1">${b.title}</h4>
-                    <p class="text-[10px] font-editorial text-slate-600 truncate italic">${b.author}</p>
-                    ${starStr ? `<div class="text-[#FF5B22] text-xs font-bold leading-none mt-0.5">${starStr} <span class="text-[9px] text-slate-500 font-normal">(${starDisplayNum}★)</span></div>` : ''}
-                    <div class="mt-1 flex justify-between items-center text-[10px] font-bold">
-                      <span>${b.currentPage} / ${b.pageCount} pgs</span>
-                      <span class="text-[#FF5B22] font-black">${pct}%</span>
+                    <div class="text-right flex-shrink-0">
+                      <span class="text-xs font-mono font-black text-[#05244C]">${pct}%</span>
+                      <span class="text-[9px] text-slate-400 block">${b.currentPage}p</span>
                     </div>
                   </div>
-                  <button onclick="openBookDetailModal('${b.id}')" class="px-2.5 py-1.5 bg-white border border-[#05244C] rounded-xl text-xs font-bold text-[#05244C] flex-shrink-0">Edit</button>
-                </div>
-              `;
-            }).join('')}
-          </div>
-        `;
-      } else {
-        container.innerHTML = `
-          <div class="bg-[#FFF9EE] border-2 border-[#05244C] rounded-2xl divide-y-2 divide-orange-100 overflow-hidden shadow-retro-orange">
-            ${filtered.map(b => {
-              const isSelected = selectedBookIds.has(b.id);
-              const info = getShelfInfo(b.shelf);
-              const pct = b.pageCount > 0 ? Math.round((b.currentPage / b.pageCount) * 100) : 0;
-              const starStr = getStarDisplayHtml(b.rating);
-              const fmts = getBookFormatsList(b);
-              return `
-                <div onclick="${isBatchMode ? `toggleSelectBook('${b.id}', event)` : `openBookDetailModal('${b.id}')`}" class="p-3 flex items-center justify-between cursor-pointer hover:bg-amber-50 ${isSelected ? 'bg-orange-100/60' : ''}">
-                  ${isBatchMode ? `
-                    <div class="w-4 h-4 rounded-md bg-white border border-[#05244C] flex items-center justify-center mr-2.5 flex-shrink-0">
-                      ${isSelected ? '<span class="text-[#FF5B22] font-black text-[10px]">✓</span>' : ''}
-                    </div>
-                  ` : ''}
-                  <div class="min-w-0 flex-1 pr-2">
-                    <div class="flex items-center gap-1.5">
-                      <span class="text-[8px] font-black uppercase px-1.5 py-0.5 rounded border border-[#05244C] ${info.bg} ${info.text}">${info.label}</span>
-                      <h4 class="text-xs font-bold text-[#05244C] truncate">${b.title}</h4>
-                      ${b.isFavorite ? `<span class="text-xs text-rose-600 font-bold">♥️</span>` : ''}
-                    </div>
-                    <p class="text-[10px] text-slate-500 truncate mt-0.5">${b.author} • <span class="text-slate-400">${fmts.join(', ')}</span> ${starStr ? `• <span class="text-[#FF5B22] font-bold">${starStr}</span>` : ''}</p>
-                  </div>
-                  <div class="text-right flex-shrink-0">
-                    <span class="text-xs font-mono font-black text-[#05244C]">${pct}%</span>
-                    <span class="text-[9px] text-slate-400 block">${b.currentPage}p</span>
-                  </div>
-                </div>
-              `;
-            }).join('')}
-          </div>
-        `;
-      }
+                `;
+              }).join('')}
+            </div>
+          `}
+        </div>
+      `).join('');
     }
 
-    // --- MANUAL BOOK REDIRECTION (UNIFIED FULL SCHEMA) ---
+    // --- MANUAL BOOK REDIRECTION ---
     function openManualBookModal() {
       const tempBook = {
         id: 'b_custom_' + Date.now(),
@@ -2177,9 +2325,14 @@
       document.getElementById('editBookShelf').value = bk.shelf || 'reading';
       document.getElementById('editBookOwnership').value = bk.ownership || 'Owned';
       
-      // Filter existing genres strictly against PRESET_GENRES to eliminate stale strings & ghost counts
+      // Load and normalize genres against PRESET_GENRES
       const rawGenres = Array.isArray(bk.genres) ? bk.genres : (bk.genres ? bk.genres.split(/[,;/]/).map(g => g.trim()) : []);
       editingBookGenres = rawGenres.filter(g => PRESET_GENRES.includes(g));
+      showUnselectedCatalog = false;
+      document.getElementById('unselectedPillsCatalog')?.classList.add('hidden');
+      document.getElementById('unselectedPillsCatalog')?.classList.remove('flex');
+      const toggleBtn = document.getElementById('unselectedToggleBtn');
+      if (toggleBtn) toggleBtn.innerText = 'Show all (+)';
       renderGenrePills();
 
       document.getElementById('editBookCover').value = bk.cover || '';
@@ -2374,8 +2527,6 @@
       bk.ownership = document.getElementById('editBookOwnership').value;
       bk.formats = [...editingBookFormats];
       bk.isFavorite = isEditingFavorite;
-
-      // Cleaned genres restricted to selected pills
       bk.genres = [...editingBookGenres];
 
       const rawCover = document.getElementById('editBookCover').value;
@@ -2502,7 +2653,7 @@
 
       let items = [];
 
-      // 1. Try Google Books
+      // 1. Google Books
       try {
         const res = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(query)}&maxResults=10`);
         if (res.ok) {
