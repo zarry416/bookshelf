@@ -180,14 +180,14 @@
         </div>
 
         <div class="flex gap-3.5 items-start">
-          <img id="heroCover" src="https://images.unsplash.com/photo-1544947950-fa07a98d237f?auto=format&fit=crop&w=400&q=80" alt="Book Cover" class="w-24 aspect-[2/3] object-cover rounded-xl border-2 border-[#05244C] shadow-md flex-shrink-0 bg-slate-200" onerror="handleCoverError(this)">
+          <img id="heroCover" src="https://placehold.co/200x300/446BA2/FFF9EE?text=Cover" alt="Book Cover" class="w-24 aspect-[2/3] object-cover rounded-xl border-2 border-[#05244C] shadow-md flex-shrink-0 bg-slate-200" onerror="handleCoverError(this)">
           
           <div class="flex-1 min-w-0">
-            <h2 id="heroTitle" class="text-lg font-retro-title text-[#05244C] leading-snug line-clamp-2">The Butterfly Garden</h2>
-            <p id="heroAuthor" class="text-sm font-editorial text-slate-600 italic line-clamp-1 mb-2.5">Dot Hutchison</p>
+            <h2 id="heroTitle" class="text-lg font-retro-title text-[#05244C] leading-snug line-clamp-2">No Book Selected</h2>
+            <p id="heroAuthor" class="text-sm font-editorial text-slate-600 italic line-clamp-1 mb-2.5">--</p>
             
             <div class="bg-amber-100 rounded-full h-3.5 border-2 border-[#05244C] overflow-hidden p-[1px] mb-2">
-              <div id="heroProgressBar" class="bg-gradient-to-r from-[#FF5B22] to-[#FFD034] h-full rounded-full transition-all duration-500" style="width: 50%"></div>
+              <div id="heroProgressBar" class="bg-gradient-to-r from-[#FF5B22] to-[#FFD034] h-full rounded-full transition-all duration-500" style="width: 0%"></div>
             </div>
 
             <div class="flex justify-between items-center text-xs font-bold text-[#05244C]">
@@ -959,52 +959,6 @@
     </div>
   </div>
 
-  <!-- MODAL: MANUAL BOOK CREATION -->
-  <div id="modalManualBook" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4">
-    <div class="bg-[#FFF9EE] border-3 border-[#05244C] rounded-3xl p-6 w-full max-w-sm shadow-retro-orange space-y-3.5">
-      <div class="flex justify-between items-center pb-2 border-b-2 border-orange-200">
-        <h3 class="text-base font-retro-title text-[#05244C]">Add Custom Book</h3>
-        <button onclick="closeModal('modalManualBook')" class="text-slate-500 font-bold text-lg">✕</button>
-      </div>
-
-      <div class="space-y-2.5 text-xs font-bold text-[#05244C]">
-        <div>
-          <label class="block mb-1">Title</label>
-          <input type="text" id="manualBookTitle" placeholder="Book Title" class="w-full bg-white border-2 border-[#05244C] rounded-xl p-2">
-        </div>
-        <div>
-          <label class="block mb-1">Author</label>
-          <input type="text" id="manualBookAuthor" placeholder="Author Name" class="w-full bg-white border-2 border-[#05244C] rounded-xl p-2">
-        </div>
-        <div class="grid grid-cols-2 gap-2">
-          <div>
-            <label class="block mb-1">Total Pages</label>
-            <input type="number" id="manualBookPages" placeholder="320" class="w-full bg-white border-2 border-[#05244C] rounded-xl p-2">
-          </div>
-          <div>
-            <label class="block mb-1">Shelf</label>
-            <select id="manualBookShelf" class="w-full bg-white border-2 border-[#05244C] rounded-xl p-2">
-              <option value="to-read">To Read (TBR)</option>
-              <option value="reading">Currently Reading</option>
-              <option value="finished">Finished</option>
-              <option value="wishlist">Wishlist</option>
-            </select>
-          </div>
-        </div>
-        <div>
-          <label class="block mb-1">Genres</label>
-          <input type="text" id="manualBookGenres" placeholder="Thriller, Fiction" class="w-full bg-white border-2 border-[#05244C] rounded-xl p-2">
-        </div>
-        <div>
-          <label class="block mb-1">Cover Image URL (optional)</label>
-          <input type="url" id="manualBookCover" placeholder="https://..." class="w-full bg-white border-2 border-[#05244C] rounded-xl p-2">
-        </div>
-      </div>
-
-      <button onclick="submitManualBook()" class="w-full py-3 bg-[#FFA4C4] text-[#05244C] rounded-2xl font-black border-2 border-[#05244C] shadow-retro-navy">Add to Bookshelf</button>
-    </div>
-  </div>
-
   <!-- MODAL: ONLINE BOOK SEARCH -->
   <div id="modalOnlineSearch" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4">
     <div class="bg-[#FFF9EE] border-3 border-[#05244C] rounded-3xl p-5 w-full max-w-sm shadow-retro-orange space-y-3 max-h-[85vh] flex flex-col">
@@ -1282,7 +1236,7 @@
   </div>
 
   <script>
-    const APP_VERSION = "4.6";
+    const APP_VERSION = "4.7";
     let books = [];
     let readingSessions = [];
     let quotes = [];
@@ -1298,13 +1252,12 @@
     let currentLogMode = 'pages';
 
     let editingBookFormats = ['Paperback'];
-    let manualBookFormats = ['Paperback'];
-
     let calendarYear = new Date().getFullYear();
     let calendarMonth = new Date().getMonth();
     let quoteViewMode = 'timeline';
     let isEditingFavorite = false;
 
+    let currentSearchResults = [];
     let timerInterval = null;
     let timerRunning = false;
     let timerSeconds = 0;
@@ -1472,6 +1425,23 @@
       }
 
       try {
+        const gq = `intitle:${encodeURIComponent(title)}${author ? `+inauthor:${encodeURIComponent(author)}` : ''}`;
+        const gres = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${gq}&maxResults=4`);
+        if (gres.ok) {
+          const gdata = await gres.json();
+          if (Array.isArray(gdata.items)) {
+            for (const item of gdata.items) {
+              const links = item.volumeInfo?.imageLinks;
+              const gUrl = (links?.thumbnail || links?.smallThumbnail || '').replace(/^http:\/\//i, 'https://').replace('&edge=curl', '');
+              if (gUrl && !candidates.some(c => c.url === gUrl)) {
+                candidates.push({ source: 'Google Books', url: gUrl, label: 'Google Books' });
+              }
+            }
+          }
+        }
+      } catch(e) {}
+
+      try {
         const q = `title=${encodeURIComponent(title)}${author ? `&author=${encodeURIComponent(author)}` : ''}`;
         const res = await fetch(`https://openlibrary.org/search.json?${q}&limit=4`);
         if (res.ok) {
@@ -1483,23 +1453,6 @@
                 if (!candidates.some(c => c.url === olUrl)) {
                   candidates.push({ source: 'Open Library', url: olUrl, label: 'Open Library' });
                 }
-              }
-            }
-          }
-        }
-      } catch(e) {}
-
-      try {
-        const gq = `intitle:${encodeURIComponent(title)}${author ? `+inauthor:${encodeURIComponent(author)}` : ''}`;
-        const gres = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${gq}&maxResults=4`);
-        if (gres.ok) {
-          const gdata = await gres.json();
-          if (Array.isArray(gdata.items)) {
-            for (const item of gdata.items) {
-              const links = item.volumeInfo?.imageLinks;
-              const gUrl = (links?.thumbnail || links?.smallThumbnail || '').replace(/^http:\/\//i, 'https://').replace('&edge=curl', '');
-              if (gUrl && !candidates.some(c => c.url === gUrl)) {
-                candidates.push({ source: 'Google Books', url: gUrl, label: 'Google Books' });
               }
             }
           }
@@ -1642,48 +1595,7 @@
       if (storedBooks && Array.isArray(storedBooks)) {
         books = storedBooks;
       } else {
-        books = [
-          {
-            id: 'b_1',
-            title: 'The Butterfly Garden',
-            author: 'Dot Hutchison',
-            cover: 'https://images.unsplash.com/photo-1544947950-fa07a98d237f?auto=format&fit=crop&w=400&q=80',
-            pageCount: 288,
-            currentPage: 145,
-            shelf: 'reading',
-            formats: ['eBook', 'Paperback'],
-            ownership: 'Owned',
-            genres: ['Thriller', 'Mystery'],
-            lastSessionDate: '2026-10-09'
-          },
-          {
-            id: 'b_2',
-            title: 'Dune',
-            author: 'Frank Herbert',
-            cover: 'https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=400&q=80',
-            pageCount: 688,
-            currentPage: 210,
-            shelf: 'reading',
-            formats: ['Paperback'],
-            ownership: 'Owned',
-            genres: ['Sci-Fi', 'Classic'],
-            lastSessionDate: '2026-10-08'
-          },
-          {
-            id: 'b_3',
-            title: 'Tomorrow, and Tomorrow, and Tomorrow',
-            author: 'Gabrielle Zevin',
-            cover: 'https://images.unsplash.com/photo-1543002588-bfa74002ed7e?auto=format&fit=crop&w=400&q=80',
-            pageCount: 416,
-            currentPage: 0,
-            shelf: 'to-read',
-            formats: ['Hardcover', 'eBook'],
-            ownership: 'Owned',
-            genres: ['Fiction', 'Contemporary'],
-            lastSessionDate: null
-          }
-        ];
-        saveBooks();
+        books = [];
       }
 
       readingSessions = safeJsonParse('rianne_sessions_v1', []);
@@ -1764,7 +1676,16 @@
 
     function renderHeroCard() {
       const book = books.find(b => b.id === activeBookId);
-      if (!book) return;
+      if (!book) {
+        document.getElementById('heroTitle').innerText = 'No Book Selected';
+        document.getElementById('heroAuthor').innerText = '--';
+        document.getElementById('heroLastDate').innerText = 'Last read: --';
+        document.getElementById('heroProgressBar').style.width = '0%';
+        document.getElementById('heroProgressText').innerText = '0 / 0 pages';
+        document.getElementById('heroPercentBadge').innerText = '0%';
+        document.getElementById('heroEstTimeRemaining').innerText = '-- remaining';
+        return;
+      }
 
       const coverEl = document.getElementById('heroCover');
       if (coverEl) coverEl.src = book.cover || 'https://placehold.co/200x300/446BA2/FFF9EE?text=Cover';
@@ -2174,6 +2095,37 @@
       }
     }
 
+    // --- MANUAL BOOK REDIRECTION (UNIFIED FULL SCHEMA) ---
+    function openManualBookModal() {
+      const tempBook = {
+        id: 'b_custom_' + Date.now(),
+        title: '',
+        author: '',
+        pageCount: 300,
+        currentPage: 0,
+        shelf: 'to-read',
+        ownership: 'Owned',
+        formats: ['Paperback'],
+        genres: [],
+        cover: '',
+        rating: 0,
+        review: '',
+        vibeTears: 0,
+        vibeScary: 0,
+        vibeSpice: 0,
+        vibeHeartbreak: 0,
+        isFavorite: false,
+        finishedDate: null,
+        lastSessionDate: null
+      };
+
+      books.unshift(tempBook);
+      saveBooks();
+      renderAllViews();
+      openBookDetailModal(tempBook.id);
+      showToast('Enter details and tap Save Changes!');
+    }
+
     // --- BOOK DETAIL / EDIT MODAL LOGIC ---
     function openBookDetailModal(bookId) {
       const bk = books.find(b => b.id === bookId);
@@ -2369,10 +2321,16 @@
       const bk = books.find(b => b.id === id);
       if (!bk) return;
 
-      bk.title = document.getElementById('editBookTitle').value.trim() || bk.title;
-      bk.author = document.getElementById('editBookAuthor').value.trim() || bk.author;
+      const titleInput = document.getElementById('editBookTitle').value.trim();
+      if (!titleInput) {
+        showToast('Please enter a book title');
+        return;
+      }
+
+      bk.title = titleInput;
+      bk.author = document.getElementById('editBookAuthor').value.trim() || 'Unknown';
       bk.currentPage = Number(document.getElementById('editBookCurrentPage').value) || 0;
-      bk.pageCount = Number(document.getElementById('editBookTotalPages').value) || bk.pageCount;
+      bk.pageCount = Number(document.getElementById('editBookTotalPages').value) || bk.pageCount || 300;
       bk.shelf = document.getElementById('editBookShelf').value;
       bk.ownership = document.getElementById('editBookOwnership').value;
       bk.formats = [...editingBookFormats];
@@ -2494,52 +2452,7 @@
       document.getElementById('pastSessionPercentMinutes').value = elapsedMinutes;
     }
 
-    // --- MANUAL BOOK & SEARCH MODALS ---
-    function openManualBookModal() {
-      document.getElementById('manualBookTitle').value = '';
-      document.getElementById('manualBookAuthor').value = '';
-      document.getElementById('manualBookPages').value = '';
-      document.getElementById('manualBookGenres').value = '';
-      document.getElementById('manualBookCover').value = '';
-      openModal('modalManualBook');
-    }
-
-    function submitManualBook() {
-      const title = document.getElementById('manualBookTitle').value.trim();
-      const author = document.getElementById('manualBookAuthor').value.trim() || 'Unknown';
-      const pages = Number(document.getElementById('manualBookPages').value) || 300;
-      const shelf = document.getElementById('manualBookShelf').value;
-      const genres = document.getElementById('manualBookGenres').value.split(',').map(g => g.trim()).filter(Boolean);
-      const cover = cleanImageUrl(document.getElementById('manualBookCover').value);
-
-      if (!title) {
-        showToast('Title is required');
-        return;
-      }
-
-      const newBk = {
-        id: 'b_custom_' + Date.now(),
-        title,
-        author,
-        pageCount: pages,
-        currentPage: (shelf === 'finished') ? pages : 0,
-        shelf,
-        ownership: 'Owned',
-        formats: ['Paperback'],
-        genres: genres.length > 0 ? genres : ['General'],
-        cover,
-        rating: 0,
-        lastSessionDate: (shelf === 'finished') ? new Date().toISOString().split('T')[0] : null
-      };
-
-      books.push(newBk);
-      saveBooks();
-      closeModal('modalManualBook');
-      determineActiveHeroBook();
-      renderAllViews();
-      showToast(`Added "${title}"!`);
-    }
-
+    // --- ONLINE BOOK SEARCH ---
     async function executeOnlineBookSearch() {
       const query = document.getElementById('onlineSearchQuery')?.value.trim();
       const resultsContainer = document.getElementById('onlineSearchResultsList');
@@ -2548,30 +2461,32 @@
       resultsContainer.innerHTML = '<p class="text-center text-xs text-slate-400 py-6">Searching catalogs...</p>';
 
       try {
-        const res = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(query)}&maxResults=8`);
+        const res = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(query)}&maxResults=10`);
         const data = await res.json();
         if (!data.items || data.items.length === 0) {
           resultsContainer.innerHTML = '<p class="text-center text-xs text-slate-500 py-6">No books found.</p>';
+          currentSearchResults = [];
           return;
         }
 
-        resultsContainer.innerHTML = data.items.map(item => {
+        currentSearchResults = data.items;
+
+        resultsContainer.innerHTML = data.items.map((item, index) => {
           const info = item.volumeInfo || {};
-          const title = (info.title || 'Unknown').replace(/'/g, "\\'");
-          const author = ((info.authors && info.authors[0]) || 'Unknown').replace(/'/g, "\\'");
+          const title = info.title || 'Untitled';
+          const authors = info.authors ? info.authors.join(', ') : 'Unknown Author';
           const pgs = info.pageCount || 300;
           const cover = (info.imageLinks?.thumbnail || info.imageLinks?.smallThumbnail || '').replace(/^http:\/\//i, 'https://');
-          const genre = (info.categories && info.categories[0]) ? info.categories[0].replace(/'/g, "\\'") : 'General';
 
           return `
             <div class="bg-white border-2 border-[#05244C] rounded-2xl p-2.5 flex items-center justify-between gap-2.5 shadow-sm">
               <img src="${cover || 'https://placehold.co/80x120/446BA2/FFF9EE?text=Cover'}" class="w-10 aspect-[2/3] object-cover rounded-lg border border-[#05244C] flex-shrink-0" onerror="handleCoverError(this)">
               <div class="flex-1 min-w-0">
-                <h4 class="text-xs font-bold text-[#05244C] truncate">${info.title || 'Unknown'}</h4>
-                <p class="text-[10px] text-slate-500 font-editorial italic truncate">${info.authors ? info.authors.join(', ') : 'Unknown'}</p>
+                <h4 class="text-xs font-bold text-[#05244C] truncate">${title}</h4>
+                <p class="text-[10px] text-slate-500 font-editorial italic truncate">${authors}</p>
                 <span class="text-[9px] text-slate-400 block">${pgs} pages</span>
               </div>
-              <button onclick="addBookFromSearch('${title}', '${author}', ${pgs}, '${cover}', '${genre}')" class="px-3 py-1.5 bg-[#FF5B22] text-white rounded-xl text-xs font-bold border border-[#05244C] shadow-sm retro-btn">Add</button>
+              <button onclick="addBookFromSearchIndex(${index})" class="px-3 py-1.5 bg-[#FF5B22] text-white rounded-xl text-xs font-bold border border-[#05244C] shadow-sm retro-btn">Add</button>
             </div>
           `;
         }).join('');
@@ -2580,19 +2495,30 @@
       }
     }
 
-    function addBookFromSearch(title, author, pages, cover, genre) {
+    function addBookFromSearchIndex(index) {
+      const item = currentSearchResults[index];
+      if (!item) return;
+
+      const info = item.volumeInfo || {};
       const newBk = {
         id: 'b_search_' + Date.now(),
-        title,
-        author,
-        pageCount: pages || 300,
+        title: info.title || 'Untitled',
+        author: info.authors ? info.authors.join(', ') : 'Unknown',
+        pageCount: Number(info.pageCount) || 300,
         currentPage: 0,
         shelf: 'to-read',
         ownership: 'Owned',
         formats: ['Paperback'],
-        genres: [genre || 'General'],
-        cover: cleanImageUrl(cover),
+        genres: Array.isArray(info.categories) ? info.categories : ['General'],
+        cover: cleanImageUrl((info.imageLinks?.thumbnail || info.imageLinks?.smallThumbnail || '').replace(/^http:\/\//i, 'https://')),
         rating: 0,
+        review: '',
+        vibeTears: 0,
+        vibeScary: 0,
+        vibeSpice: 0,
+        vibeHeartbreak: 0,
+        isFavorite: false,
+        finishedDate: null,
         lastSessionDate: null
       };
 
@@ -2601,96 +2527,93 @@
       closeModal('modalOnlineSearch');
       determineActiveHeroBook();
       renderAllViews();
-      showToast(`Added "${title}" to TBR!`);
+      showToast(`Added "${newBk.title}" to TBR!`);
     }
 
     // --- CALENDAR & STATS FUNCTIONS ---
     function renderCalendar() {
-  const monthTitleEl = document.getElementById('calendarMonthTitle');
-  if (!monthTitleEl) return;
+      const monthTitleEl = document.getElementById('calendarMonthTitle');
+      if (!monthTitleEl) return;
 
-  const monthTitle = new Date(calendarYear, calendarMonth).toLocaleString('default', { month: 'long', year: 'numeric' });
-  monthTitleEl.innerText = monthTitle;
+      const monthTitle = new Date(calendarYear, calendarMonth).toLocaleString('default', { month: 'long', year: 'numeric' });
+      monthTitleEl.innerText = monthTitle;
 
-  const firstDayIndex = new Date(calendarYear, calendarMonth, 1).getDay();
-  const daysInMonth = new Date(calendarYear, calendarMonth + 1, 0).getDate();
-  const grid = document.getElementById('calendarDaysGrid');
-  if (!grid) return;
-  grid.innerHTML = '';
+      const firstDayIndex = new Date(calendarYear, calendarMonth, 1).getDay();
+      const daysInMonth = new Date(calendarYear, calendarMonth + 1, 0).getDate();
+      const grid = document.getElementById('calendarDaysGrid');
+      if (!grid) return;
+      grid.innerHTML = '';
 
-  for (let i = 0; i < firstDayIndex; i++) {
-    grid.innerHTML += `<div class="h-14 rounded-xl bg-amber-50/40 border border-transparent"></div>`;
-  }
-
-  for (let day = 1; day <= daysInMonth; day++) {
-    const dateStr = `${calendarYear}-${String(calendarMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-    
-    // Find sessions matching this date (with date normalization support)
-    const daySessions = readingSessions.filter(s => {
-      const sDate = normalizeDateToYMD(s.date) || s.date;
-      return sDate === dateStr;
-    });
-
-    // Find books finished on this date
-    const dayFinishedBooks = books.filter(b => {
-      const fDate = normalizeDateToYMD(b.finishedDate) || b.finishedDate;
-      const fDates = Array.isArray(b.finishedDates) ? b.finishedDates.map(d => normalizeDateToYMD(d) || d) : [];
-      return fDate === dateStr || fDates.includes(dateStr);
-    });
-
-    const hasRead = daySessions.length > 0;
-    const isFinished = dayFinishedBooks.length > 0;
-
-    if (hasRead || isFinished) {
-      let cover = '';
-      let bookTitle = '';
-
-      if (isFinished) {
-        const bk = dayFinishedBooks[dayFinishedBooks.length - 1];
-        cover = bk?.cover || '';
-        bookTitle = bk?.title || '';
-      } else if (hasRead) {
-        const lastSess = daySessions[daySessions.length - 1];
-        // Match by internal ID, external Goodreads ID, or book title
-        const bk = books.find(b => 
-          b.id === lastSess.bookId || 
-          (b.externalId && b.externalId === lastSess.bookId) ||
-          (lastSess.bookTitle && b.title.toLowerCase() === lastSess.bookTitle.toLowerCase())
-        );
-        cover = bk?.cover || '';
-        bookTitle = bk?.title || '';
+      for (let i = 0; i < firstDayIndex; i++) {
+        grid.innerHTML += `<div class="h-14 rounded-xl bg-amber-50/40 border border-transparent"></div>`;
       }
 
-      const hasValidCover = Boolean(cover && cover.trim() !== '');
+      for (let day = 1; day <= daysInMonth; day++) {
+        const dateStr = `${calendarYear}-${String(calendarMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+        
+        const daySessions = readingSessions.filter(s => {
+          const sDate = normalizeDateToYMD(s.date) || s.date;
+          return sDate === dateStr;
+        });
 
-      grid.innerHTML += `
-        <div class="h-14 rounded-xl border-2 border-[#05244C] relative overflow-hidden shadow-sm bg-[#446BA2] bg-cover bg-center" style="${hasValidCover ? `background-image: url('${cover}'); background-size: cover; background-position: center;` : ''}">
-          <div class="absolute inset-0 ${hasValidCover ? 'bg-black/30' : 'bg-transparent'} flex flex-col justify-between p-1">
-            <span class="text-[9px] font-black text-white drop-shadow">${day}</span>
-            ${!hasValidCover ? `<span class="text-[7px] text-white font-extrabold truncate leading-tight">${bookTitle}</span>` : ''}
-          </div>
-          ${isFinished ? `<span class="absolute bottom-0.5 right-0.5 bg-emerald-500 text-white text-[8px] px-1 rounded-full font-black border border-white shadow">✓</span>` : ''}
-        </div>
-      `;
-    } else {
-      grid.innerHTML += `
-        <div class="h-14 rounded-xl border border-orange-200 bg-white flex flex-col items-center justify-between p-1">
-          <span class="text-[9px] font-bold text-slate-400 self-start">${day}</span>
-        </div>
-      `;
+        const dayFinishedBooks = books.filter(b => {
+          const fDate = normalizeDateToYMD(b.finishedDate) || b.finishedDate;
+          const fDates = Array.isArray(b.finishedDates) ? b.finishedDates.map(d => normalizeDateToYMD(d) || d) : [];
+          return fDate === dateStr || fDates.includes(dateStr);
+        });
+
+        const hasRead = daySessions.length > 0;
+        const isFinished = dayFinishedBooks.length > 0;
+
+        if (hasRead || isFinished) {
+          let cover = '';
+          let bookTitle = '';
+
+          if (isFinished) {
+            const bk = dayFinishedBooks[dayFinishedBooks.length - 1];
+            cover = bk?.cover || '';
+            bookTitle = bk?.title || '';
+          } else if (hasRead) {
+            const lastSess = daySessions[daySessions.length - 1];
+            const bk = books.find(b => 
+              b.id === lastSess.bookId || 
+              (b.externalId && b.externalId === lastSess.bookId) ||
+              (lastSess.bookTitle && b.title.toLowerCase() === lastSess.bookTitle.toLowerCase())
+            );
+            cover = bk?.cover || '';
+            bookTitle = bk?.title || '';
+          }
+
+          const hasValidCover = Boolean(cover && cover.trim() !== '');
+
+          grid.innerHTML += `
+            <div class="h-14 rounded-xl border-2 border-[#05244C] relative overflow-hidden shadow-sm bg-[#446BA2] bg-cover bg-center" style="${hasValidCover ? `background-image: url('${cover}'); background-size: cover; background-position: center;` : ''}">
+              <div class="absolute inset-0 ${hasValidCover ? 'bg-black/30' : 'bg-transparent'} flex flex-col justify-between p-1">
+                <span class="text-[9px] font-black text-white drop-shadow">${day}</span>
+                ${!hasValidCover ? `<span class="text-[7px] text-white font-extrabold truncate leading-tight">${bookTitle}</span>` : ''}
+              </div>
+              ${isFinished ? `<span class="absolute bottom-0.5 right-0.5 bg-emerald-500 text-white text-[8px] px-1 rounded-full font-black border border-white shadow">✓</span>` : ''}
+            </div>
+          `;
+        } else {
+          grid.innerHTML += `
+            <div class="h-14 rounded-xl border border-orange-200 bg-white flex flex-col items-center justify-between p-1">
+              <span class="text-[9px] font-bold text-slate-400 self-start">${day}</span>
+            </div>
+          `;
+        }
+      }
+
+      const completedBooksThisYear = books.filter(b => b.shelf === 'finished').length;
+      const currentMonthNum = new Date().getMonth() + 1;
+      const rate = (completedBooksThisYear / currentMonthNum).toFixed(1);
+      const proj = (rate * 12).toFixed(1);
+
+      const bannerText = document.getElementById('velocityBannerText');
+      if (bannerText) {
+        bannerText.innerText = `At your current rate of ${rate} books/month, you'll read ${proj} books this year!`;
+      }
     }
-  }
-
-  const completedBooksThisYear = books.filter(b => b.shelf === 'finished').length;
-  const currentMonthNum = new Date().getMonth() + 1;
-  const rate = (completedBooksThisYear / currentMonthNum).toFixed(1);
-  const proj = (rate * 12).toFixed(1);
-
-  const bannerText = document.getElementById('velocityBannerText');
-  if (bannerText) {
-    bannerText.innerText = `At your current rate of ${rate} books/month, you'll read ${proj} books this year!`;
-  }
-}
 
     function changeCalendarMonth(offset) {
       calendarMonth += offset;
@@ -3860,22 +3783,45 @@
       let updated = 0;
 
       for (const bk of missing) {
+        let foundCover = '';
+
         try {
-          const res = await fetch(`https://openlibrary.org/search.json?title=${encodeURIComponent(bk.title)}&limit=1`);
-          const data = await res.json();
-          if (data.docs && data.docs[0] && data.docs[0].cover_i) {
-            bk.cover = `https://covers.openlibrary.org/b/id/${data.docs[0].cover_i}-L.jpg`;
-            updated++;
+          const gq = `intitle:${encodeURIComponent(bk.title)}${bk.author ? `+inauthor:${encodeURIComponent(bk.author)}` : ''}`;
+          const res = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${gq}&maxResults=1`);
+          if (res.ok) {
+            const data = await res.json();
+            const links = data.items?.[0]?.volumeInfo?.imageLinks;
+            foundCover = (links?.thumbnail || links?.smallThumbnail || '')
+              .replace(/^http:\/\//i, 'https://')
+              .replace('&edge=curl', '');
           }
         } catch(e) {}
+
+        if (!foundCover) {
+          try {
+            const olUrl = `https://openlibrary.org/search.json?title=${encodeURIComponent(bk.title)}${bk.author ? `&author=${encodeURIComponent(bk.author)}` : ''}&limit=1`;
+            const res = await fetch(olUrl);
+            if (res.ok) {
+              const data = await res.json();
+              if (data.docs?.[0]?.cover_i) {
+                foundCover = `https://covers.openlibrary.org/b/id/${data.docs[0].cover_i}-L.jpg`;
+              }
+            }
+          } catch(e) {}
+        }
+
+        if (foundCover) {
+          bk.cover = cleanImageUrl(foundCover);
+          updated++;
+        }
       }
 
       if (updated > 0) {
         saveBooks();
         renderAllViews();
-        if (notify) showToast(`Fetched ${updated} new covers!`);
+        if (notify) showToast(`Updated ${updated} cover(s)!`);
       } else if (notify) {
-        showToast('Could not find covers automatically.');
+        showToast('No covers found automatically.');
       }
     }
 
@@ -3945,7 +3891,7 @@
       determineActiveHeroBook();
       renderAllViews();
       event.target.value = '';
-      showToast(`Import completed!`);
+      showToast('Import completed!');
     }
 
     // --- TAB & MODAL HELPERS ---
@@ -4020,7 +3966,6 @@
         'modalFinishedBooks',
         'modalBulkEdit',
         'modalOnlineSearch',
-        'modalManualBook',
         'modalAddQuote',
         'modalGoalEditor',
         'modalBookHours',
