@@ -105,7 +105,7 @@
   <header id="appHeader" class="relative z-40 bg-[#446BA2] border-b-2 border-[#FFA4C4] px-4 pb-3 shadow-md">
     <div class="max-w-md mx-auto flex items-center justify-between">
       <div class="flex items-center gap-3">
-        <!-- CELESTIAL SUN & MOON (ACCURATE VECTOR) -->
+        <!-- CELESTIAL SUN & MOON VECTOR -->
         <svg class="w-11 h-11 flex-shrink-0 drop-shadow-[0_2px_4px_rgba(5,36,76,0.35)]" viewBox="0 0 200 200" fill="none" stroke="#FFF9EE" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <g id="sharp-ray">
@@ -146,7 +146,7 @@
           <path d="M93 121 C 95 122, 95 125, 92 126" stroke-width="1.2"/>
         </svg>
 
-        <!-- VACATION RETRO TITLE WITH LAYERED DROP SHADOW -->
+        <!-- VACATION RETRO TITLE -->
         <h1 class="text-2xl font-retro-title italic text-[#FFF9EE] tracking-tight leading-none drop-shadow-[2px_3px_0px_#05244C]">
           Rianne's Bookshelf
         </h1>
@@ -239,7 +239,7 @@
         <div class="flex items-center justify-between mb-2.5 px-1">
           <h3 class="text-xs font-extrabold text-[#FFF9EE] uppercase tracking-wider flex items-center gap-2">
             <span>Also In Progress</span>
-            <span id="activeCountBadge" class="bg-[#FFA4C4] text-[#05244C] text-[10px] font-black px-2.5 py-0.5 rounded-full border border-[#05244C]">0</span>
+            <span id="activeCountBadge" class="bg-[#FFA4C4] text-[#05244C] text-[10px] font-black px-2 py-0.5 rounded-full border border-[#05244C]">0</span>
           </h3>
           <span class="text-[11px] font-bold text-[#FFD034]">Tap to switch</span>
         </div>
@@ -685,7 +685,7 @@
             <input type="date" id="editBookFinishedDate" class="w-full bg-white border-2 border-[#05244C] rounded-xl p-2 font-bold text-xs">
           </div>
 
-          <!-- Overall Rating (Clean Stars, No Top-Right Number) -->
+          <!-- Overall Rating (Clean Stars, No Top-Right Badge) -->
           <div class="bg-white border-2 border-[#05244C] p-3 rounded-2xl shadow-sm space-y-1.5">
             <div class="flex items-center">
               <span class="text-[10px] uppercase font-bold text-slate-500">Overall Rating</span>
@@ -702,7 +702,7 @@
             <input type="hidden" id="editBookStarRating" value="0">
           </div>
 
-          <!-- 7 Dynamic Vibes Container (With Half-Stars) -->
+          <!-- 7 Custom Vibe Shapes Grid Container -->
           <div class="bg-white/95 border-2 border-[#05244C] p-3 rounded-2xl shadow-sm space-y-2">
             <span class="text-[10px] font-black uppercase text-[#05244C] tracking-wider block">Vibe & Impact</span>
             <div id="vibesContainer" class="space-y-2 text-[11px] font-bold text-[#05244C]"></div>
@@ -1146,58 +1146,51 @@
       'Adventure': ['adventure', 'survival', 'expedition', 'quest']
     };
 
-    // --- 7 CUSTOM VIBE SHAPES & COLORS ---
-const VIBE_DEFINITIONS = [
-  {
-    key: 'vibeHeartfelt',
-    label: 'Heartfelt',
-    color: '#E11D48',
-    // Cracked Heart
-    svgPath: 'M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z M12 5.5l-1.5 3.5 2.5 3-2 3.5 1 4'[cite: 10]
-  },
-  {
-    key: 'vibeSuspense',
-    label: 'Suspense',
-    color: '#F59E0B',
-    // Lightning Bolt
-    svgPath: 'M7 2v11h3v9l7-12h-4l4-8z'
-  },
-  {
-    key: 'vibeMystery',
-    label: 'Mystery',
-    color: '#3B82F6',
-    // Magnifying Glass
-    svgPath: 'M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z'
-  },
-  {
-    key: 'vibeHorror',
-    label: 'Horror',
-    color: '#7C3AED',
-    // Ghost
-    svgPath: 'M12 2C7.58 2 4 5.58 4 10v10l2.5-2 2.5 2 3-2 3 2 2.5-2 2.5 2V10c0-4.42-3.58-8-8-8zm-2.5 9c-.83 0-1.5-.67-1.5-1.5S8.67 8 9.5 8s1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm5 0c-.83 0-1.5-.67-1.5-1.5S13.67 8 14.5 8s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z'[cite: 10]
-  },
-  {
-    key: 'vibeRomance',
-    label: 'Love',
-    color: '#DB2777',
-    // Solid Heart
-    svgPath: 'M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'[cite: 10]
-  },
-  {
-    key: 'vibeSpice',
-    label: 'Spice',
-    color: '#EA580C',
-    // Chili Pepper
-    svgPath: 'M19.5 3c-1.5 0-3 .8-3.8 2.1C13.8 4.2 11.5 4.5 9 6c-4.5 2.7-7 8.5-4 13.5 1.5 2.5 4 3.5 6.5 3.5 6 0 10.5-5.5 11-12 .2-2.5-.5-5-1.5-6.8.8-.7 1.5-1.5 1.5-2.7 0-.3-.2-.5-.5-.5z'
-  },
-  {
-    key: 'vibeTears',
-    label: 'Tear',
-    color: '#0284C7',
-    // Teardrop
-    svgPath: 'M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z'[cite: 10]
-  }
-];
+    // 7 CUSTOM VIBE & IMPACT METRICS
+    const VIBE_DEFINITIONS = [
+      {
+        key: 'vibeHeartfelt',
+        label: 'Heartfelt',
+        color: '#E11D48',
+        svgPath: 'M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z M12 5.5l-1.5 3.5 2.5 3-2 3.5 1 4'[cite: 10]
+      },
+      {
+        key: 'vibeSuspense',
+        label: 'Suspense',
+        color: '#F59E0B',
+        svgPath: 'M7 2v11h3v9l7-12h-4l4-8z'
+      },
+      {
+        key: 'vibeMystery',
+        label: 'Mystery',
+        color: '#3B82F6',
+        svgPath: 'M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z'
+      },
+      {
+        key: 'vibeHorror',
+        label: 'Horror',
+        color: '#7C3AED',
+        svgPath: 'M12 2C7.58 2 4 5.58 4 10v10l2.5-2 2.5 2 3-2 3 2 2.5-2 2.5 2V10c0-4.42-3.58-8-8-8zm-2.5 9c-.83 0-1.5-.67-1.5-1.5S8.67 8 9.5 8s1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm5 0c-.83 0-1.5-.67-1.5-1.5S13.67 8 14.5 8s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z'[cite: 10]
+      },
+      {
+        key: 'vibeRomance',
+        label: 'Love',
+        color: '#DB2777',
+        svgPath: 'M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'[cite: 10]
+      },
+      {
+        key: 'vibeSpice',
+        label: 'Spice',
+        color: '#EA580C',
+        svgPath: 'M19.5 3c-1.5 0-3 .8-3.8 2.1C13.8 4.2 11.5 4.5 9 6c-4.5 2.7-7 8.5-4 13.5 1.5 2.5 4 3.5 6.5 3.5 6 0 10.5-5.5 11-12 .2-2.5-.5-5-1.5-6.8.8-.7 1.5-1.5 1.5-2.7 0-.3-.2-.5-.5-.5z'
+      },
+      {
+        key: 'vibeTears',
+        label: 'Tear',
+        color: '#0284C7',
+        svgPath: 'M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z'[cite: 10]
+      }
+    ];
 
     let calendarYear = new Date().getFullYear();
     let calendarMonth = new Date().getMonth();
@@ -1582,56 +1575,73 @@ const VIBE_DEFINITIONS = [
       }).join('');
     }
 
-    // 7 VIBES WITH HALF-STAR CYCLING (★ -> ½ -> 0)
+    // 7 VIBES WITH SVG SHAPES & HALF-FILL CYCLING (1 -> 0.5 -> 0)
     function renderVibeInputs() {
       const container = document.getElementById('vibesContainer');
       if (!container) return;
+
+      container.className = "grid grid-cols-2 gap-2";
       container.innerHTML = VIBE_DEFINITIONS.map(vibe => `
-        <div class="bg-[#FFF9EE] border border-orange-200 rounded-xl p-2.5 flex items-center justify-between">
-          <span class="font-bold">${vibe.label}</span>
-          <div class="flex gap-1.5 text-lg select-none cursor-pointer" id="stars_${vibe.key}">
-            ${[1, 2, 3, 4, 5].map(i => `<span onclick="cycleVibeStar('${vibe.key}', ${i})" class="vibe-star text-slate-300 hover:scale-110 transition-transform">★</span>`).join('')}
+        <div class="bg-[#FFF9EE] border-2 border-[#05244C] rounded-2xl overflow-hidden shadow-sm flex flex-col justify-between">
+          <div class="bg-[#05244C] text-[#FFF9EE] text-[9px] font-black uppercase tracking-wider py-1 text-center select-none">
+            ${vibe.label}
+          </div>
+          <div class="p-2 flex justify-center items-center gap-1 select-none" id="icons_${vibe.key}">
+            ${[1, 2, 3, 4, 5].map(i => `
+              <div onclick="cycleVibeShape('${vibe.key}', ${i})" class="cursor-pointer transition-transform hover:scale-110 active:scale-90">
+                <svg class="w-5 h-5" viewBox="0 0 24 24">
+                  <defs>
+                    <linearGradient id="grad_${vibe.key}_${i}" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stop-color="${vibe.color}" class="stop-active" stop-opacity="1"/>
+                      <stop offset="0%" stop-color="#CBD5E1" class="stop-inactive" stop-opacity="0.35"/>
+                    </linearGradient>
+                  </defs>
+                  <path d="${vibe.svgPath}" fill="url(#grad_${vibe.key}_${i})" stroke="#05244C" stroke-width="0.75" stroke-linejoin="round"/>
+                </svg>
+              </div>
+            `).join('')}
           </div>
           <input type="hidden" id="${vibe.key}" value="0">
         </div>
       `).join('');
     }
 
-    function setVibeStars(vibeKey, rating) {
+    function setVibeShapes(vibeKey, rating) {
       const hiddenInput = document.getElementById(vibeKey);
       if (hiddenInput) hiddenInput.value = rating;
 
-      const container = document.getElementById('stars_' + vibeKey);
-      if (!container) return;
-      const starElements = container.querySelectorAll('.vibe-star');
-      const fullStars = Math.floor(rating);
-      const hasHalf = (rating % 1 !== 0);
+      const fullUnits = Math.floor(rating);
+      const remainder = Math.round((rating - fullUnits) * 100) / 100;
 
-      starElements.forEach((el, idx) => {
-        if (idx < fullStars) {
-          el.className = "vibe-star text-[#FF5B22] font-bold";
-          el.innerText = '★';
-        } else if (idx === fullStars && hasHalf) {
-          el.className = "vibe-star text-[#FF5B22] font-bold";
-          el.innerText = '½';
-        } else {
-          el.className = "vibe-star text-slate-300";
-          el.innerText = '★';
+      for (let i = 1; i <= 5; i++) {
+        const grad = document.getElementById(`grad_${vibeKey}_${i}`);
+        if (!grad) continue;
+        const stopActive = grad.querySelector('.stop-active');
+        const stopInactive = grad.querySelector('.stop-inactive');
+
+        let percent = '0%';
+        if (i <= fullUnits) {
+          percent = '100%';
+        } else if (i === fullUnits + 1 && remainder > 0) {
+          percent = '50%';
         }
-      });
+
+        if (stopActive) stopActive.setAttribute('offset', percent);
+        if (stopInactive) stopInactive.setAttribute('offset', percent);
+      }
     }
 
-    function cycleVibeStar(vibeKey, starNum) {
+    function cycleVibeShape(vibeKey, slotNum) {
       const current = Number(document.getElementById(vibeKey)?.value) || 0;
-      let newRating = starNum;
+      let next = slotNum;
 
-      if (current === starNum) {
-        newRating = starNum - 0.5;
-      } else if (current === starNum - 0.5) {
-        newRating = 0;
+      if (current === slotNum) {
+        next = slotNum - 0.5;
+      } else if (current === slotNum - 0.5) {
+        next = 0;
       }
 
-      setVibeStars(vibeKey, newRating);
+      setVibeShapes(vibeKey, next);
     }
 
     function safeJsonParse(key, fallback) {
@@ -2225,7 +2235,7 @@ const VIBE_DEFINITIONS = [
       setEditBookStarRating(bk.rating || 0);
 
       VIBE_DEFINITIONS.forEach(v => {
-        setVibeStars(v.key, bk[v.key] || 0);
+        setVibeShapes(v.key, bk[v.key] || 0);
       });
 
       toggleReviewSectionDisplay();
@@ -2421,7 +2431,7 @@ const VIBE_DEFINITIONS = [
     function deleteBookDetail() {
       const id = document.getElementById('editBookId').value;
       if (!id) return;
-      books = books.filter(b => !selectedBookIds.has(b.id));
+      books = books.filter(b => b.id !== id);
       readingSessions = readingSessions.filter(s => s.bookId !== id);
       quotes = quotes.filter(q => q.bookId !== id);
 
@@ -3146,7 +3156,7 @@ const VIBE_DEFINITIONS = [
       document.getElementById('editBookShelf').value = 'reading';
       document.getElementById('editBookFinishedDate').value = '';
       setEditBookStarRating(0);
-      VIBE_DEFINITIONS.forEach(v => { setVibeStars(v.key, 0); });
+      VIBE_DEFINITIONS.forEach(v => { setVibeShapes(v.key, 0); });
 
       saveBooks();
       saveSessions();
