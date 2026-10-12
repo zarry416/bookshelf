@@ -43,7 +43,7 @@
     };
   </script>
 
-  <!-- Google Fonts: Vacation & Retro Typography -->
+  <!-- Google Fonts: Retro Typography -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Fraunces:ital,opsz,wght@0,9..144,400..900;1,9..144,400..900&family=Playfair+Display:ital,wght@0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
@@ -88,10 +88,6 @@
       font-family: 'Playfair Display', 'Bodoni Moda', Georgia, serif;
     }
 
-    .font-handwriting {
-      font-family: 'Caveat', cursive;
-    }
-
     .shadow-retro-orange {
       box-shadow: 4px 4px 0px var(--retro-orange), 7px 7px 0px var(--retro-navy);
     }
@@ -116,7 +112,7 @@
       -moz-appearance: textfield;
     }
 
-    header.sticky {
+    #appHeader.sticky {
       padding-top: calc(env(safe-area-inset-top, 0px) + 12px) !important;
     }
 
@@ -133,27 +129,28 @@
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
   </style>
 </head>
-<body class="text-slate-800 antialiased selection:bg-[#FFA4C4] selection:text-[#05244C]">
 
-  <!-- TOP HEADER -->
-  <header class="sticky top-0 z-40 bg-[#446BA2]/95 backdrop-blur-md border-b-2 border-[#FFA4C4] px-4 pb-3 transition-all shadow-md">
+  <body class="text-slate-800 antialiased selection:bg-[#FFA4C4] selection:text-[#05244C]">
+
+  <!-- TOP HEADER (TOGGLEABLE STICKY) -->
+  <header id="appHeader" class="sticky top-0 z-40 bg-[#446BA2]/95 backdrop-blur-md border-b-2 border-[#FFA4C4] px-4 pb-3 transition-all shadow-md">
     <div class="max-w-md mx-auto flex items-center justify-between">
       <div class="flex items-center gap-2.5">
-        <div class="w-10 h-10 rounded-2xl bg-[#FFF9EE] border-2 border-[#FFA4C4] shadow-retro-navy flex items-center justify-center overflow-hidden flex-shrink-0">
-          <svg class="w-6 h-6" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="23" cy="9" r="4.5" fill="#FFD034" stroke="#05244C" stroke-width="1.5"/>
-            <path d="M4 27C9 24.5 23 24.5 28 27" stroke="#05244C" stroke-width="2" stroke-linecap="round"/>
-            <path d="M15 25.5C14.5 20 16 15.5 19 12" stroke="#05244C" stroke-width="2.2" stroke-linecap="round"/>
-            <circle cx="17.2" cy="13.2" r="1.3" fill="#FF5B22"/>
-            <circle cx="19.4" cy="13.8" r="1.3" fill="#FF5B22"/>
-            <path d="M19 12C16 9 9 10 7 13C10 13 15 12 19 12Z" fill="#1DBBB4" stroke="#05244C" stroke-width="1.5" stroke-linejoin="round"/>
-            <path d="M19 12C19 7 15 4 12 5C13 8 16 10 19 12Z" fill="#1DBBB4" stroke="#05244C" stroke-width="1.5" stroke-linejoin="round"/>
-            <path d="M19 12C22 8 26 6 28 8C27 10 23 11 19 12Z" fill="#1DBBB4" stroke="#05244C" stroke-width="1.5" stroke-linejoin="round"/>
-            <path d="M19 12C23 12 28 14 29 17C26 16 22 15 19 12Z" fill="#1DBBB4" stroke="#05244C" stroke-width="1.5" stroke-linejoin="round"/>
+        <!-- CUSTOM MONSTERA LEAF ICON -->
+        <div class="w-11 h-11 rounded-2xl bg-[#FFF9EE] border-2 border-[#05244C] shadow-retro-navy flex items-center justify-center p-1.5 flex-shrink-0 group">
+          <svg class="w-full h-full text-[#2D8A4E]" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M48 92C32 90 14 74 15 52C16 34 32 18 46 12C48 24 45 32 38 38C46 36 50 32 52 24C55 36 50 44 40 48C48 48 54 44 56 36C59 50 52 60 41 64C50 63 56 59 58 50C60 66 54 78 44 82C48 84 50 82 52 76C50 86 48 92 48 92Z" fill="#3AA863" stroke="#05244C" stroke-width="3" stroke-linejoin="round"/>
+            <path d="M52 92C66 90 84 74 83 50C82 32 66 16 52 10C50 22 53 30 60 36C52 34 48 30 46 22C43 34 48 42 58 46C50 46 44 42 42 34C39 48 46 58 57 62C48 61 42 57 40 48C38 64 44 76 54 80C50 82 48 80 46 74C48 84 50 90 52 92Z" fill="#2E8B57" stroke="#05244C" stroke-width="3" stroke-linejoin="round"/>
+            <path d="M50 14V94" stroke="#05244C" stroke-width="3.5" stroke-linecap="round"/>
+            <path d="M46 12C46 12 49 52 50 94" stroke="#FFE79A" stroke-width="1.8" stroke-linecap="round"/>
           </svg>
         </div>
         <div>
-          <h1 class="text-xl font-retro-title text-[#FFF9EE] tracking-tight leading-none drop-shadow-sm">Rianne's Bookshelf</h1>
+          <!-- STYLIZED RETRO TITLE WITH SHADOW -->
+          <h1 class="text-xl font-retro-title text-[#FFF9EE] tracking-tight leading-none drop-shadow-[2px_2px_0px_#05244C]">
+            Rianne's Bookshelf
+          </h1>
+          <p class="text-[9px] uppercase tracking-widest text-[#FFD034] font-black drop-shadow-sm mt-0.5">Tropical Reading Lounge</p>
         </div>
       </div>
 
@@ -162,6 +159,11 @@
       </button>
     </div>
   </header>
+
+  <!-- FLOATING SCROLL BACK TO TOP BUTTON -->
+  <button id="scrollToTopBtn" onclick="scrollToTopSmooth()" class="fixed bottom-24 right-5 z-40 w-11 h-11 rounded-2xl bg-[#FFD034] text-[#05244C] border-3 border-[#05244C] shadow-retro-navy flex items-center justify-center font-black text-lg transition-all duration-300 opacity-0 pointer-events-none hover:scale-105 active:scale-95">
+    ↑
+  </button>
 
   <!-- MAIN TAB CONTENT CONTAINER -->
   <main class="max-w-md mx-auto px-4 pt-4 pb-28">
@@ -208,7 +210,7 @@
           <span id="heroPaceMetric" class="text-[10px] font-bold text-[#05244C] bg-white/80 px-2 py-1 rounded-lg border border-orange-200">~ 40 pgs/hr</span>
         </div>
 
-        <!-- Five Action Buttons (Log, Timer, Quote, Thought, DNF) -->
+        <!-- Action Buttons -->
         <div class="grid grid-cols-5 gap-1.5 mt-3.5 pt-1">
           <button onclick="openPastSessionModal()" class="retro-btn bg-[#FF5B22] text-white py-2 px-1 rounded-xl text-xs font-black border-2 border-[#05244C] shadow-retro-navy text-center flex flex-col items-center justify-center gap-1">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
@@ -469,31 +471,6 @@
 
   </main>
 
-  <!-- BOTTOM NAVIGATION BAR -->
-  <nav class="fixed bottom-0 left-0 right-0 z-50 bg-[#446BA2]/95 backdrop-blur-lg border-t-2 border-[#FFA4C4] px-6 py-2 shadow-lg">
-    <div class="max-w-md mx-auto flex items-center justify-between">
-      <button onclick="switchTab('reading')" class="nav-tab flex flex-col items-center gap-1 text-[#FFD034]" data-tab="reading">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
-        <span class="text-[10px] font-extrabold uppercase tracking-wider">Read</span>
-      </button>
-
-      <button onclick="switchTab('library')" class="nav-tab flex flex-col items-center gap-1 text-white/70 hover:text-white" data-tab="library">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
-        <span class="text-[10px] font-extrabold uppercase tracking-wider">Library</span>
-      </button>
-
-      <button onclick="switchTab('calendar')" class="nav-tab flex flex-col items-center gap-1 text-white/70 hover:text-white" data-tab="calendar">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-        <span class="text-[10px] font-extrabold uppercase tracking-wider">Calendar</span>
-      </button>
-
-      <button onclick="switchTab('quotes')" class="nav-tab flex flex-col items-center gap-1 text-white/70 hover:text-white" data-tab="quotes">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"/></svg>
-        <span class="text-[10px] font-extrabold uppercase tracking-wider">Quotes & Thoughts</span>
-      </button>
-    </div>
-  </nav>
-
   <!-- MODAL: MANUAL PAST SESSION -->
   <div id="modalPastSession" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4">
     <div class="bg-[#FFF9EE] border-3 border-[#05244C] rounded-3xl p-6 w-full max-w-sm shadow-retro-orange space-y-3.5">
@@ -617,7 +594,7 @@
           </div>
         </div>
 
-        <!-- TWO-TIER GENRE SELECTOR WITH SMART ONLINE MATCH -->
+        <!-- TWO-TIER GENRE SELECTOR -->
         <div class="space-y-1.5">
           <div class="flex items-center justify-between">
             <label class="block text-slate-700 font-bold">Genres</label>
@@ -1191,6 +1168,20 @@
           <button onclick="closeMenuDrawer()" class="text-xl font-bold text-slate-500">✕</button>
         </div>
 
+        <!-- NEW: STICKY HEADER VS SCROLL TO TOP TOGGLE -->
+        <div class="bg-amber-100/70 border-2 border-[#05244C] rounded-2xl p-3.5 space-y-2">
+          <label class="text-xs font-black uppercase text-[#05244C] tracking-wide block">Header & Scrolling Mode</label>
+          <div class="grid grid-cols-2 gap-2 text-[10px] font-bold">
+            <button type="button" onclick="setScrollBehaviorMode('sticky')" id="btnScrollModeSticky" class="py-2 px-1 rounded-xl border-2 border-[#05244C] bg-[#FF5B22] text-white shadow-retro-navy text-center">
+              📌 Sticky Top
+            </button>
+            <button type="button" onclick="setScrollBehaviorMode('totop')" id="btnScrollModeToTop" class="py-2 px-1 rounded-xl border border-[#05244C]/40 bg-white text-[#05244C] text-center">
+              ⬆️ Back to Top
+            </button>
+          </div>
+          <p class="text-[9px] text-slate-500 leading-tight pt-0.5">Toggle between fixing the top header or having a floating "Jump to Top" arrow.</p>
+        </div>
+
         <div class="bg-gradient-to-br from-[#446BA2] to-[#2B4B79] text-[#FFF9EE] p-4 rounded-2xl border-2 border-[#FFD034] shadow-md">
           <div class="flex items-center justify-between mb-2">
             <span class="text-xs font-black uppercase tracking-wider text-[#FFD034] flex items-center gap-1.5">
@@ -1258,7 +1249,7 @@
     Notice
   </div>
 
-  <script>
+    <script>
     const APP_VERSION = "5.0";
     let books = [];
     let readingSessions = [];
@@ -1338,6 +1329,59 @@
     let timerSeconds = 0;
     let timerStartTimestamp = null;
 
+    // --- SCROLL BEHAVIOR & STICKY HEADER SETTING ---
+    let scrollBehaviorMode = localStorage.getItem('rianne_scroll_mode') || 'sticky';
+
+    function setScrollBehaviorMode(mode) {
+      scrollBehaviorMode = mode;
+      localStorage.setItem('rianne_scroll_mode', mode);
+      applyScrollBehavior();
+      updateScrollSettingsButtons();
+      showToast(mode === 'sticky' ? 'Header set to Sticky' : 'Scroll-To-Top button enabled');
+    }
+
+    function applyScrollBehavior() {
+      const header = document.getElementById('appHeader');
+      const btn = document.getElementById('scrollToTopBtn');
+      if (!header || !btn) return;
+
+      if (scrollBehaviorMode === 'sticky') {
+        header.classList.add('sticky');
+        btn.classList.add('opacity-0', 'pointer-events-none');
+      } else {
+        header.classList.remove('sticky');
+        handleScrollButtonVisibility();
+      }
+    }
+
+    function updateScrollSettingsButtons() {
+      const btnSticky = document.getElementById('btnScrollModeSticky');
+      const btnToTop = document.getElementById('btnScrollModeToTop');
+      if (!btnSticky || !btnToTop) return;
+
+      if (scrollBehaviorMode === 'sticky') {
+        btnSticky.className = "py-2 px-1 rounded-xl border-2 border-[#05244C] bg-[#FF5B22] text-white shadow-retro-navy text-center";
+        btnToTop.className = "py-2 px-1 rounded-xl border border-[#05244C]/40 bg-white text-[#05244C] text-center";
+      } else {
+        btnSticky.className = "py-2 px-1 rounded-xl border border-[#05244C]/40 bg-white text-[#05244C] text-center";
+        btnToTop.className = "py-2 px-1 rounded-xl border-2 border-[#05244C] bg-[#FF5B22] text-white shadow-retro-navy text-center";
+      }
+    }
+
+    function handleScrollButtonVisibility() {
+      const btn = document.getElementById('scrollToTopBtn');
+      if (!btn) return;
+      if (scrollBehaviorMode === 'totop' && window.scrollY > 300) {
+        btn.classList.remove('opacity-0', 'pointer-events-none');
+      } else {
+        btn.classList.add('opacity-0', 'pointer-events-none');
+      }
+    }
+
+    function scrollToTopSmooth() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
     // --- TWO-TIER GENRE PILLS UI ---
     function renderGenrePills() {
       const selectedTray = document.getElementById('selectedPillsTray');
@@ -1350,7 +1394,6 @@
       if (countLabel) countLabel.innerText = `${editingBookGenres.length} selected`;
       if (hiddenInput) hiddenInput.value = editingBookGenres.join(', ');
 
-      // 1. Render active/selected tray
       if (editingBookGenres.length === 0) {
         selectedTray.innerHTML = `<span class="text-[11px] text-slate-400 italic">No genres selected yet.</span>`;
       } else {
@@ -1365,7 +1408,6 @@
         `).join('');
       }
 
-      // 2. Render unselected catalog
       const unselectedList = PRESET_GENRES.filter(g => !editingBookGenres.includes(g));
       if (unselectedList.length === 0) {
         unselectedCatalog.innerHTML = `<span class="text-[10px] text-slate-400 italic py-1">All preset genres selected!</span>`;
@@ -1407,106 +1449,87 @@
       }
     }
 
-    // Smart-Match closest preset genres using Google Books + Open Library
-  // Upgraded Smart-Match: Google Books + Open Library + Wikipedia with fuzzy fallback
-async function autoMatchBookGenresOnline() {
-  const title = document.getElementById('editBookTitle')?.value.trim();
-  const author = document.getElementById('editBookAuthor')?.value.trim();
-  if (!title) {
-    showToast('Please enter a title first');
-    return;
-  }
-
-  showToast(`Matching genres for "${title}"...`);
-  const gatheredText = [title];
-
-  // 1. Google Books (Exact & General Title Fallback)
-  try {
-    const cleanTitle = title.replace(/[^\w\s]/gi, ' ').trim();
-    const gq = `intitle:${encodeURIComponent(cleanTitle)}${author ? `+inauthor:${encodeURIComponent(author)}` : ''}`;
-    const gres = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${gq}&maxResults=3`);
-    if (gres.ok) {
-      const gdata = await gres.json();
-      if (Array.isArray(gdata.items)) {
-        gdata.items.forEach(it => {
-          if (Array.isArray(it.volumeInfo?.categories)) {
-            gatheredText.push(...it.volumeInfo.categories);
-          }
-          if (it.volumeInfo?.description) {
-            gatheredText.push(it.volumeInfo.description);
-          }
-        });
+    async function autoMatchBookGenresOnline() {
+      const title = document.getElementById('editBookTitle')?.value.trim();
+      const author = document.getElementById('editBookAuthor')?.value.trim();
+      if (!title) {
+        showToast('Please enter a title first');
+        return;
       }
-    }
-  } catch (e) {}
 
-  // 2. Open Library Search (title + author general query)
-  try {
-    const olQuery = `${title} ${author || ''}`.trim();
-    const olRes = await fetch(`https://openlibrary.org/search.json?q=${encodeURIComponent(olQuery)}&limit=3`);
-    if (olRes.ok) {
-      const odata = await olRes.json();
-      if (Array.isArray(odata.docs)) {
-        odata.docs.forEach(d => {
-          if (Array.isArray(d.subject)) gatheredText.push(...d.subject);
-          if (Array.isArray(d.subject_facet)) gatheredText.push(...d.subject_facet);
-          if (Array.isArray(d.first_sentence)) gatheredText.push(...d.first_sentence);
-        });
+      showToast(`Analyzing metadata for "${title}"...`);
+      const gatheredTags = [];
+
+      try {
+        const cleanTitle = title.replace(/[^\w\s]/gi, ' ').trim();
+        const gq = `intitle:${encodeURIComponent(cleanTitle)}${author ? `+inauthor:${encodeURIComponent(author)}` : ''}`;
+        const gres = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${gq}&maxResults=3`);
+        if (gres.ok) {
+          const gdata = await gres.json();
+          if (Array.isArray(gdata.items)) {
+            gdata.items.forEach(it => {
+              if (Array.isArray(it.volumeInfo?.categories)) gatheredTags.push(...it.volumeInfo.categories);
+              if (it.volumeInfo?.description) gatheredTags.push(it.volumeInfo.description);
+            });
+          }
+        }
+      } catch (e) {}
+
+      try {
+        const olRes = await fetch(`https://openlibrary.org/search.json?q=${encodeURIComponent(`${title} ${author || ''}`.trim())}&limit=3`);
+        if (olRes.ok) {
+          const odata = await olRes.json();
+          if (Array.isArray(odata.docs)) {
+            odata.docs.forEach(d => {
+              if (Array.isArray(d.subject)) gatheredTags.push(...d.subject);
+            });
+          }
+        }
+      } catch (e) {}
+
+      if (gatheredTags.length <= 1) {
+        try {
+          const wRes = await fetch(`https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(`${title} novel`)}&format=json&origin=*`);
+          if (wRes.ok) {
+            const wData = await wRes.json();
+            if (wData.query?.search?.length > 0) {
+              wData.query.search.slice(0, 2).forEach(s => gatheredTags.push(s.snippet.replace(/<[^>]+>/g, ' ')));
+            }
+          }
+        } catch (e) {}
       }
-    }
-  } catch (e) {}
 
-  // 3. Wikipedia API fallback (extremely reliable for book plots/genres, no rate limits)
-  if (gatheredText.length <= 1) {
-    try {
-      const wikiQuery = `${title} novel`;
-      const wRes = await fetch(`https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(wikiQuery)}&format=json&origin=*`);
-      if (wRes.ok) {
-        const wData = await wRes.json();
-        if (wData.query?.search?.length > 0) {
-          wData.query.search.slice(0, 2).forEach(s => {
-            gatheredText.push(s.snippet.replace(/<[^>]+>/g, ' '));
-          });
+      const textCorpus = (gatheredTags.join(' ') + ' ' + title).toLowerCase();
+      let matchedCount = 0;
+
+      Object.entries(GENRE_KEYWORDS_MAP).forEach(([preset, keywords]) => {
+        const hits = keywords.some(k => textCorpus.includes(k));
+        if (hits && !editingBookGenres.includes(preset)) {
+          editingBookGenres.push(preset);
+          matchedCount++;
+        }
+      });
+
+      if (textCorpus.includes('manga') || textCorpus.includes('vol.')) {
+        if (!editingBookGenres.includes('Manga')) { editingBookGenres.push('Manga'); matchedCount++; }
+      }
+      if (textCorpus.includes('comic') || textCorpus.includes('graphic novel')) {
+        if (!editingBookGenres.includes('Graphic Novel / Comic')) { editingBookGenres.push('Graphic Novel / Comic'); matchedCount++; }
+      }
+
+      if (editingBookGenres.length === 0) {
+        if (textCorpus.includes('biography') || textCorpus.includes('memoir') || textCorpus.includes('nonfiction')) {
+          editingBookGenres.push('Non-Fiction / Memoir');
+          matchedCount++;
+        } else {
+          editingBookGenres.push('Fiction');
+          matchedCount++;
         }
       }
-    } catch (e) {}
-  }
 
-  const textCorpus = gatheredText.join(' ').toLowerCase();
-
-  // If literally nothing came back online, scan the title itself
-  let matchedCount = 0;
-
-  Object.entries(GENRE_KEYWORDS_MAP).forEach(([preset, keywords]) => {
-    const hits = keywords.some(k => textCorpus.includes(k));
-    if (hits && !editingBookGenres.includes(preset)) {
-      editingBookGenres.push(preset);
-      matchedCount++;
+      renderGenrePills();
+      showToast(matchedCount > 0 ? `Matched ${matchedCount} genre(s)!` : 'No new genre matches found.');
     }
-  });
-
-  // Common title/subtext deductions
-  if (textCorpus.includes('manga') || textCorpus.includes('vol.') || textCorpus.includes('vol ')) {
-    if (!editingBookGenres.includes('Manga')) { editingBookGenres.push('Manga'); matchedCount++; }
-  }
-  if (textCorpus.includes('comic') || textCorpus.includes('graphic novel')) {
-    if (!editingBookGenres.includes('Graphic Novel / Comic')) { editingBookGenres.push('Graphic Novel / Comic'); matchedCount++; }
-  }
-
-  // Fallback to Fiction if nothing specific triggered and it's clearly fiction
-  if (editingBookGenres.length === 0) {
-    if (textCorpus.includes('biography') || textCorpus.includes('memoir') || textCorpus.includes('nonfiction')) {
-      editingBookGenres.push('Non-Fiction / Memoir');
-      matchedCount++;
-    } else {
-      editingBookGenres.push('Fiction');
-      matchedCount++;
-    }
-  }
-
-  renderGenrePills();
-  showToast(matchedCount > 0 ? `Matched ${matchedCount} genre(s)!` : 'No new genre matches found.');
-}
 
     function extractValidYear(dateStr) {
       if (!dateStr) return null;
@@ -1776,6 +1799,8 @@ async function autoMatchBookGenresOnline() {
       populateYearDropdown();
       renderAllViews();
       initCloudSync();
+      applyScrollBehavior();
+      updateScrollSettingsButtons();
     }
 
     function createVaultSnapshot() {
@@ -1998,23 +2023,25 @@ async function autoMatchBookGenresOnline() {
       renderLibrary();
     }
 
+    // CONSISTENT GENRE FILTER DROPDOWN: Shows all PRESET_GENRES with real book counts
     function populateGenreDropdown() {
       const select = document.getElementById('libraryGenreSelect');
       if (!select) return;
       const currentVal = select.value;
       
-      const activePresetGenres = new Set();
+      const genreCounts = {};
+      PRESET_GENRES.forEach(g => { genreCounts[g] = 0; });
+
       books.forEach(b => {
         if (Array.isArray(b.genres)) {
           b.genres.forEach(g => {
-            if (PRESET_GENRES.includes(g)) activePresetGenres.add(g);
+            if (genreCounts[g] !== undefined) genreCounts[g]++;
           });
         }
       });
 
       select.innerHTML = '<option value="all">All Genres</option>' + PRESET_GENRES.map(g => {
-        const hasBooks = activePresetGenres.has(g);
-        return `<option value="${g}">${g}${hasBooks ? '' : ' (0)'}</option>`;
+        return `<option value="${g}">${g} (${genreCounts[g]})</option>`;
       }).join('');
 
       if (PRESET_GENRES.includes(currentVal)) select.value = currentVal;
@@ -2114,7 +2141,7 @@ async function autoMatchBookGenresOnline() {
       showToast('Books deleted');
     }
 
-    // --- LIBRARY RENDERER WITH DYNAMIC SECTION DIVIDERS ---
+    // --- LIBRARY RENDERER WITH STYLIZED SECTION DIVIDERS ---
     function renderLibrary() {
       const container = document.getElementById('libraryContainer');
       if (!container) return;
@@ -2162,7 +2189,6 @@ async function autoMatchBookGenresOnline() {
         return;
       }
 
-      // Group books for Section Dividers (letters for title/author, stars for ratings, brackets for progress)
       const groups = [];
       let currentGroupHeader = null;
 
@@ -2176,15 +2202,15 @@ async function autoMatchBookGenresOnline() {
           header = /^[A-Z]$/.test(firstChar) ? firstChar : '#';
         } else if (sort === 'rating_high' || sort === 'rating_low') {
           const r = Math.floor(b.rating || 0);
-          header = r > 0 ? `${r} Star${r === 1 ? '' : 's'} (${'★'.repeat(r)})` : 'Unrated (0★)';
+          header = r > 0 ? `${r} STARS (${'★'.repeat(r)})` : 'UNRATED (0★)';
         } else if (sort === 'progress') {
           const pct = b.pageCount > 0 ? Math.round((b.currentPage / b.pageCount) * 100) : 0;
-          if (pct >= 100) header = 'Finished (100%)';
-          else if (pct >= 75) header = '75% - 99%';
-          else if (pct >= 50) header = '50% - 74%';
-          else if (pct >= 25) header = '25% - 49%';
-          else if (pct > 0) header = '1% - 24%';
-          else header = 'Not Started (0%)';
+          if (pct >= 100) header = '100% COMPLETE';
+          else if (pct >= 75) header = '75% – 99%';
+          else if (pct >= 50) header = '50% – 74%';
+          else if (pct >= 25) header = '25% – 49%';
+          else if (pct > 0) header = '1% – 24%';
+          else header = 'NOT STARTED (0%)';
         }
 
         if (header && header !== currentGroupHeader) {
@@ -2198,14 +2224,14 @@ async function autoMatchBookGenresOnline() {
         }
       });
 
-      // Render Layout
       container.innerHTML = groups.map(group => `
         <div class="space-y-2 mb-4">
           ${group.header ? `
-            <div class="sticky top-[68px] z-20 bg-[#688FDE]/95 backdrop-blur-sm py-1">
-              <span class="inline-block bg-[#05244C] text-[#FFF9EE] text-[10px] font-black uppercase px-2.5 py-0.5 rounded-full border border-[#FFA4C4] shadow-sm tracking-wider">
+            <div class="py-1 flex items-center gap-2">
+              <span class="inline-flex items-center px-3 py-1 rounded-full bg-[#05244C] text-[#FFF9EE] border-2 border-[#FFA4C4] shadow-sm text-[10px] font-black tracking-wider leading-none">
                 ${group.header}
               </span>
+              <div class="flex-1 h-[2px] bg-[#FFA4C4]/40 rounded-full"></div>
             </div>
           ` : ''}
 
@@ -2358,7 +2384,6 @@ async function autoMatchBookGenresOnline() {
       document.getElementById('editBookShelf').value = bk.shelf || 'reading';
       document.getElementById('editBookOwnership').value = bk.ownership || 'Owned';
       
-      // Load and normalize genres against PRESET_GENRES
       const rawGenres = Array.isArray(bk.genres) ? bk.genres : (bk.genres ? bk.genres.split(/[,;/]/).map(g => g.trim()) : []);
       editingBookGenres = rawGenres.filter(g => PRESET_GENRES.includes(g));
       showUnselectedCatalog = false;
@@ -2588,7 +2613,7 @@ async function autoMatchBookGenresOnline() {
     function deleteBookDetail() {
       const id = document.getElementById('editBookId').value;
       if (!id) return;
-      books = books.filter(b => b.id !== id);
+      books = books.filter(b => !selectedBookIds.has(b.id));
       readingSessions = readingSessions.filter(s => s.bookId !== id);
       quotes = quotes.filter(q => q.bookId !== id);
 
@@ -2686,7 +2711,6 @@ async function autoMatchBookGenresOnline() {
 
       let items = [];
 
-      // 1. Google Books
       try {
         const res = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(query)}&maxResults=10`);
         if (res.ok) {
@@ -2707,7 +2731,6 @@ async function autoMatchBookGenresOnline() {
         }
       } catch (err) {}
 
-      // 2. Open Library Fallback
       if (items.length === 0) {
         try {
           const olRes = await fetch(`https://openlibrary.org/search.json?q=${encodeURIComponent(query)}&limit=10`);
@@ -4239,6 +4262,8 @@ async function autoMatchBookGenresOnline() {
         });
       }
     }
+
+    window.addEventListener('scroll', handleScrollButtonVisibility);
 
     window.addEventListener('DOMContentLoaded', () => {
       initializeUserData();
