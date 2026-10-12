@@ -47,7 +47,7 @@
   <!-- Google Fonts: Vacation & Retro Typography -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Fraunces:ital,opsz,wght@0,9..144,400..900;1,9..144,400..900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Fraunces:ital,opsz,wght@0,9..144,400..900;1,9..144,400..900&family=Playfair+Display:ital,wght@0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <style>
     :root {
@@ -83,6 +83,10 @@
 
     .font-editorial {
       font-family: 'Bodoni Moda', Georgia, serif;
+    }
+
+    .font-quote-display {
+      font-family: 'Playfair Display', 'Bodoni Moda', Georgia, serif;
     }
 
     /* 3D Extruded Retro Shadows */
@@ -467,21 +471,24 @@
       </div>
     </section>
 
-    <!-- TAB 4: AESTHETIC QUOTES -->
+    <!-- TAB 4: AESTHETIC QUOTES WITH GIANT QUOTATION POSTER DESIGN -->
     <section id="tab-quotes" class="tab-content hidden space-y-4">
       <div class="bg-[#FFF9EE] border-3 border-[#05244C] rounded-3xl p-4 shadow-retro-orange flex items-center justify-between">
         <div>
           <h3 class="text-base font-retro-title text-[#05244C]">Quotes & Thoughts</h3>
           <p class="text-xs font-editorial text-slate-600">Saved passages that stood out</p>
         </div>
-        <div class="flex bg-amber-100 p-1 rounded-xl border border-[#05244C]">
-          <button onclick="setQuoteView('timeline')" id="quoteViewTimelineBtn" class="px-2.5 py-1 rounded-lg text-xs font-bold bg-[#FF5B22] text-white">Latest</button>
-          <button onclick="setQuoteView('bybook')" id="quoteViewByBookBtn" class="px-2.5 py-1 rounded-lg text-xs font-bold text-slate-700">By Book</button>
+        <div class="flex items-center gap-2">
+          <button onclick="openAddQuoteModal(null)" class="px-2.5 py-1 rounded-xl text-xs font-black bg-[#FF5B22] text-white border-2 border-[#05244C] shadow-retro-navy retro-btn">+ Add</button>
+          <div class="flex bg-amber-100 p-1 rounded-xl border border-[#05244C]">
+            <button onclick="setQuoteView('timeline')" id="quoteViewTimelineBtn" class="px-2.5 py-1 rounded-lg text-xs font-bold bg-[#FF5B22] text-white">Latest</button>
+            <button onclick="setQuoteView('bybook')" id="quoteViewByBookBtn" class="px-2.5 py-1 rounded-lg text-xs font-bold text-slate-700">By Book</button>
+          </div>
         </div>
       </div>
 
-      <div id="quotesContainer" class="space-y-3">
-        <!-- Rendered dynamically -->
+      <div id="quotesContainer" class="space-y-4">
+        <!-- Rendered dynamically as editorial quote poster cards[cite: 4] -->
       </div>
     </section>
 
@@ -651,14 +658,14 @@
           </div>
         </div>
 
-        <!-- Cover Image with Direct "Add Image", "Auto-Find" from Amazon/Google/OpenLibrary, and Search Shortcuts -->
+        <!-- Cover Image with Direct "Add Image", "Auto-Find" from Google/OpenLibrary, and Google Images Search Shortcut[cite: 5] -->
         <div>
           <div class="flex items-center justify-between mb-1">
             <label class="block">Cover Image</label>
             <span id="coverPreviewStatus" class="text-[9px] font-bold text-slate-500">Live preview below</span>
           </div>
 
-          <!-- Quick Action Buttons: Add Image (File/Camera) & Auto-Find from Amazon/Google/OpenLibrary -->
+          <!-- Quick Action Buttons: Add Image (File/Camera) & Auto-Find -->
           <div class="flex gap-2 mb-2">
             <label class="flex-1 py-1.5 px-2 bg-[#FFD034] text-[#05244C] border-2 border-[#05244C] rounded-xl text-[11px] font-black shadow-retro-navy text-center cursor-pointer flex items-center justify-center gap-1 retro-btn">
               <span>📷 Add Image</span>
@@ -677,18 +684,12 @@
             </div>
           </div>
 
-          <!-- Direct Web Search Shortcuts: Amazon & Google Images -->
+          <!-- Direct Web Search Shortcut: Google Images Only[cite: 5] -->
           <div class="flex items-center justify-between pt-1.5 px-1 text-[10px] text-slate-500">
             <span class="font-bold">Browse covers:</span>
-            <div class="flex gap-2">
-              <button type="button" onclick="openAmazonSearch()" class="text-[#FF5B22] font-black hover:underline flex items-center gap-0.5">
-                <span>Amazon ↗</span>
-              </button>
-              <span class="text-slate-300">•</span>
-              <button type="button" onclick="openGoogleImagesSearch()" class="text-[#1DBBB4] font-black hover:underline flex items-center gap-0.5">
-                <span>Google Images ↗</span>
-              </button>
-            </div>
+            <button type="button" onclick="openGoogleImagesSearch()" class="text-[#1DBBB4] font-black hover:underline flex items-center gap-0.5">
+              <span>Google Images ↗</span>
+            </button>
           </div>
         </div>
 
@@ -696,7 +697,7 @@
         <div id="finishedReviewSection" class="pt-3 border-t-2 border-orange-200/80 space-y-3">
           <div class="flex items-center justify-between">
             <label class="text-[11px] font-black uppercase text-[#FF5B22]">Finished Review & Vibes</label>
-            <span class="text-[10px] text-slate-500 font-editorial">Your rating & feelings</span>
+            <button type="button" onclick="unmarkBookFinished()" class="text-[10px] font-black bg-rose-100 hover:bg-rose-200 text-rose-700 px-2 py-0.5 rounded-lg border border-rose-300 retro-btn">✕ Unmark Finished</button>
           </div>
 
           <!-- Date Finished Field -->
@@ -705,7 +706,7 @@
             <input type="date" id="editBookFinishedDate" class="w-full bg-white border-2 border-[#05244C] rounded-xl p-2 font-bold text-xs">
           </div>
 
-          <!-- CLEAN TAP-TO-CYCLE STAR RATING: NO INSTRUCTION TEXT, NO MICRO BUTTONS -->
+          <!-- CLEAN TAP-TO-CYCLE STAR RATING -->
           <div class="bg-white border-2 border-[#05244C] p-3 rounded-2xl shadow-sm space-y-1.5">
             <div class="flex items-center justify-between">
               <span class="text-[10px] uppercase font-bold text-slate-500">Overall Rating</span>
@@ -857,6 +858,42 @@
           </div>
         </div>
 
+        <!-- BOOK QUOTES & PASSAGES DIRECTLY INSIDE EDIT MODAL -->
+        <div class="pt-3 border-t-2 border-orange-200/80 space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-[10px] uppercase font-black text-[#05244C] tracking-wide">Book Quotes & Highlights</span>
+            <button type="button" onclick="toggleEditQuoteForm()" class="px-2 py-0.5 bg-[#1DBBB4] text-white rounded-lg text-[10px] font-black border border-[#05244C] shadow-sm retro-btn">+ Add Quote</button>
+          </div>
+
+          <!-- Inline Quote Form -->
+          <div id="editBookQuoteForm" class="hidden bg-[#FFF9EE] border-2 border-[#05244C] rounded-xl p-2.5 space-y-2 shadow-sm">
+            <div class="flex justify-between items-center pb-1 border-b border-orange-200">
+              <span class="text-[10px] font-black uppercase text-[#1DBBB4]">New Book Quote</span>
+              <button type="button" onclick="toggleEditQuoteForm(false)" class="text-slate-400 hover:text-slate-600 font-bold text-xs">✕</button>
+            </div>
+            <textarea id="editModalQuoteText" rows="2" placeholder="“Type or paste passage...”" class="w-full bg-white border border-[#05244C] rounded-lg p-1.5 font-editorial italic text-xs leading-relaxed"></textarea>
+            <div class="grid grid-cols-2 gap-2 text-[10px]">
+              <div>
+                <label class="block font-bold text-slate-600 mb-0.5">Page #</label>
+                <input type="text" id="editModalQuotePage" placeholder="p. 142" class="w-full bg-white border border-[#05244C] rounded-lg p-1.5 font-bold text-[10px]">
+              </div>
+              <div>
+                <label class="block font-bold text-slate-600 mb-0.5">Tag / Mood</label>
+                <input type="text" id="editModalQuoteTag" placeholder="Favorite, Poetic" class="w-full bg-white border border-[#05244C] rounded-lg p-1.5 font-bold text-[10px]">
+              </div>
+            </div>
+            <div class="flex gap-1.5 pt-0.5">
+              <button type="button" onclick="submitEditModalQuote()" class="flex-1 py-1.5 bg-[#1DBBB4] text-white rounded-lg text-[10px] font-black border border-[#05244C] shadow-sm">Save Quote</button>
+              <button type="button" onclick="toggleEditQuoteForm(false)" class="px-2.5 py-1.5 bg-white text-slate-600 rounded-lg text-[10px] font-bold border border-slate-300">Cancel</button>
+            </div>
+          </div>
+
+          <!-- Book Quotes List Inside Modal -->
+          <div id="editBookQuotesList" class="space-y-2 max-h-48 overflow-y-auto no-scrollbar text-xs">
+            <!-- Populated dynamically -->
+          </div>
+        </div>
+
       </div>
       <div class="flex gap-2 pt-1">
         <button onclick="saveBookDetail()" class="flex-1 py-2.5 bg-[#FF5B22] text-white rounded-xl font-black border-2 border-[#05244C] shadow-retro-navy text-xs">Save Changes</button>
@@ -865,7 +902,7 @@
     </div>
   </div>
 
-  <!-- MODAL: MULTI-COVER PICKER (AMAZON, GOOGLE, OPENLIBRARY) -->
+  <!-- MODAL: MULTI-COVER PICKER (GOOGLE & OPENLIBRARY) -->
   <div id="modalCoverPicker" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4">
     <div class="bg-[#FFF9EE] border-3 border-[#05244C] rounded-3xl p-5 w-full max-w-sm shadow-retro-orange space-y-3 max-h-[85vh] flex flex-col">
       <div class="flex justify-between items-center pb-2 border-b-2 border-orange-200">
@@ -1039,7 +1076,7 @@
     </div>
   </div>
 
-  <!-- MODAL: ADD QUOTE -->
+  <!-- MODAL: ADD QUOTE (STANDALONE) -->
   <div id="modalAddQuote" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4">
     <div class="bg-[#FFF9EE] border-3 border-[#05244C] rounded-3xl p-6 w-full max-w-sm shadow-retro-orange space-y-4">
       <div class="flex justify-between items-center pb-2 border-b-2 border-orange-200">
@@ -1048,13 +1085,17 @@
       </div>
       <div class="space-y-3 text-xs font-bold text-[#05244C]">
         <div>
-          <label class="block mb-1">Quote</label>
+          <label class="block mb-1">Select Book</label>
+          <select id="quoteBookSelect" class="w-full bg-white border-2 border-[#05244C] rounded-xl p-2.5"></select>
+        </div>
+        <div>
+          <label class="block mb-1">Quote Passage</label>
           <textarea id="quoteTextInput" rows="4" placeholder="Type or paste passage..." class="w-full bg-white border-2 border-[#05244C] rounded-xl p-3 font-editorial text-sm italic"></textarea>
         </div>
         <div class="grid grid-cols-2 gap-2">
           <div>
             <label class="block mb-1">Page #</label>
-            <input type="number" id="quotePageInput" placeholder="142" class="w-full bg-white border-2 border-[#05244C] rounded-xl p-2.5">
+            <input type="text" id="quotePageInput" placeholder="142" class="w-full bg-white border-2 border-[#05244C] rounded-xl p-2.5">
           </div>
           <div>
             <label class="block mb-1">Tag / Mood</label>
@@ -1175,7 +1216,7 @@
   </div>
 
   <script>
-    const APP_VERSION = "4.2";
+    const APP_VERSION = "4.3";
     let books = [];
     let readingSessions = [];
     let quotes = [];
@@ -1213,28 +1254,7 @@
     let currentSoundType = null;
     let activeSoundNodes = [];
 
-    // Convert 13-digit ISBN (starting with 978) to standard 10-digit ISBN for Amazon Lookups
-    function convertIsbn13To10(isbn13) {
-      if (!isbn13) return null;
-      const clean = isbn13.replace(/[^0-9X]/gi, '');
-      if (clean.length === 10) return clean;
-      if (clean.length === 13 && clean.startsWith('978')) {
-        const core = clean.substring(3, 12);
-        let sum = 0;
-        for (let i = 0; i < 9; i++) {
-          sum += parseInt(core[i], 10) * (10 - i);
-        }
-        const rem = 11 - (sum % 11);
-        let check = '0';
-        if (rem === 10) check = 'X';
-        else if (rem === 11) check = '0';
-        else check = String(rem);
-        return core + check;
-      }
-      return null;
-    }
-
-    // Verify image URL by testing real dimensions (filters out blank 1x1 Amazon placeholder GIFs)
+    // Verify image URL by testing real dimensions
     function testImageUrl(url) {
       return new Promise((resolve) => {
         if (!url) return resolve(false);
@@ -1262,13 +1282,12 @@
       });
     }
 
-    // Smart Image URL Cleaner & Resolver (handles Google Images, direct links, extra quotes/spaces)
+    // Smart Image URL Cleaner & Resolver
     function cleanImageUrl(rawUrl) {
       if (!rawUrl) return '';
       let url = String(rawUrl).trim().replace(/^["']|["']$/g, '');
       if (!url) return '';
 
-      // Resolve Google Image Search redirect URLs
       if (url.includes('google.com/imgres') || url.includes('google.com/url')) {
         try {
           const parsed = new URL(url);
@@ -1279,7 +1298,6 @@
         } catch (e) {}
       }
 
-      // Upgrade insecure HTTP links to HTTPS to avoid mixed content blocking
       if (url.startsWith('http://')) {
         url = url.replace('http://', 'https://');
       }
@@ -1287,14 +1305,12 @@
       return url;
     }
 
-    // Safe error handler for book covers in the UI
     function handleCoverError(imgElement) {
       if (!imgElement) return;
       imgElement.onerror = null;
       imgElement.src = 'https://placehold.co/200x300/446BA2/FFF9EE?text=Cover';
     }
 
-    // Handle Local Image Upload (File / Camera) with Client-Side Auto Compression
     function handleCoverImageUpload(e) {
       const file = e.target.files?.[0];
       if (!file) return;
@@ -1303,7 +1319,6 @@
       reader.onload = function(event) {
         const img = new Image();
         img.onload = function() {
-          // Scale to max 480x720 for crisp display while keeping storage lightweight
           const canvas = document.createElement('canvas');
           let width = img.width;
           let height = img.height;
@@ -1332,14 +1347,6 @@
       e.target.value = '';
     }
 
-    // Web Search Direct Helper Links (Amazon & Google Images)
-    function openAmazonSearch() {
-      const title = document.getElementById('editBookTitle')?.value.trim() || '';
-      const author = document.getElementById('editBookAuthor')?.value.trim() || '';
-      const q = encodeURIComponent(`${title} ${author}`.trim() || 'book');
-      window.open(`https://www.amazon.com/s?k=${q}&i=stripbooks`, '_blank');
-    }
-
     function openGoogleImagesSearch() {
       const title = document.getElementById('editBookTitle')?.value.trim() || '';
       const author = document.getElementById('editBookAuthor')?.value.trim() || '';
@@ -1347,7 +1354,7 @@
       window.open(`https://www.google.com/search?tbm=isch&q=${q}`, '_blank');
     }
 
-    // Auto-Find Cover from Amazon, Google Books & Open Library
+    // Auto-Find Cover from Google Books & Open Library
     async function autoFindSingleCover() {
       const title = document.getElementById('editBookTitle')?.value.trim();
       const author = document.getElementById('editBookAuthor')?.value.trim();
@@ -1359,21 +1366,10 @@
         return;
       }
 
-      showToast(`Searching Amazon, Google Books & Open Library for "${title}"...`);
-      const candidates = []; // { source, url, label }
+      showToast(`Searching Google Books & Open Library for "${title}"...`);
+      const candidates = [];
 
-      // 1. AMAZON CDN SEARCH (via ISBN10 or converted ISBN13)
       const rawIsbn = (bk?.isbn || bk?.isbn13 || '').replace(/[^0-9X]/gi, '');
-      const isbn10 = convertIsbn13To10(rawIsbn);
-      if (isbn10) {
-        const amazonUrl = `https://images-na.ssl-images-amazon.com/images/P/${isbn10}.01.LZZZZZZZ.jpg`;
-        const isValidAmazon = await testImageUrl(amazonUrl);
-        if (isValidAmazon) {
-          candidates.push({ source: 'Amazon', url: amazonUrl, label: 'Amazon High-Res' });
-        }
-      }
-
-      // 2. OPEN LIBRARY BY ISBN
       if (rawIsbn && rawIsbn.length >= 10) {
         const olIsbnUrl = `https://covers.openlibrary.org/b/isbn/${rawIsbn}-L.jpg`;
         const isValidOl = await testImageUrl(olIsbnUrl);
@@ -1382,7 +1378,6 @@
         }
       }
 
-      // 3. OPEN LIBRARY SEARCH BY TITLE & AUTHOR
       try {
         const q = `title=${encodeURIComponent(title)}${author ? `&author=${encodeURIComponent(author)}` : ''}`;
         const res = await fetch(`https://openlibrary.org/search.json?${q}&limit=4`);
@@ -1401,7 +1396,6 @@
         }
       } catch(e) {}
 
-      // 4. GOOGLE BOOKS SEARCH
       try {
         const gq = `intitle:${encodeURIComponent(title)}${author ? `+inauthor:${encodeURIComponent(author)}` : ''}`;
         const gres = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${gq}&maxResults=4`);
@@ -1420,7 +1414,7 @@
       } catch(e) {}
 
       if (candidates.length === 0) {
-        showToast('No covers found. Try "📷 Add Image" or "Amazon ↗"');
+        showToast('No covers found. Try "📷 Add Image" or "Google Images ↗"');
         return;
       }
 
@@ -1430,7 +1424,6 @@
         return;
       }
 
-      // Multiple covers found: open Cover Picker Modal so user can choose
       openCoverPickerModal(candidates);
     }
 
@@ -1439,14 +1432,14 @@
       const sub = document.getElementById('coverPickerSub');
       if (!grid) return;
 
-      if (sub) sub.innerText = `Found ${candidates.length} covers across Amazon & libraries`;
+      if (sub) sub.innerText = `Found ${candidates.length} covers`;
       grid.innerHTML = candidates.map(c => `
         <div onclick="applyChosenCover('${c.url}')" class="bg-white border-2 border-[#05244C] rounded-2xl p-2 cursor-pointer hover:bg-orange-50 transition-all flex flex-col items-center gap-1.5 shadow-sm group">
           <div class="w-full aspect-[2/3] rounded-xl overflow-hidden border border-[#05244C] bg-slate-200">
             <img src="${c.url}" class="w-full h-full object-cover group-hover:scale-105 transition-transform" onerror="handleCoverError(this)">
           </div>
           <div class="w-full text-center">
-            <span class="text-[9px] font-black uppercase px-2 py-0.5 rounded-full ${c.source === 'Amazon' ? 'bg-amber-100 text-amber-800' : (c.source === 'Google Books' ? 'bg-blue-100 text-blue-800' : 'bg-emerald-100 text-emerald-800')} border border-[#05244C]/30">${c.source}</span>
+            <span class="text-[9px] font-black uppercase px-2 py-0.5 rounded-full ${c.source === 'Google Books' ? 'bg-blue-100 text-blue-800' : 'bg-emerald-100 text-emerald-800'} border border-[#05244C]/30">${c.source}</span>
           </div>
         </div>
       `).join('');
@@ -1462,25 +1455,21 @@
       showToast('Cover updated!');
     }
 
-    // Universal Date Normalizer: Converts any format (Goodreads, Bookshelf, text dates) to YYYY-MM-DD
     function normalizeDateToYMD(val) {
       if (!val) return null;
       val = String(val).trim();
       if (!val || val === 'null' || val === 'undefined') return null;
 
-      // Match YYYY-MM-DD or YYYY/MM/DD
       const ymd = val.match(/^(\d{4})[-/.](\d{1,2})[-/.](\d{1,2})/);
       if (ymd) {
         return `${ymd[1]}-${String(ymd[2]).padStart(2, '0')}-${String(ymd[3]).padStart(2, '0')}`;
       }
 
-      // Match MM/DD/YYYY or M/D/YYYY
       const mdy = val.match(/^(\d{1,2})[-/.](\d{1,2})[-/.](\d{4})/);
       if (mdy) {
         return `${mdy[3]}-${String(mdy[1]).padStart(2, '0')}-${String(mdy[2]).padStart(2, '0')}`;
       }
 
-      // Try Date.parse for text strings like "May 18, 2024"
       const parsed = Date.parse(val);
       if (!isNaN(parsed)) {
         const d = new Date(parsed);
@@ -1490,7 +1479,6 @@
       return null;
     }
 
-    // Helper: Star glyph formatter for full, quarter, half, and three-quarter stars
     function getStarDisplayHtml(rating) {
       if (!rating || rating <= 0) return '';
       const full = Math.floor(rating);
@@ -1503,7 +1491,6 @@
     }
     window.renderStarGlyphs = getStarDisplayHtml;
 
-    // Multi-format array normalizer
     function getBookFormatsList(book) {
       if (!book) return ['Paperback'];
       if (Array.isArray(book.formats) && book.formats.length > 0) {
@@ -1578,7 +1565,6 @@
       });
     }
 
-    // Safe JSON parser
     function safeJsonParse(key, fallback) {
       try {
         const val = localStorage.getItem(key);
@@ -1589,10 +1575,8 @@
     }
 
     function initializeUserData() {
-      // 1. Primary storage check
       let storedBooks = safeJsonParse('rianne_books_v1', null);
       
-      // 2. Fail-safe backup vault check
       if (!storedBooks || !Array.isArray(storedBooks) || storedBooks.length === 0) {
         const vault = safeJsonParse('rianne_backup_vault', null);
         if (vault && Array.isArray(vault.books) && vault.books.length > 0) {
@@ -1657,7 +1641,6 @@
       quotes = safeJsonParse('rianne_quotes_v1', []);
       userGoals = safeJsonParse('rianne_goals_v1', userGoals);
 
-      // Clean existing book covers in case raw URLs need fixing
       books.forEach(b => {
         if (b.cover) b.cover = cleanImageUrl(b.cover);
         if (!b.formats) {
@@ -1665,7 +1648,6 @@
         }
       });
 
-      // Auto-migrate dates in stored books & sessions
       let dataChanged = false;
       books.forEach(b => {
         if (b.finishedDate) {
@@ -1688,7 +1670,6 @@
         }
       });
 
-      // Jump calendar to most recent session or finish if current month is empty
       const currentMonthPrefix = `${calendarYear}-${String(calendarMonth + 1).padStart(2, '0')}`;
       const hasSessionsInCurrentMonth = readingSessions.some(s => s.date && s.date.startsWith(currentMonthPrefix));
       const hasFinishesInCurrentMonth = books.some(b => b.finishedDate && b.finishedDate.startsWith(currentMonthPrefix));
@@ -1721,7 +1702,6 @@
       renderAllViews();
       initCloudSync();
 
-      // Automatically recover missing covers in background if any book lacks cover
       setTimeout(() => {
         const missingCount = books.filter(b => !b.cover || b.cover.trim() === '').length;
         if (missingCount > 0) fetchMissingCovers(false);
@@ -1741,22 +1721,7 @@
       for (const b of missingBooks) {
         let coverUrl = '';
 
-        // 1. Try Amazon High-Res via ISBN10 / ISBN13
         const cleanIsbn = (b.isbn || b.isbn13 || '').replace(/[^0-9X]/gi, '');
-        const isbn10 = convertIsbn13To10(cleanIsbn);
-        if (isbn10) {
-          const amazonCandidate = `https://images-na.ssl-images-amazon.com/images/P/${isbn10}.01.LZZZZZZZ.jpg`;
-          const isValidAmazon = await testImageUrl(amazonCandidate);
-          if (isValidAmazon) {
-            coverUrl = amazonCandidate;
-            b.cover = coverUrl;
-            foundCount++;
-            saveBooks();
-            continue;
-          }
-        }
-
-        // 2. Try Open Library ISBN
         if (cleanIsbn && cleanIsbn.length >= 10) {
           const olCandidate = `https://covers.openlibrary.org/b/isbn/${cleanIsbn}-L.jpg`;
           const isValidOl = await testImageUrl(olCandidate);
@@ -1769,7 +1734,6 @@
           }
         }
 
-        // 3. Try Open Library search by title & author
         try {
           const q = `title=${encodeURIComponent(b.title)}${b.author ? `&author=${encodeURIComponent(b.author)}` : ''}`;
           const res = await fetch(`https://openlibrary.org/search.json?${q}&limit=1`);
@@ -1785,7 +1749,6 @@
           }
         } catch(e) {}
 
-        // 4. Fallback: Google Books search
         try {
           const gq = `intitle:${encodeURIComponent(b.title)}${b.author ? `+inauthor:${encodeURIComponent(b.author)}` : ''}`;
           const gres = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${gq}&maxResults=1`);
@@ -2614,7 +2577,6 @@
       showToast('Session logged to calendar!');
     }
 
-    // Live Cover Image Preview & Diagnostics
     function updateLiveCoverPreview(url) {
       const cleaned = cleanImageUrl(url);
       const img = document.getElementById('editBookCoverPreviewImg');
@@ -2717,7 +2679,6 @@
       const pagesRead = Math.max(0, endP - startP);
 
       if (editSessionId) {
-        // Editing existing entry
         const sess = readingSessions.find(s => s.id === editSessionId);
         if (sess) {
           sess.date = dateStr;
@@ -2728,7 +2689,6 @@
           sess.notes = notes;
         }
       } else {
-        // Adding new entry
         const session = {
           id: 'sess_' + Date.now(),
           bookId: bk.id,
@@ -2743,19 +2703,16 @@
         readingSessions.push(session);
       }
 
-      // Recalculate max page reached across all sessions for this book
       const bookSessions = readingSessions.filter(s => s.bookId === bk.id);
       const maxPageReached = bookSessions.reduce((max, s) => Math.max(max, s.endPage || 0), 0);
 
       bk.currentPage = Math.max(bk.currentPage, maxPageReached);
       bk.lastSessionDate = dateStr;
 
-      // Update current page & percent inputs inside the modal in real time
       document.getElementById('editBookCurrentPage').value = bk.currentPage;
       const pct = bk.pageCount > 0 ? Math.min(100, Math.round((bk.currentPage / bk.pageCount) * 100)) : 0;
       document.getElementById('editBookPercent').value = pct;
 
-      // Auto-finish if complete
       if (bk.pageCount > 0 && bk.currentPage >= bk.pageCount) {
         bk.currentPage = bk.pageCount;
         bk.shelf = 'finished';
@@ -2775,6 +2732,143 @@
       showToast(editSessionId ? 'Entry updated!' : 'Session logged!');
     }
 
+    // Unmark book as finished & clean milestone records
+    function unmarkBookFinished() {
+      const id = document.getElementById('editBookId').value;
+      const bk = books.find(b => b.id === id);
+      if (!bk) return;
+
+      bk.shelf = 'reading';
+      bk.finishedDate = null;
+      bk.finishedDates = [];
+      bk.rating = 0;
+      bk.vibeTears = 0;
+      bk.vibeScary = 0;
+      bk.vibeSpice = 0;
+      bk.vibeHeartbreak = 0;
+
+      // Also clean auto-generated finish sessions so calendar updates properly
+      readingSessions = readingSessions.filter(s => !(s.bookId === bk.id && (s.id.startsWith('sess_fin_') || s.notes === 'Finished reading!' || s.notes === 'Completed book!')));
+
+      document.getElementById('editBookShelf').value = 'reading';
+      document.getElementById('editBookFinishedDate').value = '';
+      setEditBookStarRating(0);
+      renderVibeStars('vibeTears', 0);
+      renderVibeStars('vibeScary', 0);
+      renderVibeStars('vibeSpice', 0);
+      renderVibeStars('vibeHeartbreak', 0);
+
+      saveBooks();
+      saveSessions();
+      toggleReviewSectionDisplay();
+      renderBookSessionsList(bk.id);
+      renderAllViews();
+      showToast(`Unmarked as finished. Moved back to Reading.`);
+    }
+
+    function removeFinishedMilestoneDate(targetDate, bookId) {
+      const bk = books.find(b => b.id === bookId);
+      if (!bk) return;
+
+      if (Array.isArray(bk.finishedDates)) {
+        bk.finishedDates = bk.finishedDates.filter(d => d !== targetDate);
+        if (bk.finishedDates.length > 0) {
+          bk.finishedDate = bk.finishedDates[bk.finishedDates.length - 1];
+        } else {
+          bk.finishedDate = null;
+          bk.shelf = 'reading';
+        }
+      } else if (bk.finishedDate === targetDate) {
+        bk.finishedDate = null;
+        bk.shelf = 'reading';
+      }
+
+      readingSessions = readingSessions.filter(s => !(s.bookId === bk.id && s.date === targetDate && (s.id.startsWith('sess_fin_') || s.notes === 'Finished reading!' || s.notes === 'Completed book!')));
+
+      saveBooks();
+      saveSessions();
+      renderBookSessionsList(bk.id);
+      toggleReviewSectionDisplay();
+      renderAllViews();
+      showToast('Finished milestone removed.');
+    }
+
+    // Quotes Management Inside Edit Modal
+    function toggleEditQuoteForm(forceState) {
+      const form = document.getElementById('editBookQuoteForm');
+      if (!form) return;
+      if (typeof forceState === 'boolean') {
+        form.classList.toggle('hidden', !forceState);
+      } else {
+        form.classList.toggle('hidden');
+      }
+      if (!form.classList.contains('hidden')) {
+        document.getElementById('editModalQuoteText').value = '';
+        document.getElementById('editModalQuotePage').value = '';
+        document.getElementById('editModalQuoteTag').value = '';
+      }
+    }
+
+    function submitEditModalQuote() {
+      const bookId = document.getElementById('editBookId').value;
+      const bk = books.find(b => b.id === bookId);
+      const text = document.getElementById('editModalQuoteText')?.value.trim();
+      const page = document.getElementById('editModalQuotePage')?.value.trim();
+      const tag = document.getElementById('editModalQuoteTag')?.value.trim();
+
+      if (!text) {
+        showToast('Please type a quote');
+        return;
+      }
+
+      quotes.unshift({
+        id: 'q_' + Date.now(),
+        bookId: bk?.id || bookId,
+        bookTitle: bk?.title || 'Unknown Title',
+        bookCover: bk?.cover || '',
+        text: text,
+        page: page,
+        tag: tag || 'Favorite',
+        date: new Date().toISOString().split('T')[0]
+      });
+
+      saveQuotes();
+      toggleEditQuoteForm(false);
+      renderEditBookQuotesList(bookId);
+      renderQuotes();
+      showToast('Quote saved!');
+    }
+
+    function renderEditBookQuotesList(bookId) {
+      const listEl = document.getElementById('editBookQuotesList');
+      if (!listEl) return;
+      const bQuotes = quotes.filter(q => q.bookId === bookId);
+
+      if (bQuotes.length === 0) {
+        listEl.innerHTML = `<p class="text-[11px] text-slate-400 italic text-center py-2">No quotes logged for this book yet.</p>`;
+        return;
+      }
+
+      listEl.innerHTML = bQuotes.map(q => `
+        <div class="bg-amber-50/70 border border-orange-200/80 rounded-xl p-2.5 space-y-1 relative group">
+          <button type="button" onclick="deleteQuote('${q.id}', '${bookId}')" class="absolute top-1.5 right-1.5 text-slate-400 hover:text-red-500 font-bold text-xs p-1">✕</button>
+          <p class="font-editorial text-xs italic text-[#05244C] leading-snug pr-4">“${q.text}”</p>
+          <div class="flex items-center gap-2 text-[10px] text-slate-500 pt-0.5">
+            ${q.page ? `<span>Page ${q.page}</span>` : ''}
+            <span class="bg-[#FFA4C4] text-[#05244C] px-1.5 py-0.2 rounded-full font-bold border border-[#05244C]/30">${q.tag}</span>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function deleteQuote(quoteId, bookId) {
+      quotes = quotes.filter(q => q.id !== quoteId);
+      saveQuotes();
+      renderQuotes();
+      if (bookId) renderEditBookQuotesList(bookId);
+      showToast('Quote deleted');
+    }
+
     function openBookDetailModal(id) {
       const bk = books.find(b => b.id === id);
       if (!bk) return;
@@ -2791,7 +2885,6 @@
       document.getElementById('editBookShelf').value = bk.shelf || 'reading';
       document.getElementById('editBookOwnership').value = bk.ownership || 'Owned';
       
-      // Multi-format array setup for this book
       editingBookFormats = getBookFormatsList(bk);
       renderEditBookFormatButtons();
 
@@ -2799,7 +2892,6 @@
       document.getElementById('editBookCover').value = rawCover;
       updateLiveCoverPreview(rawCover);
 
-      // Pre-fill inline session form with smart defaults
       const sessDateEl = document.getElementById('inlineSessDate');
       if (sessDateEl) sessDateEl.value = new Date().toISOString().split('T')[0];
       const sessMinsEl = document.getElementById('inlineSessMinutes');
@@ -2811,6 +2903,7 @@
       const sessNotesEl = document.getElementById('inlineSessNotes');
       if (sessNotesEl) sessNotesEl.value = '';
       toggleInlineSessionForm(false);
+      toggleEditQuoteForm(false);
 
       isEditingFavorite = !!bk.isFavorite;
       updateFavoriteButtonDisplay();
@@ -2826,7 +2919,6 @@
 
       setEditBookStarRating(bk.rating || 0);
 
-      // Initialize all 4 Vibe Stars
       document.getElementById('vibeTears').value = bk.vibeTears || 0;
       renderVibeStars('vibeTears', bk.vibeTears || 0);
 
@@ -2842,6 +2934,7 @@
       document.getElementById('editBookReviewText').value = bk.review || '';
 
       renderBookSessionsList(bk.id);
+      renderEditBookQuotesList(bk.id);
       toggleReviewSectionDisplay();
       openModal('modalBookDetail');
     }
@@ -2988,7 +3081,6 @@
       bk.currentPage = Number(document.getElementById('editBookCurrentPage').value) || 0;
       bk.pageCount = Number(document.getElementById('editBookTotalPages').value) || bk.pageCount;
       
-      // Save chosen formats array and legacy string format
       bk.formats = editingBookFormats.length > 0 ? [...editingBookFormats] : ['Paperback'];
       bk.format = bk.formats.join(', ');
 
@@ -2999,7 +3091,7 @@
       const pct = bk.pageCount > 0 ? Math.round((bk.currentPage / bk.pageCount) * 100) : 0;
       const chosenShelf = document.getElementById('editBookShelf').value;
 
-      if (pct >= 100 || (bk.pageCount > 0 && bk.currentPage >= bk.pageCount) || chosenShelf === 'finished') {
+      if (chosenShelf === 'finished') {
         const todayStr = new Date().toISOString().split('T')[0];
         const enteredDate = document.getElementById('editBookFinishedDate')?.value || todayStr;
 
@@ -3012,24 +3104,11 @@
           bk.finishedDates.push(enteredDate);
         }
         bk.lastSessionDate = enteredDate;
-
-        const hasSessionOnFinish = readingSessions.some(s => s.bookId === bk.id && s.date === enteredDate);
-        if (!hasSessionOnFinish) {
-          readingSessions.push({
-            id: 'sess_fin_' + Date.now(),
-            bookId: bk.id,
-            date: enteredDate,
-            timestamp: Date.now(),
-            durationMinutes: 25,
-            startPage: Math.max(0, bk.pageCount - 15),
-            endPage: bk.pageCount,
-            pagesRead: Math.min(15, bk.pageCount),
-            notes: 'Completed book!'
-          });
-          saveSessions();
-        }
       } else {
         bk.shelf = chosenShelf;
+        if (chosenShelf !== 'finished') {
+          bk.finishedDate = null;
+        }
       }
 
       if (bk.shelf === 'finished') {
@@ -3093,7 +3172,10 @@
                 <p class="text-[10px] text-emerald-700 font-bold">${d}</p>
               </div>
             </div>
-            <span class="bg-emerald-500 text-white text-[9px] font-black px-2 py-0.5 rounded-full border border-emerald-600">Completed ✓</span>
+            <div class="flex items-center gap-1.5">
+              <span class="bg-emerald-500 text-white text-[9px] font-black px-2 py-0.5 rounded-full border border-emerald-600">Completed ✓</span>
+              <button type="button" onclick="removeFinishedMilestoneDate('${d}', '${bk.id}')" class="text-slate-400 hover:text-red-500 font-bold px-1 py-0.5 text-xs" title="Remove Milestone">✕</button>
+            </div>
           </div>
         `).join('');
       }
@@ -3113,7 +3195,7 @@
               <span class="bg-[#FF5B22] text-white px-1.5 py-0.2 rounded text-[9px] font-black">+${s.pagesRead || (s.endPage - s.startPage)} pgs</span>
               <span class="text-slate-500 font-bold">${s.durationMinutes}m</span>
             </div>
-            <p class="text-[10px] text-slate-500 truncate">Pgs ${s.startPage || 0} ➔ ${s.endPage || 0}${s.notes ? ` • “${s.notes}”` : ''}</p>
+            <p class="text-[10px] text-slate-500 truncate">Pgs ${s.startPage || 0} ➔ ${s.endPage || 0}${s.notes ? ` • “${s.notes}"` : ''}</p>
           </div>
           <div class="flex items-center gap-1 flex-shrink-0">
             <button type="button" onclick="editSessionInBook('${s.id}', '${bookId}')" class="px-2 py-0.5 bg-white border border-[#05244C] rounded-lg text-[10px] font-black text-[#05244C] shadow-sm hover:bg-amber-100" title="Edit Session">✏️ Edit</button>
@@ -3137,7 +3219,11 @@
     function deleteBookDetail() {
       const id = document.getElementById('editBookId').value;
       books = books.filter(b => b.id !== id);
+      readingSessions = readingSessions.filter(s => s.bookId !== id);
+      quotes = quotes.filter(q => q.bookId !== id);
       saveBooks();
+      saveSessions();
+      saveQuotes();
       closeModal('modalBookDetail');
       determineActiveHeroBook();
       renderAllViews();
@@ -3438,15 +3524,22 @@
     }
 
     function openAddQuoteModal(bookId) {
-      window._activeQuoteBookId = bookId || activeBookId;
+      const select = document.getElementById('quoteBookSelect');
+      if (select) {
+        select.innerHTML = books.map(b => `<option value="${b.id}" ${(bookId || activeBookId) === b.id ? 'selected' : ''}>${b.title} (${b.author})</option>`).join('');
+      }
+      document.getElementById('quoteTextInput').value = '';
+      document.getElementById('quotePageInput').value = '';
+      document.getElementById('quoteTagInput').value = '';
       openModal('modalAddQuote');
     }
 
     function saveQuote() {
+      const bookId = document.getElementById('quoteBookSelect').value;
       const text = document.getElementById('quoteTextInput').value.trim();
       const page = document.getElementById('quotePageInput').value;
       const tag = document.getElementById('quoteTagInput').value.trim();
-      const bk = books.find(b => b.id === window._activeQuoteBookId);
+      const bk = books.find(b => b.id === bookId);
       if (!text) return;
 
       quotes.unshift({
@@ -3466,25 +3559,33 @@
       showToast('Quote saved to collection!');
     }
 
+    // Editorial Poster Quote Design with Giant Quotation Mark[cite: 4]
     function renderQuotes() {
       const container = document.getElementById('quotesContainer');
       if (!container) return;
       if (quotes.length === 0) {
-        container.innerHTML = `<div class="bg-[#FFF9EE] rounded-2xl p-6 text-center border-2 border-[#05244C] text-xs font-bold text-slate-500">No quotes saved yet. Tap "Quote" on any book to add one.</div>`;
+        container.innerHTML = `<div class="bg-[#FFF9EE] rounded-3xl p-8 text-center border-3 border-[#05244C] shadow-retro-orange text-xs font-bold text-slate-500">No quotes saved yet. Tap "+ Add" above to collect passages!</div>`;
         return;
       }
 
       if (quoteViewMode === 'timeline') {
         container.innerHTML = quotes.map(q => `
-          <div class="bg-[#FFF9EE] border-2 border-[#05244C] rounded-2xl p-4 shadow-retro-orange space-y-2">
-            <div class="flex justify-between items-center text-[10px] text-slate-500 pb-1 border-b border-orange-200">
-              <span class="font-bold text-[#FF5B22] uppercase tracking-wider">${q.bookTitle}</span>
-              <span>${q.page ? 'Page ' + q.page : ''} • ${q.date}</span>
-            </div>
-            <p class="font-editorial text-sm italic text-[#05244C] leading-relaxed">“${q.text}”</p>
-            <div class="flex justify-between items-center pt-1 text-[10px]">
-              <span class="bg-[#FFA4C4] text-[#05244C] px-2 py-0.5 rounded-full font-bold border border-[#05244C]">${q.tag}</span>
-              <button onclick="copyQuoteText('${q.id}')" class="text-xs font-bold text-[#FF5B22]">Copy Card</button>
+          <div class="relative bg-[#FFF9EE] border-3 border-[#05244C] rounded-3xl p-6 shadow-retro-orange space-y-3">
+            <button onclick="deleteQuote('${q.id}')" class="absolute top-4 right-4 text-slate-400 hover:text-red-500 font-bold text-sm p-1">✕</button>
+            <!-- Giant Signature Quotation Mark[cite: 4] -->
+            <div class="font-quote-display text-6xl text-[#1DBBB4] font-black leading-none select-none -mb-3">“</div>
+            <p class="font-quote-display text-lg text-[#05244C] font-semibold italic leading-relaxed pt-1">
+              ${q.text}
+            </p>
+            <div class="pt-2 border-t-2 border-orange-200/80 flex items-center justify-between text-xs">
+              <div class="min-w-0 pr-2">
+                <span class="font-black text-[#FF5B22] uppercase tracking-wider block truncate">${q.bookTitle}</span>
+                <span class="text-[10px] text-slate-500 font-bold">${q.page ? 'Page ' + q.page : ''} ${q.date ? '• ' + q.date : ''}</span>
+              </div>
+              <div class="flex items-center gap-1.5 flex-shrink-0">
+                <span class="bg-[#FFA4C4] text-[#05244C] text-[10px] font-black px-2.5 py-0.5 rounded-full border border-[#05244C]">${q.tag || 'Favorite'}</span>
+                <button onclick="copyQuoteText('${q.id}')" class="text-xs font-bold text-[#446BA2] underline ml-1">Copy</button>
+              </div>
             </div>
           </div>
         `).join('');
@@ -3496,12 +3597,19 @@
         });
 
         container.innerHTML = Object.keys(grouped).map(title => `
-          <div class="space-y-2">
+          <div class="space-y-3">
             <h4 class="text-xs font-extrabold text-[#FFF9EE] uppercase tracking-wider px-1">${title}</h4>
             ${grouped[title].map(q => `
-              <div class="bg-[#FFF9EE] border-2 border-[#05244C] rounded-2xl p-4 shadow-retro-orange space-y-1">
-                <p class="font-editorial text-sm italic text-[#05244C]">“${q.text}”</p>
-                <div class="text-[10px] text-slate-500 pt-1">${q.page ? 'Page ' + q.page : ''}</div>
+              <div class="relative bg-[#FFF9EE] border-3 border-[#05244C] rounded-3xl p-6 shadow-retro-orange space-y-3">
+                <button onclick="deleteQuote('${q.id}')" class="absolute top-4 right-4 text-slate-400 hover:text-red-500 font-bold text-sm p-1">✕</button>
+                <div class="font-quote-display text-5xl text-[#1DBBB4] font-black leading-none select-none -mb-2">“</div>
+                <p class="font-quote-display text-base text-[#05244C] font-semibold italic leading-relaxed">
+                  ${q.text}
+                </p>
+                <div class="pt-2 border-t border-orange-200 flex justify-between items-center text-[10px] text-slate-500">
+                  <span>${q.page ? 'Page ' + q.page : ''}</span>
+                  <span class="bg-[#FFA4C4] text-[#05244C] px-2 py-0.5 rounded-full font-bold border border-[#05244C]">${q.tag || 'Favorite'}</span>
+                </div>
               </div>
             `).join('')}
           </div>
@@ -3878,8 +3986,6 @@
       renderAllViews();
       event.target.value = '';
       showToast(`Imported ${booksAdded} books, ${sessionsAdded} sessions, ${quotesAdded} quotes!`);
-
-      // Trigger automatic background cover search for newly imported items
       fetchMissingCovers(false);
     }
 
@@ -4174,7 +4280,6 @@
       renderQuotes();
     }
 
-    // Click outside backdrop to close modals & drawer
     function setupBackdropDismiss() {
       const modals = [
         'modalPastSession',
