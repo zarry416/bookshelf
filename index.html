@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <!-- Ensure external book cover images from Google Books, Open Library & external CDNs load without 403 referrer blocks -->
+  <!-- Ensure external book cover images from Amazon, Google Books, Open Library load without 403 referrer blocks -->
   <meta name="referrer" content="no-referrer">
   <title>Rianne's Bookshelf</title>
 
@@ -18,7 +18,7 @@
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Global Image Preview Handlers Safeguard -->
+  <!-- Global Image Preview Handlers Safeguard (placed early in head) -->
   <script>
     window.handlePreviewImgLoaded = function() {
       const img = document.getElementById('editBookCoverPreviewImg');
@@ -44,7 +44,7 @@
     };
   </script>
 
-  <!-- Google Fonts: Vacation & Retro 80s Typography -->
+  <!-- Google Fonts: Vacation & Retro Typography -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Fraunces:ital,opsz,wght@0,9..144,400..900;1,9..144,400..900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -640,12 +640,9 @@
           </div>
         </div>
 
-        <!-- Multi-Format Selection Buttons (Select Any Combination) -->
+        <!-- Clean Formats Header (No subtext) -->
         <div>
-          <div class="flex items-center justify-between mb-1">
-            <label class="block">Formats (Select All That Apply)</label>
-            <span class="text-[9px] font-bold text-slate-400">Tap to toggle</span>
-          </div>
+          <label class="block mb-1">Formats</label>
           <div class="grid grid-cols-2 gap-1.5" id="editBookFormatButtonsContainer">
             <button type="button" onclick="toggleEditBookFormat('Paperback')" id="fmtBtn_edit_Paperback" class="py-2 px-2 rounded-xl text-[11px] font-bold border-2 border-[#05244C] bg-white text-slate-700 text-center transition-all">📖 Paperback</button>
             <button type="button" onclick="toggleEditBookFormat('Hardcover')" id="fmtBtn_edit_Hardcover" class="py-2 px-2 rounded-xl text-[11px] font-bold border-2 border-[#05244C] bg-white text-slate-700 text-center transition-all">📚 Hardcover</button>
@@ -654,17 +651,43 @@
           </div>
         </div>
 
-        <!-- Cover Image URL with Live Preview & Error Diagnostics -->
+        <!-- Cover Image with Direct "Add Image", "Auto-Find" from Amazon/Google/OpenLibrary, and Search Shortcuts -->
         <div>
           <div class="flex items-center justify-between mb-1">
-            <label class="block">Cover Image URL</label>
+            <label class="block">Cover Image</label>
             <span id="coverPreviewStatus" class="text-[9px] font-bold text-slate-500">Live preview below</span>
           </div>
+
+          <!-- Quick Action Buttons: Add Image (File/Camera) & Auto-Find from Amazon/Google/OpenLibrary -->
+          <div class="flex gap-2 mb-2">
+            <label class="flex-1 py-1.5 px-2 bg-[#FFD034] text-[#05244C] border-2 border-[#05244C] rounded-xl text-[11px] font-black shadow-retro-navy text-center cursor-pointer flex items-center justify-center gap-1 retro-btn">
+              <span>📷 Add Image</span>
+              <input type="file" accept="image/*" onchange="handleCoverImageUpload(event)" class="hidden">
+            </label>
+            <button type="button" onclick="autoFindSingleCover()" class="flex-1 py-1.5 px-2 bg-[#1DBBB4] text-white border-2 border-[#05244C] rounded-xl text-[11px] font-black shadow-retro-navy text-center flex items-center justify-center gap-1 retro-btn">
+              <span>🔍 Auto-Find</span>
+            </button>
+          </div>
+
           <div class="flex gap-2 items-center">
-            <input type="url" id="editBookCover" oninput="updateLiveCoverPreview(this.value)" placeholder="Paste image link..." class="flex-1 min-w-0 bg-white border-2 border-[#05244C] rounded-xl p-2 font-semibold text-xs">
+            <input type="url" id="editBookCover" oninput="updateLiveCoverPreview(this.value)" placeholder="Or paste image link..." class="flex-1 min-w-0 bg-white border-2 border-[#05244C] rounded-xl p-2 font-semibold text-xs">
             <div class="w-10 h-14 rounded-lg border-2 border-[#05244C] overflow-hidden bg-slate-200 flex-shrink-0 relative shadow-sm">
               <img id="editBookCoverPreviewImg" alt="" class="w-full h-full object-cover hidden">
               <div id="editBookCoverPreviewPlaceholder" class="w-full h-full flex items-center justify-center text-[10px] text-slate-400 font-bold">🖼️</div>
+            </div>
+          </div>
+
+          <!-- Direct Web Search Shortcuts: Amazon & Google Images -->
+          <div class="flex items-center justify-between pt-1.5 px-1 text-[10px] text-slate-500">
+            <span class="font-bold">Browse covers:</span>
+            <div class="flex gap-2">
+              <button type="button" onclick="openAmazonSearch()" class="text-[#FF5B22] font-black hover:underline flex items-center gap-0.5">
+                <span>Amazon ↗</span>
+              </button>
+              <span class="text-slate-300">•</span>
+              <button type="button" onclick="openGoogleImagesSearch()" class="text-[#1DBBB4] font-black hover:underline flex items-center gap-0.5">
+                <span>Google Images ↗</span>
+              </button>
             </div>
           </div>
         </div>
@@ -770,7 +793,7 @@
           </div>
         </div>
 
-        <!-- RE-READ & SESSIONS HISTORY SECTION -->
+        <!-- RE-READ & SESSIONS HISTORY SECTION WITH EDITABLE SESSIONS -->
         <div class="pt-3 border-t-2 border-orange-200/80 space-y-3">
           <div class="flex items-center justify-between">
             <div>
@@ -788,15 +811,16 @@
                 <span class="text-[10px] uppercase font-black text-[#05244C] tracking-wide">Reading Sessions Log</span>
                 <span id="bookTotalSessionTime" class="text-[10px] font-bold text-slate-500">0 mins total</span>
               </div>
-              <button type="button" onclick="toggleInlineSessionForm()" class="px-2 py-0.5 bg-[#FF5B22] text-white rounded-lg text-[10px] font-black border border-[#05244C] shadow-sm retro-btn">+ Log Session</button>
+              <button type="button" onclick="openNewInlineSessionForm()" class="px-2 py-0.5 bg-[#FF5B22] text-white rounded-lg text-[10px] font-black border border-[#05244C] shadow-sm retro-btn">+ Log Session</button>
             </div>
 
-            <!-- Inline Quick Session Logger Form -->
+            <!-- Inline Quick Session Logger Form (Add OR Edit Existing) -->
             <div id="inlineSessionForm" class="hidden bg-[#FFF9EE] border-2 border-[#05244C] rounded-xl p-2.5 space-y-2 shadow-sm">
               <div class="flex items-center justify-between pb-1 border-b border-orange-200">
-                <span class="text-[10px] font-black uppercase text-[#FF5B22]">Quick Log Session</span>
+                <span id="inlineSessFormTitle" class="text-[10px] font-black uppercase text-[#FF5B22]">Quick Log Session</span>
                 <button type="button" onclick="toggleInlineSessionForm(false)" class="text-slate-400 hover:text-slate-600 font-bold text-xs">✕</button>
               </div>
+              <input type="hidden" id="inlineSessEditId" value="">
               <div class="grid grid-cols-2 gap-2 text-[10px]">
                 <div>
                   <label class="block font-bold text-slate-600 mb-0.5">Date</label>
@@ -822,13 +846,13 @@
                 <input type="text" id="inlineSessNotes" placeholder="Thoughts or bookmark..." class="w-full bg-white border border-[#05244C] rounded-lg p-1.5 font-editorial italic text-[10px]">
               </div>
               <div class="flex gap-1.5 pt-0.5">
-                <button type="button" onclick="submitInlineSession()" class="flex-1 py-1.5 bg-[#FF5B22] text-white rounded-lg text-[10px] font-black border border-[#05244C] shadow-sm">Save Session</button>
+                <button type="button" onclick="submitInlineSession()" id="inlineSessSubmitBtn" class="flex-1 py-1.5 bg-[#FF5B22] text-white rounded-lg text-[10px] font-black border border-[#05244C] shadow-sm">Save Session</button>
                 <button type="button" onclick="toggleInlineSessionForm(false)" class="px-2.5 py-1.5 bg-white text-slate-600 rounded-lg text-[10px] font-bold border border-slate-300">Cancel</button>
               </div>
             </div>
 
-            <div id="bookSessionsList" class="space-y-1.5 max-h-44 overflow-y-auto no-scrollbar text-xs">
-              <!-- Rendered dynamically -->
+            <div id="bookSessionsList" class="space-y-1.5 max-h-48 overflow-y-auto no-scrollbar text-xs">
+              <!-- Rendered dynamically with Edit & Delete options -->
             </div>
           </div>
         </div>
@@ -838,6 +862,23 @@
         <button onclick="saveBookDetail()" class="flex-1 py-2.5 bg-[#FF5B22] text-white rounded-xl font-black border-2 border-[#05244C] shadow-retro-navy text-xs">Save Changes</button>
         <button onclick="deleteBookDetail()" class="px-3 py-2.5 bg-red-100 text-red-700 rounded-xl font-black border-2 border-red-300 text-xs">Delete</button>
       </div>
+    </div>
+  </div>
+
+  <!-- MODAL: MULTI-COVER PICKER (AMAZON, GOOGLE, OPENLIBRARY) -->
+  <div id="modalCoverPicker" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4">
+    <div class="bg-[#FFF9EE] border-3 border-[#05244C] rounded-3xl p-5 w-full max-w-sm shadow-retro-orange space-y-3 max-h-[85vh] flex flex-col">
+      <div class="flex justify-between items-center pb-2 border-b-2 border-orange-200">
+        <div>
+          <h3 class="text-base font-retro-title text-[#05244C]">Select Book Cover</h3>
+          <p id="coverPickerSub" class="text-[11px] font-editorial text-slate-500 italic">Found multiple covers</p>
+        </div>
+        <button onclick="closeModal('modalCoverPicker')" class="text-slate-500 font-bold text-lg">✕</button>
+      </div>
+      <div id="coverPickerGrid" class="flex-1 overflow-y-auto grid grid-cols-2 gap-3 pr-1 no-scrollbar pt-1">
+        <!-- Populated dynamically -->
+      </div>
+      <p class="text-[10px] text-center text-slate-400 italic">Tap any cover to apply it to your book.</p>
     </div>
   </div>
 
@@ -927,7 +968,7 @@
       </div>
 
       <div id="searchResultsList" class="flex-1 overflow-y-auto space-y-2 pr-1 no-scrollbar">
-        <p class="text-xs text-center text-slate-500 py-6 italic">Enter title or author above to pull covers and details.</p>
+        <p class="text-xs text-center text-slate-500 py-6 italic">Enter title, author, or ISBN above to find books.</p>
       </div>
     </div>
   </div>
@@ -974,12 +1015,9 @@
           </select>
         </div>
 
-        <!-- Multi-Format Selection Buttons for Custom Book -->
+        <!-- Clean Formats Header (No subtext) -->
         <div>
-          <div class="flex items-center justify-between mb-1">
-            <label class="block">Formats (Select All That Apply)</label>
-            <span class="text-[9px] font-bold text-slate-400">Tap to toggle</span>
-          </div>
+          <label class="block mb-1">Formats</label>
           <div class="grid grid-cols-2 gap-1.5" id="manualBookFormatButtonsContainer">
             <button type="button" onclick="toggleManualBookFormat('Paperback')" id="fmtBtn_manual_Paperback" class="py-2 px-2 rounded-xl text-[11px] font-bold border-2 border-[#05244C] bg-white text-slate-700 text-center transition-all">📖 Paperback</button>
             <button type="button" onclick="toggleManualBookFormat('Hardcover')" id="fmtBtn_manual_Hardcover" class="py-2 px-2 rounded-xl text-[11px] font-bold border-2 border-[#05244C] bg-white text-slate-700 text-center transition-all">📚 Hardcover</button>
@@ -1137,7 +1175,7 @@
   </div>
 
   <script>
-    const APP_VERSION = "3.8";
+    const APP_VERSION = "4.2";
     let books = [];
     let readingSessions = [];
     let quotes = [];
@@ -1175,6 +1213,55 @@
     let currentSoundType = null;
     let activeSoundNodes = [];
 
+    // Convert 13-digit ISBN (starting with 978) to standard 10-digit ISBN for Amazon Lookups
+    function convertIsbn13To10(isbn13) {
+      if (!isbn13) return null;
+      const clean = isbn13.replace(/[^0-9X]/gi, '');
+      if (clean.length === 10) return clean;
+      if (clean.length === 13 && clean.startsWith('978')) {
+        const core = clean.substring(3, 12);
+        let sum = 0;
+        for (let i = 0; i < 9; i++) {
+          sum += parseInt(core[i], 10) * (10 - i);
+        }
+        const rem = 11 - (sum % 11);
+        let check = '0';
+        if (rem === 10) check = 'X';
+        else if (rem === 11) check = '0';
+        else check = String(rem);
+        return core + check;
+      }
+      return null;
+    }
+
+    // Verify image URL by testing real dimensions (filters out blank 1x1 Amazon placeholder GIFs)
+    function testImageUrl(url) {
+      return new Promise((resolve) => {
+        if (!url) return resolve(false);
+        const img = new Image();
+        img.referrerPolicy = 'no-referrer';
+        const timer = setTimeout(() => {
+          img.onload = null;
+          img.onerror = null;
+          resolve(false);
+        }, 3500);
+
+        img.onload = function() {
+          clearTimeout(timer);
+          if (img.naturalWidth > 15 && img.naturalHeight > 15) {
+            resolve(true);
+          } else {
+            resolve(false);
+          }
+        };
+        img.onerror = function() {
+          clearTimeout(timer);
+          resolve(false);
+        };
+        img.src = url;
+      });
+    }
+
     // Smart Image URL Cleaner & Resolver (handles Google Images, direct links, extra quotes/spaces)
     function cleanImageUrl(rawUrl) {
       if (!rawUrl) return '';
@@ -1205,6 +1292,174 @@
       if (!imgElement) return;
       imgElement.onerror = null;
       imgElement.src = 'https://placehold.co/200x300/446BA2/FFF9EE?text=Cover';
+    }
+
+    // Handle Local Image Upload (File / Camera) with Client-Side Auto Compression
+    function handleCoverImageUpload(e) {
+      const file = e.target.files?.[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(event) {
+        const img = new Image();
+        img.onload = function() {
+          // Scale to max 480x720 for crisp display while keeping storage lightweight
+          const canvas = document.createElement('canvas');
+          let width = img.width;
+          let height = img.height;
+          const maxDim = 720;
+          if (width > height && width > maxDim) {
+            height = Math.round((height * maxDim) / width);
+            width = maxDim;
+          } else if (height > maxDim) {
+            width = Math.round((width * maxDim) / height);
+            height = maxDim;
+          }
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, width, height);
+          const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.82);
+
+          const coverInput = document.getElementById('editBookCover');
+          if (coverInput) coverInput.value = compressedDataUrl;
+          updateLiveCoverPreview(compressedDataUrl);
+          showToast('Image attached!');
+        };
+        img.src = event.target.result;
+      };
+      reader.readAsDataURL(file);
+      e.target.value = '';
+    }
+
+    // Web Search Direct Helper Links (Amazon & Google Images)
+    function openAmazonSearch() {
+      const title = document.getElementById('editBookTitle')?.value.trim() || '';
+      const author = document.getElementById('editBookAuthor')?.value.trim() || '';
+      const q = encodeURIComponent(`${title} ${author}`.trim() || 'book');
+      window.open(`https://www.amazon.com/s?k=${q}&i=stripbooks`, '_blank');
+    }
+
+    function openGoogleImagesSearch() {
+      const title = document.getElementById('editBookTitle')?.value.trim() || '';
+      const author = document.getElementById('editBookAuthor')?.value.trim() || '';
+      const q = encodeURIComponent(`${title} ${author} book cover`.trim() || 'book cover');
+      window.open(`https://www.google.com/search?tbm=isch&q=${q}`, '_blank');
+    }
+
+    // Auto-Find Cover from Amazon, Google Books & Open Library
+    async function autoFindSingleCover() {
+      const title = document.getElementById('editBookTitle')?.value.trim();
+      const author = document.getElementById('editBookAuthor')?.value.trim();
+      const id = document.getElementById('editBookId')?.value;
+      const bk = books.find(b => b.id === id);
+
+      if (!title) {
+        showToast('Please enter a title first');
+        return;
+      }
+
+      showToast(`Searching Amazon, Google Books & Open Library for "${title}"...`);
+      const candidates = []; // { source, url, label }
+
+      // 1. AMAZON CDN SEARCH (via ISBN10 or converted ISBN13)
+      const rawIsbn = (bk?.isbn || bk?.isbn13 || '').replace(/[^0-9X]/gi, '');
+      const isbn10 = convertIsbn13To10(rawIsbn);
+      if (isbn10) {
+        const amazonUrl = `https://images-na.ssl-images-amazon.com/images/P/${isbn10}.01.LZZZZZZZ.jpg`;
+        const isValidAmazon = await testImageUrl(amazonUrl);
+        if (isValidAmazon) {
+          candidates.push({ source: 'Amazon', url: amazonUrl, label: 'Amazon High-Res' });
+        }
+      }
+
+      // 2. OPEN LIBRARY BY ISBN
+      if (rawIsbn && rawIsbn.length >= 10) {
+        const olIsbnUrl = `https://covers.openlibrary.org/b/isbn/${rawIsbn}-L.jpg`;
+        const isValidOl = await testImageUrl(olIsbnUrl);
+        if (isValidOl) {
+          candidates.push({ source: 'Open Library', url: olIsbnUrl, label: 'Open Library (ISBN)' });
+        }
+      }
+
+      // 3. OPEN LIBRARY SEARCH BY TITLE & AUTHOR
+      try {
+        const q = `title=${encodeURIComponent(title)}${author ? `&author=${encodeURIComponent(author)}` : ''}`;
+        const res = await fetch(`https://openlibrary.org/search.json?${q}&limit=4`);
+        if (res.ok) {
+          const data = await res.json();
+          if (Array.isArray(data.docs)) {
+            for (const doc of data.docs) {
+              if (doc.cover_i) {
+                const olUrl = `https://covers.openlibrary.org/b/id/${doc.cover_i}-L.jpg`;
+                if (!candidates.some(c => c.url === olUrl)) {
+                  candidates.push({ source: 'Open Library', url: olUrl, label: doc.edition_count ? `${doc.edition_count} Editions` : 'Open Library' });
+                }
+              }
+            }
+          }
+        }
+      } catch(e) {}
+
+      // 4. GOOGLE BOOKS SEARCH
+      try {
+        const gq = `intitle:${encodeURIComponent(title)}${author ? `+inauthor:${encodeURIComponent(author)}` : ''}`;
+        const gres = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${gq}&maxResults=4`);
+        if (gres.ok) {
+          const gdata = await gres.json();
+          if (Array.isArray(gdata.items)) {
+            for (const item of gdata.items) {
+              const links = item.volumeInfo?.imageLinks;
+              const gUrl = (links?.thumbnail || links?.smallThumbnail || '').replace(/^http:\/\//i, 'https://').replace('&edge=curl', '');
+              if (gUrl && !candidates.some(c => c.url === gUrl)) {
+                candidates.push({ source: 'Google Books', url: gUrl, label: item.volumeInfo?.publishedDate ? `Google (${item.volumeInfo.publishedDate.slice(0, 4)})` : 'Google Books' });
+              }
+            }
+          }
+        }
+      } catch(e) {}
+
+      if (candidates.length === 0) {
+        showToast('No covers found. Try "📷 Add Image" or "Amazon ↗"');
+        return;
+      }
+
+      if (candidates.length === 1) {
+        applyChosenCover(candidates[0].url);
+        showToast(`Applied cover from ${candidates[0].source}!`);
+        return;
+      }
+
+      // Multiple covers found: open Cover Picker Modal so user can choose
+      openCoverPickerModal(candidates);
+    }
+
+    function openCoverPickerModal(candidates) {
+      const grid = document.getElementById('coverPickerGrid');
+      const sub = document.getElementById('coverPickerSub');
+      if (!grid) return;
+
+      if (sub) sub.innerText = `Found ${candidates.length} covers across Amazon & libraries`;
+      grid.innerHTML = candidates.map(c => `
+        <div onclick="applyChosenCover('${c.url}')" class="bg-white border-2 border-[#05244C] rounded-2xl p-2 cursor-pointer hover:bg-orange-50 transition-all flex flex-col items-center gap-1.5 shadow-sm group">
+          <div class="w-full aspect-[2/3] rounded-xl overflow-hidden border border-[#05244C] bg-slate-200">
+            <img src="${c.url}" class="w-full h-full object-cover group-hover:scale-105 transition-transform" onerror="handleCoverError(this)">
+          </div>
+          <div class="w-full text-center">
+            <span class="text-[9px] font-black uppercase px-2 py-0.5 rounded-full ${c.source === 'Amazon' ? 'bg-amber-100 text-amber-800' : (c.source === 'Google Books' ? 'bg-blue-100 text-blue-800' : 'bg-emerald-100 text-emerald-800')} border border-[#05244C]/30">${c.source}</span>
+          </div>
+        </div>
+      `).join('');
+
+      openModal('modalCoverPicker');
+    }
+
+    function applyChosenCover(url) {
+      const coverInput = document.getElementById('editBookCover');
+      if (coverInput) coverInput.value = url;
+      updateLiveCoverPreview(url);
+      closeModal('modalCoverPicker');
+      showToast('Cover updated!');
     }
 
     // Universal Date Normalizer: Converts any format (Goodreads, Bookshelf, text dates) to YYYY-MM-DD
@@ -1486,17 +1741,35 @@
       for (const b of missingBooks) {
         let coverUrl = '';
 
-        // 1. Try ISBN if available
+        // 1. Try Amazon High-Res via ISBN10 / ISBN13
         const cleanIsbn = (b.isbn || b.isbn13 || '').replace(/[^0-9X]/gi, '');
-        if (cleanIsbn && cleanIsbn.length >= 10) {
-          coverUrl = `https://covers.openlibrary.org/b/isbn/${cleanIsbn}-L.jpg`;
-          b.cover = coverUrl;
-          foundCount++;
-          saveBooks();
-          continue;
+        const isbn10 = convertIsbn13To10(cleanIsbn);
+        if (isbn10) {
+          const amazonCandidate = `https://images-na.ssl-images-amazon.com/images/P/${isbn10}.01.LZZZZZZZ.jpg`;
+          const isValidAmazon = await testImageUrl(amazonCandidate);
+          if (isValidAmazon) {
+            coverUrl = amazonCandidate;
+            b.cover = coverUrl;
+            foundCount++;
+            saveBooks();
+            continue;
+          }
         }
 
-        // 2. Try Open Library search by title & author
+        // 2. Try Open Library ISBN
+        if (cleanIsbn && cleanIsbn.length >= 10) {
+          const olCandidate = `https://covers.openlibrary.org/b/isbn/${cleanIsbn}-L.jpg`;
+          const isValidOl = await testImageUrl(olCandidate);
+          if (isValidOl) {
+            coverUrl = olCandidate;
+            b.cover = coverUrl;
+            foundCount++;
+            saveBooks();
+            continue;
+          }
+        }
+
+        // 3. Try Open Library search by title & author
         try {
           const q = `title=${encodeURIComponent(b.title)}${b.author ? `&author=${encodeURIComponent(b.author)}` : ''}`;
           const res = await fetch(`https://openlibrary.org/search.json?${q}&limit=1`);
@@ -1512,7 +1785,7 @@
           }
         } catch(e) {}
 
-        // 3. Fallback: Google Books search
+        // 4. Fallback: Google Books search
         try {
           const gq = `intitle:${encodeURIComponent(b.title)}${b.author ? `+inauthor:${encodeURIComponent(b.author)}` : ''}`;
           const gres = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${gq}&maxResults=1`);
@@ -2384,32 +2657,97 @@
       }
     }
 
+    function openNewInlineSessionForm() {
+      const idInput = document.getElementById('inlineSessEditId');
+      if (idInput) idInput.value = '';
+
+      const titleEl = document.getElementById('inlineSessFormTitle');
+      if (titleEl) titleEl.innerText = 'Quick Log Session';
+
+      const btn = document.getElementById('inlineSessSubmitBtn');
+      if (btn) btn.innerText = 'Save Session';
+
+      const bk = books.find(b => b.id === document.getElementById('editBookId')?.value);
+      const cur = bk ? bk.currentPage : 0;
+      const tot = bk ? bk.pageCount : 300;
+
+      document.getElementById('inlineSessDate').value = new Date().toISOString().split('T')[0];
+      document.getElementById('inlineSessMinutes').value = 30;
+      document.getElementById('inlineSessStartPage').value = cur;
+      document.getElementById('inlineSessEndPage').value = Math.min(tot, cur + 15);
+      document.getElementById('inlineSessNotes').value = '';
+
+      toggleInlineSessionForm(true);
+    }
+
+    function editSessionInBook(sessionId, bookId) {
+      const sess = readingSessions.find(s => s.id === sessionId);
+      if (!sess) return;
+
+      const idInput = document.getElementById('inlineSessEditId');
+      if (idInput) idInput.value = sess.id;
+
+      const titleEl = document.getElementById('inlineSessFormTitle');
+      if (titleEl) titleEl.innerText = 'Edit Session Entry';
+
+      const btn = document.getElementById('inlineSessSubmitBtn');
+      if (btn) btn.innerText = 'Update Entry';
+
+      document.getElementById('inlineSessDate').value = sess.date || new Date().toISOString().split('T')[0];
+      document.getElementById('inlineSessMinutes').value = sess.durationMinutes || 30;
+      document.getElementById('inlineSessStartPage').value = sess.startPage || 0;
+      document.getElementById('inlineSessEndPage').value = sess.endPage || (sess.startPage + (sess.pagesRead || 0));
+      document.getElementById('inlineSessNotes').value = sess.notes || '';
+
+      toggleInlineSessionForm(true);
+      document.getElementById('inlineSessionForm')?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
     function submitInlineSession() {
       const bookId = document.getElementById('editBookId').value;
       const bk = books.find(b => b.id === bookId);
       if (!bk) return;
 
+      const editSessionId = document.getElementById('inlineSessEditId')?.value;
       const dateStr = document.getElementById('inlineSessDate').value || new Date().toISOString().split('T')[0];
       const minutes = Number(document.getElementById('inlineSessMinutes').value) || 20;
       const startP = Number(document.getElementById('inlineSessStartPage').value) || 0;
       const endP = Number(document.getElementById('inlineSessEndPage').value) || startP;
       const notes = document.getElementById('inlineSessNotes').value.trim();
-
       const pagesRead = Math.max(0, endP - startP);
-      const session = {
-        id: 'sess_' + Date.now(),
-        bookId: bk.id,
-        date: dateStr,
-        timestamp: Date.now(),
-        durationMinutes: minutes,
-        startPage: startP,
-        endPage: endP,
-        pagesRead: pagesRead,
-        notes: notes
-      };
 
-      readingSessions.push(session);
-      bk.currentPage = Math.max(bk.currentPage, endP);
+      if (editSessionId) {
+        // Editing existing entry
+        const sess = readingSessions.find(s => s.id === editSessionId);
+        if (sess) {
+          sess.date = dateStr;
+          sess.durationMinutes = minutes;
+          sess.startPage = startP;
+          sess.endPage = endP;
+          sess.pagesRead = pagesRead;
+          sess.notes = notes;
+        }
+      } else {
+        // Adding new entry
+        const session = {
+          id: 'sess_' + Date.now(),
+          bookId: bk.id,
+          date: dateStr,
+          timestamp: Date.now(),
+          durationMinutes: minutes,
+          startPage: startP,
+          endPage: endP,
+          pagesRead: pagesRead,
+          notes: notes
+        };
+        readingSessions.push(session);
+      }
+
+      // Recalculate max page reached across all sessions for this book
+      const bookSessions = readingSessions.filter(s => s.bookId === bk.id);
+      const maxPageReached = bookSessions.reduce((max, s) => Math.max(max, s.endPage || 0), 0);
+
+      bk.currentPage = Math.max(bk.currentPage, maxPageReached);
       bk.lastSessionDate = dateStr;
 
       // Update current page & percent inputs inside the modal in real time
@@ -2434,7 +2772,7 @@
       toggleInlineSessionForm(false);
       determineActiveHeroBook();
       renderAllViews();
-      showToast('Session logged!');
+      showToast(editSessionId ? 'Entry updated!' : 'Session logged!');
     }
 
     function openBookDetailModal(id) {
@@ -2769,15 +3107,18 @@
 
       const sessionCardsHtml = sessions.map(s => `
         <div class="bg-amber-50/70 border border-orange-200/80 rounded-xl p-2 flex items-center justify-between text-[11px]">
-          <div>
+          <div class="min-w-0 flex-1 pr-2">
             <div class="flex items-center gap-2">
               <span class="font-bold text-[#05244C]">${s.date}</span>
               <span class="bg-[#FF5B22] text-white px-1.5 py-0.2 rounded text-[9px] font-black">+${s.pagesRead || (s.endPage - s.startPage)} pgs</span>
               <span class="text-slate-500 font-bold">${s.durationMinutes}m</span>
             </div>
-            <p class="text-[10px] text-slate-500">Pgs ${s.startPage || 0} ➔ ${s.endPage || 0}${s.notes ? ` • “${s.notes}”` : ''}</p>
+            <p class="text-[10px] text-slate-500 truncate">Pgs ${s.startPage || 0} ➔ ${s.endPage || 0}${s.notes ? ` • “${s.notes}”` : ''}</p>
           </div>
-          <button type="button" onclick="deleteSessionFromBook('${s.id}', '${bookId}')" class="text-slate-400 hover:text-red-500 font-bold px-1.5 py-0.5 rounded text-xs" title="Delete Session">✕</button>
+          <div class="flex items-center gap-1 flex-shrink-0">
+            <button type="button" onclick="editSessionInBook('${s.id}', '${bookId}')" class="px-2 py-0.5 bg-white border border-[#05244C] rounded-lg text-[10px] font-black text-[#05244C] shadow-sm hover:bg-amber-100" title="Edit Session">✏️ Edit</button>
+            <button type="button" onclick="deleteSessionFromBook('${s.id}', '${bookId}')" class="text-slate-400 hover:text-red-500 font-bold px-1.5 py-0.5 rounded text-xs" title="Delete Session">✕</button>
+          </div>
         </div>
       `).join('');
 
@@ -3838,6 +4179,7 @@
       const modals = [
         'modalPastSession',
         'modalBookDetail',
+        'modalCoverPicker',
         'modalFinishedBooks',
         'modalBulkEdit',
         'modalOnlineSearch',
