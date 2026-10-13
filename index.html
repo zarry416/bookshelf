@@ -2755,6 +2755,134 @@
       initializeUserData();
       setupBackdropDismiss();
     });
+    function updateLiveCoverPreview(url) {
+      const img = document.getElementById('editBookCoverPreviewImg');
+      const placeholder = document.getElementById('editBookCoverPreviewPlaceholder');
+      if (!img || !placeholder) return;
+      if (url && url.trim().length > 0) {
+        img.src = cleanImageUrl(url);
+        img.classList.remove('hidden');
+        placeholder.classList.add('hidden');
+        img.onerror = () => {
+          img.classList.add('hidden');
+          placeholder.classList.remove('hidden');
+        };
+      } else {
+        img.src = '';
+        img.classList.add('hidden');
+        placeholder.classList.remove('hidden');
+      }
+    }
+
+    function saveBookDetail() {
+      const bookId = document.getElementById('editBookId').value;
+      let bk = books.find(b => b.id === bookId);
+      if (!bk) return;
+
+      bk.title = document.getElementById('editBookTitle').value.trim() || 'Untitled';
+      bk.author = document.getElementById('editBookAuthor').value.trim() || 'Unknown Author';
+      bk.currentPage = Number(document.getElementById('editBookCurrentPage').value) || 0;
+      bk.pageCount = Number(document.getElementById('editBookTotalPages').value) || 0;
+      bk.shelf = document.getElementById('editBookShelf').value;
+      bk.ownership = document.getElementById('editBookOwnership').value;
+      bk.genres = [...editingBookGenres];
+      bk.formats = [...editingBookFormats];
+      bk.cover = cleanImageUrl(document.getElementById('editBookCover').value.trim());
+      bk.isFavorite = isEditingFavorite;
+      bk.finishedDate = document.getElementById('editBookFinishedDate').value || null;
+      bk.review = document.getElementById('editBookReviewText').value.trim();
+      bk.rating = Number(document.getElementById('editBookStarRating').value) || 0;
+
+      VIBE_DEFINITIONS.forEach(v => {
+        bk[v.key] = Number(document.getElementById(v.key)?.value) || 0;
+      });
+
+      if (bk.pageCount > 0 && bk.currentPage >= bk.pageCount && bk.shelf === 'reading') {
+        bk.shelf = 'finished';
+        if (!bk.finishedDate) bk.finishedDate = new Date().toISOString().split('T')[0];
+      }
+
+      saveBooks();
+      closeModal('modalBookDetail');
+      determineActiveHeroBook();
+      renderAllViews();
+      showToast('Book details saved!');
+    }
+
+    function deleteBookDetail() {
+      const bookId = document.getElementById('editBookId').value;
+      if (!confirm('Are you sure you want to delete this book?')) return;
+      books = books.filter(b => b.id !== bookId);
+      readingSessions = readingSessions.filter(s => s.bookId !== bookId);
+      quotes = quotes.filter(q => q.bookId !== bookId);
+      saveBooks();
+      saveSessions();
+      saveQuotes();
+      closeModal('modalBookDetail');
+      determineActiveHeroBook();
+      renderAllViews();
+      showToast('Book removed');
+    }
+
+    function renderBookSessionsList(bookId) {
+      const list = document.getElementById('bookSessionsList');
+      const timeLbl = document.getElementById('bookTotalSessionTime');
+      if (!list) return;
+      const sess = readingSessions.filter(s => s.bookId === bookId);
+      const totalMins = sess.reduce((acc, s) => acc + (s.durationMinutes || 0), 0);
+      if (timeLbl) timeLbl.innerText = `${totalMins} mins total`;
+
+      if (sess.length === 0) {
+        list.innerHTML = `<p class="text-[10px] text-slate-400 italic">No reading sessions recorded yet.</p>`;
+        return;
+      }
+      list.innerHTML = sess.map(s => `
+        <div class="bg-amber-50/70 border border-[#05244C]/30 rounded-xl p-2 flex justify-between items-center text-[10px]">
+          <div>
+            <span class="font-bold text-[#05244C]">${s.date || 'Recent'}</span>
+            <span class="text-slate-500">• ${s.durationMinutes}m (+${s.pagesRead} pgs)</span>
+          </div>
+          <button type="button" onclick="editSessionInBook('${s.id}', '${bookId}')" class="text-[#FF5B22] font-black underline">Edit</button>
+        </div>
+      `).join('');
+    }
+
+    function renderEditBookQuotesList(bookId) {
+      const list = document.getElementById('editBookQuotesList');
+      if (!list) return;
+      const bQuotes = quotes.filter(q => q.bookId === bookId);
+      if (bQuotes.length === 0) {
+        list.innerHTML = `<p class="text-[10px] text-slate-400 italic">No quotes or thoughts added yet.</p>`;
+        return;
+      }
+      list.innerHTML = bQuotes.map(q => `
+        <div class="bg-amber-50/70 border border-[#05244C]/30 rounded-xl p-2 text-[10px] space-y-1">
+          <p class="font-editorial italic text-slate-700 leading-snug">${formatRichText(q.text)}</p>
+          <div class="text-[9px] text-slate-400 font-bold flex justify-between">
+            <span>${q.page ? 'p. ' + q.page : ''}</span>
+            <span>${q.type === 'thought' ? '💭 Thought' : '“ Quote'}</span>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function toggleInlineSessionForm(show) {
+      const f = document.getElementById('inlineSessionForm');
+      if (!f) return;
+      f.classList.toggle('hidden', !show);
+    }
+
+    function toggleEditQuoteForm(show) {
+      const f = document.getElementById('editBookQuoteForm');
+      if (!f) return;
+      f.classList.toggle('hidden', !show);
+    }
+
+    function renderStatsDashboard() {}
+    function renderCalendar() {}
+    function renderQuotes() {}
+    function initCloudSync() {}
+    function triggerCloudAutoSync() {}
   </script>
 </body>
 </html>
