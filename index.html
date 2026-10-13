@@ -19,7 +19,7 @@
 
   <!-- Google Fonts: Vacation & Retro Typography -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Fraunces:ital,opsz,wght@0,9..144,400..900;1,9..144,400..900&family=Playfair+Display:ital,wght@0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <style>
@@ -146,7 +146,6 @@
           <path d="M93 121 C 95 122, 95 125, 92 126" stroke-width="1.2"/>
         </svg>
 
-        <!-- VACATION RETRO TITLE -->
         <h1 class="text-2xl font-retro-title italic text-[#FFF9EE] tracking-tight leading-none drop-shadow-[2px_3px_0px_#05244C]">
           Rianne's Bookshelf
         </h1>
@@ -283,7 +282,7 @@
           <button onclick="toggleBatchSelectMode()" id="batchSelectModeBtn" class="h-9 px-3 bg-amber-100 hover:bg-amber-200 border-2 border-[#05244C] rounded-xl text-[11px] font-black text-[#05244C] shadow-retro-navy flex items-center justify-center flex-shrink-0 whitespace-nowrap retro-btn">Select</button>
         </div>
 
-        <!-- Shelf Pills with Integrated Live Count Badges -->
+        <!-- Shelf Pills with Live Count Badges -->
         <div class="space-y-1.5 pt-1">
           <div class="grid grid-cols-4 gap-1.5">
             <button onclick="setShelfFilter('all')" class="shelf-pill py-1.5 px-1 rounded-xl text-[11px] font-black border-2 border-[#05244C] bg-[#05244C] text-[#FFF9EE] shadow-retro-navy flex items-center justify-center gap-1 transition-all" data-shelf="all">
@@ -370,7 +369,7 @@
       <div id="libraryContainer" class="pt-1"></div>
     </section>
 
-    <!-- TAB 3: CALENDAR & STATS (WITH VIBE DNA ANALYTICS) -->
+    <!-- TAB 3: CALENDAR & STATS -->
     <section id="tab-calendar" class="tab-content hidden space-y-5">
       <div class="bg-[#FFF9EE] border-3 border-[#05244C] rounded-3xl p-5 shadow-retro-orange">
         <div class="flex items-center justify-between mb-4">
@@ -448,7 +447,7 @@
           </div>
         </div>
 
-        <!-- VIBE DNA OVERVIEW (8 METRICS) -->
+        <!-- VIBE DNA OVERVIEW -->
         <div class="bg-white border-2 border-[#05244C] p-3.5 rounded-2xl shadow-sm space-y-2.5">
           <div class="flex items-center justify-between">
             <span class="text-[10px] font-black uppercase text-[#05244C] tracking-wider">Reading Vibe DNA</span>
@@ -515,6 +514,7 @@
       </button>
     </div>
   </nav>
+
   <!-- MODAL: MANUAL PAST SESSION -->
   <div id="modalPastSession" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4">
     <div class="bg-[#FFF9EE] border-3 border-[#05244C] rounded-3xl p-6 w-full max-w-sm shadow-retro-orange space-y-3.5">
@@ -553,7 +553,7 @@
           </div>
         </div>
 
-        <div id="logSectionPercent" class="hidden grid-cols-3 gap-2">
+        <div id="logSectionPercent" class="hidden grid grid-cols-3 gap-2">
           <div>
             <label class="block mb-1">Start %</label>
             <input type="number" id="pastSessionStartPercent" min="0" max="100" placeholder="0" class="w-full bg-white border-2 border-[#05244C] rounded-xl p-2 font-bold text-[#FF5B22]">
@@ -639,7 +639,7 @@
           </div>
         </div>
 
-        <!-- Two-Tier Genre Selector -->
+        <!-- Genres -->
         <div class="space-y-1.5">
           <div class="flex items-center justify-between">
             <label class="block text-slate-700 font-bold">Genres</label>
@@ -667,13 +667,13 @@
           <input type="hidden" id="editBookGenres">
         </div>
 
-        <!-- Format Selector Container -->
+        <!-- Formats -->
         <div>
           <label class="block mb-1">Formats</label>
           <div class="grid grid-cols-2 gap-1.5" id="editBookFormatButtonsContainer"></div>
         </div>
 
-        <!-- Cover Image with Auto-Find & Upload -->
+        <!-- Cover Image -->
         <div>
           <div class="flex items-center justify-between mb-1">
             <label class="block">Cover Image</label>
@@ -716,7 +716,7 @@
             <input type="date" id="editBookFinishedDate" class="w-full bg-white border-2 border-[#05244C] rounded-xl p-2 font-bold text-xs">
           </div>
 
-          <!-- Overall Rating (Clean Stars, No Top-Right Badge) -->
+          <!-- Overall Rating -->
           <div class="bg-white border-2 border-[#05244C] p-3 rounded-2xl shadow-sm space-y-1.5">
             <div class="flex items-center">
               <span class="text-[10px] uppercase font-bold text-slate-500">Overall Rating</span>
@@ -733,7 +733,7 @@
             <input type="hidden" id="editBookStarRating" value="0">
           </div>
 
-          <!-- 8 Custom Vibe Shapes Grid Container -->
+          <!-- Vibe Shapes -->
           <div class="bg-white/95 border-2 border-[#05244C] p-3 rounded-2xl shadow-sm space-y-2">
             <span class="text-[10px] font-black uppercase text-[#05244C] tracking-wider block">Vibe & Impact</span>
             <div id="vibesContainer" class="space-y-2 text-[11px] font-bold text-[#05244C]"></div>
@@ -745,7 +745,7 @@
           </div>
         </div>
 
-        <!-- Re-Read Tracker & Sessions -->
+        <!-- Re-Read Tracker & Sessions (With % vs Page Switch & Full Edit Support) -->
         <div class="pt-3 border-t-2 border-orange-200/80 space-y-3">
           <div class="flex items-center justify-between">
             <span class="bg-[#1DBBB4] text-white text-[10px] font-black px-2 py-0.5 rounded-full border border-[#05244C]">Re-read Tracker</span>
@@ -758,6 +758,7 @@
               <button type="button" onclick="openNewInlineSessionForm()" class="px-2 py-0.5 bg-[#FF5B22] text-white rounded-lg text-[10px] font-black border border-[#05244C] shadow-sm retro-btn">+ Session</button>
             </div>
 
+            <!-- INLINE SESSION FORM WITH % VS PG SUPPORT -->
             <div id="inlineSessionForm" class="hidden bg-[#FFF9EE] border-2 border-[#05244C] rounded-xl p-2.5 space-y-2 shadow-sm">
               <div class="flex items-center justify-between pb-1 border-b border-orange-200">
                 <span id="inlineSessFormTitle" class="text-[10px] font-black uppercase text-[#FF5B22]">Quick Log</span>
@@ -765,6 +766,11 @@
               </div>
               <input type="hidden" id="inlineSessEditId" value="">
               
+              <div class="flex bg-amber-100 p-0.5 rounded-lg border border-[#05244C]">
+                <button type="button" onclick="setInlineLogMode('pages')" id="btnInlineLogModePages" class="flex-1 py-0.5 rounded-md text-[10px] font-black bg-[#FF5B22] text-white">Pages</button>
+                <button type="button" onclick="setInlineLogMode('percent')" id="btnInlineLogModePercent" class="flex-1 py-0.5 rounded-md text-[10px] font-black text-slate-700">Percentage (%)</button>
+              </div>
+
               <div class="grid grid-cols-2 gap-2 text-[10px]">
                 <div>
                   <label class="block font-bold mb-0.5">Date</label>
@@ -776,14 +782,27 @@
                 </div>
               </div>
 
-              <div class="grid grid-cols-2 gap-2 text-[10px]">
+              <!-- Page input fields -->
+              <div id="inlineSectionPages" class="grid grid-cols-2 gap-2 text-[10px]">
                 <div>
                   <label class="block font-bold mb-0.5">Start Page</label>
-                  <input type="number" id="inlineSessStartPage" oninput="syncInlineSessionInputs('startPage')" placeholder="0" class="w-full bg-white border border-[#05244C] rounded-lg p-1.5 font-bold text-[10px]">
+                  <input type="number" id="inlineSessStartPage" oninput="syncInlineSessionValues('startPage')" placeholder="0" class="w-full bg-white border border-[#05244C] rounded-lg p-1.5 font-bold text-[10px]">
                 </div>
                 <div>
                   <label class="block font-bold mb-0.5">End Page</label>
-                  <input type="number" id="inlineSessEndPage" oninput="syncInlineSessionInputs('endPage')" placeholder="25" class="w-full bg-white border border-[#05244C] rounded-lg p-1.5 font-bold text-[10px]">
+                  <input type="number" id="inlineSessEndPage" oninput="syncInlineSessionValues('endPage')" placeholder="25" class="w-full bg-white border border-[#05244C] rounded-lg p-1.5 font-bold text-[10px]">
+                </div>
+              </div>
+
+              <!-- Percentage input fields -->
+              <div id="inlineSectionPercent" class="hidden grid-cols-2 gap-2 text-[10px]">
+                <div>
+                  <label class="block font-bold mb-0.5">Start %</label>
+                  <input type="number" min="0" max="100" id="inlineSessStartPercent" oninput="syncInlineSessionValues('startPercent')" placeholder="0" class="w-full bg-white border border-[#05244C] rounded-lg p-1.5 font-bold text-[10px] text-[#FF5B22]">
+                </div>
+                <div>
+                  <label class="block font-bold mb-0.5">End %</label>
+                  <input type="number" min="0" max="100" id="inlineSessEndPercent" oninput="syncInlineSessionValues('endPercent')" placeholder="10" class="w-full bg-white border border-[#05244C] rounded-lg p-1.5 font-bold text-[10px] text-[#FF5B22]">
                 </div>
               </div>
 
@@ -792,16 +811,16 @@
                 <input type="text" id="inlineSessNotes" placeholder="Thoughts..." class="w-full bg-white border border-[#05244C] rounded-lg p-1.5 font-editorial italic text-[10px]">
               </div>
               <div class="flex gap-1.5 pt-0.5">
-                <button type="button" onclick="submitInlineSession()" id="inlineSessSubmitBtn" class="flex-1 py-1.5 bg-[#FF5B22] text-white rounded-lg text-[10px] font-black border border-[#05244C]">Save</button>
+                <button type="button" onclick="submitInlineSession()" id="inlineSessSubmitBtn" class="flex-1 py-1.5 bg-[#FF5B22] text-white rounded-lg text-[10px] font-black border border-[#05244C]">Save Session</button>
                 <button type="button" onclick="toggleInlineSessionForm(false)" class="px-2.5 py-1.5 bg-white text-slate-600 rounded-lg text-[10px] font-bold border border-slate-300">Cancel</button>
               </div>
             </div>
 
-            <div id="bookSessionsList" class="space-y-1.5 max-h-40 overflow-y-auto no-scrollbar text-xs"></div>
+            <div id="bookSessionsList" class="space-y-1.5 max-h-48 overflow-y-auto no-scrollbar text-xs"></div>
           </div>
         </div>
 
-        <!-- Book Quotes Inside Edit Modal (Tag-Free, Normal Typing Font) -->
+        <!-- Book Quotes -->
         <div class="pt-3 border-t-2 border-orange-200/80 space-y-3">
           <div class="flex items-center justify-between">
             <span class="text-[10px] uppercase font-black text-[#05244C] tracking-wide">Passages & Reactions</span>
@@ -850,7 +869,7 @@
     </div>
   </div>
 
-  <!-- MODAL: ADD / EDIT QUOTE OR THOUGHT (STANDALONE, TAG-FREE) -->
+  <!-- MODAL: ADD / EDIT QUOTE OR THOUGHT -->
   <div id="modalAddQuote" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4">
     <div class="bg-[#FFF9EE] border-3 border-[#05244C] rounded-3xl p-6 w-full max-w-sm shadow-retro-orange space-y-3.5">
       <div class="flex justify-between items-center pb-2 border-b-2 border-orange-200">
@@ -970,7 +989,7 @@
     </div>
   </div>
 
-  <!-- CONSOLIDATED LIST MODAL (FOR FINISHED TITLES & READING HOURS) -->
+  <!-- CONSOLIDATED LIST MODAL -->
   <div id="modalGenericList" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4">
     <div class="bg-[#FFF9EE] border-3 border-[#05244C] rounded-3xl p-5 w-full max-w-sm shadow-retro-orange space-y-3 max-h-[85vh] flex flex-col">
       <div class="flex justify-between items-center pb-2 border-b-2 border-orange-200">
@@ -984,7 +1003,7 @@
     </div>
   </div>
 
-  <!-- MODAL: ANNUAL READING WRAP (WITH VIBE BREAKDOWN) -->
+  <!-- MODAL: ANNUAL READING WRAP -->
   <div id="modalInfographic" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden items-center justify-center p-4">
     <div class="bg-[#FFF9EE] border-3 border-[#05244C] rounded-3xl p-5 w-full max-w-md shadow-retro-orange space-y-4 max-h-[92vh] overflow-y-auto no-scrollbar">
       <div class="flex justify-between items-center pb-2 border-b-2 border-orange-200">
@@ -1032,7 +1051,6 @@
             <p id="infoReadingPace" class="text-[10px] text-slate-300 mt-1">~ 0 pgs/hr</p>
           </div>
 
-          <!-- Top Reading Vibes Highlight in Infographic -->
           <div class="bg-white/10 rounded-2xl p-3 border border-white/20 col-span-2">
             <p class="text-[9px] font-black uppercase text-[#FFD034] tracking-wider mb-1.5">Top Reading Vibes</p>
             <div id="infoTopVibesBar" class="flex flex-wrap gap-1.5"></div>
@@ -1131,8 +1149,9 @@
   <div id="toastNotification" class="fixed top-5 left-1/2 -translate-x-1/2 z-50 bg-[#05244C] text-[#FFF9EE] border-2 border-[#FFD034] px-4 py-2 rounded-2xl text-xs font-black shadow-2xl transition-all duration-300 opacity-0 pointer-events-none">
     Notice
   </div>
+
   <script>
-    const APP_VERSION = "5.8";
+    const APP_VERSION = "5.9";
     let books = [];
     let readingSessions = [];
     let quotes = [];
@@ -1146,12 +1165,12 @@
     let isBatchMode = false;
     let selectedBookIds = new Set();
     let currentLogMode = 'pages';
+    let currentInlineLogMode = 'pages';
 
     let editingBookFormats = ['eBook'];
     let editingBookGenres = [];
     let showUnselectedCatalog = false;
 
-    // PRESET GENRES (INCLUDING SELF-HELP / PERSONAL GROWTH)
     const PRESET_GENRES = [
       'Fiction', 'Classics', 'Manga', 'Graphic Novel / Comic',
       'Coming of Age / YA', 'Romance', 'Horror', 'Thriller',
@@ -1185,57 +1204,15 @@
       'Self-Help / Personal Growth': ['self-help', 'self help', 'personal development', 'personal growth', 'productivity', 'habits', 'mindfulness', 'motivation', 'mindset', 'wellness', 'self-improvement', 'leadership', 'success']
     };
 
-    // EXACT 8 CUSTOM VIBE & IMPACT METRICS (FEATURING KILIG SPARKLE ✨)
     const VIBE_DEFINITIONS = [
-      {
-        key: 'vibeHeartfelt',
-        label: 'Heartfelt',
-        color: '#E11D48',
-        svgPath: 'M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z M12 5.5l-1.5 3.5 2.5 3-2 3.5 1 4'
-      },
-      {
-        key: 'vibeSuspense',
-        label: 'Suspense',
-        color: '#F59E0B',
-        svgPath: 'M7 2v11h3v9l7-12h-4l4-8z'
-      },
-      {
-        key: 'vibeMystery',
-        label: 'Mystery',
-        color: '#3B82F6',
-        svgPath: 'M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z'
-      },
-      {
-        key: 'vibeHorror',
-        label: 'Horror',
-        color: '#7C3AED',
-        svgPath: 'M12 2C7.58 2 4 5.58 4 10v10l2.5-2 2.5 2 3-2 3 2 2.5-2 2.5 2V10c0-4.42-3.58-8-8-8zm-2.5 9c-.83 0-1.5-.67-1.5-1.5S8.67 8 9.5 8s1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm5 0c-.83 0-1.5-.67-1.5-1.5S13.67 8 14.5 8s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z'
-      },
-      {
-        key: 'vibeRomance',
-        label: 'Love',
-        color: '#DB2777',
-        svgPath: 'M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'
-      },
-      {
-        key: 'vibeSpice',
-        label: 'Spice',
-        color: '#EA580C',
-        svgPath: 'M12 2c-.5 2.5-2 4.5-3.5 6.5C7 10.5 6 12.5 6 15c0 3.31 2.69 6 6 6s6-2.69 6-6c0-4-3-7.5-3.5-9.5-.5 1.5-1.5 2.5-2.5 2.5-.5-1.5 0-4.5 0-6z'
-      },
-      {
-        key: 'vibeTears',
-        label: 'Tear',
-        color: '#0284C7',
-        svgPath: 'M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z'
-      },
-      {
-        key: 'vibeKilig',
-        label: 'Kilig',
-        color: '#F59E0B',
-        // 4-Pointed Sparkle Star Silhouette (✨)
-        svgPath: 'M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5Z'
-      }
+      { key: 'vibeHeartfelt', label: 'Heartfelt', color: '#E11D48', svgPath: 'M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z M12 5.5l-1.5 3.5 2.5 3-2 3.5 1 4' },
+      { key: 'vibeSuspense', label: 'Suspense', color: '#F59E0B', svgPath: 'M7 2v11h3v9l7-12h-4l4-8z' },
+      { key: 'vibeMystery', label: 'Mystery', color: '#3B82F6', svgPath: 'M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z' },
+      { key: 'vibeHorror', label: 'Horror', color: '#7C3AED', svgPath: 'M12 2C7.58 2 4 5.58 4 10v10l2.5-2 2.5 2 3-2 3 2 2.5-2 2.5 2V10c0-4.42-3.58-8-8-8zm-2.5 9c-.83 0-1.5-.67-1.5-1.5S8.67 8 9.5 8s1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm5 0c-.83 0-1.5-.67-1.5-1.5S13.67 8 14.5 8s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z' },
+      { key: 'vibeRomance', label: 'Love', color: '#DB2777', svgPath: 'M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z' },
+      { key: 'vibeSpice', label: 'Spice', color: '#EA580C', svgPath: 'M12 2c-.5 2.5-2 4.5-3.5 6.5C7 10.5 6 12.5 6 15c0 3.31 2.69 6 6 6s6-2.69 6-6c0-4-3-7.5-3.5-9.5-.5 1.5-1.5 2.5-2.5 2.5-.5-1.5 0-4.5 0-6z' },
+      { key: 'vibeTears', label: 'Tear', color: '#0284C7', svgPath: 'M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z' },
+      { key: 'vibeKilig', label: 'Kilig', color: '#F59E0B', svgPath: 'M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5Z' }
     ];
 
     let calendarYear = new Date().getFullYear();
@@ -1360,18 +1337,6 @@
         }
       } catch (e) {}
 
-      if (gatheredTags.length <= 1) {
-        try {
-          const wRes = await fetch(`https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(`${title} novel`)}&format=json&origin=*`);
-          if (wRes.ok) {
-            const wData = await wRes.json();
-            if (wData.query?.search?.length > 0) {
-              wData.query.search.slice(0, 2).forEach(s => gatheredTags.push(s.snippet.replace(/<[^>]+>/g, ' ')));
-            }
-          }
-        } catch (e) {}
-      }
-
       const textCorpus = (gatheredTags.join(' ') + ' ' + title).toLowerCase();
       let matchedCount = 0;
 
@@ -1382,21 +1347,9 @@
         }
       });
 
-      if (textCorpus.includes('manga') || textCorpus.includes('vol.')) {
-        if (!editingBookGenres.includes('Manga')) { editingBookGenres.push('Manga'); matchedCount++; }
-      }
-      if (textCorpus.includes('comic') || textCorpus.includes('graphic novel')) {
-        if (!editingBookGenres.includes('Graphic Novel / Comic')) { editingBookGenres.push('Graphic Novel / Comic'); matchedCount++; }
-      }
-
       if (editingBookGenres.length === 0) {
-        if (textCorpus.includes('biography') || textCorpus.includes('memoir') || textCorpus.includes('nonfiction')) {
-          editingBookGenres.push('Non-Fiction / Memoir');
-          matchedCount++;
-        } else {
-          editingBookGenres.push('Fiction');
-          matchedCount++;
-        }
+        editingBookGenres.push('Fiction');
+        matchedCount++;
       }
 
       renderGenrePills();
@@ -1621,7 +1574,6 @@
       }).join('');
     }
 
-    // 8 VIBES WITH SVG SHAPES & HALF-FILL CYCLING (1 -> 0.5 -> 0)
     function renderVibeInputs() {
       const container = document.getElementById('vibesContainer');
       if (!container) return;
@@ -1690,7 +1642,6 @@
       setVibeShapes(vibeKey, next);
     }
 
-    // VIBE AVERAGES & DNA ANALYTICS
     function calculateVibeAverages(bookList) {
       const ratedBooks = bookList.filter(b => b.shelf === 'finished');
       const totals = {};
@@ -1717,7 +1668,6 @@
       }).sort((a, b) => b.average - a.average);
     }
 
-    // SHELF COUNT BADGES UPDATE
     function updateShelfCountBadges() {
       const counts = {
         'all': books.filter(b => b.shelf !== 'wishlist').length,
@@ -2429,6 +2379,7 @@
       setEditBookStarRating(newRating);
     }
 
+    // RENDER SESSIONS WITH EDIT AND DELETE BUTTONS
     function renderBookSessionsList(bookId) {
       const listEl = document.getElementById('bookSessionsList');
       const timeEl = document.getElementById('bookTotalSessionTime');
@@ -2442,24 +2393,84 @@
         return;
       }
 
-      listEl.innerHTML = bSessions.map(s => `
-        <div class="bg-amber-50 border border-orange-200/80 rounded-xl p-2 flex items-center justify-between">
-          <div>
-            <span class="font-bold text-[#05244C]">${s.date}</span>
-            <span class="text-slate-500 text-[10px] ml-1">(${s.durationMinutes || 0}m • ${s.pagesRead || 0} pgs)</span>
-            ${s.notes ? `<p class="text-[10px] text-slate-600 italic font-editorial truncate max-w-[170px]">${s.notes}</p>` : ''}
+      const bk = books.find(b => b.id === bookId);
+      const totalPages = bk ? (bk.pageCount || 300) : 300;
+
+      listEl.innerHTML = bSessions.map(s => {
+        const startPct = totalPages > 0 ? Math.round(((s.startPage || 0) / totalPages) * 100) : 0;
+        const endPct = totalPages > 0 ? Math.round(((s.endPage || 0) / totalPages) * 100) : 0;
+        const modeBadge = s.loggedAsPercent ? `${startPct}% ➔ ${endPct}%` : `p. ${s.startPage || 0} ➔ ${s.endPage || 0}`;
+
+        return `
+          <div class="bg-amber-50 border border-orange-200/80 rounded-xl p-2 flex items-center justify-between">
+            <div class="min-w-0 flex-1 pr-2">
+              <div class="flex items-center gap-1.5">
+                <span class="font-bold text-[#05244C]">${s.date}</span>
+                <span class="text-slate-500 text-[10px]">(${s.durationMinutes || 0}m • ${s.pagesRead || 0} pgs)</span>
+              </div>
+              <div class="text-[10px] font-black text-[#FF5B22] mt-0.5">${modeBadge}</div>
+              ${s.notes ? `<p class="text-[10px] text-slate-600 italic font-editorial truncate mt-0.5">${s.notes}</p>` : ''}
+            </div>
+            <div class="flex items-center gap-1 flex-shrink-0">
+              <button type="button" onclick="editSessionInBook('${s.id}', '${bookId}')" class="px-1.5 py-0.5 bg-white border border-[#05244C] rounded-lg text-[10px] font-black text-[#05244C] hover:bg-orange-100">✏️</button>
+              <button type="button" onclick="deleteSessionFromBook('${s.id}', '${bookId}')" class="px-1.5 py-0.5 bg-white border border-red-300 rounded-lg text-[10px] font-bold text-red-500 hover:bg-red-50">✕</button>
+            </div>
           </div>
-          <button type="button" onclick="deleteSessionFromBook('${s.id}', '${bookId}')" class="text-slate-400 hover:text-red-500 font-bold text-xs">✕</button>
-        </div>
-      `).join('');
+        `;
+      }).join('');
+    }
+
+    function editSessionInBook(sessionId, bookId) {
+      const s = readingSessions.find(sess => sess.id === sessionId);
+      const bk = books.find(b => b.id === bookId);
+      if (!s || !bk) return;
+
+      const total = bk.pageCount || 300;
+      document.getElementById('inlineSessEditId').value = s.id;
+      document.getElementById('inlineSessFormTitle').innerText = 'Edit Session';
+      document.getElementById('inlineSessSubmitBtn').innerText = 'Update Session';
+      document.getElementById('inlineSessDate').value = s.date || new Date().toISOString().split('T')[0];
+      document.getElementById('inlineSessMinutes').value = s.durationMinutes || 30;
+      document.getElementById('inlineSessStartPage').value = s.startPage || 0;
+      document.getElementById('inlineSessEndPage').value = s.endPage || 0;
+
+      const sPct = total > 0 ? Math.round(((s.startPage || 0) / total) * 100) : 0;
+      const ePct = total > 0 ? Math.round(((s.endPage || 0) / total) * 100) : 0;
+      document.getElementById('inlineSessStartPercent').value = sPct;
+      document.getElementById('inlineSessEndPercent').value = ePct;
+
+      document.getElementById('inlineSessNotes').value = s.notes || '';
+
+      setInlineLogMode(s.loggedAsPercent ? 'percent' : 'pages');
+      toggleInlineSessionForm(true);
     }
 
     function deleteSessionFromBook(sessionId, bookId) {
+      if (!confirm('Are you sure you want to delete this session?')) return;
       readingSessions = readingSessions.filter(s => s.id !== sessionId);
+
+      // Recalculate book current progress from remaining sessions
+      const bk = books.find(b => b.id === bookId);
+      if (bk) {
+        const remaining = readingSessions.filter(s => s.bookId === bookId);
+        if (remaining.length > 0) {
+          const maxPage = Math.max(...remaining.map(s => s.endPage || 0));
+          bk.currentPage = maxPage;
+          bk.lastSessionDate = remaining[remaining.length - 1].date;
+        } else {
+          bk.currentPage = 0;
+          bk.lastSessionDate = null;
+        }
+        document.getElementById('editBookCurrentPage').value = bk.currentPage;
+        const pct = bk.pageCount > 0 ? Math.min(100, Math.round((bk.currentPage / bk.pageCount) * 100)) : 0;
+        document.getElementById('editBookPercent').value = pct;
+        saveBooks();
+      }
+
       saveSessions();
       renderBookSessionsList(bookId);
       renderAllViews();
-      showToast('Session removed');
+      showToast('Session deleted!');
     }
 
     function rereadCurrentBook() {
@@ -2525,6 +2536,7 @@
     function deleteBookDetail() {
       const id = document.getElementById('editBookId').value;
       if (!id) return;
+      if (!confirm('Are you sure you want to delete this book?')) return;
       books = books.filter(b => b.id !== id);
       readingSessions = readingSessions.filter(s => s.bookId !== id);
       quotes = quotes.filter(q => q.bookId !== id);
@@ -2854,7 +2866,6 @@
         }
       }
 
-      // Render Vibe DNA (Averages across all 8 vibes)
       const vibeAvgs = calculateVibeAverages(finishedBooks);
       const dnaGrid = document.getElementById('vibeDnaGrid');
       const dnaCount = document.getElementById('vibeDnaCount');
@@ -3015,7 +3026,6 @@
       const avgSpeed = totalMinutes > 0 ? Math.round((totalPages / totalMinutes) * 60) : 40;
       document.getElementById('infoReadingPace').innerText = `~ ${avgSpeed} pgs/hr pace`;
 
-      // Top Vibes in Infographic
       const infoVibes = calculateVibeAverages(finishedBooks).filter(v => v.average > 0).slice(0, 4);
       const vibesBarEl = document.getElementById('infoTopVibesBar');
       if (vibesBarEl) {
@@ -3049,6 +3059,7 @@
       showToast('Copied reading summary to clipboard!');
     }
 
+    // MAIN PAST SESSION MODAL (% VS PAGES)
     function setLogSessionMode(mode) {
       currentLogMode = mode;
       const btnPages = document.getElementById('btnLogModePages');
@@ -3061,6 +3072,7 @@
         btnPercent.className = "flex-1 py-1 rounded-lg text-xs font-black text-slate-700";
         secPages.classList.remove('hidden');
         secPercent.classList.add('hidden');
+        secPercent.classList.remove('grid');
       } else {
         btnPages.className = "flex-1 py-1 rounded-lg text-xs font-black text-slate-700";
         btnPercent.className = "flex-1 py-1 rounded-lg text-xs font-black bg-[#FF5B22] text-white";
@@ -3101,8 +3113,9 @@
       if (!bk) return;
 
       let startP = 0, endP = 0, minutes = 30;
+      const isPercent = (currentLogMode === 'percent');
 
-      if (currentLogMode === 'pages') {
+      if (!isPercent) {
         startP = Number(document.getElementById('pastSessionStartPage').value) || 0;
         endP = Number(document.getElementById('pastSessionEndPage').value) || startP;
         minutes = Number(document.getElementById('pastSessionMinutes').value) || 1;
@@ -3124,6 +3137,7 @@
         startPage: startP,
         endPage: endP,
         pagesRead: pagesRead,
+        loggedAsPercent: isPercent,
         notes: notes
       });
 
@@ -3187,14 +3201,30 @@
       }
     }
 
-    function toggleInlineSessionForm(forceState) {
-      const form = document.getElementById('inlineSessionForm');
-      if (!form) return;
-      if (typeof forceState === 'boolean') form.classList.toggle('hidden', !forceState);
-      else form.classList.toggle('hidden');
+    // INLINE SESSION % VS PAGE TOGGLE & SYNC
+    function setInlineLogMode(mode) {
+      currentInlineLogMode = mode;
+      const btnPages = document.getElementById('btnInlineLogModePages');
+      const btnPercent = document.getElementById('btnInlineLogModePercent');
+      const secPages = document.getElementById('inlineSectionPages');
+      const secPercent = document.getElementById('inlineSectionPercent');
+
+      if (mode === 'pages') {
+        btnPages.className = "flex-1 py-0.5 rounded-md text-[10px] font-black bg-[#FF5B22] text-white";
+        btnPercent.className = "flex-1 py-0.5 rounded-md text-[10px] font-black text-slate-700";
+        secPages.classList.remove('hidden');
+        secPercent.classList.add('hidden');
+        secPercent.classList.remove('grid');
+      } else {
+        btnPages.className = "flex-1 py-0.5 rounded-md text-[10px] font-black text-slate-700";
+        btnPercent.className = "flex-1 py-0.5 rounded-md text-[10px] font-black bg-[#FF5B22] text-white";
+        secPages.classList.add('hidden');
+        secPercent.classList.remove('hidden');
+        secPercent.classList.add('grid');
+      }
     }
 
-    function syncInlineSessionInputs(origin) {
+    function syncInlineSessionValues(origin) {
       const bkId = document.getElementById('editBookId')?.value;
       const bk = books.find(b => b.id === bkId);
       const total = bk ? (bk.pageCount || 300) : 300;
@@ -3202,16 +3232,45 @@
 
       const startPageEl = document.getElementById('inlineSessStartPage');
       const endPageEl = document.getElementById('inlineSessEndPage');
+      const startPctEl = document.getElementById('inlineSessStartPercent');
+      const endPctEl = document.getElementById('inlineSessEndPercent');
 
       if (origin === 'startPage') {
-        const p = Number(startPageEl.value) || 0;
-        if (endPageEl && !endPageEl.value) endPageEl.value = Math.min(total, p + 15);
+        const val = Number(startPageEl.value) || 0;
+        startPctEl.value = Math.min(100, Math.round((val / total) * 100));
+        if (!endPageEl.value) {
+          endPageEl.value = Math.min(total, val + 15);
+          endPctEl.value = Math.min(100, Math.round((Number(endPageEl.value) / total) * 100));
+        }
+      } else if (origin === 'endPage') {
+        const val = Number(endPageEl.value) || 0;
+        endPctEl.value = Math.min(100, Math.round((val / total) * 100));
+      } else if (origin === 'startPercent') {
+        const pct = Math.min(100, Math.max(0, Number(startPctEl.value) || 0));
+        startPageEl.value = Math.round((pct / 100) * total);
+        if (!endPctEl.value) {
+          endPctEl.value = Math.min(100, pct + 5);
+          endPageEl.value = Math.round((Number(endPctEl.value) / 100) * total);
+        }
+      } else if (origin === 'endPercent') {
+        const pct = Math.min(100, Math.max(0, Number(endPctEl.value) || 0));
+        endPageEl.value = Math.round((pct / 100) * total);
       }
+    }
+
+    function toggleInlineSessionForm(forceState) {
+      const form = document.getElementById('inlineSessionForm');
+      if (!form) return;
+      if (typeof forceState === 'boolean') form.classList.toggle('hidden', !forceState);
+      else form.classList.toggle('hidden');
     }
 
     function openNewInlineSessionForm() {
       const idInput = document.getElementById('inlineSessEditId');
       if (idInput) idInput.value = '';
+      document.getElementById('inlineSessFormTitle').innerText = 'Quick Log';
+      document.getElementById('inlineSessSubmitBtn').innerText = 'Save Session';
+
       const bk = books.find(b => b.id === document.getElementById('editBookId')?.value);
       const cur = bk ? bk.currentPage : 0;
       const tot = bk ? (bk.pageCount || 300) : 300;
@@ -3220,7 +3279,14 @@
       document.getElementById('inlineSessMinutes').value = 30;
       document.getElementById('inlineSessStartPage').value = cur;
       document.getElementById('inlineSessEndPage').value = Math.min(tot, cur + 15);
+
+      const sPct = tot > 0 ? Math.round((cur / tot) * 100) : 0;
+      const ePct = tot > 0 ? Math.min(100, Math.round(((cur + 15) / tot) * 100)) : 0;
+      document.getElementById('inlineSessStartPercent').value = sPct;
+      document.getElementById('inlineSessEndPercent').value = ePct;
+
       document.getElementById('inlineSessNotes').value = '';
+      setInlineLogMode('pages');
       toggleInlineSessionForm(true);
     }
 
@@ -3229,26 +3295,61 @@
       const bk = books.find(b => b.id === bookId);
       if (!bk) return;
 
+      const editingSessionId = document.getElementById('inlineSessEditId').value;
       const dateStr = document.getElementById('inlineSessDate').value || new Date().toISOString().split('T')[0];
       const minutes = Number(document.getElementById('inlineSessMinutes').value) || 20;
-      const startP = Number(document.getElementById('inlineSessStartPage').value) || 0;
-      const endP = Number(document.getElementById('inlineSessEndPage').value) || startP;
       const notes = document.getElementById('inlineSessNotes').value.trim();
+      const isPercent = (currentInlineLogMode === 'percent');
 
-      readingSessions.push({
-        id: 'sess_' + Date.now(),
-        bookId: bk.id,
-        date: dateStr,
-        timestamp: Date.now(),
-        durationMinutes: minutes,
-        startPage: startP,
-        endPage: endP,
-        pagesRead: Math.max(0, endP - startP),
-        notes: notes
-      });
+      let startP = 0, endP = 0;
+      if (!isPercent) {
+        startP = Number(document.getElementById('inlineSessStartPage').value) || 0;
+        endP = Number(document.getElementById('inlineSessEndPage').value) || startP;
+      } else {
+        const sPct = Math.max(0, Math.min(100, Number(document.getElementById('inlineSessStartPercent').value) || 0));
+        const ePct = Math.max(0, Math.min(100, Number(document.getElementById('inlineSessEndPercent').value) || sPct));
+        startP = Math.round((sPct / 100) * bk.pageCount);
+        endP = Math.round((ePct / 100) * bk.pageCount);
+      }
+
+      const pagesRead = Math.max(0, endP - startP);
+
+      if (editingSessionId) {
+        const sess = readingSessions.find(s => s.id === editingSessionId);
+        if (sess) {
+          sess.date = dateStr;
+          sess.durationMinutes = minutes;
+          sess.startPage = startP;
+          sess.endPage = endP;
+          sess.pagesRead = pagesRead;
+          sess.loggedAsPercent = isPercent;
+          sess.notes = notes;
+        }
+      } else {
+        readingSessions.push({
+          id: 'sess_' + Date.now(),
+          bookId: bk.id,
+          date: dateStr,
+          timestamp: Date.now(),
+          durationMinutes: minutes,
+          startPage: startP,
+          endPage: endP,
+          pagesRead: pagesRead,
+          loggedAsPercent: isPercent,
+          notes: notes
+        });
+      }
 
       bk.currentPage = Math.max(bk.currentPage, endP);
       bk.lastSessionDate = dateStr;
+
+      if (bk.pageCount > 0 && bk.currentPage >= bk.pageCount) {
+        bk.currentPage = bk.pageCount;
+        bk.shelf = 'finished';
+        bk.finishedDate = dateStr;
+        if (!bk.finishedDates) bk.finishedDates = [];
+        if (!bk.finishedDates.includes(dateStr)) bk.finishedDates.push(dateStr);
+      }
 
       document.getElementById('editBookCurrentPage').value = bk.currentPage;
       const pct = bk.pageCount > 0 ? Math.min(100, Math.round((bk.currentPage / bk.pageCount) * 100)) : 0;
@@ -3260,7 +3361,7 @@
       toggleInlineSessionForm(false);
       determineActiveHeroBook();
       renderAllViews();
-      showToast('Session logged!');
+      showToast(editingSessionId ? 'Session updated!' : 'Session logged!');
     }
 
     function unmarkBookFinished() {
@@ -3289,7 +3390,7 @@
       showToast('Unmarked as finished.');
     }
 
-    // INLINE QUOTE LOGGER (TAG-FREE, NORMAL FONT)
+    // INLINE QUOTE LOGGER
     function openInlineQuoteLogger(type = 'quote') {
       const form = document.getElementById('editBookQuoteForm');
       if (!form) return;
@@ -3414,7 +3515,7 @@
       showToast('Entry deleted');
     }
 
-    // STANDALONE ADD & EDIT MODAL (TAG-FREE)
+    // STANDALONE ADD & EDIT MODAL
     function setStandaloneEntryType(type) {
       document.getElementById('standaloneEntryTypeVal').value = type;
       const btnQ = document.getElementById('btnEntryTypeQuote');
@@ -3549,7 +3650,6 @@
       showToast('Copied to clipboard!');
     }
 
-    // MAIN TAB QUOTES: Tight Spacing, Big Quotation Mark & No Tags
     function renderQuotes() {
       const container = document.getElementById('quotesContainer');
       if (!container) return;
@@ -3803,34 +3903,6 @@
       determineActiveHeroBook();
       renderAllViews();
       showToast('Cleared sample books!');
-    }
-
-    function parseCsvRows(text) {
-      const rows = [];
-      let currentRow = [], currentField = '', insideQuotes = false;
-      for (let i = 0; i < text.length; i++) {
-        const char = text[i], nextChar = text[i + 1];
-        if (char === '"') {
-          if (insideQuotes && nextChar === '"') { currentField += '"'; i++; }
-          else { insideQuotes = !insideQuotes; }
-        } else if (char === ',' && !insideQuotes) {
-          currentRow.push(currentField.trim());
-          currentField = '';
-        } else if ((char === '\r' || char === '\n') && !insideQuotes) {
-          if (char === '\r' && nextChar === '\n') i++;
-          currentRow.push(currentField.trim());
-          if (currentRow.some(f => f.length > 0)) rows.push(currentRow);
-          currentRow = [];
-          currentField = '';
-        } else {
-          currentField += char;
-        }
-      }
-      if (currentField.length > 0 || currentRow.length > 0) {
-        currentRow.push(currentField.trim());
-        if (currentRow.some(f => f.length > 0)) rows.push(currentRow);
-      }
-      return rows;
     }
 
     async function handleUniversalFileImport(event) {
