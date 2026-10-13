@@ -101,10 +101,11 @@
 </head>
 <body class="text-slate-800 antialiased selection:bg-[#FFA4C4] selection:text-[#05244C]">
 
-  <!-- TOP HEADER -->
+  <!-- TOP HEADER (NON-STICKY) -->
   <header id="appHeader" class="relative z-40 bg-[#446BA2] border-b-2 border-[#FFA4C4] px-4 pb-3 shadow-md">
     <div class="max-w-md mx-auto flex items-center justify-between">
       <div class="flex items-center gap-3">
+        <!-- CELESTIAL SUN & MOON VECTOR -->
         <svg class="w-11 h-11 flex-shrink-0 drop-shadow-[0_2px_4px_rgba(5,36,76,0.35)]" viewBox="0 0 200 200" fill="none" stroke="#FFF9EE" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <g id="sharp-ray">
@@ -145,6 +146,7 @@
           <path d="M93 121 C 95 122, 95 125, 92 126" stroke-width="1.2"/>
         </svg>
 
+        <!-- VACATION RETRO TITLE -->
         <h1 class="text-2xl font-retro-title italic text-[#FFF9EE] tracking-tight leading-none drop-shadow-[2px_3px_0px_#05244C]">
           Rianne's Bookshelf
         </h1>
@@ -268,7 +270,7 @@
           
           <div class="flex bg-amber-200/70 p-1 rounded-xl border border-[#05244C] flex-shrink-0">
             <button onclick="setLibraryView('covers')" id="viewBtnCovers" class="px-2 py-1 rounded-lg text-xs font-bold bg-[#FF5B22] text-white" title="Covers Grid">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6z"/></svg>
             </button>
             <button onclick="setLibraryView('cards')" id="viewBtnCards" class="px-2 py-1 rounded-lg text-xs font-bold text-slate-700" title="Detailed Cards">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h14a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6z"/></svg>
@@ -513,7 +515,6 @@
       </button>
     </div>
   </nav>
-
   <!-- MODAL: MANUAL PAST SESSION -->
   <div id="modalPastSession" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4">
     <div class="bg-[#FFF9EE] border-3 border-[#05244C] rounded-3xl p-6 w-full max-w-sm shadow-retro-orange space-y-3.5">
@@ -715,7 +716,7 @@
             <input type="date" id="editBookFinishedDate" class="w-full bg-white border-2 border-[#05244C] rounded-xl p-2 font-bold text-xs">
           </div>
 
-          <!-- Overall Rating -->
+          <!-- Overall Rating (Clean Stars, No Top-Right Badge) -->
           <div class="bg-white border-2 border-[#05244C] p-3 rounded-2xl shadow-sm space-y-1.5">
             <div class="flex items-center">
               <span class="text-[10px] uppercase font-bold text-slate-500">Overall Rating</span>
@@ -766,6 +767,7 @@
               <input type="hidden" id="inlineSessEditId" value="">
               <input type="hidden" id="inlineSessModeVal" value="pages">
 
+              <!-- Toggle: Pages vs Percentage -->
               <div class="flex bg-amber-100 p-0.5 rounded-lg border border-[#05244C]">
                 <button type="button" onclick="setInlineSessionMode('pages')" id="btnInlineModePages" class="flex-1 py-0.5 rounded-md text-[10px] font-black bg-[#FF5B22] text-white">Pages</button>
                 <button type="button" onclick="setInlineSessionMode('percent')" id="btnInlineModePercent" class="flex-1 py-0.5 rounded-md text-[10px] font-black text-slate-700">% Percent</button>
@@ -873,7 +875,7 @@
     </div>
   </div>
 
-  <!-- MODAL: ADD / EDIT QUOTE OR THOUGHT -->
+  <!-- MODAL: ADD / EDIT QUOTE OR THOUGHT (STANDALONE, TAG-FREE) -->
   <div id="modalAddQuote" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4">
     <div class="bg-[#FFF9EE] border-3 border-[#05244C] rounded-3xl p-6 w-full max-w-sm shadow-retro-orange space-y-3.5">
       <div class="flex justify-between items-center pb-2 border-b-2 border-orange-200">
@@ -999,7 +1001,7 @@
     </div>
   </div>
 
-  <!-- CONSOLIDATED LIST MODAL -->
+  <!-- CONSOLIDATED LIST MODAL (FOR FINISHED TITLES & READING HOURS) -->
   <div id="modalGenericList" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4">
     <div class="bg-[#FFF9EE] border-3 border-[#05244C] rounded-3xl p-5 w-full max-w-sm shadow-retro-orange space-y-3 max-h-[85vh] flex flex-col">
       <div class="flex justify-between items-center pb-2 border-b-2 border-orange-200">
@@ -1013,7 +1015,7 @@
     </div>
   </div>
 
-  <!-- MODAL: ANNUAL READING WRAP -->
+  <!-- MODAL: ANNUAL READING WRAP (WITH VIBE BREAKDOWN) -->
   <div id="modalInfographic" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden items-center justify-center p-4">
     <div class="bg-[#FFF9EE] border-3 border-[#05244C] rounded-3xl p-5 w-full max-w-md shadow-retro-orange space-y-4 max-h-[92vh] overflow-y-auto no-scrollbar">
       <div class="flex justify-between items-center pb-2 border-b-2 border-orange-200">
@@ -1052,15 +1054,16 @@
 
         <div class="grid grid-cols-2 gap-2 text-xs">
           <div class="bg-white/10 rounded-2xl p-3 border border-white/20">
-            <p class="text-[9px] font-black uppercase text-[#FFD034] tracking-wider mb-1.5">Top Genres</p>
+            <p class="text-[9px] font-black uppercase text-[#FFD034] tracking-wider mb-1">Top Genres</p>
             <div id="infoTopGenresList" class="space-y-0.5 text-[11px] font-bold"></div>
           </div>
           <div class="bg-white/10 rounded-2xl p-3 border border-white/20">
-            <p class="text-[9px] font-black uppercase text-[#FFA4C4] tracking-wider mb-1.5">Avg Star Rating</p>
+            <p class="text-[9px] font-black uppercase text-[#FFA4C4] tracking-wider mb-1">Avg Star Rating</p>
             <p id="infoAvgRating" class="text-xl font-retro-title text-white">0.0 ★</p>
             <p id="infoReadingPace" class="text-[10px] text-slate-300 mt-1">~ 0 pgs/hr</p>
           </div>
 
+          <!-- Top Reading Vibes Highlight in Infographic -->
           <div class="bg-white/10 rounded-2xl p-3 border border-white/20 col-span-2">
             <p class="text-[9px] font-black uppercase text-[#FFD034] tracking-wider mb-1.5">Top Reading Vibes</p>
             <div id="infoTopVibesBar" class="flex flex-wrap gap-1.5"></div>
@@ -1159,9 +1162,8 @@
   <div id="toastNotification" class="fixed top-5 left-1/2 -translate-x-1/2 z-50 bg-[#05244C] text-[#FFF9EE] border-2 border-[#FFD034] px-4 py-2 rounded-2xl text-xs font-black shadow-2xl transition-all duration-300 opacity-0 pointer-events-none">
     Notice
   </div>
-
   <script>
-    const APP_VERSION = "6.5";
+    const APP_VERSION = "6.0";
     let books = [];
     let readingSessions = [];
     let quotes = [];
@@ -1275,8 +1277,6 @@
     let timerRunning = false;
     let timerSeconds = 0;
     let timerStartTimestamp = null;
-    let activeSyncKey = localStorage.getItem('rianne_cloud_sync_key') || '';
-    let autoSyncTimer = null;
 
     // RICH TEXT FORMATTER FOR QUOTES & THOUGHTS
     function formatRichText(raw) {
@@ -1746,7 +1746,7 @@
 
     // VIBE AVERAGES & DNA ANALYTICS
     function calculateVibeAverages(bookList) {
-      const ratedBooks = (bookList || []).filter(b => b.shelf === 'finished');
+      const ratedBooks = bookList.filter(b => b.shelf === 'finished');
       const totals = {};
       const counts = {};
 
@@ -1970,1380 +1970,698 @@
       showToast(editingId ? 'Session updated!' : 'Session logged!');
     }
 
-    function renderBookSessionsList(bookId) {
-      const listEl = document.getElementById('bookSessionsList');
-      const timeEl = document.getElementById('bookTotalSessionTime');
-      if (!listEl) return;
-      const bSessions = readingSessions.filter(s => s.bookId === bookId);
-      const totalMins = bSessions.reduce((acc, s) => acc + (s.durationMinutes || 0), 0);
-      if (timeEl) timeEl.innerText = `${totalMins} mins total`;
-
-      if (bSessions.length === 0) {
-        listEl.innerHTML = `<p class="text-[11px] text-slate-400 italic text-center py-2">No individual sessions logged yet.</p>`;
-        return;
-      }
-
-      listEl.innerHTML = bSessions.map(s => `
-        <div class="bg-amber-50 border border-orange-200/80 rounded-xl p-2.5 flex items-center justify-between">
-          <div class="min-w-0 pr-2">
-            <span class="font-bold text-[#05244C]">${s.date}</span>
-            <span class="text-slate-500 text-[10px] ml-1">(${s.durationMinutes || 0}m • ${s.pagesRead || 0} pgs)</span>
-            ${s.notes ? `<p class="text-[10px] text-slate-600 italic font-editorial truncate max-w-[190px]">${s.notes}</p>` : ''}
-          </div>
-          <div class="flex items-center gap-2 flex-shrink-0">
-            <button type="button" onclick="editSessionInBook('${s.id}', '${bookId}')" class="text-slate-500 hover:text-[#05244C] font-black text-[10px] retro-btn">✏️ Edit</button>
-            <button type="button" onclick="deleteSessionFromBook('${s.id}', '${bookId}')" class="text-slate-400 hover:text-red-500 font-bold text-xs">✕</button>
-          </div>
-        </div>
-      `).join('');
-    }
-
-    function deleteSessionFromBook(sessionId, bookId) {
-      readingSessions = readingSessions.filter(s => s.id !== sessionId);
-      saveSessions();
-      renderBookSessionsList(bookId);
-      renderAllViews();
-      showToast('Session removed');
-    }
-
-    function rereadCurrentBook() {
-      const id = document.getElementById('editBookId').value;
-      const bk = books.find(b => b.id === id);
-      if (!bk) return;
-      if (bk.finishedDate) {
-        if (!bk.finishedDates) bk.finishedDates = [];
-        if (!bk.finishedDates.includes(bk.finishedDate)) bk.finishedDates.push(bk.finishedDate);
-      }
-      bk.shelf = 'reading';
-      bk.currentPage = 0;
-      bk.finishedDate = null;
-      saveBooks();
-      openBookDetailModal(bk.id);
-      renderAllViews();
-      showToast(`Restarted ${bk.title}!`);
-    }
-
-    function saveBookDetail() {
-      const id = document.getElementById('editBookId').value;
-      const bk = books.find(b => b.id === id);
-      if (!bk) return;
-
-      const titleInput = document.getElementById('editBookTitle').value.trim();
-      if (!titleInput) {
-        showToast('Please enter a book title');
-        return;
-      }
-
-      bk.title = titleInput;
-      bk.author = document.getElementById('editBookAuthor').value.trim() || 'Unknown';
-      bk.currentPage = Number(document.getElementById('editBookCurrentPage').value) || 0;
-      bk.pageCount = Number(document.getElementById('editBookTotalPages').value) || bk.pageCount || 300;
-      bk.shelf = document.getElementById('editBookShelf').value;
-      bk.ownership = document.getElementById('editBookOwnership').value;
-      bk.formats = [...editingBookFormats];
-      bk.isFavorite = isEditingFavorite;
-      bk.genres = [...editingBookGenres];
-
-      const rawCover = document.getElementById('editBookCover').value;
-      bk.cover = cleanImageUrl(rawCover);
-
-      if (bk.shelf === 'finished') {
-        bk.finishedDate = normalizeDateToYMD(document.getElementById('editBookFinishedDate').value) || new Date().toISOString().split('T')[0];
-        bk.rating = Number(document.getElementById('editBookStarRating').value) || 0;
-        bk.review = document.getElementById('editBookReviewText').value.trim();
-        VIBE_DEFINITIONS.forEach(v => {
-          bk[v.key] = Number(document.getElementById(v.key)?.value) || 0;
-        });
-
-        if (!bk.finishedDates) bk.finishedDates = [];
-        if (!bk.finishedDates.includes(bk.finishedDate)) bk.finishedDates.push(bk.finishedDate);
-      }
-
-      saveBooks();
-      closeModal('modalBookDetail');
-      determineActiveHeroBook();
-      renderAllViews();
-      showToast('Book updated!');
-    }
-
-    function deleteBookDetail() {
-      const id = document.getElementById('editBookId').value;
-      if (!id) return;
-      books = books.filter(b => b.id !== id);
-      readingSessions = readingSessions.filter(s => s.bookId !== id);
-      quotes = quotes.filter(q => q.bookId !== id);
-
-      saveBooks();
-      saveSessions();
-      saveQuotes();
-      closeModal('modalBookDetail');
-      determineActiveHeroBook();
-      renderAllViews();
-      showToast('Book deleted');
-    }
-
-    function promptDnfBook(bookId) {
-      const bk = books.find(b => b.id === bookId);
-      if (!bk) return;
-      if (confirm(`Move "${bk.title}" to DNF?`)) {
-        bk.shelf = 'dnf';
-        saveBooks();
-        determineActiveHeroBook();
-        renderAllViews();
-        showToast('Moved to DNF');
-      }
-    }
-
-    function toggleReadingTimer() {
-      const timerBox = document.getElementById('liveTimerBox');
-      if (!timerBox) return;
-
-      if (!timerRunning) {
-        timerRunning = true;
-        timerStartTimestamp = Date.now() - (timerSeconds * 1000);
-        timerBox.classList.remove('hidden');
-        document.getElementById('heroTimerBtnText').innerText = 'Active';
-        document.getElementById('heroTimerBtn').classList.add('animate-pulse');
-
-        timerInterval = setInterval(() => {
-          timerSeconds = Math.floor((Date.now() - timerStartTimestamp) / 1000);
-          updateTimerClockDisplay();
-        }, 1000);
-      } else {
-        timerBox.classList.toggle('hidden');
-      }
-    }
-
-    function updateTimerClockDisplay() {
-      const hrs = String(Math.floor(timerSeconds / 3600)).padStart(2, '0');
-      const mins = String(Math.floor((timerSeconds % 3600) / 60)).padStart(2, '0');
-      const secs = String(timerSeconds % 60).padStart(2, '0');
-      const el = document.getElementById('timerClockDisplay');
-      if (el) el.innerText = `${hrs}:${mins}:${secs}`;
-    }
-
-    function pauseResumeTimer() {
-      const btn = document.getElementById('pauseTimerBtn');
-      if (timerInterval) {
-        clearInterval(timerInterval);
-        timerInterval = null;
-        if (btn) btn.innerText = 'Resume';
-      } else {
-        timerStartTimestamp = Date.now() - (timerSeconds * 1000);
-        timerInterval = setInterval(() => {
-          timerSeconds = Math.floor((Date.now() - timerStartTimestamp) / 1000);
-          updateTimerClockDisplay();
-        }, 1000);
-        if (btn) btn.innerText = 'Pause';
-      }
-    }
-
-    function finishTimerSession() {
-      clearInterval(timerInterval);
-      timerInterval = null;
-      timerRunning = false;
-      document.getElementById('liveTimerBox').classList.add('hidden');
-      document.getElementById('heroTimerBtnText').innerText = 'Timer';
-      document.getElementById('heroTimerBtn').classList.remove('animate-pulse');
-
-      const elapsedMinutes = Math.max(1, Math.round(timerSeconds / 60));
-      timerSeconds = 0;
-      updateTimerClockDisplay();
-
-      openPastSessionModal();
-      document.getElementById('pastSessionMinutes').value = elapsedMinutes;
-      document.getElementById('pastSessionPercentMinutes').value = elapsedMinutes;
-    }
-
-    async function executeOnlineBookSearch() {
-      const query = document.getElementById('onlineSearchQuery')?.value.trim();
-      const resultsContainer = document.getElementById('onlineSearchResultsList');
-      if (!query || !resultsContainer) return;
-
-      resultsContainer.innerHTML = '<p class="text-center text-xs text-slate-400 py-6">Searching...</p>';
-      currentSearchResults = [];
-      let items = [];
-
+    function safeJsonParse(key, fallback) {
       try {
-        const res = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(query)}&maxResults=10`);
-        if (res.ok) {
-          const data = await res.json();
-          if (Array.isArray(data.items)) {
-            items = data.items.map(it => {
-              const info = it.volumeInfo || {};
-              const links = info.imageLinks || {};
-              return {
-                title: info.title || 'Untitled',
-                author: info.authors ? info.authors.join(', ') : 'Unknown Author',
-                pageCount: Number(info.pageCount) || 300,
-                genres: [],
-                cover: cleanImageUrl((links.thumbnail || links.smallThumbnail || '').replace(/^http:\/\//i, 'https://'))
-              };
-            });
-          }
-        }
-      } catch (err) {}
-
-      if (items.length === 0) {
-        try {
-          const olRes = await fetch(`https://openlibrary.org/search.json?q=${encodeURIComponent(query)}&limit=10`);
-          if (olRes.ok) {
-            const olData = await olRes.json();
-            if (Array.isArray(olData.docs)) {
-              items = olData.docs.map(doc => ({
-                title: doc.title || 'Untitled',
-                author: Array.isArray(doc.author_name) ? doc.author_name.join(', ') : 'Unknown Author',
-                pageCount: Number(doc.number_of_pages_median) || 300,
-                genres: [],
-                cover: doc.cover_i ? `https://covers.openlibrary.org/b/id/${doc.cover_i}-L.jpg` : ''
-              }));
-            }
-          }
-        } catch (err) {}
+        const val = localStorage.getItem(key);
+        return val ? JSON.parse(val) : fallback;
+      } catch (e) {
+        return fallback;
       }
-
-      if (items.length === 0) {
-        resultsContainer.innerHTML = '<p class="text-center text-xs text-slate-500 py-6">No books found.</p>';
-        return;
-      }
-
-      currentSearchResults = items;
-      resultsContainer.innerHTML = items.map((book, index) => `
-        <div class="bg-white border-2 border-[#05244C] rounded-2xl p-2.5 flex items-center justify-between gap-2.5 shadow-sm">
-          <img src="${book.cover || 'https://placehold.co/80x120/446BA2/FFF9EE?text=Cover'}" class="w-10 aspect-[2/3] object-cover rounded-lg border border-[#05244C] flex-shrink-0 bg-slate-200" onerror="handleCoverError(this)">
-          <div class="flex-1 min-w-0">
-            <h4 class="text-xs font-bold text-[#05244C] truncate">${book.title}</h4>
-            <p class="text-[10px] text-slate-500 font-editorial italic truncate">${book.author}</p>
-            <span class="text-[9px] text-slate-400 block">${book.pageCount} pages</span>
-          </div>
-          <button onclick="addBookFromSearchIndex(${index})" class="px-3 py-1.5 bg-[#FF5B22] text-white rounded-xl text-xs font-bold border border-[#05244C] shadow-sm retro-btn">Add</button>
-        </div>
-      `).join('');
     }
 
-    function addBookFromSearchIndex(index) {
-      const item = currentSearchResults[index];
-      if (!item) return;
-
-      const newBk = {
-        id: 'b_search_' + Date.now(),
-        title: item.title,
-        author: item.author,
-        pageCount: item.pageCount,
-        currentPage: 0,
-        shelf: 'to-read',
-        ownership: 'Owned',
-        formats: ['eBook'],
-        genres: [],
-        cover: item.cover,
-        rating: 0,
-        review: '',
-        isFavorite: false,
-        finishedDate: null,
-        lastSessionDate: null
-      };
-      VIBE_DEFINITIONS.forEach(v => { newBk[v.key] = 0; });
-
-      books.push(newBk);
-      saveBooks();
-      closeModal('modalOnlineSearch');
-      determineActiveHeroBook();
-      renderAllViews();
-      showToast(`Added "${newBk.title}"!`);
-    }
-
-    function renderCalendar() {
-      const monthTitleEl = document.getElementById('calendarMonthTitle');
-      if (!monthTitleEl) return;
-      const monthTitle = new Date(calendarYear, calendarMonth).toLocaleString('default', { month: 'long', year: 'numeric' });
-      monthTitleEl.innerText = monthTitle;
-
-      const firstDayIndex = new Date(calendarYear, calendarMonth, 1).getDay();
-      const daysInMonth = new Date(calendarYear, calendarMonth + 1, 0).getDate();
-      const grid = document.getElementById('calendarDaysGrid');
-      if (!grid) return;
-      grid.innerHTML = '';
-
-      for (let i = 0; i < firstDayIndex; i++) {
-        grid.innerHTML += `<div class="h-14 rounded-xl bg-amber-50/40 border border-transparent"></div>`;
-      }
-
-      for (let day = 1; day <= daysInMonth; day++) {
-        const dateStr = `${calendarYear}-${String(calendarMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-        const daySessions = readingSessions.filter(s => (normalizeDateToYMD(s.date) || s.date) === dateStr);
-        const dayFinishedBooks = books.filter(b => {
-          const fDate = normalizeDateToYMD(b.finishedDate) || b.finishedDate;
-          const fDates = Array.isArray(b.finishedDates) ? b.finishedDates.map(d => normalizeDateToYMD(d) || d) : [];
-          return fDate === dateStr || fDates.includes(dateStr);
-        });
-
-        const hasRead = daySessions.length > 0;
-        const isFinished = dayFinishedBooks.length > 0;
-
-        if (hasRead || isFinished) {
-          let cover = '', bookTitle = '';
-          if (isFinished) {
-            const bk = dayFinishedBooks[dayFinishedBooks.length - 1];
-            cover = bk?.cover || '';
-            bookTitle = bk?.title || '';
-          } else if (hasRead) {
-            const lastSess = daySessions[daySessions.length - 1];
-            const bk = books.find(b => b.id === lastSess.bookId || (b.externalId && b.externalId === lastSess.bookId));
-            cover = bk?.cover || '';
-            bookTitle = bk?.title || '';
-          }
-          const hasValidCover = Boolean(cover && cover.trim() !== '');
-
-          grid.innerHTML += `
-            <div class="h-14 rounded-xl border-2 border-[#05244C] relative overflow-hidden shadow-sm bg-[#446BA2] bg-cover bg-center" style="${hasValidCover ? `background-image: url('${cover}'); background-size: cover; background-position: center;` : ''}">
-              <div class="absolute inset-0 ${hasValidCover ? 'bg-black/30' : 'bg-transparent'} flex flex-col justify-between p-1">
-                <span class="text-[9px] font-black text-white drop-shadow">${day}</span>
-                ${!hasValidCover ? `<span class="text-[7px] text-white font-extrabold truncate leading-tight">${bookTitle}</span>` : ''}
-              </div>
-              ${isFinished ? `<span class="absolute bottom-0.5 right-0.5 bg-emerald-500 text-white text-[8px] px-1 rounded-full font-black border border-white shadow">✓</span>` : ''}
-            </div>
-          `;
-        } else {
-          grid.innerHTML += `
-            <div class="h-14 rounded-xl border border-orange-200 bg-white flex flex-col items-center justify-between p-1">
-              <span class="text-[9px] font-bold text-slate-400 self-start">${day}</span>
-            </div>
-          `;
+    function initializeUserData() {
+      let storedBooks = safeJsonParse('rianne_books_v1', null);
+      if (!storedBooks || !Array.isArray(storedBooks) || storedBooks.length === 0) {
+        const vault = safeJsonParse('rianne_backup_vault', null);
+        if (vault && Array.isArray(vault.books) && vault.books.length > 0) {
+          storedBooks = vault.books;
+          localStorage.setItem('rianne_books_v1', JSON.stringify(storedBooks));
         }
       }
 
-      const completedBooksThisYear = books.filter(b => b.shelf === 'finished').length;
-      const currentMonthNum = new Date().getMonth() + 1;
-      const rate = (completedBooksThisYear / currentMonthNum).toFixed(1);
-      const proj = (rate * 12).toFixed(1);
+      books = (storedBooks && Array.isArray(storedBooks)) ? storedBooks : [];
+      readingSessions = safeJsonParse('rianne_sessions_v1', []);
+      quotes = safeJsonParse('rianne_quotes_v1', []);
+      userGoals = safeJsonParse('rianne_goals_v1', userGoals);
 
-      const bannerText = document.getElementById('velocityBannerText');
-      if (bannerText) {
-        bannerText.innerText = `At your rate of ${rate} books/mo, you'll read ${proj} books this year!`;
-      }
-    }
-
-    function changeCalendarMonth(offset) {
-      calendarMonth += offset;
-      if (calendarMonth < 0) {
-        calendarMonth = 11;
-        calendarYear--;
-      } else if (calendarMonth > 11) {
-        calendarMonth = 0;
-        calendarYear++;
-      }
-      renderCalendar();
-    }
-
-    function populateYearDropdown() {
-      const select = document.getElementById('statsYearSelect');
-      if (!select) return;
-      const currentRealYear = new Date().getFullYear();
-      const yearsSet = new Set([currentRealYear]);
-
-      readingSessions.forEach(s => {
-        const yr = extractValidYear(s.date);
-        if (yr) yearsSet.add(yr);
-      });
       books.forEach(b => {
-        const yr = extractValidYear(b.finishedDate);
-        if (yr) yearsSet.add(yr);
+        if (b.cover) b.cover = cleanImageUrl(b.cover);
+        if (!b.formats) b.formats = b.format ? [b.format] : ['eBook'];
       });
 
-      const sortedYears = Array.from(yearsSet).sort((a, b) => b - a);
-      const prevVal = select.value || String(currentRealYear);
-
-      select.innerHTML = sortedYears.map(y => `<option value="${y}">${y}</option>`).join('') + `<option value="all">All-Time</option>`;
-      select.value = sortedYears.map(String).includes(prevVal) ? prevVal : String(currentRealYear);
-    }
-
-    function renderStatsDashboard() {
-      const yearSelect = document.getElementById('statsYearSelect');
-      const year = yearSelect ? yearSelect.value : String(calendarYear);
-      let filteredSessions = readingSessions;
-      if (year !== 'all') {
-        filteredSessions = readingSessions.filter(s => {
-          const yr = extractValidYear(s.date);
-          return yr && String(yr) === year;
-        });
-      }
-
-      const totalPages = filteredSessions.reduce((acc, s) => acc + (s.pagesRead || 0), 0);
-      const totalMinutes = filteredSessions.reduce((acc, s) => acc + (s.durationMinutes || 0), 0);
-
-      const finishedBooks = (year === 'all')
-        ? books.filter(b => b.shelf === 'finished')
-        : books.filter(b => b.shelf === 'finished' && String(extractValidYear(b.finishedDate)) === year);
-
-      document.getElementById('statPagesRead').innerText = totalPages.toLocaleString();
-      document.getElementById('statBooksFinished').innerText = finishedBooks.length;
-
-      const hrs = Math.floor(totalMinutes / 60);
-      const mins = totalMinutes % 60;
-      document.getElementById('statHoursRead').innerText = `${hrs}h ${mins}m`;
-
-      const avgSpeed = totalMinutes > 0 ? Math.round((totalPages / totalMinutes) * 60) : '--';
-      document.getElementById('statAvgSpeed').innerText = `${avgSpeed} pgs/hr`;
-
-      const todayStr = new Date().toISOString().split('T')[0];
-      const todaySessions = readingSessions.filter(s => s.date === todayStr);
-      const dailyGoalEl = document.getElementById('dailyGoalCount');
-      if (dailyGoalEl) {
-        if (userGoals.dailyTargetType === 'minutes') {
-          const todayMins = todaySessions.reduce((acc, s) => acc + (s.durationMinutes || 0), 0);
-          dailyGoalEl.innerText = `${todayMins} / ${userGoals.dailyTarget} mins`;
-        } else {
-          const todayPages = todaySessions.reduce((acc, s) => acc + (s.pagesRead || 0), 0);
-          dailyGoalEl.innerText = `${todayPages} / ${userGoals.dailyTarget} pages`;
-        }
-      }
-
-      const vibeAvgs = calculateVibeAverages(finishedBooks);
-      const dnaGrid = document.getElementById('vibeDnaGrid');
-      const dnaCount = document.getElementById('vibeDnaCount');
-
-      if (dnaCount) dnaCount.innerText = `${finishedBooks.length} book${finishedBooks.length === 1 ? '' : 's'} analyzed`;
-      if (dnaGrid) {
-        if (finishedBooks.length === 0) {
-          dnaGrid.innerHTML = `<span class="text-slate-400 italic col-span-2 text-center py-2">Complete books and log vibes to view DNA.</span>`;
-        } else {
-          dnaGrid.innerHTML = vibeAvgs.map(v => `
-            <div class="bg-amber-50/70 border border-orange-200/80 rounded-xl p-2 flex items-center justify-between">
-              <span class="font-bold text-[#05244C] truncate pr-1">${v.label}</span>
-              <span class="font-black font-mono text-xs" style="color: ${v.color}">${v.average > 0 ? v.average + ' / 5' : '—'}</span>
-            </div>
-          `).join('');
-        }
-      }
-    }
-
-    function openBookHoursModal() {
-      const year = document.getElementById('statsYearSelect')?.value || String(calendarYear);
-      let filteredSessions = readingSessions;
-      if (year !== 'all') {
-        filteredSessions = readingSessions.filter(s => {
-          const yr = extractValidYear(s.date);
-          return yr && String(yr) === year;
-        });
-      }
-
-      const bookTimes = {};
-      filteredSessions.forEach(s => {
-        if (!bookTimes[s.bookId]) bookTimes[s.bookId] = 0;
-        bookTimes[s.bookId] += (s.durationMinutes || 0);
-      });
-
-      const bookEntries = Object.keys(bookTimes).map(bId => {
-        const bk = books.find(b => b.id === bId) || { title: 'Unknown', author: 'Unknown', cover: '' };
-        return { book: bk, minutes: bookTimes[bId] };
-      }).sort((a, b) => b.minutes - a.minutes);
-
-      document.getElementById('genericListTitle').innerText = 'Hours Spent';
-      document.getElementById('genericListSubtitle').innerText = (year === 'all' ? 'All-Time' : year) + ' Breakdown';
-
-      const container = document.getElementById('genericListItemsContainer');
-      if (bookEntries.length === 0) {
-        container.innerHTML = `<p class="p-6 text-center text-xs font-bold text-slate-500 italic">No reading time recorded.</p>`;
-      } else {
-        container.innerHTML = bookEntries.map(e => `
-          <div onclick="closeModal('modalGenericList'); openBookDetailModal('${e.book.id}')" class="bg-white border-2 border-[#05244C] rounded-2xl p-2.5 flex items-center justify-between cursor-pointer hover:bg-teal-50 transition-colors shadow-sm">
-            <div class="flex items-center gap-2.5 min-w-0 pr-2">
-              <img src="${e.book.cover || 'https://placehold.co/80x120/446BA2/FFF9EE?text=Cover'}" class="w-10 aspect-[2/3] object-cover rounded-lg border border-[#05244C] flex-shrink-0 bg-slate-200" onerror="handleCoverError(this)">
-              <div class="min-w-0">
-                <h4 class="text-xs font-bold text-[#05244C] truncate">${e.book.title}</h4>
-                <p class="text-[10px] text-slate-500 truncate italic">${e.book.author}</p>
-              </div>
-            </div>
-            <span class="text-xs font-black text-[#1DBBB4]">${Math.floor(e.minutes / 60)}h ${e.minutes % 60}m</span>
-          </div>
-        `).join('');
-      }
-      openModal('modalGenericList');
-    }
-
-    function openFinishedBooksModal() {
-      const year = document.getElementById('statsYearSelect')?.value || String(calendarYear);
-      const finishedBooks = books.filter(b => {
-        if (b.shelf !== 'finished') return false;
-        if (year === 'all') return true;
-        const bYr = extractValidYear(b.finishedDate);
-        return bYr && String(bYr) === year;
-      });
-
-      document.getElementById('genericListTitle').innerText = 'Finished Books';
-      document.getElementById('genericListSubtitle').innerText = (year === 'all' ? 'All-Time Completed' : `Completed in ${year}`);
-
-      const container = document.getElementById('genericListItemsContainer');
-      if (finishedBooks.length === 0) {
-        container.innerHTML = `<div class="p-6 text-center text-xs font-bold text-slate-500 italic">No completed books logged.</div>`;
-      } else {
-        container.innerHTML = finishedBooks.map(b => `
-          <div onclick="closeModal('modalGenericList'); openBookDetailModal('${b.id}')" class="bg-white border-2 border-[#05244C] rounded-2xl p-2.5 flex gap-3 items-center cursor-pointer hover:bg-orange-50 transition-colors shadow-sm">
-            <img src="${b.cover || 'https://placehold.co/80x120/446BA2/FFF9EE?text=Cover'}" class="w-12 aspect-[2/3] object-cover rounded-lg border border-[#05244C] flex-shrink-0 bg-slate-200" onerror="handleCoverError(this)">
-            <div class="flex-1 min-w-0">
-              <h4 class="text-xs font-bold text-[#05244C] truncate">${b.title}</h4>
-              <p class="text-[10px] text-slate-500 truncate italic">${b.author}</p>
-              <span class="text-[9px] font-bold text-emerald-700 bg-emerald-100 px-1.5 py-0.5 rounded-full inline-block mt-1">✓ ${b.finishedDate || 'Finished'}</span>
-            </div>
-            <span class="text-xs text-slate-400 font-bold pr-1">›</span>
-          </div>
-        `).join('');
-      }
-      openModal('modalGenericList');
-    }
-
-    function openInfographicModal() {
-      const year = document.getElementById('statsYearSelect')?.value || String(calendarYear);
-      const isAll = (year === 'all');
-      const activeYear = isAll ? String(calendarYear) : year;
-
-      document.getElementById('infoYearTitle').innerText = isAll ? 'All-Time Wrap' : `${activeYear} Reading Wrap`;
-
-      let filteredSessions = readingSessions;
-      if (!isAll) {
-        filteredSessions = readingSessions.filter(s => {
-          const yr = extractValidYear(s.date);
-          return yr && String(yr) === activeYear;
-        });
-      }
-
-      const totalPages = filteredSessions.reduce((acc, s) => acc + (s.pagesRead || 0), 0);
-      const totalMinutes = filteredSessions.reduce((acc, s) => acc + (s.durationMinutes || 0), 0);
-      const hrs = Math.round(totalMinutes / 60);
-
-      const finishedBooks = books.filter(b => {
-        if (b.shelf !== 'finished') return false;
-        if (isAll) return true;
-        const bYr = extractValidYear(b.finishedDate);
-        return bYr && String(bYr) === activeYear;
-      });
-
-      document.getElementById('infoTotalBooks').innerText = finishedBooks.length;
-      document.getElementById('infoTotalPages').innerText = totalPages.toLocaleString();
-      document.getElementById('infoTotalHours').innerText = `${hrs}h`;
-
-      const coversRow = document.getElementById('infoCoversRow');
-      if (finishedBooks.length === 0) {
-        coversRow.innerHTML = `<span class="text-xs text-slate-300 italic py-2">No completed books logged.</span>`;
-      } else {
-        coversRow.innerHTML = finishedBooks.map(b => `
-          <img src="${b.cover || 'https://placehold.co/80x120/446BA2/FFF9EE?text=Cover'}" alt="${b.title}" class="w-14 aspect-[2/3] object-cover rounded-xl border border-white/40 shadow-sm flex-shrink-0" onerror="handleCoverError(this)">
-        `).join('');
-      }
-
-      const genreCounts = {};
-      finishedBooks.forEach(b => {
-        if (Array.isArray(b.genres)) {
-          b.genres.forEach(g => {
-            if (PRESET_GENRES.includes(g)) genreCounts[g] = (genreCounts[g] || 0) + 1;
-          });
-        }
-      });
-
-      const topGenres = Object.entries(genreCounts).sort((a, b) => b[1] - a[1]).slice(0, 3);
-      const genresListEl = document.getElementById('infoTopGenresList');
-      genresListEl.innerHTML = topGenres.length === 0 
-        ? `<span class="text-slate-300">Fiction</span>`
-        : topGenres.map(([g, cnt]) => `
-            <div class="flex justify-between items-center text-slate-200">
-              <span class="truncate pr-1">${g}</span>
-              <span class="text-[#FFD034] font-black">${cnt}</span>
-            </div>
-          `).join('');
-
-      const ratedBooks = finishedBooks.filter(b => b.rating > 0);
-      const avg = ratedBooks.length > 0 ? (ratedBooks.reduce((acc, b) => acc + b.rating, 0) / ratedBooks.length).toFixed(2) : '0.0';
-      document.getElementById('infoAvgRating').innerText = `${avg} ★`;
-
-      const avgSpeed = totalMinutes > 0 ? Math.round((totalPages / totalMinutes) * 60) : 40;
-      document.getElementById('infoReadingPace').innerText = `~ ${avgSpeed} pgs/hr pace`;
-
-      const infoVibes = calculateVibeAverages(finishedBooks).filter(v => v.average > 0).slice(0, 4);
-      const vibesBarEl = document.getElementById('infoTopVibesBar');
-      if (vibesBarEl) {
-        vibesBarEl.innerHTML = infoVibes.length === 0
-          ? `<span class="text-xs text-slate-300 italic">No vibe scores logged.</span>`
-          : infoVibes.map(v => `
-              <span class="px-2 py-0.5 rounded-full text-[10px] font-black border border-white/30 text-white" style="background-color: ${v.color}99">
-                ${v.label} ${v.average}★
-              </span>
-            `).join('');
-      }
-
-      openModal('modalInfographic');
-    }
-
-    function shareInfographicText() {
-      const year = document.getElementById('statsYearSelect')?.value || String(calendarYear);
-      const bCount = document.getElementById('infoTotalBooks').innerText;
-      const pCount = document.getElementById('infoTotalPages').innerText;
-      const hCount = document.getElementById('infoTotalHours').innerText;
-      const rating = document.getElementById('infoAvgRating').innerText;
-
-      const summary = `📚 My ${year} Reading Wrap:\n• ${bCount} books completed\n• ${pCount} pages read\n• ${hCount} spent reading\n• ${rating} average rating\n\nTracked with Rianne's Bookshelf! 🌴`;
-
-      const t = document.createElement("textarea");
-      t.value = summary;
-      document.body.appendChild(t);
-      t.select();
-      document.execCommand('copy');
-      document.body.removeChild(t);
-      showToast('Copied reading summary to clipboard!');
-    }
-
-    function setLogSessionMode(mode) {
-      currentLogMode = mode;
-      const btnPages = document.getElementById('btnLogModePages');
-      const btnPercent = document.getElementById('btnLogModePercent');
-      const secPages = document.getElementById('logSectionPages');
-      const secPercent = document.getElementById('logSectionPercent');
-
-      if (mode === 'pages') {
-        btnPages.className = "flex-1 py-1 rounded-lg text-xs font-black bg-[#FF5B22] text-white";
-        btnPercent.className = "flex-1 py-1 rounded-lg text-xs font-black text-slate-700";
-        secPages.classList.remove('hidden');
-        secPercent.classList.add('hidden');
-      } else {
-        btnPages.className = "flex-1 py-1 rounded-lg text-xs font-black text-slate-700";
-        btnPercent.className = "flex-1 py-1 rounded-lg text-xs font-black bg-[#FF5B22] text-white";
-        secPages.classList.add('hidden');
-        secPercent.classList.remove('hidden');
-        secPercent.classList.add('grid');
-      }
-    }
-
-    function openPastSessionModal() {
-      const select = document.getElementById('pastSessionBookSelect');
-      select.innerHTML = books.map(b => `<option value="${b.id}" ${b.id === activeBookId ? 'selected' : ''}>${b.title}</option>`).join('');
-      document.getElementById('pastSessionDate').value = new Date().toISOString().split('T')[0];
-      syncPastSessionBookInfo();
-      openModal('modalPastSession');
-    }
-
-    function syncPastSessionBookInfo() {
-      const bookId = document.getElementById('pastSessionBookSelect').value;
-      const bk = books.find(b => b.id === bookId);
-      if (!bk) return;
-
-      document.getElementById('pastSessionStartPage').value = bk.currentPage;
-      document.getElementById('pastSessionEndPage').value = Math.min(bk.pageCount, bk.currentPage + 15);
-      document.getElementById('pastSessionMinutes').value = 30;
-
-      const startPct = bk.pageCount > 0 ? Math.round((bk.currentPage / bk.pageCount) * 100) : 0;
-      document.getElementById('pastSessionStartPercent').value = startPct;
-      document.getElementById('pastSessionEndPercent').value = Math.min(100, startPct + 10);
-      document.getElementById('pastSessionPercentMinutes').value = 30;
-    }
-
-    function submitPastSession() {
-      const bookId = document.getElementById('pastSessionBookSelect').value;
-      const dateStr = document.getElementById('pastSessionDate').value;
-      const notes = document.getElementById('pastSessionNotes').value.trim();
-      const bk = books.find(b => b.id === bookId);
-      if (!bk) return;
-
-      let startP = 0, endP = 0, minutes = 30;
-
-      if (currentLogMode === 'pages') {
-        startP = Number(document.getElementById('pastSessionStartPage').value) || 0;
-        endP = Number(document.getElementById('pastSessionEndPage').value) || startP;
-        minutes = Number(document.getElementById('pastSessionMinutes').value) || 1;
-      } else {
-        const startPct = Math.max(0, Math.min(100, Number(document.getElementById('pastSessionStartPercent').value) || 0));
-        const endPct = Math.max(0, Math.min(100, Number(document.getElementById('pastSessionEndPercent').value) || startPct));
-        minutes = Number(document.getElementById('pastSessionPercentMinutes').value) || 1;
-        startP = Math.round((startPct / 100) * bk.pageCount);
-        endP = Math.round((endPct / 100) * bk.pageCount);
-      }
-
-      const pagesRead = Math.max(0, endP - startP);
-      readingSessions.push({
-        id: 'sess_' + Date.now(),
-        bookId: bk.id,
-        date: dateStr,
-        timestamp: Date.now(),
-        durationMinutes: minutes,
-        startPage: startP,
-        endPage: endP,
-        pagesRead: pagesRead,
-        notes: notes
-      });
-
-      bk.currentPage = Math.max(bk.currentPage, endP);
-      bk.lastSessionDate = dateStr;
-
-      if (bk.pageCount > 0 && bk.currentPage >= bk.pageCount) {
-        bk.currentPage = bk.pageCount;
-        bk.shelf = 'finished';
-        bk.finishedDate = dateStr;
-        if (!bk.finishedDates) bk.finishedDates = [];
-        if (!bk.finishedDates.includes(dateStr)) bk.finishedDates.push(dateStr);
-        showToast(`🎉 You finished ${bk.title}! Moved to Finished.`);
-      }
-
-      saveSessions();
-      saveBooks();
-      closeModal('modalPastSession');
+      renderVibeInputs();
+      updateBackupCountBadge();
       determineActiveHeroBook();
+      populateGenreDropdown();
+      populateYearDropdown();
       renderAllViews();
-      showToast('Session logged!');
+      initCloudSync();
     }
 
-    function updateLiveCoverPreview(url) {
-      const cleaned = cleanImageUrl(url);
-      const img = document.getElementById('editBookCoverPreviewImg');
-      const placeholder = document.getElementById('editBookCoverPreviewPlaceholder');
-      const statusLbl = document.getElementById('coverPreviewStatus');
+    function createVaultSnapshot() {
+      try {
+        const snapshot = { savedAt: Date.now(), books, sessions: readingSessions, quotes, goals: userGoals };
+        localStorage.setItem('rianne_backup_vault', JSON.stringify(snapshot));
+      } catch(e) {}
+      updateBackupCountBadge();
+    }
 
-      if (!cleaned) {
-        if (img) {
-          img.removeAttribute('src');
-          img.classList.add('hidden');
-        }
-        if (placeholder) placeholder.classList.remove('hidden');
-        if (statusLbl) {
-          statusLbl.innerText = 'No link entered';
-          statusLbl.className = 'text-[9px] font-bold text-slate-400';
-        }
+    function updateBackupCountBadge() {
+      const badge = document.getElementById('drawerBackupCount');
+      if (badge) badge.innerText = `${books.length} book${books.length === 1 ? '' : 's'}`;
+    }
+
+    function saveBooks() {
+      localStorage.setItem('rianne_books_v1', JSON.stringify(books));
+      createVaultSnapshot();
+      populateGenreDropdown();
+      triggerCloudAutoSync();
+    }
+
+    function saveSessions() {
+      localStorage.setItem('rianne_sessions_v1', JSON.stringify(readingSessions));
+      createVaultSnapshot();
+      triggerCloudAutoSync();
+    }
+
+    function saveQuotes() {
+      localStorage.setItem('rianne_quotes_v1', JSON.stringify(quotes));
+      createVaultSnapshot();
+      triggerCloudAutoSync();
+    }
+
+    function saveGoals() {
+      localStorage.setItem('rianne_goals_v1', JSON.stringify(userGoals));
+      createVaultSnapshot();
+      triggerCloudAutoSync();
+    }
+
+    function calculateSmartReadingPace(book) {
+      if (!readingSessions || readingSessions.length === 0) return 40;
+      const validSessions = readingSessions.filter(s => s.durationMinutes > 0 && s.pagesRead > 0);
+      if (validSessions.length > 0) {
+        const totalMins = validSessions.reduce((acc, s) => acc + s.durationMinutes, 0);
+        const totalPgs = validSessions.reduce((acc, s) => acc + s.pagesRead, 0);
+        return Math.max(15, Math.min(120, Math.round((totalPgs / totalMins) * 60)));
+      }
+      return 40;
+    }
+
+    function determineActiveHeroBook() {
+      const activeBooks = books.filter(b => b.shelf === 'reading');
+      if (activeBooks.length === 0) {
+        activeBookId = books[0] ? books[0].id : null;
+        return;
+      }
+      activeBooks.sort((a, b) => (b.lastSessionDate || '').localeCompare(a.lastSessionDate || ''));
+      activeBookId = activeBooks[0].id;
+    }
+
+    function renderHeroCard() {
+      const book = books.find(b => b.id === activeBookId);
+      if (!book) {
+        document.getElementById('heroTitle').innerText = 'No Book Selected';
+        document.getElementById('heroAuthor').innerText = '--';
+        document.getElementById('heroLastDate').innerText = 'Last read: --';
+        document.getElementById('heroProgressBar').style.width = '0%';
+        document.getElementById('heroProgressText').innerText = '0 / 0 pages';
+        document.getElementById('heroPercentBadge').innerText = '0%';
+        document.getElementById('heroEstTimeRemaining').innerText = '-- remaining';
         return;
       }
 
-      if (img) {
-        img.onload = function() {
-          img.classList.remove('hidden');
-          if (placeholder) placeholder.classList.add('hidden');
-          if (statusLbl) {
-            statusLbl.innerText = '✓ Valid image';
-            statusLbl.className = 'text-[9px] font-bold text-emerald-600';
-          }
-        };
-        img.onerror = function() {
-          img.classList.add('hidden');
-          if (placeholder) placeholder.classList.remove('hidden');
-          if (statusLbl) {
-            statusLbl.innerText = '⚠️ Could not load image';
-            statusLbl.className = 'text-[9px] font-bold text-rose-500';
-          }
-        };
-        img.src = cleaned;
-      }
-    }
+      const coverEl = document.getElementById('heroCover');
+      if (coverEl) coverEl.src = book.cover || 'https://placehold.co/200x300/446BA2/FFF9EE?text=Cover';
+      document.getElementById('heroTitle').innerText = book.title;
+      document.getElementById('heroAuthor').innerText = book.author;
+      document.getElementById('heroLastDate').innerText = book.lastSessionDate ? `Last read: ${book.lastSessionDate}` : 'No sessions yet';
 
-    function toggleInlineSessionForm(forceState) {
-      const form = document.getElementById('inlineSessionForm');
-      if (!form) return;
-      if (typeof forceState === 'boolean') form.classList.toggle('hidden', !forceState);
-      else form.classList.toggle('hidden');
-    }
+      const formatEl = document.getElementById('heroFormatBadge');
+      const fmts = getBookFormatsList(book);
+      if (formatEl) formatEl.innerText = `${fmts.join(' • ')} • ${book.ownership || 'Owned'}`;
 
-    function syncInlineSessionInputs(origin) {
-      const bkId = document.getElementById('editBookId')?.value;
-      const bk = books.find(b => b.id === bkId);
-      const total = bk ? (bk.pageCount || 300) : 300;
-      if (total <= 0) return;
+      const pct = book.pageCount > 0 ? Math.min(100, Math.round((book.currentPage / book.pageCount) * 100)) : 0;
+      document.getElementById('heroProgressBar').style.width = `${pct}%`;
+      document.getElementById('heroProgressText').innerText = `${book.currentPage} / ${book.pageCount} pages`;
+      document.getElementById('heroPercentBadge').innerText = `${pct}%`;
 
-      const startPageEl = document.getElementById('inlineSessStartPage');
-      const endPageEl = document.getElementById('inlineSessEndPage');
+      const pace = calculateSmartReadingPace(book);
+      document.getElementById('heroPaceMetric').innerText = `~ ${pace} pgs/hr`;
 
-      if (origin === 'startPage') {
-        const p = Number(startPageEl.value) || 0;
-        if (endPageEl && !endPageEl.value) endPageEl.value = Math.min(total, p + 15);
-      }
-    }
-
-    function unmarkBookFinished() {
-      const id = document.getElementById('editBookId').value;
-      const bk = books.find(b => b.id === id);
-      if (!bk) return;
-
-      bk.shelf = 'reading';
-      bk.finishedDate = null;
-      bk.finishedDates = [];
-      bk.rating = 0;
-      VIBE_DEFINITIONS.forEach(v => { bk[v.key] = 0; });
-
-      readingSessions = readingSessions.filter(s => !(s.bookId === bk.id && s.notes === 'Finished reading!'));
-
-      document.getElementById('editBookShelf').value = 'reading';
-      document.getElementById('editBookFinishedDate').value = '';
-      setEditBookStarRating(0);
-      VIBE_DEFINITIONS.forEach(v => { setVibeShapes(v.key, 0); });
-
-      saveBooks();
-      saveSessions();
-      toggleReviewSectionDisplay();
-      renderBookSessionsList(bk.id);
-      renderAllViews();
-      showToast('Unmarked as finished.');
-    }
-
-    function openInlineQuoteLogger(type = 'quote') {
-      const form = document.getElementById('editBookQuoteForm');
-      if (!form) return;
-      form.classList.remove('hidden');
-
-      document.getElementById('editModalEntryType').value = type;
-      document.getElementById('editModalEditingQuoteId').value = '';
-      document.getElementById('editQuoteFormHeader').innerText = type === 'thought' ? '💭 New Thought' : '“ New Quote';
-      document.getElementById('editModalQuoteSubmitBtn').innerText = 'Save Entry';
-      
-      const textEl = document.getElementById('editModalQuoteText');
-      textEl.value = '';
-      textEl.placeholder = type === 'thought' ? 'Your reaction or thought...' : 'Type passage...';
-
-      document.getElementById('editModalQuoteDate').value = new Date().toISOString().split('T')[0];
-      document.getElementById('editModalQuotePage').value = '';
-    }
-
-    function editBookEntryInModal(quoteId, bookId) {
-      const q = quotes.find(item => item.id === quoteId);
-      if (!q) return;
-
-      const form = document.getElementById('editBookQuoteForm');
-      if (!form) return;
-      form.classList.remove('hidden');
-
-      const type = q.type || 'quote';
-      document.getElementById('editModalEntryType').value = type;
-      document.getElementById('editModalEditingQuoteId').value = q.id;
-      document.getElementById('editQuoteFormHeader').innerText = type === 'thought' ? '💭 Edit Thought' : '“ Edit Quote';
-      document.getElementById('editModalQuoteSubmitBtn').innerText = 'Update Entry';
-
-      document.getElementById('editModalQuoteText').value = q.text || '';
-      document.getElementById('editModalQuoteDate').value = q.date || new Date().toISOString().split('T')[0];
-      document.getElementById('editModalQuotePage').value = q.page || '';
-    }
-
-    function toggleEditQuoteForm(forceState) {
-      const form = document.getElementById('editBookQuoteForm');
-      if (!form) return;
-      if (typeof forceState === 'boolean') form.classList.toggle('hidden', !forceState);
-      else form.classList.toggle('hidden');
-    }
-
-    function submitEditModalQuote() {
-      const bookId = document.getElementById('editBookId').value;
-      const bk = books.find(b => b.id === bookId);
-      const text = document.getElementById('editModalQuoteText')?.value.trim();
-      const date = document.getElementById('editModalQuoteDate')?.value || new Date().toISOString().split('T')[0];
-      const page = document.getElementById('editModalQuotePage')?.value.trim();
-      const type = document.getElementById('editModalEntryType')?.value || 'quote';
-      const editingId = document.getElementById('editModalEditingQuoteId')?.value;
-
-      if (!text) {
-        showToast('Please type text');
-        return;
-      }
-
-      if (editingId) {
-        const q = quotes.find(item => item.id === editingId);
-        if (q) {
-          q.text = text;
-          q.date = date;
-          q.page = page;
-          q.type = type;
+      const remainingPages = Math.max(0, book.pageCount - book.currentPage);
+      const estTimeEl = document.getElementById('heroEstTimeRemaining');
+      if (estTimeEl) {
+        if (remainingPages === 0) {
+          estTimeEl.innerText = 'Completed!';
+        } else {
+          const estMinutesLeft = Math.round((remainingPages / (pace / 60)));
+          const hrs = Math.floor(estMinutesLeft / 60);
+          const mins = estMinutesLeft % 60;
+          estTimeEl.innerText = `${hrs}h ${mins}m remaining`;
         }
-      } else {
-        quotes.unshift({
-          id: 'q_' + Date.now(),
-          type: type,
-          bookId: bk?.id || bookId,
-          bookTitle: bk?.title || 'Untitled',
-          bookCover: bk?.cover || '',
-          text: text,
-          page: page,
-          date: date
-        });
       }
-
-      saveQuotes();
-      toggleEditQuoteForm(false);
-      renderEditBookQuotesList(bookId);
-      renderQuotes();
-      showToast(editingId ? 'Entry updated!' : (type === 'thought' ? 'Thought saved!' : 'Quote saved!'));
     }
 
-    function renderEditBookQuotesList(bookId) {
-      const listEl = document.getElementById('editBookQuotesList');
-      if (!listEl) return;
-      const bQuotes = quotes.filter(q => q.bookId === bookId);
+    function renderCarousel() {
+      const container = document.getElementById('inProgressCarousel');
+      if (!container) return;
+      const readingBooks = books.filter(b => b.shelf === 'reading' && b.id !== activeBookId);
+      const countBadge = document.getElementById('activeCountBadge');
+      if (countBadge) countBadge.innerText = readingBooks.length;
 
-      if (bQuotes.length === 0) {
-        listEl.innerHTML = `<p class="text-[11px] text-slate-400 italic text-center py-2">No passages or thoughts logged for this book yet.</p>`;
+      if (readingBooks.length === 0) {
+        container.innerHTML = `<div class="w-full bg-[#FFF9EE]/25 border-2 border-dashed border-[#FFF9EE]/50 rounded-2xl p-4 text-center text-xs font-bold text-[#FFF9EE]">No other books in progress.</div>`;
         return;
       }
 
-      listEl.innerHTML = bQuotes.map(q => {
-        const isThought = (q.type === 'thought');
+      container.innerHTML = readingBooks.map(b => {
+        const pct = b.pageCount > 0 ? Math.round((b.currentPage / b.pageCount) * 100) : 0;
         return `
-          <div class="${isThought ? 'bg-[#FFEDC9]/80 border-amber-300' : 'bg-amber-50/70 border-orange-200/80'} border rounded-xl p-2.5 space-y-1.5 shadow-sm">
-            <div class="flex items-center justify-between pb-0.5">
-              <span class="text-[9px] font-black uppercase ${isThought ? 'text-amber-800' : 'text-[#FF5B22]'}">${isThought ? '💭 Reader Thought' : '“ Quote'}</span>
-              <div class="flex items-center gap-2">
-                <button type="button" onclick="editBookEntryInModal('${q.id}', '${bookId}')" class="text-slate-500 hover:text-[#05244C] font-black text-[10px] retro-btn">✏️ Edit</button>
-                <button type="button" onclick="deleteQuote('${q.id}', '${bookId}')" class="text-slate-400 hover:text-red-500 font-bold text-xs">✕</button>
+          <div onclick="selectHeroBook('${b.id}')" class="flex-shrink-0 w-44 bg-[#FFF9EE] border-2 border-[#05244C] rounded-2xl p-3 shadow-retro-navy cursor-pointer transition-transform hover:-translate-y-1">
+            <div class="flex gap-2.5 items-center">
+              <img src="${b.cover || 'https://placehold.co/100x150/446BA2/FFF9EE?text=Cover'}" class="w-11 aspect-[2/3] object-cover rounded-lg border border-[#05244C]" onerror="handleCoverError(this)">
+              <div class="flex-1 min-w-0">
+                <h4 class="text-xs font-bold text-[#05244C] truncate">${b.title}</h4>
+                <p class="text-[10px] text-slate-500 truncate font-editorial italic">${b.author}</p>
+                <div class="mt-2 text-[10px] font-black text-[#FF5B22]">${pct}% (${b.currentPage}p)</div>
               </div>
-            </div>
-            <p class="font-sans text-xs text-[#05244C] leading-snug">${isThought ? formatRichText(q.text) : `“${formatRichText(q.text)}”`}</p>
-            <div class="pt-0.5 text-[10px] text-slate-500 font-bold">
-              ${q.page ? 'Page ' + q.page : ''} ${q.date ? '• ' + q.date : ''}
             </div>
           </div>
         `;
       }).join('');
     }
 
-    function deleteQuote(quoteId, bookId) {
-      quotes = quotes.filter(q => q.id !== quoteId);
-      saveQuotes();
-      renderQuotes();
-      if (bookId) renderEditBookQuotesList(bookId);
-      showToast('Entry deleted');
+    function selectHeroBook(id) {
+      activeBookId = id;
+      renderHeroCard();
+      renderCarousel();
+      showToast('Switched active book');
     }
 
-    function setStandaloneEntryType(type) {
-      document.getElementById('standaloneEntryTypeVal').value = type;
-      const btnQ = document.getElementById('btnEntryTypeQuote');
-      const btnT = document.getElementById('btnEntryTypeThought');
-      const lbl = document.getElementById('standaloneContentLabel');
-      const txt = document.getElementById('quoteTextInput');
-
-      if (type === 'quote') {
-        btnQ.className = "flex-1 py-1 rounded-lg text-xs font-black bg-[#FF5B22] text-white";
-        btnT.className = "flex-1 py-1 rounded-lg text-xs font-black text-slate-700";
-        if (lbl) lbl.innerText = "Quote Passage";
-        if (txt) txt.placeholder = "Type passage...";
-      } else {
-        btnQ.className = "flex-1 py-1 rounded-lg text-xs font-black text-slate-700";
-        btnT.className = "flex-1 py-1 rounded-lg text-xs font-black bg-[#FF5B22] text-white";
-        if (lbl) lbl.innerText = "Reader Reaction or Thought";
-        if (txt) txt.placeholder = "What popped into your head?";
+    function getShelfInfo(shelf) {
+      switch(shelf) {
+        case 'reading': return { label: 'Reading', bg: 'bg-[#FF5B22]', text: 'text-white' };
+        case 'to-read': return { label: 'TBR', bg: 'bg-[#FFD034]', text: 'text-[#05244C]' };
+        case 'finished': return { label: 'Finished', bg: 'bg-[#10B981]', text: 'text-white' };
+        case 'faves': return { label: 'Faves', bg: 'bg-[#FF2E7E]', text: 'text-white' };
+        case 'dnf': return { label: 'DNF', bg: 'bg-[#A855F7]', text: 'text-white' };
+        case 'wishlist': return { label: 'Wishlist', bg: 'bg-[#FFA4C4]', text: 'text-[#05244C]' };
+        default: return { label: 'All', bg: 'bg-[#05244C]', text: 'text-[#FFF9EE]' };
       }
     }
 
-    function openAddQuoteModal(bookId, type = 'quote') {
-      const select = document.getElementById('quoteBookSelect');
-      if (select) {
-        select.innerHTML = books.map(b => `<option value="${b.id}" ${(bookId || activeBookId) === b.id ? 'selected' : ''}>${b.title} (${b.author})</option>`).join('');
-      }
-      document.getElementById('standaloneQuoteEditId').value = '';
-      document.getElementById('standaloneModalTitle').innerText = (type === 'thought') ? 'Save Reader Thought' : 'Save Quote';
-      document.getElementById('standaloneQuoteSaveBtn').innerText = 'Save Entry';
-      document.getElementById('quoteTextInput').value = '';
-      document.getElementById('quoteDateInput').value = new Date().toISOString().split('T')[0];
-      document.getElementById('quotePageInput').value = '';
-      setStandaloneEntryType(type);
-      openModal('modalAddQuote');
-    }
-
-    function editStandaloneQuote(id) {
-      const q = quotes.find(item => item.id === id);
-      if (!q) return;
-
-      const type = q.type || 'quote';
-      openAddQuoteModal(q.bookId, type);
-
-      document.getElementById('standaloneQuoteEditId').value = q.id;
-      document.getElementById('standaloneModalTitle').innerText = (type === 'thought') ? 'Edit Reader Thought' : 'Edit Quote';
-      document.getElementById('standaloneQuoteSaveBtn').innerText = 'Update Entry';
-      document.getElementById('quoteTextInput').value = q.text || '';
-      document.getElementById('quoteDateInput').value = q.date || new Date().toISOString().split('T')[0];
-      document.getElementById('quotePageInput').value = '';
-    }
-
-    function saveQuote() {
-      const editingId = document.getElementById('standaloneQuoteEditId')?.value;
-      const bookId = document.getElementById('quoteBookSelect').value;
-      const text = document.getElementById('quoteTextInput').value.trim();
-      const date = document.getElementById('quoteDateInput').value || new Date().toISOString().split('T')[0];
-      const page = document.getElementById('quotePageInput').value;
-      const type = document.getElementById('standaloneEntryTypeVal').value || 'quote';
-      const bk = books.find(b => b.id === bookId);
-      if (!text) return;
-
-      if (editingId) {
-        const q = quotes.find(item => item.id === editingId);
-        if (q) {
-          q.bookId = bk?.id || bookId;
-          q.bookTitle = bk?.title || 'Untitled';
-          q.bookCover = bk?.cover || '';
-          q.text = text;
-          q.date = date;
-          q.page = page;
-          q.type = type;
+    function setLibraryView(view) {
+      currentLibraryView = view;
+      ['viewBtnCovers', 'viewBtnCards', 'viewBtnList'].forEach(id => {
+        const btn = document.getElementById(id);
+        if (btn) {
+          btn.classList.remove('bg-[#FF5B22]', 'text-white');
+          btn.classList.add('text-slate-700');
         }
-      } else {
-        quotes.unshift({
-          id: 'q_' + Date.now(),
-          type: type,
-          bookId: bk?.id || 'unknown',
-          bookTitle: bk?.title || 'Untitled',
-          bookCover: bk?.cover || '',
-          text: text,
-          page: page,
-          date: date
-        });
-      }
-
-      saveQuotes();
-      closeModal('modalAddQuote');
-      renderQuotes();
-      showToast(editingId ? 'Entry updated!' : (type === 'thought' ? 'Thought saved!' : 'Quote saved!'));
-    }
-
-    function setQuoteTypeFilter(filterType) {
-      currentQuoteTypeFilter = filterType;
-      ['all', 'quote', 'thought'].forEach(t => {
-        const btn = document.getElementById(`qTypeFilter_${t}`);
-        if (!btn) return;
-        btn.className = (t === filterType) 
-          ? "px-2.5 py-1 rounded-lg text-xs font-black bg-[#FF5B22] text-white" 
-          : "px-2.5 py-1 rounded-lg text-xs font-bold text-slate-700";
       });
-      renderQuotes();
+      if (view === 'covers') document.getElementById('viewBtnCovers')?.classList.add('bg-[#FF5B22]', 'text-white');
+      if (view === 'cards') document.getElementById('viewBtnCards')?.classList.add('bg-[#FF5B22]', 'text-white');
+      if (view === 'list') document.getElementById('viewBtnList')?.classList.add('bg-[#FF5B22]', 'text-white');
+      renderLibrary();
     }
 
-    function setQuoteView(mode) {
-      quoteViewMode = mode;
-      const timeBtn = document.getElementById('quoteViewTimelineBtn');
-      const bookBtn = document.getElementById('quoteViewByBookBtn');
+    function setShelfFilter(shelf) {
+      currentShelfFilter = shelf;
+      document.querySelectorAll('.shelf-pill').forEach(btn => {
+        const btnShelf = btn.getAttribute('data-shelf');
+        const info = getShelfInfo(btnShelf);
+        const badge = btn.querySelector('span:last-child');
 
-      if (timeBtn && bookBtn) {
-        if (mode === 'timeline') {
-          timeBtn.className = "px-2 py-1 rounded-lg text-xs font-bold bg-[#FF5B22] text-white";
-          bookBtn.className = "px-2 py-1 rounded-lg text-xs font-bold text-slate-700";
+        if (btnShelf === shelf) {
+          btn.className = `shelf-pill py-1.5 px-1 rounded-xl text-[11px] font-black border-2 border-[#05244C] ${info.bg} ${info.text} shadow-retro-navy flex items-center justify-center gap-1 transition-all`;
+          if (badge) badge.className = "text-[9px] px-1.5 py-0.2 rounded-full bg-black/20 text-white font-bold";
         } else {
-          timeBtn.className = "px-2 py-1 rounded-lg text-xs font-bold text-slate-700";
-          bookBtn.className = "px-2 py-1 rounded-lg text-xs font-bold bg-[#FF5B22] text-white";
+          btn.className = `shelf-pill py-1.5 px-1 rounded-xl text-[11px] font-bold border border-[#05244C]/30 bg-white/70 text-slate-700 flex items-center justify-center gap-1 transition-all`;
+          if (badge) badge.className = "text-[9px] px-1.5 py-0.2 rounded-full bg-slate-200/80 text-slate-600 font-bold";
         }
+      });
+      renderLibrary();
+    }
+
+    function setFormatFilter(format) {
+      currentFormatFilter = format;
+      ['all', 'eBook', 'Paperback', 'Hardcover', 'Audiobook'].forEach(f => {
+        const btn = document.getElementById(`formatFilter-${f}`);
+        if (!btn) return;
+        btn.className = (f === format)
+          ? "px-2 py-0.5 rounded-lg text-[10px] font-bold border border-[#05244C] bg-[#FFD034] text-[#05244C]"
+          : "px-2 py-0.5 rounded-lg text-[10px] font-bold border border-[#05244C]/40 bg-white/60 text-[#05244C]";
+      });
+      renderLibrary();
+    }
+
+    function populateGenreDropdown() {
+      const select = document.getElementById('libraryGenreSelect');
+      if (!select) return;
+      const currentVal = select.value;
+      const genreCounts = {};
+      PRESET_GENRES.forEach(g => { genreCounts[g] = 0; });
+
+      books.forEach(b => {
+        if (Array.isArray(b.genres)) {
+          b.genres.forEach(g => { if (genreCounts[g] !== undefined) genreCounts[g]++; });
+        }
+      });
+
+      select.innerHTML = '<option value="all">All Genres</option>' + PRESET_GENRES.map(g => `<option value="${g}">${g} (${genreCounts[g]})</option>`).join('');
+      select.value = PRESET_GENRES.includes(currentVal) ? currentVal : 'all';
+    }
+
+    function toggleBatchSelectMode() {
+      isBatchMode = !isBatchMode;
+      selectedBookIds.clear();
+      const btn = document.getElementById('batchSelectModeBtn');
+      const bar = document.getElementById('batchActionBar');
+      if (btn) btn.innerText = isBatchMode ? 'Done' : 'Select';
+      if (bar) bar.classList.toggle('hidden', !isBatchMode);
+      updateBatchCountDisplay();
+      renderLibrary();
+    }
+
+    function toggleSelectBook(id, e) {
+      if (e) e.stopPropagation();
+      if (selectedBookIds.has(id)) selectedBookIds.delete(id);
+      else selectedBookIds.add(id);
+      updateBatchCountDisplay();
+      renderLibrary();
+    }
+
+    function selectAllVisibleBooks() {
+      const query = (document.getElementById('librarySearchInput')?.value || '').toLowerCase();
+      const genre = document.getElementById('libraryGenreSelect')?.value || 'all';
+
+      let filtered = books.filter(b => {
+        if (currentShelfFilter === 'faves') return !!b.isFavorite;
+        if (currentShelfFilter === 'all') return b.shelf !== 'wishlist';
+        return b.shelf === currentShelfFilter;
+      });
+
+      if (currentFormatFilter !== 'all') filtered = filtered.filter(b => getBookFormatsList(b).includes(currentFormatFilter));
+      if (genre !== 'all') filtered = filtered.filter(b => b.genres && b.genres.includes(genre));
+      if (query) {
+        filtered = filtered.filter(b => 
+          b.title.toLowerCase().includes(query) || 
+          b.author.toLowerCase().includes(query) ||
+          (b.genres && b.genres.some(g => g.toLowerCase().includes(query)))
+        );
       }
-      renderQuotes();
+
+      filtered.forEach(b => selectedBookIds.add(b.id));
+      updateBatchCountDisplay();
+      renderLibrary();
     }
 
-    function copyQuoteText(id) {
-      const q = quotes.find(item => item.id === id);
-      if (!q) return;
-      const textToCopy = q.type === 'thought' 
-        ? `💭 Thought on "${q.bookTitle}" (p. ${q.page || 'N/A'}):\n"${q.text}"`
-        : `“${q.text}”\n— ${q.bookTitle}${q.page ? ' (p. ' + q.page + ')' : ''}`;
-      const t = document.createElement("textarea");
-      t.value = textToCopy;
-      document.body.appendChild(t);
-      t.select();
-      document.execCommand('copy');
-      document.body.removeChild(t);
-      showToast('Copied to clipboard!');
+    function updateBatchCountDisplay() {
+      const lbl = document.getElementById('batchCountLabel');
+      if (lbl) lbl.innerText = `${selectedBookIds.size} books selected`;
     }
 
-    function renderQuotes() {
-      const container = document.getElementById('quotesContainer');
+    function openBatchEditModal() {
+      if (selectedBookIds.size === 0) {
+        showToast('Please select at least 1 book');
+        return;
+      }
+      openModal('modalBulkEdit');
+    }
+
+    function applyBatchEdit() {
+      const shelf = document.getElementById('bulkShelfSelect').value;
+      const format = document.getElementById('bulkFormatSelect').value;
+      const ownership = document.getElementById('bulkOwnershipSelect').value;
+
+      selectedBookIds.forEach(id => {
+        const bk = books.find(b => b.id === id);
+        if (bk) {
+          if (shelf !== 'no-change') bk.shelf = shelf;
+          if (format !== 'no-change') bk.formats = [format];
+          if (ownership !== 'no-change') bk.ownership = ownership;
+        }
+      });
+
+      saveBooks();
+      closeModal('modalBulkEdit');
+      toggleBatchSelectMode();
+      determineActiveHeroBook();
+      renderAllViews();
+      showToast('Batch changes applied!');
+    }
+
+    function batchDeleteSelectedBooks() {
+      if (selectedBookIds.size === 0) return;
+      books = books.filter(b => !selectedBookIds.has(b.id));
+      saveBooks();
+      closeModal('modalBulkEdit');
+      toggleBatchSelectMode();
+      determineActiveHeroBook();
+      renderAllViews();
+      showToast('Books deleted');
+    }
+
+    function renderLibrary() {
+      updateShelfCountBadges();
+      const container = document.getElementById('libraryContainer');
       if (!container) return;
 
-      let filteredQuotes = quotes;
-      if (currentQuoteTypeFilter === 'quote') filteredQuotes = quotes.filter(q => (q.type || 'quote') === 'quote');
-      else if (currentQuoteTypeFilter === 'thought') filteredQuotes = quotes.filter(q => q.type === 'thought');
+      const query = (document.getElementById('librarySearchInput')?.value || '').toLowerCase();
+      const genre = document.getElementById('libraryGenreSelect')?.value || 'all';
+      const sort = document.getElementById('librarySortSelect')?.value || 'recent';
 
-      if (filteredQuotes.length === 0) {
-        container.innerHTML = `<div class="bg-[#FFF9EE] rounded-3xl p-6 text-center border-3 border-[#05244C] shadow-retro-orange text-xs font-bold text-slate-500">No entries saved in this view yet.</div>`;
+      let filtered = books.filter(b => {
+        if (currentShelfFilter === 'faves') return !!b.isFavorite;
+        if (currentShelfFilter === 'all') return b.shelf !== 'wishlist';
+        return b.shelf === currentShelfFilter;
+      });
+
+      if (currentFormatFilter !== 'all') filtered = filtered.filter(b => getBookFormatsList(b).includes(currentFormatFilter));
+      if (genre !== 'all') filtered = filtered.filter(b => b.genres && b.genres.includes(genre));
+      if (query) {
+        filtered = filtered.filter(b => 
+          b.title.toLowerCase().includes(query) || 
+          b.author.toLowerCase().includes(query) ||
+          (b.genres && b.genres.some(g => g.toLowerCase().includes(query)))
+        );
+      }
+
+      if (sort === 'rating_high') filtered.sort((a, b) => (b.rating || 0) - (a.rating || 0));
+      else if (sort === 'rating_low') filtered.sort((a, b) => (a.rating || 0) - (b.rating || 0));
+      else if (sort === 'title') filtered.sort((a, b) => a.title.localeCompare(b.title));
+      else if (sort === 'author') filtered.sort((a, b) => a.author.localeCompare(b.author));
+      else if (sort === 'progress') {
+        filtered.sort((a, b) => {
+          const pctA = a.pageCount > 0 ? (a.currentPage / a.pageCount) : 0;
+          const pctB = b.pageCount > 0 ? (b.currentPage / b.pageCount) : 0;
+          return pctB - pctA;
+        });
+      } else {
+        filtered.sort((a, b) => (b.lastSessionDate || '').localeCompare(a.lastSessionDate || ''));
+      }
+
+      if (filtered.length === 0) {
+        container.innerHTML = `<div class="bg-[#FFF9EE] rounded-2xl p-6 text-center border-2 border-[#05244C] text-xs font-bold text-slate-500">No books found on this shelf.</div>`;
         return;
       }
 
-      function renderSingleQuoteCard(q) {
-        const isThought = (q.type === 'thought');
-        if (isThought) {
-          return `
-            <div class="relative bg-[#FFF9EE] border-3 border-[#05244C] rounded-2xl p-3.5 shadow-retro-orange space-y-2">
-              <div class="flex items-center justify-between pb-1 border-b border-orange-200/70">
-                <span class="bg-[#FFEDC9] text-amber-900 border border-[#05244C] text-[9px] font-black uppercase px-2 py-0.5 rounded-full flex items-center gap-1">
-                  <span>💭</span> Thought
-                </span>
-                <div class="flex items-center gap-2">
-                  <button onclick="editStandaloneQuote('${q.id}')" class="text-slate-500 hover:text-[#05244C] font-black text-xs">✏️ Edit</button>
-                  <button onclick="deleteQuote('${q.id}')" class="text-slate-400 hover:text-red-500 font-bold text-xs">✕</button>
-                </div>
-              </div>
-              <div class="bg-amber-100/60 border-2 border-dashed border-[#05244C]/25 rounded-xl p-2.5">
-                <p class="font-sans text-xs text-[#05244C] font-semibold leading-relaxed">${formatRichText(q.text)}</p>
-              </div>
-              <div class="pt-0.5 flex items-center justify-between text-[10px] text-slate-500 font-bold">
-                <span class="truncate pr-2">${q.bookTitle} ${q.page ? '• p. ' + q.page : ''} ${q.date ? '• ' + q.date : ''}</span>
-                <button onclick="copyQuoteText('${q.id}')" class="text-xs font-bold text-[#446BA2] underline flex-shrink-0">Copy</button>
-              </div>
-            </div>
-          `;
+      const groups = [];
+      let currentGroupHeader = null;
+
+      filtered.forEach(b => {
+        let header = '';
+        if (sort === 'title') {
+          const firstChar = (b.title || '').trim().charAt(0).toUpperCase();
+          header = /^[A-Z]$/.test(firstChar) ? firstChar : '#';
+        } else if (sort === 'author') {
+          const firstChar = (b.author || '').trim().charAt(0).toUpperCase();
+          header = /^[A-Z]$/.test(firstChar) ? firstChar : '#';
+        } else if (sort === 'rating_high' || sort === 'rating_low') {
+          const r = Math.floor(b.rating || 0);
+          header = r > 0 ? `${r} STARS (${'★'.repeat(r)})` : 'UNRATED (0★)';
+        } else if (sort === 'progress') {
+          const pct = b.pageCount > 0 ? Math.round((b.currentPage / b.pageCount) * 100) : 0;
+          if (pct >= 100) header = '100% COMPLETE';
+          else if (pct >= 75) header = '75% – 99%';
+          else if (pct >= 50) header = '50% – 74%';
+          else if (pct >= 25) header = '25% – 49%';
+          else if (pct > 0) header = '1% – 24%';
+          else header = 'NOT STARTED (0%)';
         }
 
-        return `
-          <div class="relative bg-[#FFF9EE] border-3 border-[#05244C] rounded-2xl p-4 pt-3 shadow-retro-orange">
-            <div class="absolute top-2.5 right-3 flex items-center gap-2">
-              <button onclick="editStandaloneQuote('${q.id}')" class="text-slate-500 hover:text-[#05244C] font-black text-xs">✏️ Edit</button>
-              <button onclick="deleteQuote('${q.id}')" class="text-slate-400 hover:text-red-500 font-bold text-xs">✕</button>
-            </div>
-
-            <div class="font-quote-display text-4xl text-[#1DBBB4] font-black leading-none select-none mb-1">“</div>
-            <p class="font-quote-display text-base text-[#05244C] font-semibold italic leading-snug pr-8">${formatRichText(q.text)}</p>
-            
-            <div class="mt-2.5 pt-2 border-t border-orange-200/80 flex items-center justify-between text-[10px] text-slate-500 font-bold">
-              <span class="truncate pr-2 text-[#05244C]">${q.bookTitle} ${q.page ? '• p. ' + q.page : ''} ${q.date ? '• ' + q.date : ''}</span>
-              <button onclick="copyQuoteText('${q.id}')" class="text-xs font-bold text-[#446BA2] underline flex-shrink-0">Copy</button>
-            </div>
-          </div>
-        `;
-      }
-
-      if (quoteViewMode === 'timeline') {
-        container.innerHTML = filteredQuotes.map(renderSingleQuoteCard).join('');
-      } else {
-        const grouped = {};
-        filteredQuotes.forEach(q => {
-          const bookKey = q.bookTitle || 'Unknown Title';
-          if (!grouped[bookKey]) grouped[bookKey] = [];
-          grouped[bookKey].push(q);
-        });
-
-        container.innerHTML = Object.keys(grouped).sort().map(bookTitle => `
-          <div class="space-y-2 mb-4">
-            <div class="flex items-center gap-2 pt-1">
-              <span class="inline-block bg-[#05244C] text-[#FFF9EE] text-[10px] font-black uppercase px-2.5 py-0.5 rounded-full border border-[#FFA4C4] shadow-sm tracking-wider">
-                ${bookTitle}
-              </span>
-              <div class="flex-1 h-[1.5px] bg-[#FFA4C4]/40 rounded-full"></div>
-            </div>
-            <div class="space-y-2.5">
-              ${grouped[bookTitle].map(renderSingleQuoteCard).join('')}
-            </div>
-          </div>
-        `).join('');
-      }
-    }
-
-    function initCloudSync() {
-      if (activeSyncKey) {
-        const input = document.getElementById('syncKeyInput');
-        if (input) input.value = activeSyncKey;
-      }
-    }
-
-    async function generateNewSyncKey() {
-      showToast('Connecting...');
-      const payload = { books, sessions: readingSessions, quotes, goals: userGoals, updatedAt: Date.now() };
-      let newKey = null;
-
-      try {
-        const res = await fetch("https://jsonblob.com/api/jsonBlob", {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-          body: JSON.stringify(payload)
-        });
-        const loc = res.headers.get('Location') || res.headers.get('location') || res.headers.get('x-jsonblob');
-        if (loc) newKey = loc.split('/').pop();
-      } catch (e) {}
-
-      if (newKey) {
-        activeSyncKey = newKey;
-        localStorage.setItem('rianne_cloud_sync_key', newKey);
-        const input = document.getElementById('syncKeyInput');
-        if (input) input.value = newKey;
-        document.getElementById('syncStatusBadge').innerText = 'Connected';
-        showToast('Sync Key Linked!');
-      } else {
-        showToast('Offline mode.');
-      }
-    }
-
-    function connectSyncKey() {
-      const key = document.getElementById('syncKeyInput').value.trim();
-      if (!key) return;
-      activeSyncKey = key;
-      localStorage.setItem('rianne_cloud_sync_key', key);
-      pullFromCloudSync(true);
-    }
-
-    async function syncNowWithCloud() {
-      if (!activeSyncKey) {
-        generateNewSyncKey();
-        return;
-      }
-      showToast('Synchronizing...');
-      await pushToCloudSync();
-      await pullFromCloudSync(true);
-    }
-
-    async function pushToCloudSync() {
-      if (!activeSyncKey) return false;
-      const payload = { books, sessions: readingSessions, quotes, goals: userGoals, updatedAt: Date.now() };
-      let success = false;
-      try {
-        const res = await fetch(`https://jsonblob.com/api/jsonBlob/${activeSyncKey}`, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
-        if (res.ok) success = true;
-      } catch(e) {}
-      const badge = document.getElementById('syncStatusBadge');
-      if (badge) badge.innerText = success ? 'Synced' : 'Local Only';
-      return success;
-    }
-
-    async function pullFromCloudSync(notify = false) {
-      if (!activeSyncKey) return false;
-      let cloudData = null;
-      try {
-        const res = await fetch(`https://jsonblob.com/api/jsonBlob/${activeSyncKey}`);
-        if (res.ok) cloudData = await res.json();
-      } catch(e) {}
-
-      // SAFE GUARD: Never let empty cloud data wipe local books
-      if (cloudData && Array.isArray(cloudData.books) && cloudData.books.length > 0) {
-        books = cloudData.books;
-        readingSessions = cloudData.sessions || [];
-        quotes = cloudData.quotes || [];
-        userGoals = cloudData.goals || userGoals;
-
-        saveBooks();
-        saveSessions();
-        saveQuotes();
-        saveGoals();
-
-        determineActiveHeroBook();
-        renderAllViews();
-        if (notify) showToast('Cloud sync complete!');
-        return true;
-      } else if (books.length > 0) {
-        pushToCloudSync();
-      }
-      return false;
-    }
-
-    function triggerCloudAutoSync() {
-      if (!activeSyncKey) return;
-      clearTimeout(autoSyncTimer);
-      autoSyncTimer = setTimeout(() => { pushToCloudSync(); }, 2500);
-    }
-
-    function copyQuickTransferCode() {
-      try {
-        const packageData = { b: books, s: readingSessions, q: quotes, g: userGoals, t: Date.now() };
-        const code = btoa(encodeURIComponent(JSON.stringify(packageData)));
-        const t = document.createElement("textarea");
-        t.value = code;
-        document.body.appendChild(t);
-        t.select();
-        document.execCommand('copy');
-        document.body.removeChild(t);
-        showToast('Copied Transfer Code!');
-      } catch (err) {
-        showToast('Export failed.');
-      }
-    }
-
-    function pasteQuickTransferCode() {
-      const code = prompt("Paste your Transfer Code here:");
-      if (!code || !code.trim()) return;
-      try {
-        const data = JSON.parse(decodeURIComponent(atob(code.trim())));
-        if (data && Array.isArray(data.b)) {
-          books = data.b;
-          readingSessions = data.s || [];
-          quotes = data.q || [];
-          userGoals = data.g || userGoals;
-
-          saveBooks();
-          saveSessions();
-          saveQuotes();
-          saveGoals();
-          determineActiveHeroBook();
-          renderAllViews();
-          showToast(`Transferred ${books.length} books!`);
-        }
-      } catch (err) {
-        showToast('Invalid code.');
-      }
-    }
-
-    function exportJsonBackup() {
-      const backupData = {
-        app: "RianneBookshelf",
-        version: APP_VERSION,
-        timestamp: new Date().toISOString(),
-        books,
-        sessions: readingSessions,
-        quotes,
-        goals: userGoals
-      };
-      const blob = new Blob([JSON.stringify(backupData, null, 2)], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `bookshelf_backup_${new Date().toISOString().split('T')[0]}.json`;
-      a.click();
-      URL.revokeObjectURL(url);
-      showToast('Backup downloaded!');
-    }
-
-    function clearSampleBooks() {
-      const sampleIds = ['b_1', 'b_2', 'b_3'];
-      books = books.filter(b => !sampleIds.includes(b.id));
-      saveBooks();
-      determineActiveHeroBook();
-      renderAllViews();
-      showToast('Cleared sample books!');
-    }
-
-    function parseCsvRows(text) {
-      const rows = [];
-      let currentRow = [], currentField = '', insideQuotes = false;
-      for (let i = 0; i < text.length; i++) {
-        const char = text[i], nextChar = text[i + 1];
-        if (char === '"') {
-          if (insideQuotes && nextChar === '"') { currentField += '"'; i++; }
-          else { insideQuotes = !insideQuotes; }
-        } else if (char === ',' && !insideQuotes) {
-          currentRow.push(currentField.trim());
-          currentField = '';
-        } else if ((char === '\r' || char === '\n') && !insideQuotes) {
-          if (char === '\r' && nextChar === '\n') i++;
-          currentRow.push(currentField.trim());
-          if (currentRow.some(f => f.length > 0)) rows.push(currentRow);
-          currentRow = [];
-          currentField = '';
+        if (header && header !== currentGroupHeader) {
+          currentGroupHeader = header;
+          groups.push({ header: currentGroupHeader, books: [b] });
+        } else if (groups.length > 0 && header) {
+          groups[groups.length - 1].books.push(b);
         } else {
-          currentField += char;
+          if (groups.length === 0) groups.push({ header: null, books: [] });
+          groups[0].books.push(b);
         }
-      }
-      if (currentField.length > 0 || currentRow.length > 0) {
-        currentRow.push(currentField.trim());
-        if (currentRow.some(f => f.length > 0)) rows.push(currentRow);
-      }
-      return rows;
+      });
+
+      container.innerHTML = groups.map(group => `
+        <div class="space-y-2 mb-4">
+          ${group.header ? `
+            <div class="py-1 flex items-center justify-center gap-2">
+              <div class="flex-1 h-[2px] bg-[#FFA4C4]/50 rounded-full"></div>
+              <span class="inline-flex items-center px-3.5 py-1 rounded-full bg-[#05244C] text-[#FFF9EE] border-2 border-[#FFA4C4] shadow-sm text-[10px] font-black tracking-widest leading-none">
+                ${group.header}
+              </span>
+              <div class="flex-1 h-[2px] bg-[#FFA4C4]/50 rounded-full"></div>
+            </div>
+          ` : ''}
+
+          ${currentLibraryView === 'covers' ? `
+            <div class="grid grid-cols-4 gap-2">
+              ${group.books.map(b => {
+                const isSelected = selectedBookIds.has(b.id);
+                const info = getShelfInfo(b.shelf);
+                const starStr = getStarDisplayHtml(b.rating);
+                return `
+                  <div onclick="${isBatchMode ? `toggleSelectBook('${b.id}', event)` : `openBookDetailModal('${b.id}')`}" class="relative group cursor-pointer">
+                    <div class="relative rounded-xl overflow-hidden border-2 border-[#05244C] shadow-retro-navy aspect-[2/3] bg-slate-200 ${isSelected ? 'ring-4 ring-[#FF5B22]' : ''}">
+                      <img src="${b.cover || 'https://placehold.co/200x300/446BA2/FFF9EE?text=Cover'}" class="w-full h-full object-cover" onerror="handleCoverError(this)">
+                      ${isBatchMode ? `
+                        <div class="absolute top-1.5 left-1.5 w-5 h-5 rounded-md bg-white border border-[#05244C] flex items-center justify-center">
+                          ${isSelected ? '<span class="text-[#FF5B22] font-black text-xs">✓</span>' : ''}
+                        </div>
+                      ` : ''}
+                      ${b.isFavorite ? `
+                        <span class="absolute top-1 left-1 bg-white/95 rounded-full p-0.5 px-1 text-[11px] border border-[#05244C] shadow-sm leading-none text-rose-600 font-bold">♥️</span>
+                      ` : ''}
+                      <span class="absolute top-1 right-1 ${info.bg} ${info.text} text-[8px] font-black px-1.5 py-0.5 rounded-md border border-[#05244C] shadow-sm leading-none">
+                        ${b.shelf === 'finished' ? '✓' : info.label}
+                      </span>
+                    </div>
+                    <p class="text-[10px] font-bold text-[#FFF9EE] truncate mt-1">${b.title}</p>
+                    ${starStr ? `<div class="text-[10px] text-[#FFD034] font-bold leading-none drop-shadow-sm truncate">${starStr}</div>` : ''}
+                  </div>
+                `;
+              }).join('')}
+            </div>
+          ` : currentLibraryView === 'cards' ? `
+            <div class="space-y-2.5">
+              ${group.books.map(b => {
+                const pct = b.pageCount > 0 ? Math.round((b.currentPage / b.pageCount) * 100) : 0;
+                const isSelected = selectedBookIds.has(b.id);
+                const info = getShelfInfo(b.shelf);
+                const starStr = getStarDisplayHtml(b.rating);
+                const fmts = getBookFormatsList(b);
+                return `
+                  <div class="bg-[#FFF9EE] border-2 border-[#05244C] rounded-2xl p-3 shadow-retro-orange flex gap-3 items-center ${isSelected ? 'ring-4 ring-[#FF5B22]' : ''}">
+                    ${isBatchMode ? `
+                      <div onclick="toggleSelectBook('${b.id}', event)" class="w-5 h-5 rounded-md bg-white border border-[#05244C] flex items-center justify-center flex-shrink-0 cursor-pointer">
+                        ${isSelected ? '<span class="text-[#FF5B22] font-black text-xs">✓</span>' : ''}
+                      </div>
+                    ` : ''}
+                    <img src="${b.cover || 'https://placehold.co/100x150/446BA2/FFF9EE?text=Cover'}" class="w-14 aspect-[2/3] object-cover rounded-xl border border-[#05244C] flex-shrink-0 bg-slate-200" onerror="handleCoverError(this)">
+                    <div class="flex-1 min-w-0">
+                      <div class="flex items-center gap-1.5">
+                        <span class="text-[9px] uppercase font-black px-2 py-0.5 rounded-full ${info.bg} ${info.text} border border-[#05244C] shadow-sm">${info.label}</span>
+                        <span class="text-[9px] font-bold text-slate-500">${fmts.join(', ')}</span>
+                        ${b.isFavorite ? `<span class="text-xs text-rose-600 font-bold">♥️</span>` : ''}
+                      </div>
+                      <h4 class="text-xs font-retro-title text-[#05244C] truncate mt-1">${b.title}</h4>
+                      <p class="text-[10px] font-editorial text-slate-600 truncate italic">${b.author}</p>
+                      ${starStr ? `<div class="text-[#FF5B22] text-xs font-bold leading-none mt-0.5">${starStr}</div>` : ''}
+                      <div class="mt-1 flex justify-between items-center text-[10px] font-bold">
+                        <span>${b.currentPage} / ${b.pageCount} pgs</span>
+                        <span class="text-[#FF5B22] font-black">${pct}%</span>
+                      </div>
+                    </div>
+                    <button onclick="openBookDetailModal('${b.id}')" class="px-2.5 py-1.5 bg-white border border-[#05244C] rounded-xl text-xs font-bold text-[#05244C] flex-shrink-0">Edit</button>
+                  </div>
+                `;
+              }).join('')}
+            </div>
+          ` : `
+            <div class="bg-[#FFF9EE] border-2 border-[#05244C] rounded-2xl divide-y-2 divide-orange-100 overflow-hidden shadow-retro-orange">
+              ${group.books.map(b => {
+                const isSelected = selectedBookIds.has(b.id);
+                const info = getShelfInfo(b.shelf);
+                const pct = b.pageCount > 0 ? Math.round((b.currentPage / b.pageCount) * 100) : 0;
+                const starStr = getStarDisplayHtml(b.rating);
+                const fmts = getBookFormatsList(b);
+                return `
+                  <div onclick="${isBatchMode ? `toggleSelectBook('${b.id}', event)` : `openBookDetailModal('${b.id}')`}" class="p-3 flex items-center justify-between cursor-pointer hover:bg-amber-50 ${isSelected ? 'bg-orange-100/60' : ''}">
+                    ${isBatchMode ? `
+                      <div class="w-4 h-4 rounded-md bg-white border border-[#05244C] flex items-center justify-center mr-2.5 flex-shrink-0">
+                        ${isSelected ? '<span class="text-[#FF5B22] font-black text-[10px]">✓</span>' : ''}
+                      </div>
+                    ` : ''}
+                    <div class="min-w-0 flex-1 pr-2">
+                      <div class="flex items-center gap-1.5">
+                        <span class="text-[8px] font-black uppercase px-1.5 py-0.5 rounded border border-[#05244C] ${info.bg} ${info.text}">${info.label}</span>
+                        <h4 class="text-xs font-bold text-[#05244C] truncate">${b.title}</h4>
+                        ${b.isFavorite ? `<span class="text-xs text-rose-600 font-bold">♥️</span>` : ''}
+                      </div>
+                      <p class="text-[10px] text-slate-500 truncate mt-0.5">${b.author} • <span class="text-slate-400">${fmts.join(', ')}</span> ${starStr ? `• <span class="text-[#FF5B22] font-bold">${starStr}</span>` : ''}</p>
+                    </div>
+                    <div class="text-right flex-shrink-0">
+                      <span class="text-xs font-mono font-black text-[#05244C]">${pct}%</span>
+                      <span class="text-[9px] text-slate-400 block">${b.currentPage}p</span>
+                    </div>
+                  </div>
+                `;
+              }).join('')}
+            </div>
+          `}
+        </div>
+      `).join('');
     }
 
-    async function handleUniversalFileImport(event) {
-      const files = event.target.files;
-      if (!files || files.length === 0) return;
+    function openManualBookModal() {
+      const tempBook = {
+        id: 'b_custom_' + Date.now(),
+        title: '',
+        author: '',
+        pageCount: 300,
+        currentPage: 0,
+        shelf: 'to-read',
+        ownership: 'Owned',
+        formats: ['eBook'],
+        genres: [],
+        cover: '',
+        rating: 0,
+        review: '',
+        isFavorite: false,
+        finishedDate: null,
+        lastSessionDate: null
+      };
+      VIBE_DEFINITIONS.forEach(v => { tempBook[v.key] = 0; });
+      books.unshift(tempBook);
+      saveBooks();
+      renderAllViews();
+      openBookDetailModal(tempBook.id);
+      showToast('Enter details and tap Save!');
+    }
 
-      for (const file of Array.from(files)) {
-        const content = await file.text();
-        if (file.name.endsWith('.json')) {
-          try {
-            const data = JSON.parse(content);
-            const importedBooks = data.books || data.library || (Array.isArray(data) ? data : []);
-            if (importedBooks.length > 0) books = importedBooks;
-            if (data.sessions) readingSessions = data.sessions;
-            if (data.quotes) quotes = data.quotes;
-          } catch(e) {}
+    function openBookDetailModal(bookId) {
+      const bk = books.find(b => b.id === bookId);
+      if (!bk) return;
+
+      document.getElementById('editBookId').value = bk.id;
+      document.getElementById('editBookTitle').value = bk.title || '';
+      document.getElementById('editBookAuthor').value = bk.author || '';
+      document.getElementById('editBookCurrentPage').value = bk.currentPage || 0;
+      document.getElementById('editBookTotalPages').value = bk.pageCount || 0;
+      
+      const pct = bk.pageCount > 0 ? Math.min(100, Math.round((bk.currentPage / bk.pageCount) * 100)) : 0;
+      document.getElementById('editBookPercent').value = pct;
+      document.getElementById('editBookShelf').value = bk.shelf || 'reading';
+      document.getElementById('editBookOwnership').value = bk.ownership || 'Owned';
+      
+      const rawGenres = Array.isArray(bk.genres) ? bk.genres : (bk.genres ? bk.genres.split(/[,;/]/).map(g => g.trim()) : []);
+      editingBookGenres = rawGenres.filter(g => PRESET_GENRES.includes(g));
+      showUnselectedCatalog = false;
+      document.getElementById('unselectedPillsCatalog')?.classList.add('hidden');
+      document.getElementById('unselectedPillsCatalog')?.classList.remove('flex');
+      const toggleBtn = document.getElementById('unselectedToggleBtn');
+      if (toggleBtn) toggleBtn.innerText = 'Show all (+)';
+      renderGenrePills();
+
+      document.getElementById('editBookCover').value = bk.cover || '';
+      updateLiveCoverPreview(bk.cover || '');
+
+      editingBookFormats = getBookFormatsList(bk);
+      renderEditBookFormatButtons();
+
+      isEditingFavorite = !!bk.isFavorite;
+      updateFavoriteButtonState();
+
+      document.getElementById('editBookFinishedDate').value = bk.finishedDate || '';
+      document.getElementById('editBookReviewText').value = bk.review || '';
+      setEditBookStarRating(bk.rating || 0);
+
+      VIBE_DEFINITIONS.forEach(v => {
+        setVibeShapes(v.key, bk[v.key] || 0);
+      });
+
+      toggleReviewSectionDisplay();
+      renderBookSessionsList(bk.id);
+      renderEditBookQuotesList(bk.id);
+      toggleInlineSessionForm(false);
+      toggleEditQuoteForm(false);
+
+      openModal('modalBookDetail');
+    }
+
+    function syncEditInputs(origin) {
+      const curEl = document.getElementById('editBookCurrentPage');
+      const pctEl = document.getElementById('editBookPercent');
+      const totEl = document.getElementById('editBookTotalPages');
+      const tot = Number(totEl.value) || 0;
+      if (tot <= 0) return;
+
+      if (origin === 'page') {
+        const cur = Number(curEl.value) || 0;
+        pctEl.value = Math.min(100, Math.round((cur / tot) * 100));
+      } else if (origin === 'percent') {
+        const pct = Math.min(100, Math.max(0, Number(pctEl.value) || 0));
+        curEl.value = Math.round((pct / 100) * tot);
+      } else if (origin === 'total') {
+        const cur = Number(curEl.value) || 0;
+        pctEl.value = Math.min(100, Math.round((cur / tot) * 100));
+      }
+    }
+
+    function toggleReviewSectionDisplay() {
+      const shelf = document.getElementById('editBookShelf')?.value;
+      const reviewSec = document.getElementById('finishedReviewSection');
+      if (!reviewSec) return;
+      if (shelf === 'finished') {
+        reviewSec.classList.remove('hidden');
+        if (!document.getElementById('editBookFinishedDate').value) {
+          document.getElementById('editBookFinishedDate').value = new Date().toISOString().split('T')[0];
         }
+      } else {
+        reviewSec.classList.add('hidden');
+      }
+    }
+
+    function toggleBookFavorite() {
+      isEditingFavorite = !isEditingFavorite;
+      updateFavoriteButtonState();
+    }
+
+    function updateFavoriteButtonState() {
+      const btn = document.getElementById('btnFavoriteToggle');
+      if (!btn) return;
+      btn.innerText = isEditingFavorite ? '♥️' : '♡';
+      btn.className = isEditingFavorite 
+        ? "w-8 h-8 rounded-full border-2 border-[#05244C] bg-rose-100 text-rose-600 text-base flex items-center justify-center retro-btn shadow-sm"
+        : "w-8 h-8 rounded-full border-2 border-[#05244C] bg-white text-base flex items-center justify-center retro-btn shadow-sm";
+    }
+
+    function setEditBookStarRating(rating) {
+      const hiddenInput = document.getElementById('editBookStarRating');
+      if (hiddenInput) hiddenInput.value = rating;
+
+      const starElements = document.querySelectorAll('#starRatingSelector .star-item');
+      const fullStars = Math.floor(rating);
+      const remainder = Math.round((rating - fullStars) * 100) / 100;
+
+      starElements.forEach((el, idx) => {
+        if (idx < fullStars) {
+          el.className = "star-item text-[#FF5B22] transition-transform";
+          el.innerText = '★';
+        } else if (idx === fullStars && remainder > 0) {
+          el.className = "star-item text-[#FF5B22] transition-transform";
+          el.innerText = remainder >= 0.75 ? '¾' : remainder >= 0.5 ? '½' : '¼';
+        } else {
+          el.className = "star-item text-slate-300 transition-transform";
+          el.innerText = '★';
+        }
+      });
+    }
+
+    function cycleStarRating(starNum) {
+      const curRating = Number(document.getElementById('editBookStarRating')?.value) || 0;
+      let newRating = starNum;
+
+      if (curRating === starNum) {
+        newRating = starNum - 0.25;
+      } else if (curRating === starNum - 0.25) {
+        newRating = starNum - 0.5;
+      } else if (curRating === starNum - 0.5) {
+        newRating = starNum - 0.75;
+      } else if (curRating === starNum - 0.75) {
+        newRating = 0;
       }
 
-      saveBooks();
-      saveSessions();
-      saveQuotes();
-      populateYearDropdown();
-      determineActiveHeroBook();
-      renderAllViews();
-      event.target.value = '';
-      showToast('Import completed!');
+      setEditBookStarRating(newRating);
     }
 
     function switchTab(tabId) {
@@ -3433,183 +2751,10 @@
 
     window.addEventListener('scroll', handleScrollButtonVisibility);
 
-    function safeJsonParse(key, fallback) {
-      try {
-        const val = localStorage.getItem(key);
-        return val ? JSON.parse(val) : fallback;
-      } catch (e) {
-        return fallback;
-      }
-    }
-
-    function createVaultSnapshot() {
-      try {
-        const snapshot = { savedAt: Date.now(), books, sessions: readingSessions, quotes, goals: userGoals };
-        localStorage.setItem('rianne_backup_vault', JSON.stringify(snapshot));
-      } catch(e) {}
-      updateBackupCountBadge();
-    }
-
-    function updateBackupCountBadge() {
-      const badge = document.getElementById('drawerBackupCount');
-      if (badge) badge.innerText = `${books.length} book${books.length === 1 ? '' : 's'}`;
-    }
-
-    function saveBooks() {
-      if (books.length === 0) {
-        // Prevent accidental zero-out overwrites
-        const existing = safeJsonParse('rianne_books_v1', []);
-        if (existing.length > 0) return;
-      }
-      localStorage.setItem('rianne_books_v1', JSON.stringify(books));
-      createVaultSnapshot();
-      populateGenreDropdown();
-      triggerCloudAutoSync();
-    }
-
-    function saveSessions() {
-      localStorage.setItem('rianne_sessions_v1', JSON.stringify(readingSessions));
-      createVaultSnapshot();
-      triggerCloudAutoSync();
-    }
-
-    function saveQuotes() {
-      localStorage.setItem('rianne_quotes_v1', JSON.stringify(quotes));
-      createVaultSnapshot();
-      triggerCloudAutoSync();
-    }
-
-    function saveGoals() {
-      localStorage.setItem('rianne_goals_v1', JSON.stringify(userGoals));
-      createVaultSnapshot();
-      triggerCloudAutoSync();
-    }
-
-    function calculateSmartReadingPace(book) {
-      if (!readingSessions || readingSessions.length === 0) return 40;
-      const validSessions = readingSessions.filter(s => s.durationMinutes > 0 && s.pagesRead > 0);
-      if (validSessions.length > 0) {
-        const totalMins = validSessions.reduce((acc, s) => acc + s.durationMinutes, 0);
-        const totalPgs = validSessions.reduce((acc, s) => acc + s.pagesRead, 0);
-        return Math.max(15, Math.min(120, Math.round((totalPgs / totalMins) * 60)));
-      }
-      return 40;
-    }
-
-    function determineActiveHeroBook() {
-      const activeBooks = books.filter(b => b.shelf === 'reading');
-      if (activeBooks.length === 0) {
-        activeBookId = books[0] ? books[0].id : null;
-        return;
-      }
-      activeBooks.sort((a, b) => (b.lastSessionDate || '').localeCompare(a.lastSessionDate || ''));
-      activeBookId = activeBooks[0].id;
-    }
-
-    // MULTI-KEY RESCUE LOADER WITH AUTO-RECONSTRUCTION
-    function initializeUserData() {
-      readingSessions = safeJsonParse('rianne_sessions_v1', []);
-      quotes = safeJsonParse('rianne_quotes_v1', []);
-      userGoals = safeJsonParse('rianne_goals_v1', userGoals);
-
-      const possibleBookKeys = ['rianne_books_v1', 'rianne_backup_vault', 'bookshelf_backup_vault', 'bookshelf_books', 'rianne_library', 'books'];
-      let loaded = null;
-
-      for (const k of possibleBookKeys) {
-        try {
-          const raw = localStorage.getItem(k);
-          if (!raw) continue;
-          const parsed = JSON.parse(raw);
-          if (Array.isArray(parsed) && parsed.length > 0) {
-            loaded = parsed;
-            break;
-          }
-          if (parsed && Array.isArray(parsed.books) && parsed.books.length > 0) {
-            loaded = parsed.books;
-            break;
-          }
-        } catch (e) {}
-      }
-
-      // AUTO-RECONSTRUCT: If books are empty but quotes or sessions exist, re-create the book objects automatically!
-      if ((!loaded || loaded.length === 0) && (readingSessions.length > 0 || quotes.length > 0)) {
-        const reconstructedMap = new Map();
-
-        quotes.forEach(q => {
-          if (q.bookId && q.bookTitle) {
-            reconstructedMap.set(q.bookId, {
-              id: q.bookId,
-              title: q.bookTitle,
-              author: 'Unknown',
-              pageCount: 300,
-              currentPage: 0,
-              shelf: 'reading',
-              ownership: 'Owned',
-              formats: ['eBook'],
-              genres: [],
-              cover: q.bookCover || '',
-              rating: 0,
-              review: '',
-              isFavorite: false,
-              finishedDate: null,
-              lastSessionDate: q.date || null
-            });
-          }
-        });
-
-        readingSessions.forEach(s => {
-          if (s.bookId && !reconstructedMap.has(s.bookId)) {
-            reconstructedMap.set(s.bookId, {
-              id: s.bookId,
-              title: s.notes ? s.notes.split(' - ')[0] : 'Book ' + s.bookId.slice(-4),
-              author: 'Unknown',
-              pageCount: Math.max(300, s.endPage || 0),
-              currentPage: s.endPage || 0,
-              shelf: (s.endPage >= 300) ? 'finished' : 'reading',
-              ownership: 'Owned',
-              formats: ['eBook'],
-              genres: [],
-              cover: '',
-              rating: 0,
-              review: '',
-              isFavorite: false,
-              finishedDate: null,
-              lastSessionDate: s.date || null
-            });
-          }
-        });
-
-        if (reconstructedMap.size > 0) {
-          loaded = Array.from(reconstructedMap.values());
-          localStorage.setItem('rianne_books_v1', JSON.stringify(loaded));
-        }
-      }
-
-      books = loaded || [];
-
-      books.forEach(b => {
-        if (b.cover) b.cover = cleanImageUrl(b.cover);
-        if (!b.formats) b.formats = b.format ? [b.format] : ['eBook'];
-        VIBE_DEFINITIONS.forEach(v => {
-          if (b[v.key] === undefined) b[v.key] = 0;
-        });
-      });
-
-      renderVibeInputs();
-      updateBackupCountBadge();
-      determineActiveHeroBook();
-      populateGenreDropdown();
-      populateYearDropdown();
-      renderAllViews();
-      initCloudSync();
-      setupBackdropDismiss();
-    }
-
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initializeUserData);
-    } else {
+    window.addEventListener('DOMContentLoaded', () => {
       initializeUserData();
-    }
+      setupBackdropDismiss();
+    });
   </script>
 </body>
 </html>
