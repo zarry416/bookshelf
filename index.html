@@ -513,6 +513,7 @@
       </button>
     </div>
   </nav>
+
   <!-- MODAL: MANUAL PAST SESSION -->
   <div id="modalPastSession" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4">
     <div class="bg-[#FFF9EE] border-3 border-[#05244C] rounded-3xl p-6 w-full max-w-sm shadow-retro-orange space-y-3.5">
@@ -1012,7 +1013,7 @@
     </div>
   </div>
 
-  <!-- MODAL: ANNUAL READING WRAP (WITH VIBE BREAKDOWN) -->
+  <!-- MODAL: ANNUAL READING WRAP -->
   <div id="modalInfographic" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden items-center justify-center p-4">
     <div class="bg-[#FFF9EE] border-3 border-[#05244C] rounded-3xl p-5 w-full max-w-md shadow-retro-orange space-y-4 max-h-[92vh] overflow-y-auto no-scrollbar">
       <div class="flex justify-between items-center pb-2 border-b-2 border-orange-200">
@@ -1158,8 +1159,9 @@
   <div id="toastNotification" class="fixed top-5 left-1/2 -translate-x-1/2 z-50 bg-[#05244C] text-[#FFF9EE] border-2 border-[#FFD034] px-4 py-2 rounded-2xl text-xs font-black shadow-2xl transition-all duration-300 opacity-0 pointer-events-none">
     Notice
   </div>
+
   <script>
-    const APP_VERSION = "6.4";
+    const APP_VERSION = "6.5";
     let books = [];
     let readingSessions = [];
     let quotes = [];
@@ -1906,7 +1908,7 @@
         endP = Number(document.getElementById('inlineSessEndPage')?.value) || startP;
       } else {
         const startPct = Math.max(0, Math.min(100, Number(document.getElementById('inlineSessStartPercent')?.value) || 0));
-        const endPct = Math.max(0, Math.min(100, Number(document.getElementById('inlineSessEndPercent')?.value) || 0));
+        const endPct = Math.max(0, Math.min(100, Number(document.getElementById('inlineSessEndPercent')?.value) || startPct));
         startP = Math.round((startPct / 100) * totalPgs);
         endP = Math.round((endPct / 100) * totalPgs);
       }
@@ -2648,7 +2650,7 @@
         minutes = Number(document.getElementById('pastSessionMinutes').value) || 1;
       } else {
         const startPct = Math.max(0, Math.min(100, Number(document.getElementById('pastSessionStartPercent').value) || 0));
-        const endPct = Math.max(0, Math.min(100, Number(document.getElementById('pastSessionEndPercent').value) || 0));
+        const endPct = Math.max(0, Math.min(100, Number(document.getElementById('pastSessionEndPercent').value) || startPct));
         minutes = Number(document.getElementById('pastSessionPercentMinutes').value) || 1;
         startP = Math.round((startPct / 100) * bk.pageCount);
         endP = Math.round((endPct / 100) * bk.pageCount);
@@ -3454,6 +3456,11 @@
     }
 
     function saveBooks() {
+      if (books.length === 0) {
+        // Prevent accidental zero-out overwrites
+        const existing = safeJsonParse('rianne_books_v1', []);
+        if (existing.length > 0) return;
+      }
       localStorage.setItem('rianne_books_v1', JSON.stringify(books));
       createVaultSnapshot();
       populateGenreDropdown();
@@ -3499,9 +3506,13 @@
       activeBookId = activeBooks[0].id;
     }
 
-    // MULTI-KEY RESCUE LOADER
+    // MULTI-KEY RESCUE LOADER WITH AUTO-RECONSTRUCTION
     function initializeUserData() {
-      const possibleBookKeys = ['rianne_books_v1', 'rianne_backup_vault', 'bookshelf_books', 'rianne_library', 'books'];
+      readingSessions = safeJsonParse('rianne_sessions_v1', []);
+      quotes = safeJsonParse('rianne_quotes_v1', []);
+      userGoals = safeJsonParse('rianne_goals_v1', userGoals);
+
+      const possibleBookKeys = ['rianne_books_v1', 'rianne_backup_vault', 'bookshelf_backup_vault', 'bookshelf_books', 'rianne_library', 'books'];
       let loaded = null;
 
       for (const k of possibleBookKeys) {
@@ -3520,14 +3531,68 @@
         } catch (e) {}
       }
 
+      // AUTO-RECONSTRUCT: If books are empty but quotes or sessions exist, re-create the book objects automatically!
+      if ((!loaded || loaded.length === 0) && (readingSessions.length > 0 || quotes.length > 0)) {
+        const reconstructedMap = new Map();
+
+        quotes.forEach(q => {
+          if (q.bookId && q.bookTitle) {
+            reconstructedMap.set(q.bookId, {
+              id: q.bookId,
+              title: q.bookTitle,
+              author: 'Unknown',
+              pageCount: 300,
+              currentPage: 0,
+              shelf: 'reading',
+              ownership: 'Owned',
+              formats: ['eBook'],
+              genres: [],
+              cover: q.bookCover || '',
+              rating: 0,
+              review: '',
+              isFavorite: false,
+              finishedDate: null,
+              lastSessionDate: q.date || null
+            });
+          }
+        });
+
+        readingSessions.forEach(s => {
+          if (s.bookId && !reconstructedMap.has(s.bookId)) {
+            reconstructedMap.set(s.bookId, {
+              id: s.bookId,
+              title: s.notes ? s.notes.split(' - ')[0] : 'Book ' + s.bookId.slice(-4),
+              author: 'Unknown',
+              pageCount: Math.max(300, s.endPage || 0),
+              currentPage: s.endPage || 0,
+              shelf: (s.endPage >= 300) ? 'finished' : 'reading',
+              ownership: 'Owned',
+              formats: ['eBook'],
+              genres: [],
+              cover: '',
+              rating: 0,
+              review: '',
+              isFavorite: false,
+              finishedDate: null,
+              lastSessionDate: s.date || null
+            });
+          }
+        });
+
+        if (reconstructedMap.size > 0) {
+          loaded = Array.from(reconstructedMap.values());
+          localStorage.setItem('rianne_books_v1', JSON.stringify(loaded));
+        }
+      }
+
       books = loaded || [];
-      readingSessions = safeJsonParse('rianne_sessions_v1', []);
-      quotes = safeJsonParse('rianne_quotes_v1', []);
-      userGoals = safeJsonParse('rianne_goals_v1', userGoals);
 
       books.forEach(b => {
         if (b.cover) b.cover = cleanImageUrl(b.cover);
         if (!b.formats) b.formats = b.format ? [b.format] : ['eBook'];
+        VIBE_DEFINITIONS.forEach(v => {
+          if (b[v.key] === undefined) b[v.key] = 0;
+        });
       });
 
       renderVibeInputs();
@@ -3540,7 +3605,6 @@
       setupBackdropDismiss();
     }
 
-    // IMMEDIATE READY-STATE CHECK (NO SAFARI RACE CONDITION)
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', initializeUserData);
     } else {
