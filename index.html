@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,7 +17,7 @@
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Google Fonts: Vacation & Retro Typography -->
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Fraunces:ital,opsz,wght@0,9..144,400..900;1,9..144,400..900&family=Playfair+Display:ital,wght@0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -45,29 +44,12 @@
       padding-bottom: env(safe-area-inset-bottom, 24px);
     }
 
-    .font-retro-title {
-      font-family: 'Fraunces', serif;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-    }
+    .font-retro-title { font-family: 'Fraunces', serif; font-weight: 800; letter-spacing: -0.02em; }
+    .font-editorial { font-family: 'Bodoni Moda', Georgia, serif; }
+    .font-quote-display { font-family: 'Playfair Display', Georgia, serif; }
 
-    .font-editorial {
-      font-family: 'Bodoni Moda', Georgia, serif;
-    }
-
-    .font-quote-display {
-      font-family: 'Playfair Display', Georgia, serif;
-    }
-
-    .shadow-retro-orange {
-      box-shadow: 4px 4px 0px var(--retro-orange), 7px 7px 0px var(--retro-navy);
-    }
-    .shadow-retro-navy {
-      box-shadow: 3px 3px 0px var(--retro-navy);
-    }
-    .shadow-retro-pink {
-      box-shadow: 3px 3px 0px var(--retro-pink);
-    }
+    .shadow-retro-orange { box-shadow: 4px 4px 0px var(--retro-orange), 7px 7px 0px var(--retro-navy); }
+    .shadow-retro-navy { box-shadow: 3px 3px 0px var(--retro-navy); }
 
     .retro-btn:active {
       transform: translate(2px, 2px);
@@ -79,18 +61,10 @@
       -webkit-appearance: none;
       margin: 0;
     }
-    input[type=number] {
-      -moz-appearance: textfield;
-    }
+    input[type=number] { -moz-appearance: textfield; }
 
-    #appHeader {
-      padding-top: calc(env(safe-area-inset-top, 0px) + 12px) !important;
-    }
-
-    nav.fixed {
-      padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 10px) !important;
-    }
-
+    #appHeader { padding-top: calc(env(safe-area-inset-top, 0px) + 12px) !important; }
+    nav.fixed { padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 10px) !important; }
     #drawerMenu > div {
       padding-top: calc(env(safe-area-inset-top, 0px) + 1.5rem);
       padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 1.5rem);
@@ -102,7 +76,7 @@
 </head>
 <body class="text-slate-800 antialiased selection:bg-[#FFA4C4] selection:text-[#05244C]">
 
-  <!-- TOP HEADER -->
+  <!-- HEADER -->
   <header id="appHeader" class="relative z-40 bg-[#446BA2] border-b-2 border-[#FFA4C4] px-4 pb-3 shadow-md">
     <div class="max-w-md mx-auto flex items-center justify-between">
       <div class="flex items-center gap-3">
@@ -111,7 +85,6 @@
           <path d="M100 68 C 118 68, 132 82, 132 100 C 132 118, 118 132, 100 132 C 121 123, 126 109, 126 100 C 126 91, 121 77, 100 68 Z" stroke-width="1.8" fill="#FFF9EE" fill-opacity="0.15"/>
           <path d="M108 81 Q 108 94, 95 94 Q 108 94, 108 107 Q 108 94, 121 94 Q 108 94, 108 81 Z" stroke-width="1.6" fill="#FFD034"/>
         </svg>
-
         <h1 class="text-2xl font-retro-title italic text-[#FFF9EE] tracking-tight leading-none drop-shadow-[2px_3px_0px_#05244C]">
           Rianne's Bookshelf
         </h1>
@@ -123,7 +96,7 @@
     </div>
   </header>
 
-  <!-- FLOATING SCROLL TO TOP BUTTON -->
+  <!-- FLOATING SCROLL TO TOP -->
   <button id="scrollToTopBtn" onclick="scrollToTopSmooth()" aria-label="Scroll to top" class="fixed bottom-24 right-5 z-40 w-11 h-11 rounded-2xl bg-[#FFD034] text-[#05244C] border-3 border-[#05244C] shadow-retro-navy flex items-center justify-center font-black text-xl transition-all duration-300 opacity-0 pointer-events-none hover:scale-105 active:scale-95">
     ↑
   </button>
@@ -131,7 +104,7 @@
   <!-- MAIN TAB CONTAINER -->
   <main class="max-w-md mx-auto px-4 pt-4 pb-28">
 
-    <!-- TAB 1: READING PROGRESS -->
+    <!-- TAB 1: READ (HERO & IN-PROGRESS) -->
     <section id="tab-reading" class="tab-content space-y-6">
       <div id="heroReadingCard" class="bg-[#FFF9EE] border-3 border-[#05244C] rounded-3xl p-5 pt-4 pb-5 shadow-retro-orange relative transition-all">
         <div class="flex items-center justify-between mb-3.5 pb-2 border-b-2 border-orange-200/70">
@@ -199,7 +172,6 @@
         </div>
       </div>
 
-      <!-- In Progress Shelf -->
       <div>
         <div class="flex items-center justify-between mb-2.5 px-1">
           <h3 class="text-xs font-extrabold text-[#FFF9EE] uppercase tracking-wider flex items-center gap-2">
@@ -211,7 +183,6 @@
         <div id="inProgressCarousel" class="flex gap-3 overflow-x-auto no-scrollbar pb-2 pt-1"></div>
       </div>
 
-      <!-- Live Timer Bar -->
       <div id="liveTimerBox" class="hidden bg-[#05244C] border-3 border-[#FFD034] rounded-3xl p-5 shadow-retro-orange text-[#FFF9EE]">
         <div class="flex items-center justify-between mb-3">
           <span class="text-xs font-extrabold uppercase tracking-widest text-[#FFD034]">Session Active</span>
@@ -239,7 +210,6 @@
           <button onclick="toggleBatchSelectMode()" id="batchSelectModeBtn" class="h-9 px-3 bg-amber-100 hover:bg-amber-200 border-2 border-[#05244C] rounded-xl text-[11px] font-black text-[#05244C] shadow-retro-navy flex items-center justify-center flex-shrink-0 retro-btn">Select</button>
         </div>
 
-        <!-- Shelf Filter Pills -->
         <div class="space-y-1.5 pt-1">
           <div class="grid grid-cols-4 gap-1.5">
             <button onclick="setShelfFilter('all')" class="shelf-pill py-1.5 px-1 rounded-xl text-[11px] font-black border-2 border-[#05244C] bg-[#05244C] text-[#FFF9EE] shadow-retro-navy flex items-center justify-center gap-1" data-shelf="all">
@@ -509,7 +479,7 @@
         </div>
       </div>
 
-      <button onclick="saveQuote()" id="standaloneQuoteSaveBtn" class="w-full py-3 bg-[#FFD034] text-[#05244C] rounded-2xl font-black border-2 border-[#05244C] shadow-retro-navy">Save to Collection</button>
+      <button onclick="saveQuote()" class="w-full py-3 bg-[#FFD034] text-[#05244C] rounded-2xl font-black border-2 border-[#05244C] shadow-retro-navy">Save to Collection</button>
     </div>
   </div>
 
@@ -540,7 +510,7 @@
     Notice
   </div>
 
-  <!-- RUNTIME ENGINE -->
+  <!-- COMPLETE RUNTIME ENGINE -->
   <script>
     let books = [];
     let readingSessions = [];
@@ -847,12 +817,6 @@
       bk.currentPage = Math.max(bk.currentPage, endP);
       bk.lastSessionDate = dateStr;
 
-      if (bk.pageCount > 0 && bk.currentPage >= bk.pageCount) {
-        bk.currentPage = bk.pageCount;
-        bk.shelf = 'finished';
-        bk.finishedDate = dateStr;
-      }
-
       saveSessions();
       saveBooks();
       closeModal('modalPastSession');
@@ -915,91 +879,35 @@
       renderQuotes();
     }
 
-    function setupBackdropDismiss() {
-      const modals = [
-        'modalPastSession', 'modalBookDetail', 'modalCoverPicker',
-        'modalBulkEdit', 'modalOnlineSearch', 'modalAddQuote',
-        'modalGoalEditor', 'modalGenericList', 'modalInfographic'
-      ];
-      modals.forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.addEventListener('click', function(e) { if (e.target === this) closeModal(id); });
-      });
-      const drawer = document.getElementById('drawerMenu');
-      if (drawer) drawer.addEventListener('click', function(e) { if (e.target === this) closeMenuDrawer(); });
-    }
-
-    window.addEventListener('scroll', handleScrollButtonVisibility);
-
-    // EMERGENCY RECOVERY + SAFE LOADER
+    // MULTI-KEY RESCUE LOADER
     function initializeUserData() {
       readingSessions = safeJsonParse('rianne_sessions_v1', []);
       quotes = safeJsonParse('rianne_quotes_v1', []);
-      userGoals = safeJsonParse('rianne_goals_v1', userGoals);
 
-      // Check all possible storage keys
-      const keys = ['rianne_books_v1', 'rianne_backup_vault', 'bookshelf_books', 'rianne_library', 'books'];
+      const candidateKeys = ['rianne_books_v1', 'rianne_backup_vault', 'bookshelf_books', 'rianne_library', 'books'];
       let loaded = null;
 
-      for (const k of keys) {
+      for (const k of candidateKeys) {
         try {
           const raw = localStorage.getItem(k);
           if (!raw) continue;
           const parsed = JSON.parse(raw);
-          if (Array.isArray(parsed) && parsed.length > 0) {
-            loaded = parsed;
-            break;
-          }
-          if (parsed && Array.isArray(parsed.books) && parsed.books.length > 0) {
-            loaded = parsed.books;
-            break;
-          }
-        } catch (e) {}
+          if (Array.isArray(parsed) && parsed.length > 0) { loaded = parsed; break; }
+          if (parsed && Array.isArray(parsed.books) && parsed.books.length > 0) { loaded = parsed.books; break; }
+        } catch(e) {}
       }
 
-      // Auto-reconstruct titles if reading sessions or quotes exist
+      // Reconstruct missing book entries if sessions or quotes exist
       if ((!loaded || loaded.length === 0) && (readingSessions.length > 0 || quotes.length > 0)) {
         const map = new Map();
         quotes.forEach(q => {
           if (q.bookId && q.bookTitle) {
-            map.set(q.bookId, {
-              id: q.bookId,
-              title: q.bookTitle,
-              author: 'Unknown',
-              pageCount: 300,
-              currentPage: 0,
-              shelf: 'reading',
-              ownership: 'Owned',
-              formats: ['eBook'],
-              genres: [],
-              cover: q.bookCover || '',
-              rating: 0,
-              review: '',
-              isFavorite: false,
-              finishedDate: null,
-              lastSessionDate: q.date || null
-            });
+            map.set(q.bookId, { id: q.bookId, title: q.bookTitle, author: 'Unknown', pageCount: 300, currentPage: 0, shelf: 'reading', cover: q.bookCover || '' });
           }
         });
         readingSessions.forEach(s => {
           if (s.bookId && !map.has(s.bookId)) {
-            map.set(s.bookId, {
-              id: s.bookId,
-              title: s.notes ? s.notes.split(' - ')[0] : 'Book ' + s.bookId.slice(-4),
-              author: 'Unknown',
-              pageCount: Math.max(300, s.endPage || 0),
-              currentPage: s.endPage || 0,
-              shelf: (s.endPage >= 300) ? 'finished' : 'reading',
-              ownership: 'Owned',
-              formats: ['eBook'],
-              genres: [],
-              cover: '',
-              rating: 0,
-              review: '',
-              isFavorite: false,
-              finishedDate: null,
-              lastSessionDate: s.date || null
-            });
+            map.set(s.bookId, { id: s.bookId, title: 'Book ' + String(s.bookId).slice(-4), author: 'Unknown', pageCount: Math.max(300, s.endPage || 0), currentPage: s.endPage || 0, shelf: 'reading', cover: '' });
           }
         });
         if (map.size > 0) {
@@ -1009,20 +917,8 @@
       }
 
       books = loaded || [];
-
-      books.forEach(b => {
-        if (b.cover) b.cover = cleanImageUrl(b.cover);
-        if (!b.formats) b.formats = b.format ? [b.format] : ['eBook'];
-      });
-
-      const badge = document.getElementById('drawerBackupCount');
-      if (badge) badge.innerText = `${books.length} book${books.length === 1 ? '' : 's'}`;
-
       determineActiveHeroBook();
-      populateGenreDropdown();
-      populateYearDropdown();
       renderAllViews();
-      setupBackdropDismiss();
     }
 
     if (document.readyState === 'loading') {
