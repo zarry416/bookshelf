@@ -1159,7 +1159,7 @@
     Notice
   </div>
   <script>
-    const APP_VERSION = "6.2";
+    const APP_VERSION = "6.3";
     let books = [];
     let readingSessions = [];
     let quotes = [];
@@ -1178,6 +1178,7 @@
     let editingBookGenres = [];
     let showUnselectedCatalog = false;
 
+    // PRESET GENRES (INCLUDING SELF-HELP / PERSONAL GROWTH)
     const PRESET_GENRES = [
       'Fiction', 'Classics', 'Manga', 'Graphic Novel / Comic',
       'Coming of Age / YA', 'Romance', 'Horror', 'Thriller',
@@ -1211,6 +1212,7 @@
       'Self-Help / Personal Growth': ['self-help', 'self help', 'personal development', 'personal growth', 'productivity', 'habits', 'mindfulness', 'motivation', 'mindset', 'wellness', 'self-improvement', 'leadership', 'success']
     };
 
+    // EXACT 8 CUSTOM VIBE & IMPACT METRICS (FEATURING KILIG SPARKLE ✨)
     const VIBE_DEFINITIONS = [
       {
         key: 'vibeHeartfelt',
@@ -1272,6 +1274,7 @@
     let timerSeconds = 0;
     let timerStartTimestamp = null;
 
+    // RICH TEXT FORMATTER FOR QUOTES & THOUGHTS
     function formatRichText(raw) {
       if (!raw) return '';
       return raw
@@ -1668,6 +1671,7 @@
       }).join('');
     }
 
+    // 8 VIBES WITH SVG SHAPES & HALF-FILL CYCLING (1 -> 0.5 -> 0)
     function renderVibeInputs() {
       const container = document.getElementById('vibesContainer');
       if (!container) return;
@@ -1736,6 +1740,7 @@
       setVibeShapes(vibeKey, next);
     }
 
+    // VIBE AVERAGES & DNA ANALYTICS
     function calculateVibeAverages(bookList) {
       const ratedBooks = (bookList || []).filter(b => b.shelf === 'finished');
       const totals = {};
@@ -1762,6 +1767,7 @@
       }).sort((a, b) => b.average - a.average);
     }
 
+    // SHELF COUNT BADGES UPDATE
     function updateShelfCountBadges() {
       const counts = {
         'all': books.filter(b => b.shelf !== 'wishlist').length,
@@ -1779,6 +1785,7 @@
       });
     }
 
+    // INLINE SESSION MODE TOGGLE (PAGES VS PERCENT)
     function setInlineSessionMode(mode) {
       const modeInput = document.getElementById('inlineSessModeVal');
       if (modeInput) modeInput.value = mode;
@@ -3421,7 +3428,6 @@
 
     window.addEventListener('scroll', handleScrollButtonVisibility);
 
-    // Multi-Key Data Recovery Scanner
     function loadUserDataSafely() {
       const possibleBookKeys = ['rianne_books_v1', 'rianne_backup_vault', 'bookshelf_books', 'rianne_library', 'books'];
       let loaded = null;
@@ -3462,7 +3468,6 @@
       setupBackdropDismiss();
     }
 
-    // Direct Ready-State Execution (Bypasses Safari DOMContentLoaded Race Condition)
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', loadUserDataSafely);
     } else {
